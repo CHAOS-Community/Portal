@@ -1,0 +1,42 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+    <link href="~/Grapthics/Global.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <div id="Container">
+        <div id="Header">
+            <div class="Content">
+                Geckon Portal API v3.0
+            </div>
+        </div>
+        <div id="Content">
+            <div class="Content">
+                <table id="PageStructure">
+                    <tr>
+                        <td id="MenuArea">
+                            <asp:ContentPlaceHolder ID="MenuPanel" runat="server">
+        
+                            </asp:ContentPlaceHolder>
+                        </td>
+                        <td id="ContentArea" >
+                            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+        
+                            </asp:ContentPlaceHolder>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="Footer">
+            <div class="Content">
+                Copyright © 2011 Geckon Aps. All rights reserved.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
