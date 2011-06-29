@@ -6,12 +6,13 @@ using System.Reflection;
 using System.Text;
 using System.Web.Mvc;
 using System.Xml;
+using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data;
 using Geckon.Serialization.Xml;
 
-namespace Geckon.Portal.Core.Entrypoint
+namespace Geckon.Portal.Core.Extension
 {
-    public abstract class AEntrypoint : Controller, IEntrypoint
+    public abstract class AExtension : Controller, IExtension
     {
         #region Fields
 
@@ -34,7 +35,7 @@ namespace Geckon.Portal.Core.Entrypoint
         #endregion
         #region Constructors
 
-        public AEntrypoint()
+        public AExtension()
         {
             
         }
@@ -57,7 +58,7 @@ namespace Geckon.Portal.Core.Entrypoint
             base.OnException( filterContext );
 
             if( filterContext.Exception is TargetInvocationException )
-                filterContext.Exception = filterContext.Exception.InnerException;
+                filterContext.Exception = filterContext.Exception.InnerException; 
             
             filterContext.ExceptionHandled = true;
             filterContext.Result = ConvertToContentResult( string.Format( "<Error><Exception>{0}</Exception><Message><![CDATA[{1}]]></Message><StackTrace><![CDATA[{2}]]></StackTrace></Error>" , 
@@ -134,6 +135,24 @@ namespace Geckon.Portal.Core.Entrypoint
 
                 return user;
             }
+        }
+
+        #endregion
+        #region Module
+
+        protected IEnumerable<XmlSerialize> CallModules( IMethodQuery methodQuery)
+        {
+            return PortalContext.CallModules( this, methodQuery );
+        }
+
+        protected T CallModule<T>( IMethodQuery methodQuery ) where T : XmlSerialize
+        {
+            return PortalContext.CallModule<T>( this, methodQuery );
+        }
+
+        protected T GetModule<T>() where T : IModule
+        {
+            return PortalContext.GetModule<T>();
         }
 
         #endregion

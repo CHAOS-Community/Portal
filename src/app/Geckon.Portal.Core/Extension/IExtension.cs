@@ -1,9 +1,9 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace Geckon.Portal.Core.Entrypoint
+namespace Geckon.Portal.Core.Extension
 {
-    public interface IEntrypoint : IController
+    public interface IExtension : IController
     {
         IPortalContext PortalContext { get; }
         HttpContextBase HttpContext { get; }

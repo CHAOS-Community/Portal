@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
-using Geckon.Portal.Core.Entrypoint;
+using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
 using Geckon.Serialization.Xml;
 using System;
@@ -48,9 +48,9 @@ namespace Geckon.Portal.Core.Standard
             LoadedModules.Add( module.Name, module );
         }
 
-        public IEnumerable<XmlSerialize> CallModules( IEntrypoint entrypoint, IMethodQuery methodQuery )
+        public IEnumerable<XmlSerialize> CallModules( IExtension extension, IMethodQuery methodQuery )
         {
-            methodQuery.Parameters.Add( "entrypoint", new Parameter( "entrypoint", entrypoint ) );
+            methodQuery.Parameters.Add( "extension", new Parameter( "extension", extension ) );
 
             foreach( IModule module in LoadedModules.Values )
             {
@@ -61,16 +61,16 @@ namespace Geckon.Portal.Core.Standard
             }
         }
 
-        public T CallModule<T>( IEntrypoint entrypoint, string moduleName, IMethodQuery methodQuery ) where T : XmlSerialize
+        public T CallModule<T>( IExtension extension, IMethodQuery methodQuery ) where T : XmlSerialize
         {
-            methodQuery.Parameters.Add( "entrypoint", new Parameter( "entrypoint", entrypoint ) );
+            methodQuery.Parameters.Add( "extension", new Parameter( "extension", extension ) );
 
-            return (T) LoadedModules[ moduleName ].InvokeMethod( methodQuery );
+            return (T) LoadedModules[ typeof(T).FullName ].InvokeMethod( methodQuery );
         }
 
-        public T GetModule<T>( string key ) where T : IModule
+        public T GetModule<T>( ) where T : IModule
         {
-            return (T) LoadedModules[ key ];
+            return (T) LoadedModules[ typeof(T).FullName ];
         }
 
         #endregion

@@ -35,14 +35,6 @@
       <Association Name="XmlType_ClientSetting" Member="XmlType" ThisKey="XmlTypeID" OtherKey="ID" Type="XmlType" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Entrypoint" Member="Entrypoints">
-    <Type Name="Entrypoint" Id="ID4">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="Path" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
-      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.[Group]" Member="Groups">
     <Type Name="Group">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -165,6 +157,14 @@
       <Column Name="SessionDateCreated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Extension" Member="Extensions">
+    <Type Name="Extension" Id="ID4">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Path" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
   <Function Name="dbo.UserInfo_Get" Method="UserInfo_Get">
     <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="SessionID" Parameter="sessionID" Type="System.Guid" DbType="UniqueIdentifier" />
@@ -202,20 +202,20 @@
     <Parameter Name="Path" Parameter="path" Type="System.String" DbType="VarChar(1024)" />
     <ElementType IdRef="ID3" />
   </Function>
-  <Function Name="dbo.Entrypoint_Insert" Method="Entrypoint_Insert">
-    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
-    <Parameter Name="Path" Parameter="path" Type="System.String" DbType="VarChar(1024)" />
-    <ElementType IdRef="ID4" />
-  </Function>
-  <Function Name="dbo.Entrypoint_Get" Method="Entrypoint_Get">
-    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
-    <ElementType IdRef="ID4" />
-  </Function>
   <Function Name="dbo.Session_Insert" Method="Session_Insert">
     <Parameter Name="SessionID" Parameter="sessionID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="ClientSettingID" Parameter="clientSettingID" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID2" />
+  </Function>
+  <Function Name="dbo.Extension_Get" Method="Extension_Get">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <ElementType IdRef="ID4" />
+  </Function>
+  <Function Name="dbo.Extension_Insert" Method="Extension_Insert">
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="Path" Parameter="path" Type="System.String" DbType="VarChar(1024)" />
+    <ElementType IdRef="ID4" />
   </Function>
 </Database>

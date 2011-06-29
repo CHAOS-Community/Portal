@@ -33,7 +33,7 @@ namespace Geckon.Portal.Core
 
         protected IEnumerable<FileInfo> GetAllExtensionFiles()
         {
-            return new DirectoryInfo( Path.Combine( ServiceDirectoryPath, "Extensions") ).GetFiles("*.dll");
+            return new DirectoryInfo( Path.Combine( ServiceDirectoryPath, "Extensions" ) ).GetFiles( "*.dll" );
         }
 
         #endregion

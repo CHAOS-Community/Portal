@@ -47,14 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entrypoint\AEntrypoint.cs" />
+    <Compile Include="Extension\AExtension.cs" />
     <Compile Include="Module\AModule.cs" />
     <Compile Include="APortalApplication.cs" />
     <Compile Include="AssemblyTypeMap.cs" />
     <Compile Include="ExtensionFactory.cs" />
     <Compile Include="Datatype.cs" />
     <Compile Include="ICache.cs" />
-    <Compile Include="Entrypoint\IEntrypoint.cs" />
+    <Compile Include="Extension\IExtension.cs" />
     <Compile Include="IEventType.cs" />
     <Compile Include="IMethodQuery.cs" />
     <Compile Include="IMethodSignature.cs" />

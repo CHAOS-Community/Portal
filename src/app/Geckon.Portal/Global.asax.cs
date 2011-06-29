@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Geckon.Portal.Core;
-using Geckon.Portal.Core.Entrypoint;
+using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Core.Standard;
 using Geckon.Portal.Data;
@@ -65,13 +65,13 @@ namespace Geckon.Portal
             // TODO: Assemblies should not just be loaded at application start
             using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
-                foreach( Entrypoint entrypoint in db.Entrypoint_Get( null, null ) )
+                foreach( Extension entrypoint in db.Extension_Get( null, null ) )
                 {
                     Assembly assembly = Assembly.LoadFile( Path.Combine( ServiceDirectoryPath, "Extensions", entrypoint.Path ) );
 
                     foreach( Type classType in assembly.GetTypes() )
                     {
-                        if( classType.GetInterface( typeof( IEntrypoint ).FullName) != null )
+                        if( classType.GetInterface( typeof( IExtension ).FullName) != null )
                             LoadedEntrypoints.Add( classType.Name, new AssemblyTypeMap( assembly, classType ) );
                     }
                 }
