@@ -54,10 +54,10 @@ namespace Geckon.Portal
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute("Default", // Route name
+            routes.MapRoute( "Default", // Route name
                              "{controller}/{action}/{id}", // URL with parameters
                              new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
-                            );
+                           );
         }
 
         protected void Application_Start()
@@ -65,15 +65,11 @@ namespace Geckon.Portal
             // TODO: Assemblies should not just be loaded at application start
             using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
-                foreach( Extension entrypoint in db.Extension_Get( null, null ) )
+                foreach( Extension extension in db.Extension_Get( null, null ) )
                 {
-                    Assembly assembly = Assembly.LoadFile( Path.Combine( ServiceDirectoryPath, "Extensions", entrypoint.Path ) );
+                    Assembly assembly = Assembly.LoadFile( Path.Combine( ServiceDirectoryPath, "Extensions", extension.Path ) );
 
-                    foreach( Type classType in assembly.GetTypes() )
-                    {
-                        if( classType.GetInterface( typeof( IExtension ).FullName) != null )
-                            LoadedEntrypoints.Add( classType.Name, new AssemblyTypeMap( assembly, classType ) );
-                    }
+                    LoadedEntrypoints.Add( extension.Map, new AssemblyTypeMap( assembly, assembly.GetType( extension.Fullname ) ) );
                 }
             }
 

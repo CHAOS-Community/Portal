@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extension\AExtension.cs" />
+    <Compile Include="Extension\IResult.cs" />
     <Compile Include="Module\AModule.cs" />
     <Compile Include="APortalApplication.cs" />
     <Compile Include="AssemblyTypeMap.cs" />

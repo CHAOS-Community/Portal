@@ -9,6 +9,7 @@ BEGIN
 	DELETE FROM XmlType
 	DELETE FROM Module
 	DELETE FROM Extension
+	DELETE FROM Permission
 
 END
 
@@ -24,7 +25,6 @@ EXECUTE Subscription_Insert @GUID = @SubscriptionIdentifier, @Name = 'Geckon'
 EXECUTE User_Insert @Firstname = 'Anonymous', @Email = 'Anonymous@Geckon.com'
 EXECUTE XmlType_Insert 1, 'XML'
 EXECUTE ClientSetting_Insert 1, 1
-EXECUTE Module_Insert 'Geckon GeoLocator','<ConnectionStrings Name="GeoLocatorDB" ConnectionString="Data Source=MSSQL00;Initial Catalog=GeoLocator;Persist Security Info=True;User ID=Application;Password=GECKONpbvu7000" />','Geckon.GeoLocator.dll'
-EXECUTE Extension_Insert 'GeoLocator','Geckon.Portal.Extensions.GeoLocator.dll'
+EXECUTE Extension_Insert 'Session', 'Geckon.Portal.Extensions.Standard.SessionExtension','Geckon.Portal.Extensions.Standard.dll'
 
 INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','Create User',1,'Permissoin to Create new users')

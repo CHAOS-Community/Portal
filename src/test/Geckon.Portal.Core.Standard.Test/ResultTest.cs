@@ -1,0 +1,49 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using Geckon.Portal.Core.Extension;
+using Geckon.Portal.Core.Standard.Extension;
+using Geckon.Serialization.Xml;
+using NUnit.Framework;
+
+namespace Geckon.Portal.Core.Standard.Test
+{
+    [TestFixture]
+    public class ResultTest
+    {
+        [Test]
+        public void Should_Add_Content_To_Result()
+        {
+            IResult result = new Result();
+
+            result.Add( new ContentResultTestDummy() );
+
+            Assert.AreEqual( 1, result.Content.Count() );
+        }
+
+        [Test]
+        public void Should_Add_Content_Range_To_Result()
+        {
+            IResult result = new Result();
+            IList<ContentResultTestDummy> range = new List<ContentResultTestDummy>();
+
+            range.Add( new ContentResultTestDummy() );
+            range.Add( new ContentResultTestDummy() );
+            range.Add( new ContentResultTestDummy() );
+            range.Add( new ContentResultTestDummy() );
+            range.Add( new ContentResultTestDummy() );
+            
+            result.Add( range );
+
+            Assert.AreEqual( 5, result.Content.Count() );
+        }
+    }
+
+
+    public class ContentResultTestDummy : XmlSerialize
+    {
+        public int SomeValue
+        {
+            get { return 4; }
+        }
+    }
+}

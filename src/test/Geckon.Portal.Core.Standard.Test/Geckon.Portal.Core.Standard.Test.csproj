@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1202731E-A723-4C46-9C49-4CFAA83F3F0C}</ProjectGuid>
+    <ProjectGuid>{E20973EF-2EC3-4837-87B7-69968E001ACB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Geckon.Portal.Core.Standard</RootNamespace>
-    <AssemblyName>Geckon.Portal.Core.Standard</AssemblyName>
+    <RootNamespace>Geckon.Portal.Core.Standard.Test</RootNamespace>
+    <AssemblyName>Geckon.Portal.Core.Standard.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,25 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Enyim.Caching">
-      <HintPath>..\..\..\lib\Enyim.Caching.dll</HintPath>
-    </Reference>
     <Reference Include="geckon">
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
     </Reference>
-    <Reference Include="Geckon.Statistics.Data.Gateway">
-      <HintPath>..\..\..\lib\Geckon.Statistics.Data.Gateway.dll</HintPath>
-    </Reference>
-    <Reference Include="Membase">
-      <HintPath>..\..\..\lib\Membase.dll</HintPath>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,24 +46,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventType.cs" />
-    <Compile Include="Extension\Result.cs" />
-    <Compile Include="Membase.cs" />
-    <Compile Include="MethodQuery.cs" />
-    <Compile Include="PortalContext.cs" />
+    <Compile Include="ResultTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Geckon.Portal.Core\Geckon.Portal.Core.csproj">
+    <ProjectReference Include="..\..\app\Geckon.Portal.Core.Standard\Geckon.Portal.Core.Standard.csproj">
+      <Project>{1202731E-A723-4C46-9C49-4CFAA83F3F0C}</Project>
+      <Name>Geckon.Portal.Core.Standard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\Geckon.Portal.Core\Geckon.Portal.Core.csproj">
       <Project>{D9388656-291A-40A3-B062-C9BF25465B4B}</Project>
       <Name>Geckon.Portal.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Geckon.Portal.Data\Geckon.Portal.Data.csproj">
-      <Project>{97DCBF2B-F655-46C1-8130-201F12B3AE82}</Project>
-      <Name>Geckon.Portal.Data</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

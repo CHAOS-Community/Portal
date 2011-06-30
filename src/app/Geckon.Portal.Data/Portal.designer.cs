@@ -293,16 +293,16 @@ namespace Geckon.Portal.Data
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Extension_Get")]
-		public ISingleResult<Extension> Extension_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name)
+		public ISingleResult<Extension> Extension_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Map", DbType="VarChar(255)")] string map)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, name);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, map);
 			return ((ISingleResult<Extension>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Extension_Insert")]
-		public ISingleResult<Extension> Extension_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Path", DbType="VarChar(1024)")] string path)
+		public ISingleResult<Extension> Extension_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Map", DbType="VarChar(255)")] string map, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Fullname", DbType="VarChar(255)")] string fullname, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Path", DbType="VarChar(1024)")] string path)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), name, path);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), map, fullname, path);
 			return ((ISingleResult<Extension>)(result.ReturnValue));
 		}
 	}
@@ -3190,7 +3190,9 @@ namespace Geckon.Portal.Data
 		
 		private int _ID;
 		
-		private string _Name;
+		private string _Map;
+		
+		private string _Fullname;
 		
 		private string _Path;
 		
@@ -3202,8 +3204,10 @@ namespace Geckon.Portal.Data
     partial void OnCreated();
     partial void OnIDChanging(int value);
     partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
+    partial void OnMapChanging(string value);
+    partial void OnMapChanged();
+    partial void OnFullnameChanging(string value);
+    partial void OnFullnameChanged();
     partial void OnPathChanging(string value);
     partial void OnPathChanged();
     partial void OnDateCreatedChanging(System.DateTime value);
@@ -3235,22 +3239,42 @@ namespace Geckon.Portal.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string Name
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Map", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Map
 		{
 			get
 			{
-				return this._Name;
+				return this._Map;
 			}
 			set
 			{
-				if ((this._Name != value))
+				if ((this._Map != value))
 				{
-					this.OnNameChanging(value);
+					this.OnMapChanging(value);
 					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
+					this._Map = value;
+					this.SendPropertyChanged("Map");
+					this.OnMapChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fullname", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Fullname
+		{
+			get
+			{
+				return this._Fullname;
+			}
+			set
+			{
+				if ((this._Fullname != value))
+				{
+					this.OnFullnameChanging(value);
+					this.SendPropertyChanging();
+					this._Fullname = value;
+					this.SendPropertyChanged("Fullname");
+					this.OnFullnameChanged();
 				}
 			}
 		}

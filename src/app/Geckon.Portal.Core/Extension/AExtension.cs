@@ -74,6 +74,11 @@ namespace Geckon.Portal.Core.Extension
         #endregion
         #region Result formatting
 
+        //protected ContentResult ConvertToContentResult( )
+        //{
+        //    return ConvertToContentResult( Result );
+        //}
+
         protected ContentResult ConvertToContentResult( string content )
         {
             ContentResult result = new ContentResult();
@@ -87,12 +92,12 @@ namespace Geckon.Portal.Core.Extension
             return result;
         }
 
-        protected ContentResult ConvertToContentResult(IEnumerable<XmlSerialize> contents)
+        protected ContentResult ConvertToContentResult( IEnumerable<XmlSerialize> contents )
         {
             return ConvertToContentResult( ConvertToString( contents ) );
         }
 
-        protected string ConvertToString(IEnumerable<XmlSerialize> contents)
+        protected string ConvertToString( IEnumerable<XmlSerialize> contents )
         {
             StringBuilder stringBuilder = new StringBuilder();
 

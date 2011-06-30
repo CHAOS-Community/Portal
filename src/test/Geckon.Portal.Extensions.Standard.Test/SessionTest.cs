@@ -8,7 +8,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [Test]
         public void Should_Create_A_New_Session()
         {
-            
+            SessionExtension sessionExtension = new SessionExtension();
+
+          //  sessionExtension.Create(  )
         }
     }
 }

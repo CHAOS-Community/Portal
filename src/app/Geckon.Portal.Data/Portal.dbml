@@ -160,7 +160,8 @@
   <Table Name="dbo.Extension" Member="Extensions">
     <Type Name="Extension" Id="ID4">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Map" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Fullname" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="Path" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
@@ -210,11 +211,12 @@
   </Function>
   <Function Name="dbo.Extension_Get" Method="Extension_Get">
     <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="Map" Parameter="map" Type="System.String" DbType="VarChar(255)" />
     <ElementType IdRef="ID4" />
   </Function>
   <Function Name="dbo.Extension_Insert" Method="Extension_Insert">
-    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="Map" Parameter="map" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="Fullname" Parameter="fullname" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="Path" Parameter="path" Type="System.String" DbType="VarChar(1024)" />
     <ElementType IdRef="ID4" />
   </Function>
