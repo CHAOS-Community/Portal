@@ -5,8 +5,8 @@ namespace Geckon.Portal.Core.Extension
 {
     public interface IResult
     {
-        void Add( XmlSerialize obj );
-        void Add( IEnumerable<XmlSerialize> obj );
-        IEnumerable<XmlSerialize> Content { get; }
+        void Add( string moduleName, XmlSerialize obj );
+        void Add(string moduleName, IEnumerable<XmlSerialize> obj);
+        string Content { get; }
     }
 }

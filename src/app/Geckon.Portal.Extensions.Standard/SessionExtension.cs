@@ -9,6 +9,18 @@ namespace Geckon.Portal.Extensions.Standard
 {
     public class SessionExtension : AExtension
     {
+        #region Constructor
+
+        public SessionExtension()
+        {
+        }
+
+        public SessionExtension(IPortalContext context)
+            : base(context)
+        {
+        }
+
+        #endregion
         #region Get
 
         public ContentResult Get( string sessionID )
@@ -28,13 +40,18 @@ namespace Geckon.Portal.Extensions.Standard
 
             using( PortalDataContext db = GetNewPortalDataContext() )
             {
-                Data.Dto.Session session = Data.Dto.Session.Create( db.Session_Insert( null, null, clientSettingsID ).First() );
+                ResultBuilder.Add( "Geckon.Portal", 
+                                   Data.Dto.Session.Create( db.Session_Insert( null, 
+                                                                               PortalContext.AnonymousUserGUID, 
+                                                                               clientSettingsID ).First() ) );
             }
             
-            return ConvertToContentResult( CallModules( new MethodQuery( "Create",
-                                                                         "Session",
-                                                                         new Parameter( "clientSettingsID", clientSettingsID ),
-                                                                         new Parameter( "protocolVersion", protocolVersion ) ) ).Concat(  ) );
+            //ResultBuilder.Add( CallModules( new MethodQuery( "Create",
+            //                                                 "Session",
+            //                                                 new Parameter( "clientSettingsID", clientSettingsID ),
+            //                                                 new Parameter( "protocolVersion", protocolVersion ) ) ) );
+
+            return ConvertToContentResult( );
         }
 
         #endregion

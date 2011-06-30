@@ -1,5 +1,6 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Geckon.Portal.Core.Extension;
+using Geckon.Portal.Core.Standard.Extension;
 
 namespace Geckon.Portal.Core
 {
@@ -24,7 +25,11 @@ namespace Geckon.Portal.Core
             {
                 AssemblyTypeMap map  = Application.LoadedEntrypoints[ controllerName ];
 
-                return (IController) map.Assembly.CreateInstance( map.Type.FullName );
+                AExtension extension = (AExtension) map.Assembly.CreateInstance( map.Type.FullName );
+
+                extension.Init( new Result() );
+
+                return (IController) extension;
             }
 
             return base.CreateController( requestContext, controllerName );

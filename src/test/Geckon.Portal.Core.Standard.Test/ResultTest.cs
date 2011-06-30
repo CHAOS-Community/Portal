@@ -15,9 +15,9 @@ namespace Geckon.Portal.Core.Standard.Test
         {
             IResult result = new Result();
 
-            result.Add( new ContentResultTestDummy() );
+            result.Add( "Geckon.Portal.Extension.TestModule", new ContentResultTestDummy() );
 
-            Assert.AreEqual( 1, result.Content.Count() );
+            Assert.AreEqual("<Geckon.Portal.Extension.TestModule><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy></Geckon.Portal.Extension.TestModule>", result.Content);
         }
 
         [Test]
@@ -32,15 +32,15 @@ namespace Geckon.Portal.Core.Standard.Test
             range.Add( new ContentResultTestDummy() );
             range.Add( new ContentResultTestDummy() );
             
-            result.Add( range );
+            result.Add( "Geckon.Portal.Extension.TestModule", range );
 
-            Assert.AreEqual( 5, result.Content.Count() );
+            Assert.AreEqual("<Geckon.Portal.Extension.TestModule><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy></Geckon.Portal.Extension.TestModule>", result.Content);
         }
     }
 
-
     public class ContentResultTestDummy : XmlSerialize
     {
+        [Element]
         public int SomeValue
         {
             get { return 4; }

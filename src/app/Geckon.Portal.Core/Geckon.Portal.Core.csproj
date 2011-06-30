@@ -52,7 +52,6 @@
     <Compile Include="Module\AModule.cs" />
     <Compile Include="APortalApplication.cs" />
     <Compile Include="AssemblyTypeMap.cs" />
-    <Compile Include="ExtensionFactory.cs" />
     <Compile Include="Datatype.cs" />
     <Compile Include="ICache.cs" />
     <Compile Include="Extension\IExtension.cs" />

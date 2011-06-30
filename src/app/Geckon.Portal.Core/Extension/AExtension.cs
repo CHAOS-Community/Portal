@@ -32,12 +32,24 @@ namespace Geckon.Portal.Core.Extension
             }
         }
 
+        protected IResult ResultBuilder { get; set; }
+
         #endregion
         #region Constructors
 
         public AExtension()
         {
             
+        }
+
+        public AExtension( IPortalContext context ) : this()
+        {
+            _PortalContext = context;
+        }
+
+        public void Init( IResult result )
+        {
+            ResultBuilder = result;
         }
 
         #endregion
@@ -74,17 +86,17 @@ namespace Geckon.Portal.Core.Extension
         #endregion
         #region Result formatting
 
-        //protected ContentResult ConvertToContentResult( )
-        //{
-        //    return ConvertToContentResult( Result );
-        //}
+        protected ContentResult ConvertToContentResult()
+        {
+            return ConvertToContentResult( ResultBuilder.Content );
+        }
 
         protected ContentResult ConvertToContentResult( string content )
         {
             ContentResult result = new ContentResult();
-
+            
             result.Content         = string.Format("<PortalResult Duration=\"{0:F1}\">{1}</PortalResult>",
-                                     DateTime.Now.Subtract( HttpContext.Timestamp ).TotalMilliseconds,
+                                     HttpContext == null ? 0 : DateTime.Now.Subtract(HttpContext.Timestamp).TotalMilliseconds,
                                      content);
             result.ContentType     = "text/xml";
             result.ContentEncoding = Encoding.UTF8;

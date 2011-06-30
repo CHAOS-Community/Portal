@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="geckon">
+      <HintPath>..\..\..\lib\geckon.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
     </Reference>
@@ -44,10 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PortalContextMock.cs" />
     <Compile Include="SessionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\app\Geckon.Portal.Core.Standard\Geckon.Portal.Core.Standard.csproj">
+      <Project>{1202731E-A723-4C46-9C49-4CFAA83F3F0C}</Project>
+      <Name>Geckon.Portal.Core.Standard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\app\Geckon.Portal.Core\Geckon.Portal.Core.csproj">
       <Project>{D9388656-291A-40A3-B062-C9BF25465B4B}</Project>
       <Name>Geckon.Portal.Core</Name>
@@ -56,6 +64,9 @@
       <Project>{E073142C-457F-456D-B19C-4FA5D9689C11}</Project>
       <Name>Geckon.Portal.Extensions.Standard</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

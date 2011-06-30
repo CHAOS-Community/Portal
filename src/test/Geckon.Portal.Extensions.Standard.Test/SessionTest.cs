@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.Web.Mvc;
+using Geckon.Portal.Core.Standard.Extension;
+using NUnit.Framework;
 
 namespace Geckon.Portal.Extensions.Standard.Test
 {
@@ -8,9 +10,12 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [Test]
         public void Should_Create_A_New_Session()
         {
-            SessionExtension sessionExtension = new SessionExtension();
+            SessionExtension sessionExtension = new SessionExtension( new PortalContextMock() );
+            sessionExtension.Init( new Result() );
+            
+            ContentResult result = sessionExtension.Create( 1, 3 );
 
-          //  sessionExtension.Create(  )
+            Assert.AreEqual( "", result.Content );
         }
     }
 }
