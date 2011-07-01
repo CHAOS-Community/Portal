@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
+using System.Xml.Linq;
 using Geckon.Portal.Core.Standard.Extension;
 using NUnit.Framework;
 
@@ -14,8 +16,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
             sessionExtension.Init( new Result() );
             
             ContentResult result = sessionExtension.Create( 1, 3 );
-
-            Assert.AreEqual( "", result.Content );
+            XDocument xml = XDocument.Parse( result.Content );
+            
+            Assert.IsNotNull( xml.Descendants("SessionID").FirstOrDefault() );
         }
     }
 }

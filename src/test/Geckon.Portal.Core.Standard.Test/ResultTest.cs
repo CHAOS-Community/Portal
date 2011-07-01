@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Serialization.Xml;
