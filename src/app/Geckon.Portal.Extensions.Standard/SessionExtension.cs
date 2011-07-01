@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Geckon.Portal.Core;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Standard;
 using Geckon.Portal.Data;
+using Geckon.Portal.Data.Dto;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -59,9 +61,17 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Update( string sessionID )
         {
-            return ConvertToContentResult( CallModules( new MethodQuery( "Update",
-                                                                         "Session",
-                                                                         new Parameter( "sessionID", sessionID ) ) ) );
+            using( PortalDataContext db = GetNewPortalDataContext() )
+            {
+                ResultBuilder.Add( "Geckon.Portal",
+                                   Data.Dto.Session.Create( db.Session_Update( null, null, null, Guid.Parse( sessionID ), null, null  ).First() ) );
+            }
+
+            //return ConvertToContentResult( CallModules( new MethodQuery( "Update",
+            //                                                             "Session",
+            //                                                             new Parameter( "sessionID", sessionID ) ) ) );
+
+            return ConvertToContentResult();
         }
 
         #endregion
@@ -69,9 +79,17 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Delete( string sessionID )
         {
-            return ConvertToContentResult( CallModules( new MethodQuery( "Delete",
-                                                                         "Session",
-                                                                         new Parameter( "sessionID", sessionID ) ) ) );
+            using( PortalDataContext db = GetNewPortalDataContext() )
+            {
+                ResultBuilder.Add( "Geckon.Portal",
+                                   new ScalarResult( db.Session_Delete( Guid.Parse( sessionID ), null, null ) ) );
+            }
+
+            //return ConvertToContentResult( CallModules( new MethodQuery( "Delete",
+            //                                                             "Session",
+            //                                                             new Parameter( "sessionID", sessionID ) ) ) );
+
+            return ConvertToContentResult();
         }
 
         #endregion

@@ -305,6 +305,20 @@ namespace Geckon.Portal.Data
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), map, fullname, path);
 			return ((ISingleResult<Extension>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.User_Insert")]
+		public ISingleResult<User> User_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatingUserID", DbType="Int")] System.Nullable<int> creatingUserID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Firstname", DbType="VarChar(255)")] string firstname, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Middlename", DbType="VarChar(255)")] string middlename, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Lastname", DbType="VarChar(255)")] string lastname, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Email", DbType="VarChar(255)")] string email)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), creatingUserID, firstname, middlename, lastname, email);
+			return ((ISingleResult<User>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.User_Delete")]
+		public int User_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID);
+			return ((int)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AuthenticationProvider")]
