@@ -27,9 +27,19 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Get( string sessionID )
         {
-            return ConvertToContentResult( CallModules( new MethodQuery( "Get",
-                                                                         "Session",
-                                                                         new Parameter( "sessionID", sessionID ) ) ) );
+            using( PortalDataContext db = GetNewPortalDataContext() )
+            {
+                ResultBuilder.Add( "Geckon.Portal", 
+                                   Data.Dto.Session.Create( db.Session_Get( Guid.Parse( sessionID ),
+                                                                                        null,
+                                                                                        null ).First() ) );
+            }
+
+            //return ConvertToContentResult( CallModules( new MethodQuery( "Get",
+            //                                                             "Session",
+            //                                                             new Parameter( "sessionID", sessionID ) ) ) );
+
+            return ConvertToContentResult();
         } 
 
         #endregion

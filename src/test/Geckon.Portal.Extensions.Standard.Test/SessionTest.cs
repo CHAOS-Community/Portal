@@ -21,6 +21,18 @@ namespace Geckon.Portal.Extensions.Standard.Test
         }
 
         [Test]
+        public void Should_Get_A_Session()
+        {
+            SessionExtension sessionExtension = new SessionExtension( new PortalContextMock() );
+            sessionExtension.Init( new Result() );
+            
+            ContentResult create = sessionExtension.Create( 1, 3 );
+            ContentResult result = sessionExtension.Get( XDocument.Parse( create.Content ).Descendants("SessionID").FirstOrDefault().Value );
+
+            Assert.IsNotNull( XDocument.Parse( result.Content ).Descendants("SessionID").FirstOrDefault() );
+        }
+
+        [Test]
         public void Should_Update_A_Session()
         {
             SessionExtension sessionExtension = new SessionExtension(new PortalContextMock());
