@@ -43,5 +43,10 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<IModule> GetModules(string extension, string action)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

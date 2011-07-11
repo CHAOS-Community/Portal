@@ -73,6 +73,17 @@ namespace Geckon.Portal.Core.Standard
             return (T) LoadedModules[ typeof(T).FullName ];
         }
 
+        public IEnumerable<IModule> GetModules( string extension, string action )
+        {
+            foreach( IModule module in LoadedModules.Values )
+            {
+                if( !module.ContainsServiceHook( extension, action ) )
+                    continue;
+
+                yield return module;
+            }
+        }
+
         #endregion
     }
 }

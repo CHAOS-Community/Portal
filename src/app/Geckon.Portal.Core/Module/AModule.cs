@@ -86,6 +86,11 @@ namespace Geckon.Portal.Core.Module
             return RegisteredMethods.ContainsKey( methodQuery.EventType.EventName ) && RegisteredMethods[ methodQuery.EventType.EventName ].Datatype.EventType == methodQuery.EventType.Type;
         }
 
+        public bool ContainsServiceHook( string extension, string action )
+        {
+            return  RegisteredMethods.ContainsKey( extension ) && RegisteredMethods[ extension ].Datatype.Event == action;
+        }
+
         private object[] GetRelevantParameters( Parameter[] parameters, IMethodQuery methodQuery )
         {
             return parameters.Select( parameter => methodQuery.Parameters[ parameter.ParameterName ].Value ).ToArray();

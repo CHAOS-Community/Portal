@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Checked.cs" />
     <Compile Include="Extension\AExtension.cs" />
+    <Compile Include="IChecked.cs" />
     <Compile Include="Extension\IResult.cs" />
     <Compile Include="Module\AModule.cs" />
     <Compile Include="APortalApplication.cs" />

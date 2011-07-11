@@ -17,6 +17,7 @@ namespace Geckon.Portal.Core.Extension
         #region Fields
 
         private IPortalContext _PortalContext;
+        private IDictionary<Type, IChecked<IModule>> _AssociatedModules;
 
         #endregion
         #region Properties
@@ -39,12 +40,12 @@ namespace Geckon.Portal.Core.Extension
 
         public AExtension()
         {
-            
+            _AssociatedModules = new Dictionary<Type, IChecked<IModule>>();
         }
 
         public AExtension( IPortalContext context ) : this()
         {
-            _PortalContext = context;
+            _PortalContext     = context;    
         }
 
         public void Init( IResult result )
@@ -62,6 +63,21 @@ namespace Geckon.Portal.Core.Extension
             return new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString );
         }
 
+        /// <summary>
+        /// Initializes the list of registered modules that wants calls from the current extension call
+        /// </summary>
+        /// <param name="requestContext"></param>
+        protected override void Execute( System.Web.Routing.RequestContext requestContext )
+        {
+            base.Execute(requestContext);
+
+            foreach( IModule module in PortalContext.GetModules( requestContext.RouteData.Values["Controller"].ToString(),
+                                                                 requestContext.RouteData.Values["Action"].ToString() ) )
+            {
+                _AssociatedModules.Add( module.GetType(), new Checked<IModule>( module ) );
+            }
+        }
+
         #endregion
         #region Override
 
@@ -73,7 +89,7 @@ namespace Geckon.Portal.Core.Extension
                 filterContext.Exception = filterContext.Exception.InnerException; 
             
             filterContext.ExceptionHandled = true;
-            filterContext.Result = ConvertToContentResult( string.Format( "<Error><Exception>{0}</Exception><Message><![CDATA[{1}]]></Message><StackTrace><![CDATA[{2}]]></StackTrace></Error>" , 
+            filterContext.Result = GetContentResult( string.Format( "<Error><Exception>{0}</Exception><Message><![CDATA[{1}]]></Message><StackTrace><![CDATA[{2}]]></StackTrace></Error>" , 
                                                            filterContext.Exception.GetType().FullName, 
                                                            filterContext.Exception.Message,
                                                            filterContext.Exception.StackTrace ) 
@@ -86,12 +102,12 @@ namespace Geckon.Portal.Core.Extension
         #endregion
         #region Result formatting
 
-        protected ContentResult ConvertToContentResult()
+        protected ContentResult GetContentResult()
         {
-            return ConvertToContentResult( ResultBuilder.Content );
+            return GetContentResult( ResultBuilder.Content );
         }
 
-        protected ContentResult ConvertToContentResult( string content )
+        protected ContentResult GetContentResult( string content )
         {
             ContentResult result = new ContentResult();
             
@@ -104,9 +120,9 @@ namespace Geckon.Portal.Core.Extension
             return result;
         }
 
-        protected ContentResult ConvertToContentResult( IEnumerable<XmlSerialize> contents )
+        protected ContentResult GetContentResult( IEnumerable<XmlSerialize> contents )
         {
-            return ConvertToContentResult( ConvertToString( contents ) );
+            return GetContentResult( ConvertToString( contents ) );
         }
 
         protected string ConvertToString( IEnumerable<XmlSerialize> contents )
@@ -121,14 +137,14 @@ namespace Geckon.Portal.Core.Extension
             return stringBuilder.ToString();
         }
 
-        protected ContentResult ConvertToContentResult( XmlDocument content )
+        protected ContentResult GetContentResult( XmlDocument content )
         {
-            return ConvertToContentResult( content.OuterXml );
+            return GetContentResult( content.OuterXml );
         }
 
-        protected ContentResult ConvertToContentResult( XmlSerialize content )
+        protected ContentResult GetContentResult( XmlSerialize content )
         {
-            return ConvertToContentResult( content.ToXML().OuterXml );
+            return GetContentResult( content.ToXML().OuterXml );
         }
 
         #endregion
@@ -157,14 +173,12 @@ namespace Geckon.Portal.Core.Extension
         #endregion
         #region Module
 
-        protected IEnumerable<XmlSerialize> CallModules( IMethodQuery methodQuery)
+        protected void CallModules( IMethodQuery methodQuery )
         {
-            return PortalContext.CallModules( this, methodQuery );
-        }
-
-        protected T CallModule<T>( IMethodQuery methodQuery ) where T : XmlSerialize
-        {
-            return PortalContext.CallModule<T>( this, methodQuery );
+            foreach( IModule associatedModule in _AssociatedModules.Values.Where( module => !module.IsChecked ) )
+            {
+                ResultBuilder.Add( associatedModule.GetType().FullName, associatedModule.InvokeMethod( methodQuery ) );
+            }
         }
 
         protected T GetModule<T>() where T : IModule

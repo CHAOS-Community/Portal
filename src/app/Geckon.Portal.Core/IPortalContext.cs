@@ -16,5 +16,6 @@ namespace Geckon.Portal.Core
         Guid AnonymousUserGUID { get; }
 
         T GetModule<T>() where T : IModule;
+        IEnumerable<IModule> GetModules( string extension, string action );
     }
 }

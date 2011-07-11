@@ -34,12 +34,12 @@ namespace Geckon.Portal.Extensions.Standard
                                                                                         null,
                                                                                         null ).First() ) );
             }
+            
+            CallModules( new MethodQuery( "Get",
+                                          "Session",
+                                          new Parameter( "sessionID", sessionID ) ) );
 
-            //return ConvertToContentResult( CallModules( new MethodQuery( "Get",
-            //                                                             "Session",
-            //                                                             new Parameter( "sessionID", sessionID ) ) ) );
-
-            return ConvertToContentResult();
+            return GetContentResult();
         } 
 
         #endregion
@@ -57,13 +57,13 @@ namespace Geckon.Portal.Extensions.Standard
                                                                                PortalContext.AnonymousUserGUID, 
                                                                                clientSettingsID ).First() ) );
             }
-            
-            //ResultBuilder.Add( CallModules( new MethodQuery( "Create",
-            //                                                 "Session",
-            //                                                 new Parameter( "clientSettingsID", clientSettingsID ),
-            //                                                 new Parameter( "protocolVersion", protocolVersion ) ) ) );
 
-            return ConvertToContentResult( );
+            CallModules( new MethodQuery( "Create",
+                                          "Session",
+                                          new Parameter( "clientSettingsID", clientSettingsID ),
+                                          new Parameter( "protocolVersion", protocolVersion ) ) );
+
+            return GetContentResult( );
         }
 
         #endregion
@@ -77,11 +77,11 @@ namespace Geckon.Portal.Extensions.Standard
                                    Data.Dto.Session.Create( db.Session_Update( null, null, null, Guid.Parse( sessionID ), null, null  ).First() ) );
             }
 
-            //return ConvertToContentResult( CallModules( new MethodQuery( "Update",
-            //                                                             "Session",
-            //                                                             new Parameter( "sessionID", sessionID ) ) ) );
+            CallModules( new MethodQuery( "Update",
+                                          "Session",
+                                          new Parameter( "sessionID", sessionID ) ) );
 
-            return ConvertToContentResult();
+            return GetContentResult();
         }
 
         #endregion
@@ -95,11 +95,11 @@ namespace Geckon.Portal.Extensions.Standard
                                    new ScalarResult( db.Session_Delete( Guid.Parse( sessionID ), null, null ) ) );
             }
 
-            //return ConvertToContentResult( CallModules( new MethodQuery( "Delete",
-            //                                                             "Session",
-            //                                                             new Parameter( "sessionID", sessionID ) ) ) );
+            CallModules( new MethodQuery( "Delete",
+                                          "Session",
+                                          new Parameter( "sessionID", sessionID ) ) );
 
-            return ConvertToContentResult();
+            return GetContentResult();
         }
 
         #endregion
