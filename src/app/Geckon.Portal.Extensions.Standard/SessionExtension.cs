@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Geckon.Data;
 using Geckon.Portal.Core;
-using Geckon.Portal.Core.Extension;
-using Geckon.Portal.Core.Standard;
+using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
 using Geckon.Portal.Data.Dto;
 
@@ -29,15 +29,18 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalDataContext db = GetNewPortalDataContext() )
             {
+                int? totalCount = 0;
                 ResultBuilder.Add( "Geckon.Portal", 
                                    Data.Dto.Session.Create( db.Session_Get( Guid.Parse( sessionID ),
                                                                                         null,
-                                                                                        null ).First() ) );
+                                                                                        null,
+                                                                                        0,
+                                                                                        null,
+                                                                                        ref totalCount ).First() ),
+                                  new NameValue( "TotalCount", totalCount.ToString() ) );
             }
             
-            CallModules( new MethodQuery( "Get",
-                                          "Session",
-                                          new Parameter( "sessionID", sessionID ) ) );
+            CallModules( new Parameter( "sessionID", sessionID ) );
 
             return GetContentResult();
         } 
@@ -58,10 +61,8 @@ namespace Geckon.Portal.Extensions.Standard
                                                                                clientSettingsID ).First() ) );
             }
 
-            CallModules( new MethodQuery( "Create",
-                                          "Session",
-                                          new Parameter( "clientSettingsID", clientSettingsID ),
-                                          new Parameter( "protocolVersion", protocolVersion ) ) );
+            CallModules( new Parameter( "clientSettingsID", clientSettingsID ),
+                         new Parameter( "protocolVersion", protocolVersion ) );
 
             return GetContentResult( );
         }
@@ -77,9 +78,7 @@ namespace Geckon.Portal.Extensions.Standard
                                    Data.Dto.Session.Create( db.Session_Update( null, null, null, Guid.Parse( sessionID ), null, null  ).First() ) );
             }
 
-            CallModules( new MethodQuery( "Update",
-                                          "Session",
-                                          new Parameter( "sessionID", sessionID ) ) );
+            CallModules( new Parameter( "sessionID", sessionID ) );
 
             return GetContentResult();
         }
@@ -95,9 +94,7 @@ namespace Geckon.Portal.Extensions.Standard
                                    new ScalarResult( db.Session_Delete( Guid.Parse( sessionID ), null, null ) ) );
             }
 
-            CallModules( new MethodQuery( "Delete",
-                                          "Session",
-                                          new Parameter( "sessionID", sessionID ) ) );
+            CallModules( new Parameter( "sessionID", sessionID ) );
 
             return GetContentResult();
         }

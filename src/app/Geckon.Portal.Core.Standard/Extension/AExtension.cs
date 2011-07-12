@@ -6,18 +6,18 @@ using System.Reflection;
 using System.Text;
 using System.Web.Mvc;
 using System.Xml;
+using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data;
 using Geckon.Serialization.Xml;
 
-namespace Geckon.Portal.Core.Extension
+namespace Geckon.Portal.Core.Standard.Extension
 {
     public abstract class AExtension : Controller, IExtension
     {
         #region Fields
 
         private IPortalContext _PortalContext;
-        private IDictionary<Type, IChecked<IModule>> _AssociatedModules;
 
         #endregion
         #region Properties
@@ -35,12 +35,16 @@ namespace Geckon.Portal.Core.Extension
 
         protected IResult ResultBuilder { get; set; }
 
+        protected IDictionary<Type, IChecked<IModule>> AssociatedModules { get; set; }
+        protected string Controller { get; set; }
+        protected string Action { get; set; }
+
         #endregion
         #region Constructors
 
         public AExtension()
         {
-            _AssociatedModules = new Dictionary<Type, IChecked<IModule>>();
+            AssociatedModules = new Dictionary<Type, IChecked<IModule>>();
         }
 
         public AExtension( IPortalContext context ) : this()
@@ -53,6 +57,23 @@ namespace Geckon.Portal.Core.Extension
             ResultBuilder = result;
         }
 
+        /// <summary>
+        /// Initializes the list of registered modules that wants calls from the current extension call
+        /// </summary>
+        /// <param name="filterContext"></param>
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            Controller = filterContext.RouteData.Values["Controller"].ToString();
+            Action     = filterContext.RouteData.Values["Action"].ToString();
+
+            foreach( IModule module in PortalContext.GetModules( Controller, Action ) )
+            {
+                AssociatedModules.Add( module.GetType(), new Checked<IModule>( module ) );
+            }
+
+            base.OnActionExecuting(filterContext);
+        }
+
         #endregion
         #region Business Logic
 
@@ -61,21 +82,6 @@ namespace Geckon.Portal.Core.Extension
         protected PortalDataContext GetNewPortalDataContext()
         {
             return new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString );
-        }
-
-        /// <summary>
-        /// Initializes the list of registered modules that wants calls from the current extension call
-        /// </summary>
-        /// <param name="requestContext"></param>
-        protected override void Execute( System.Web.Routing.RequestContext requestContext )
-        {
-            base.Execute(requestContext);
-
-            foreach( IModule module in PortalContext.GetModules( requestContext.RouteData.Values["Controller"].ToString(),
-                                                                 requestContext.RouteData.Values["Action"].ToString() ) )
-            {
-                _AssociatedModules.Add( module.GetType(), new Checked<IModule>( module ) );
-            }
         }
 
         #endregion
@@ -173,12 +179,29 @@ namespace Geckon.Portal.Core.Extension
         #endregion
         #region Module
 
-        protected void CallModules( IMethodQuery methodQuery )
+        protected void CallModules( params Parameter[] parameters )
         {
-            foreach( IModule associatedModule in _AssociatedModules.Values.Where( module => !module.IsChecked ) )
+            foreach( IChecked<IModule> associatedModule in AssociatedModules.Values.Where( module => !module.IsChecked ) )
             {
-                ResultBuilder.Add( associatedModule.GetType().FullName, associatedModule.InvokeMethod( methodQuery ) );
+                ResultBuilder.Add( associatedModule.Value.GetType().FullName, 
+                                   associatedModule.Value.InvokeMethod( new MethodQuery( Controller, 
+                                                                                         Action, 
+                                                                                         parameters ) ) );
+
+                associatedModule.IsChecked = true;
             }
+        }
+
+        protected void CallModule<T>( string controller, string action, params Parameter[] parameters )
+        {
+            IChecked<IModule> associatedModule = AssociatedModules[ typeof( T ) ];
+
+            ResultBuilder.Add( associatedModule.Value.GetType().FullName, 
+                               associatedModule.Value.InvokeMethod( new MethodQuery( Controller, 
+                                                                                     Action, 
+                                                                                     parameters ) ) );
+
+            associatedModule.IsChecked = true;
         }
 
         protected T GetModule<T>() where T : IModule

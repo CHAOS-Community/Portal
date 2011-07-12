@@ -48,10 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checked.cs" />
-    <Compile Include="Extension\AExtension.cs" />
+    <Compile Include="Extension\IModuleResult.cs" />
     <Compile Include="IChecked.cs" />
     <Compile Include="Extension\IResult.cs" />
-    <Compile Include="Module\AModule.cs" />
     <Compile Include="APortalApplication.cs" />
     <Compile Include="AssemblyTypeMap.cs" />
     <Compile Include="Datatype.cs" />

@@ -250,13 +250,6 @@ namespace Geckon.Portal.Data
 			return ((ISingleResult<UserInfo>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Session_Get")]
-		public ISingleResult<Session> Session_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingID", DbType="Int")] System.Nullable<int> clientSettingID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sessionID, userID, clientSettingID);
-			return ((ISingleResult<Session>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Session_Update")]
 		public ISingleResult<Session> Session_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingID", DbType="Int")] System.Nullable<int> clientSettingID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="WhereSessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> whereSessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="WhereUserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> whereUserGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="WhereClientSettingID", DbType="Int")] System.Nullable<int> whereClientSettingID)
 		{
@@ -318,6 +311,14 @@ namespace Geckon.Portal.Data
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID);
 			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Session_Get")]
+		public ISingleResult<Session> Session_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingID", DbType="Int")] System.Nullable<int> clientSettingID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PageIndex", DbType="Int")] System.Nullable<int> pageIndex, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PageSize", DbType="Int")] System.Nullable<int> pageSize, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="TotalCount", DbType="Int")] ref System.Nullable<int> totalCount)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sessionID, userID, clientSettingID, pageIndex, pageSize, totalCount);
+			totalCount = ((System.Nullable<int>)(result.GetParameterValue(5)));
+			return ((ISingleResult<Session>)(result.ReturnValue));
 		}
 	}
 	

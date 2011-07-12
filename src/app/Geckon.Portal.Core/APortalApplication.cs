@@ -10,7 +10,7 @@ namespace Geckon.Portal.Core
         #region Properties
 
         public IPortalContext PortalContext { get; protected set; }
-        public IDictionary<string, AssemblyTypeMap> LoadedEntrypoints { get; private set; }
+        public IDictionary<string, AssemblyTypeMap> LoadedExtensions { get; private set; }
 
         protected string ServiceDirectoryPath
         {
@@ -25,7 +25,7 @@ namespace Geckon.Portal.Core
 
         public APortalApplication()
         {
-            LoadedEntrypoints = new Dictionary<string, AssemblyTypeMap>();
+            LoadedExtensions = new Dictionary<string, AssemblyTypeMap>();
         }
 
         #endregion

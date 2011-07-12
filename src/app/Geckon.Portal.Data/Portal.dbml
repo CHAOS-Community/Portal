@@ -171,12 +171,6 @@
     <Parameter Name="SessionID" Parameter="sessionID" Type="System.Guid" DbType="UniqueIdentifier" />
     <ElementType IdRef="ID1" />
   </Function>
-  <Function Name="dbo.Session_Get" Method="Session_Get">
-    <Parameter Name="SessionID" Parameter="sessionID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="ClientSettingID" Parameter="clientSettingID" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID2" />
-  </Function>
   <Function Name="dbo.Session_Update" Method="Session_Update">
     <Parameter Name="SessionID" Parameter="sessionID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
@@ -231,5 +225,14 @@
   <Function Name="dbo.User_Delete" Method="User_Delete">
     <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Session_Get" Method="Session_Get">
+    <Parameter Name="SessionID" Parameter="sessionID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ClientSettingID" Parameter="clientSettingID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="PageIndex" Parameter="pageIndex" Type="System.Int32" DbType="Int" />
+    <Parameter Name="PageSize" Parameter="pageSize" Type="System.Int32" DbType="Int" />
+    <Parameter Name="TotalCount" Parameter="totalCount" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <ElementType IdRef="ID2" />
   </Function>
 </Database>

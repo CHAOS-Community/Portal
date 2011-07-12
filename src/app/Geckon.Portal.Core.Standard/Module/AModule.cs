@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data;
 using Geckon.Serialization.Xml;
 
-namespace Geckon.Portal.Core.Module
+namespace Geckon.Portal.Core.Standard.Module
 {
     public abstract class AModule : IModule
     {

@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Geckon.Portal.Core;
-using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Core.Standard;
 using Geckon.Portal.Data;
@@ -53,6 +52,7 @@ namespace Geckon.Portal
         public void RegisterRoutes( RouteCollection routes )
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("Scripts/");
 
             routes.MapRoute( "Default", // Route name
                              "{controller}/{action}/{id}", // URL with parameters
@@ -69,7 +69,7 @@ namespace Geckon.Portal
                 {
                     Assembly assembly = Assembly.LoadFile( Path.Combine( ServiceDirectoryPath, "Extensions", extension.Path ) );
 
-                    LoadedEntrypoints.Add( extension.Map, new AssemblyTypeMap( assembly, assembly.GetType( extension.Fullname ) ) );
+                    LoadedExtensions.Add( extension.Map, new AssemblyTypeMap( assembly, assembly.GetType( extension.Fullname ) ) );
                 }
             }
 

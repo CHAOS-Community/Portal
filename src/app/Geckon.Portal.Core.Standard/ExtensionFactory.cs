@@ -1,8 +1,7 @@
 ﻿using System.Web.Mvc;
-using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Standard.Extension;
 
-namespace Geckon.Portal.Core
+namespace Geckon.Portal.Core.Standard
 {
     public class ExtensionFactory : DefaultControllerFactory
     {
@@ -21,9 +20,9 @@ namespace Geckon.Portal.Core
         #endregion
         public override IController CreateController( System.Web.Routing.RequestContext requestContext, string controllerName )
         {
-            if( Application.LoadedEntrypoints.ContainsKey( controllerName ) )
+            if( Application.LoadedExtensions.ContainsKey( controllerName ) )
             {
-                AssemblyTypeMap map  = Application.LoadedEntrypoints[ controllerName ];
+                AssemblyTypeMap map  = Application.LoadedExtensions[ controllerName ];
 
                 AExtension extension = (AExtension) map.Assembly.CreateInstance( map.Type.FullName );
 

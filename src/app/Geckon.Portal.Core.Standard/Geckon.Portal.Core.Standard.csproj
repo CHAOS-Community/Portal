@@ -59,9 +59,12 @@
   <ItemGroup>
     <Compile Include="EventType.cs" />
     <Compile Include="ExtensionFactory.cs" />
+    <Compile Include="Extension\AExtension.cs" />
+    <Compile Include="Extension\ModuleResult.cs" />
     <Compile Include="Extension\Result.cs" />
     <Compile Include="Membase.cs" />
     <Compile Include="MethodQuery.cs" />
+    <Compile Include="Module\AModule.cs" />
     <Compile Include="PortalContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
