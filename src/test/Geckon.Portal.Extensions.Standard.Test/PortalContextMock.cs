@@ -11,7 +11,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
     {
         public ICache Cache
         {
-            get { throw new NotImplementedException(); }
+            get { return new MockCache(); }
         }
 
         public ISolr Solr
@@ -47,6 +47,34 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public IEnumerable<IModule> GetModules(string extension, string action)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public class MockCache : ICache
+    {
+        public bool Put(string key, object value, TimeSpan timeSpan)
+        {
+            return true;
+        }
+
+        public bool Put(string key, object value, DateTime dateTime)
+        {
+            return true;
+        }
+
+        public bool Remove(string key)
+        {
+            return true;
+        }
+
+        public object Get(string key)
+        {
+            return null;
+        }
+
+        public T Get<T>(string key) where T : XmlSerialize, new()
+        {
+            return (T) Get(key);
         }
     }
 }

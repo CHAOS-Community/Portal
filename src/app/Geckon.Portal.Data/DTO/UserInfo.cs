@@ -23,7 +23,7 @@ namespace Geckon.Portal.Data.Dto
         }
 
         [Element]
-        public Guid UniqueIdentifier
+        public Guid GUID
         {
             get;
             set;
@@ -86,7 +86,7 @@ namespace Geckon.Portal.Data.Dto
 
             newUserInfo.SessionID            = userInfo.SessionID.ToString();
             newUserInfo.ID                   = userInfo.ID;
-            newUserInfo.UniqueIdentifier     = userInfo.UniqueIdentifier;
+            newUserInfo.GUID                 = userInfo.GUID;
             newUserInfo.Firstname            = userInfo.Firstname;
             newUserInfo.Middlename           = userInfo.Middlename;
             newUserInfo.Lastname             = userInfo.Lastname;
@@ -101,7 +101,7 @@ namespace Geckon.Portal.Data.Dto
         {
             SessionID            = user.SessionID ?? SessionID;
             ID                   = user.ID;
-            UniqueIdentifier     = user.UniqueIdentifier;
+            GUID                 = user.UniqueIdentifier;
             Firstname            = user.Firstname ?? Firstname;
             Middlename           = user.Middlename ?? Middlename;
             Lastname             = user.Lastname ?? Lastname;

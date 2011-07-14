@@ -26,5 +26,6 @@ EXECUTE User_Insert @Firstname = 'Anonymous', @Email = 'Anonymous@Geckon.com'
 EXECUTE XmlType_Insert 1, 'XML'
 EXECUTE ClientSetting_Insert 1, 1
 EXECUTE Extension_Insert 'Session', 'Geckon.Portal.Extensions.Standard.SessionExtension','Geckon.Portal.Extensions.Standard.dll'
+EXECUTE Extension_Insert 'User', 'Geckon.Portal.Extensions.Standard.UserExtension','Geckon.Portal.Extensions.Standard.dll'
 
 INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','Create User',1,'Permissoin to Create new users')

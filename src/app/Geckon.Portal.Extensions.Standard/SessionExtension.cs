@@ -5,7 +5,6 @@ using Geckon.Data;
 using Geckon.Portal.Core;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
-using Geckon.Portal.Data.Dto;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -27,19 +26,26 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Get( string sessionID )
         {
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            Data.Dto.Session session = PortalContext.Cache.Get<Data.Dto.Session>( string.Format( "[Session:sid={0}]", sessionID ) );
+            int? totalCount = 1;
+
+            if( session == null )
             {
-                int? totalCount = 0;
-                ResultBuilder.Add( "Geckon.Portal", 
-                                   Data.Dto.Session.Create( db.Session_Get( Guid.Parse( sessionID ),
-                                                                                        null,
-                                                                                        null,
-                                                                                        0,
-                                                                                        null,
-                                                                                        ref totalCount ).First() ),
-                                  new NameValue( "TotalCount", totalCount.ToString() ) );
+                using( PortalDataContext db = GetNewPortalDataContext() )
+                {
+                    
+                    session = Data.Dto.Session.Create( db.Session_Get( Guid.Parse( sessionID ), null, null, 0, null, ref totalCount ).First() );
+
+                    PortalContext.Cache.Put( string.Format( "[Session:sid={0}]", sessionID ), 
+                                             session.ToXML().OuterXml, 
+                                             new TimeSpan( 0, 1, 0 ) );
+                }
             }
-            
+
+            ResultBuilder.Add( "Geckon.Portal",
+                                session,
+                                new NameValue( "TotalCount", totalCount.ToString() ) );
+
             CallModules( new Parameter( "sessionID", sessionID ) );
 
             return GetContentResult();
@@ -91,7 +97,7 @@ namespace Geckon.Portal.Extensions.Standard
             using( PortalDataContext db = GetNewPortalDataContext() )
             {
                 ResultBuilder.Add( "Geckon.Portal",
-                                   new ScalarResult( db.Session_Delete( Guid.Parse( sessionID ), null, null ) ) );
+                                   new Data.Dto.ScalarResult( db.Session_Delete( Guid.Parse( sessionID ), null, null ) ) );
             }
 
             CallModules( new Parameter( "sessionID", sessionID ) );

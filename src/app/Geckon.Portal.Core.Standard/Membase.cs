@@ -31,7 +31,7 @@ namespace Geckon.Portal.Core.Standard
         {
             // TODO: Refactoring needed
             object obj = Get( key );
-
+            
             if( obj == null )
                 return null;
 

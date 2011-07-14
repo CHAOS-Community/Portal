@@ -26,7 +26,7 @@ namespace Geckon.Portal.Controllers
             using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
                 int? totalCount = 0;
-                var sessions = db.Session_Get( null, null, null, (page - 1) * rows, rows, ref totalCount );
+                var sessions = db.Session_Get( null, null, null, (page - 1), rows, ref totalCount );
  
                 var jsonData = new
                 {
@@ -38,7 +38,8 @@ namespace Geckon.Portal.Controllers
                                                 id   = s.SessionID.ToString(),
                                                 cell = new string[] { 
                                                                         s.SessionID.ToString(), 
-                                                                        s.UserID.ToString(), 
+                                                                        s.UserID.ToString(),
+                                                                        s.ClientSettingID.ToString(),
                                                                         s.DateCreated.ToString(),
                                                                         s.DateModified.ToString()
                                                                     }
