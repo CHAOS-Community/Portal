@@ -55,7 +55,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Module" Member="Modules">
-    <Type Name="Module" Id="ID3">
+    <Type Name="Module" Id="ID2">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="Configuration" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" UpdateCheck="Never" />
@@ -78,7 +78,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Session" Member="Sessions">
-    <Type Name="Session" Id="ID2">
+    <Type Name="Session" Id="ID1">
       <Column Name="SessionID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ClientSettingID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -120,7 +120,7 @@
     </Type>
   </Table>
   <Table Name="dbo.[User]" Member="Users">
-    <Type Name="User" Id="ID5">
+    <Type Name="User" Id="ID4">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Firstname" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
@@ -144,7 +144,7 @@
     </Type>
   </Table>
   <Table Name="dbo.UserInfo" Member="UserInfos">
-    <Type Name="UserInfo" Id="ID1">
+    <Type Name="UserInfo" Id="ID5">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="SessionID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
@@ -158,7 +158,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Extension" Member="Extensions">
-    <Type Name="Extension" Id="ID4">
+    <Type Name="Extension" Id="ID3">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Map" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="Fullname" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
@@ -166,11 +166,6 @@
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Function Name="dbo.UserInfo_Get" Method="UserInfo_Get">
-    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="SessionID" Parameter="sessionID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType IdRef="ID1" />
-  </Function>
   <Function Name="dbo.Session_Update" Method="Session_Update">
     <Parameter Name="SessionID" Parameter="sessionID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
@@ -178,7 +173,7 @@
     <Parameter Name="WhereSessionID" Parameter="whereSessionID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="WhereUserGUID" Parameter="whereUserGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="WhereClientSettingID" Parameter="whereClientSettingID" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID2" />
+    <ElementType IdRef="ID1" />
   </Function>
   <Function Name="dbo.Session_Delete" Method="Session_Delete">
     <Parameter Name="SessionID" Parameter="sessionID" Type="System.Guid" DbType="UniqueIdentifier" />
@@ -189,30 +184,30 @@
   <Function Name="dbo.Module_Get" Method="Module_Get">
     <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
     <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
-    <ElementType IdRef="ID3" />
+    <ElementType IdRef="ID2" />
   </Function>
   <Function Name="dbo.Module_Insert" Method="Module_Insert">
     <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="Configuration" Parameter="configuration" Type="System.Xml.Linq.XElement" DbType="Xml" />
     <Parameter Name="Path" Parameter="path" Type="System.String" DbType="VarChar(1024)" />
-    <ElementType IdRef="ID3" />
+    <ElementType IdRef="ID2" />
   </Function>
   <Function Name="dbo.Session_Insert" Method="Session_Insert">
     <Parameter Name="SessionID" Parameter="sessionID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="ClientSettingID" Parameter="clientSettingID" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID2" />
+    <ElementType IdRef="ID1" />
   </Function>
   <Function Name="dbo.Extension_Get" Method="Extension_Get">
     <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
     <Parameter Name="Map" Parameter="map" Type="System.String" DbType="VarChar(255)" />
-    <ElementType IdRef="ID4" />
+    <ElementType IdRef="ID3" />
   </Function>
   <Function Name="dbo.Extension_Insert" Method="Extension_Insert">
     <Parameter Name="Map" Parameter="map" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="Fullname" Parameter="fullname" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="Path" Parameter="path" Type="System.String" DbType="VarChar(1024)" />
-    <ElementType IdRef="ID4" />
+    <ElementType IdRef="ID3" />
   </Function>
   <Function Name="dbo.User_Insert" Method="User_Insert">
     <Parameter Name="CreatingUserID" Parameter="creatingUserID" Type="System.Int32" DbType="Int" />
@@ -220,7 +215,7 @@
     <Parameter Name="Middlename" Parameter="middlename" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="Lastname" Parameter="lastname" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(255)" />
-    <ElementType IdRef="ID5" />
+    <ElementType IdRef="ID4" />
   </Function>
   <Function Name="dbo.User_Delete" Method="User_Delete">
     <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
@@ -233,6 +228,14 @@
     <Parameter Name="PageIndex" Parameter="pageIndex" Type="System.Int32" DbType="Int" />
     <Parameter Name="PageSize" Parameter="pageSize" Type="System.Int32" DbType="Int" />
     <Parameter Name="TotalCount" Parameter="totalCount" Type="System.Int32" DbType="Int" Direction="InOut" />
-    <ElementType IdRef="ID2" />
+    <ElementType IdRef="ID1" />
+  </Function>
+  <Function Name="dbo.UserInfo_Get" Method="UserInfo_Get">
+    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="SessionID" Parameter="sessionID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="AuthenticationProviderUniqueidentifier" Parameter="authenticationProviderUniqueidentifier" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="AuthenticationProviderGUID" Parameter="authenticationProviderGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType IdRef="ID5" />
   </Function>
 </Database>

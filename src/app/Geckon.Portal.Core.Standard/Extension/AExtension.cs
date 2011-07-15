@@ -156,24 +156,23 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region UserInfo
 
-        protected Data.Dto.UserInfo GetUserInfo( string sessionId )
+        protected Data.Dto.UserInfo GetUserInfo( string sessionID )
         {
-            // TODO: Consider how to best handle Caching
-            Data.Dto.UserInfo user = PortalContext.Cache.Get<Data.Dto.UserInfo>( "user-" + sessionId ); 
-            
-            if( user != null )
-                return user;
+            Data.Dto.UserInfo userInfo = PortalContext.Cache.Get<Data.Dto.UserInfo>( string.Format( "[UserInfo:sid={0}]", sessionID ) );
 
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            if( userInfo == null )
             {
-                UserInfo dbUser = db.UserInfo_Get( null, Guid.Parse( sessionId ) ).First();
+                using( PortalDataContext db = GetNewPortalDataContext() )
+                {
+                    userInfo = Data.Dto.UserInfo.Create( db.UserInfo_Get( null, Guid.Parse( sessionID ), null, null, null ).First() );
 
-                user = Data.Dto.UserInfo.Create( dbUser );
-
-                PortalContext.Cache.Put( "user-" + sessionId, user.ToXML().OuterXml, new TimeSpan( 0, 20, 0 ) );
-
-                return user;
+                    PortalContext.Cache.Put( string.Format( "[UserInfo:sid={0}]", sessionID ),
+                                             userInfo.ToXML().OuterXml,
+                                             new TimeSpan( 0, 1, 0 ) );
+                }
             }
+
+            return userInfo;
         }
 
         #endregion

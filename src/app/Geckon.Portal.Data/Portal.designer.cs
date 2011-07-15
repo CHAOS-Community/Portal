@@ -243,13 +243,6 @@ namespace Geckon.Portal.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserInfo_Get")]
-		public ISingleResult<UserInfo> UserInfo_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sessionID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, sessionID);
-			return ((ISingleResult<UserInfo>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Session_Update")]
 		public ISingleResult<Session> Session_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingID", DbType="Int")] System.Nullable<int> clientSettingID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="WhereSessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> whereSessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="WhereUserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> whereUserGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="WhereClientSettingID", DbType="Int")] System.Nullable<int> whereClientSettingID)
 		{
@@ -319,6 +312,13 @@ namespace Geckon.Portal.Data
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sessionID, userID, clientSettingID, pageIndex, pageSize, totalCount);
 			totalCount = ((System.Nullable<int>)(result.GetParameterValue(5)));
 			return ((ISingleResult<Session>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserInfo_Get")]
+		public ISingleResult<UserInfo> UserInfo_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Email", DbType="VarChar(255)")] string email, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AuthenticationProviderUniqueidentifier", DbType="VarChar(255)")] string authenticationProviderUniqueidentifier, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AuthenticationProviderGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> authenticationProviderGUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, sessionID, email, authenticationProviderUniqueidentifier, authenticationProviderGUID);
+			return ((ISingleResult<UserInfo>)(result.ReturnValue));
 		}
 	}
 	

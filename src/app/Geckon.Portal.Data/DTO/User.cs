@@ -4,7 +4,7 @@ using Geckon.Serialization.Xml;
 
 namespace Geckon.Portal.Data.Dto
 {
-    public class User : IUser
+    public class User : XmlSerialize, IUser
     {
         [Element]
         public string SessionID
