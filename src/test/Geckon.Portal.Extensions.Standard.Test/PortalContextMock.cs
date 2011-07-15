@@ -36,7 +36,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
         public Guid AnonymousUserGUID
         {
-            get { return new Guid("89ADE138-0384-433E-9CE7-0AFE53313EF2"); }
+            get { return new Guid("C0B231E9-7D98-4F52-885E-AF4837FAA352"); }
         }
 
         public T GetModule<T>() where T : IModule

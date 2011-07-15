@@ -292,13 +292,6 @@ namespace Geckon.Portal.Data
 			return ((ISingleResult<Extension>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.User_Insert")]
-		public ISingleResult<User> User_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatingUserID", DbType="Int")] System.Nullable<int> creatingUserID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Firstname", DbType="VarChar(255)")] string firstname, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Middlename", DbType="VarChar(255)")] string middlename, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Lastname", DbType="VarChar(255)")] string lastname, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Email", DbType="VarChar(255)")] string email)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), creatingUserID, firstname, middlename, lastname, email);
-			return ((ISingleResult<User>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.User_Delete")]
 		public int User_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID)
 		{
@@ -319,6 +312,27 @@ namespace Geckon.Portal.Data
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, sessionID, email, authenticationProviderUniqueidentifier, authenticationProviderGUID);
 			return ((ISingleResult<UserInfo>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AuthenticationProvider_User_Join_Get")]
+		public ISingleResult<AuthenticationProvider_User_Join> AuthenticationProvider_User_Join_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AuthenticationProviderID", DbType="Int")] System.Nullable<int> authenticationProviderID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UniqueIdentifier", DbType="VarChar(255)")] string uniqueIdentifier)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, authenticationProviderID, uniqueIdentifier);
+			return ((ISingleResult<AuthenticationProvider_User_Join>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.User_AssociateWithAuthenticationProvider")]
+		public ISingleResult<AuthenticationProvider_User_Join> User_AssociateWithAuthenticationProvider([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AuthenticationProviderGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> authenticationProviderGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UniqueIdentifier", DbType="VarChar(255)")] string uniqueIdentifier)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userGUID, authenticationProviderGUID, uniqueIdentifier);
+			return ((ISingleResult<AuthenticationProvider_User_Join>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.User_Insert")]
+		public ISingleResult<User> User_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Firstname", DbType="VarChar(255)")] string firstname, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Middlename", DbType="VarChar(255)")] string middlename, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Lastname", DbType="VarChar(255)")] string lastname, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Email", DbType="VarChar(255)")] string email)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, firstname, middlename, lastname, email);
+			return ((ISingleResult<User>)(result.ReturnValue));
 		}
 	}
 	

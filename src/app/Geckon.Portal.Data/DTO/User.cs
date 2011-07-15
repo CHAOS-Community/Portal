@@ -20,7 +20,8 @@ namespace Geckon.Portal.Data.Dto
             set;
         }
 
-        public Guid UniqueIdentifier
+        [Element]
+        public Guid GUID
         {
             get;
             set;
@@ -65,12 +66,12 @@ namespace Geckon.Portal.Data.Dto
         {
             User user = new User();
 
-            user.ID = inUser.ID;
-            user.UniqueIdentifier = inUser.UniqueIdentifier;
-            user.Firstname = inUser.Firstname;
+            user.ID         = inUser.ID;
+            user.GUID       = inUser.GUID;
+            user.Firstname  = inUser.Firstname;
             user.Middlename = inUser.Middlename;
-            user.Lastname = inUser.Lastname;
-            user.Email = inUser.Email;
+            user.Lastname   = inUser.Lastname;
+            user.Email      = inUser.Email;
 
             return user;
         }

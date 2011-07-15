@@ -32,7 +32,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
-                db.User_Delete( User.UniqueIdentifier );
+                db.User_Delete( User.GUID );
                 db.Session_Delete( Session.SessionID, null, null );
             }
         }

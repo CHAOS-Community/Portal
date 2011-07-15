@@ -86,7 +86,7 @@
         <elementListCompartment Id="6ccb221a-ab2b-46c5-8cc4-622c6b1f3382" absoluteBounds="0.765, 4.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.75 : 7.625); (3.125 : 7.25); (3.125 : 5.31814697265625); (3.5 : 5.31814697265625)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 7.625); (3.125 : 7.25); (3.125 : 5.31814697265625); (3.5 : 5.31814697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PortalDataContext/AuthenticationProvider/AuthenticationProvider_AuthenticationProvider_User_Join" />
       <nodes>
         <classShapeMoniker Id="f0e5c4f2-c371-4715-9db3-c882476cba43" />
@@ -107,7 +107,7 @@
         <classShapeMoniker Id="b826f460-108b-40aa-9ccc-e527d0ad3da1" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.65625 : 11.875); (5.65625 : 6.23484537760417); (6.5 : 6.23484537760417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.65625 : 11.875); (5.65625 : 6.23484537760417); (6.5 : 6.23484537760417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PortalDataContext/ClientSetting/ClientSetting_Session" />
       <nodes>
         <classShapeMoniker Id="06a7bfd2-bf7b-4c61-ae8f-aa089f20e495" />
@@ -121,28 +121,28 @@
         <classShapeMoniker Id="d183cd1a-2830-4fa2-b8d6-e25fc4f055f3" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 4.90907348632813); (3.5 : 4.90907348632813)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 4.90907348632813); (3.5 : 4.90907348632813)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PortalDataContext/User/User_AuthenticationProvider_User_Join" />
       <nodes>
         <classShapeMoniker Id="e8765bc2-da31-42fb-8454-a8bfa0bd4541" />
         <classShapeMoniker Id="ca9fb242-07c2-473b-bc51-a60cc804edc7" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 4.5); (3.125 : 4.125); (3.125 : 2.53929768880208); (3.5 : 2.53929768880208)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 4.5); (3.125 : 4.125); (3.125 : 2.53929768880208); (3.5 : 2.53929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PortalDataContext/User/User_Group_User_Join" />
       <nodes>
         <classShapeMoniker Id="e8765bc2-da31-42fb-8454-a8bfa0bd4541" />
         <classShapeMoniker Id="b826f460-108b-40aa-9ccc-e527d0ad3da1" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 6.09181966145833); (3.04166666666667 : 6.09181966145833 : JumpStart); (3.20833333333333 : 6.09181966145833 : JumpEnd); (6.5 : 6.09181966145833)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 6.09181966145833); (6.5 : 6.09181966145833)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PortalDataContext/User/User_Session" />
       <nodes>
         <classShapeMoniker Id="e8765bc2-da31-42fb-8454-a8bfa0bd4541" />
         <classShapeMoniker Id="6487c5ef-b4f9-42a4-8195-afe86bf30ed5" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 6.3997708374399); (3.06607443490112 : 6.71584527234103 : JumpStart); (3.18392556509888 : 6.83369640253878 : JumpEnd); (3.3125 : 6.9622708374399); (3.3125 : 8.53929768880208); (3.5 : 8.53929768880208)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 6.3997708374399); (3.06607443490112 : 6.71584527234102 : JumpStart); (3.18392556509888 : 6.83369640253878 : JumpEnd); (3.3125 : 6.9622708374399); (3.3125 : 8.53929768880208); (3.5 : 8.53929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PortalDataContext/User/User_Subscription_User_Join" />
       <nodes>
         <classShapeMoniker Id="e8765bc2-da31-42fb-8454-a8bfa0bd4541" />

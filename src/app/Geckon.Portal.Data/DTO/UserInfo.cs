@@ -101,7 +101,7 @@ namespace Geckon.Portal.Data.Dto
         {
             SessionID            = user.SessionID ?? SessionID;
             ID                   = user.ID;
-            GUID                 = user.UniqueIdentifier;
+            GUID                 = user.GUID;
             Firstname            = user.Firstname ?? Firstname;
             Middlename           = user.Middlename ?? Middlename;
             Lastname             = user.Lastname ?? Lastname;

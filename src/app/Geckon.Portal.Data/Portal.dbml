@@ -18,7 +18,7 @@
     </Type>
   </Table>
   <Table Name="dbo.AuthenticationProvider_User_Join" Member="AuthenticationProvider_User_Joins">
-    <Type Name="AuthenticationProvider_User_Join">
+    <Type Name="AuthenticationProvider_User_Join" Id="ID5">
       <Column Name="AuthenticationProviderID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="UniqueIdentifier" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
@@ -120,7 +120,7 @@
     </Type>
   </Table>
   <Table Name="dbo.[User]" Member="Users">
-    <Type Name="User" Id="ID4">
+    <Type Name="User" Id="ID6">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Firstname" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
@@ -144,7 +144,7 @@
     </Type>
   </Table>
   <Table Name="dbo.UserInfo" Member="UserInfos">
-    <Type Name="UserInfo" Id="ID5">
+    <Type Name="UserInfo" Id="ID4">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="SessionID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
@@ -209,14 +209,6 @@
     <Parameter Name="Path" Parameter="path" Type="System.String" DbType="VarChar(1024)" />
     <ElementType IdRef="ID3" />
   </Function>
-  <Function Name="dbo.User_Insert" Method="User_Insert">
-    <Parameter Name="CreatingUserID" Parameter="creatingUserID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Firstname" Parameter="firstname" Type="System.String" DbType="VarChar(255)" />
-    <Parameter Name="Middlename" Parameter="middlename" Type="System.String" DbType="VarChar(255)" />
-    <Parameter Name="Lastname" Parameter="lastname" Type="System.String" DbType="VarChar(255)" />
-    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(255)" />
-    <ElementType IdRef="ID4" />
-  </Function>
   <Function Name="dbo.User_Delete" Method="User_Delete">
     <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Return Type="System.Int32" />
@@ -236,6 +228,26 @@
     <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="AuthenticationProviderUniqueidentifier" Parameter="authenticationProviderUniqueidentifier" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="AuthenticationProviderGUID" Parameter="authenticationProviderGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType IdRef="ID4" />
+  </Function>
+  <Function Name="dbo.AuthenticationProvider_User_Join_Get" Method="AuthenticationProvider_User_Join_Get">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="AuthenticationProviderID" Parameter="authenticationProviderID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="UniqueIdentifier" Parameter="uniqueIdentifier" Type="System.String" DbType="VarChar(255)" />
     <ElementType IdRef="ID5" />
+  </Function>
+  <Function Name="dbo.User_AssociateWithAuthenticationProvider" Method="User_AssociateWithAuthenticationProvider">
+    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="AuthenticationProviderGUID" Parameter="authenticationProviderGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="UniqueIdentifier" Parameter="uniqueIdentifier" Type="System.String" DbType="VarChar(255)" />
+    <ElementType IdRef="ID5" />
+  </Function>
+  <Function Name="dbo.User_Insert" Method="User_Insert">
+    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Firstname" Parameter="firstname" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="Middlename" Parameter="middlename" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="Lastname" Parameter="lastname" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(255)" />
+    <ElementType IdRef="ID6" />
   </Function>
 </Database>
