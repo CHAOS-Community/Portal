@@ -22,6 +22,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
+                db.PopulateWithDefaultData();
                 User    = db.User_Insert(null, "Firstname", "Middlename", "Lastname", "Email@Email.com").First();
                 Session = db.Session_Insert( Guid.NewGuid(), User.GUID, 1 ).First();
             }

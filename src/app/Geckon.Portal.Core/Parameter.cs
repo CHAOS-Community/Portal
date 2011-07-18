@@ -17,7 +17,7 @@ namespace Geckon.Portal.Core
         {
             ParameterName = parameterName;
             Value         = value;
-            Type          = value.GetType();
+            Type          = value == null ? null : value.GetType();
         }
 
         public Parameter( string parameterName, Type type )

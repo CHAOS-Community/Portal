@@ -54,6 +54,7 @@
     <Compile Include="SessionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />
+    <Compile Include="UserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\app\Geckon.Portal.Core.Standard\Geckon.Portal.Core.Standard.csproj">

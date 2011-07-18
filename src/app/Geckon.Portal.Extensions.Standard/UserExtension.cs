@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Configuration;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Web.Mvc;
 using Geckon.Portal.Core;
 using Geckon.Portal.Core.Exception;
@@ -53,6 +50,56 @@ namespace Geckon.Portal.Extensions.Standard
                          new Parameter( "middlename", middlename ),
                          new Parameter( "lastname", lastname ),
                          new Parameter( "email", email ) );
+
+            return GetContentResult();
+        }
+
+        #endregion
+        #region Update
+
+        public ContentResult Update( string sessionID, string firstname, string middlename, string lastname, string email )
+        {
+            Data.Dto.UserInfo user = GetUserInfo( sessionID );
+
+            using( PortalDataContext db = GetNewPortalDataContext() )
+            {
+                Data.Dto.User updatedUser = Data.Dto.User.Create( db.User_Update( user.GUID, null, firstname, middlename, lastname, email ).First() );
+
+                ResultBuilder.Add( "Geckon.Portal",
+                                   updatedUser );
+            }
+
+            CallModules( new Parameter( "sessionID", sessionID ),
+                         new Parameter( "firstname", firstname ),
+                         new Parameter( "middlename", middlename ),
+                         new Parameter( "lastname", lastname ),
+                         new Parameter( "email", email ) );
+
+            return GetContentResult();
+        }
+
+        #endregion
+        #region Delete
+
+        public ContentResult Delete(string sessionID, string userGUID)
+        {
+            Data.Dto.UserInfo user = GetUserInfo( sessionID );
+
+            if( user.GUID.ToString() != userGUID )
+                throw new InsufficientPermissionsExcention( "The current user doesn't have permissions to delete the user with guid: " + userGUID );
+
+            using( PortalDataContext db = GetNewPortalDataContext() )
+            {
+
+
+                Data.Dto.User updatedUser = Data.Dto.User.Create( db.User_Update( user.GUID, null, firstname, middlename, lastname, email ).First() );
+
+                ResultBuilder.Add( "Geckon.Portal",
+                                   updatedUser );
+            }
+
+            CallModules( new Parameter( "sessionID", sessionID ),
+                         new Parameter( "userGUID", userGUID ) );
 
             return GetContentResult();
         }

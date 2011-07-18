@@ -250,4 +250,21 @@
     <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(255)" />
     <ElementType IdRef="ID6" />
   </Function>
+  <Function Name="dbo.User_Update" Method="User_Update">
+    <Parameter Name="WhereGUID" Parameter="whereGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="NewGUID" Parameter="newGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="NewFirstname" Parameter="newFirstname" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="NewMiddlename" Parameter="newMiddlename" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="NewLastname" Parameter="newLastname" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="Newemail" Parameter="newemail" Type="System.String" DbType="VarChar(255)" />
+    <ElementType IdRef="ID6" />
+  </Function>
+  <Function Name="dbo.PopulateWithDefaultData" Method="PopulateWithDefaultData">
+    <ElementType Name="PopulateWithDefaultDataResult">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
 </Database>

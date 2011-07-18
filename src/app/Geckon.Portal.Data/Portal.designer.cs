@@ -334,6 +334,20 @@ namespace Geckon.Portal.Data
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, firstname, middlename, lastname, email);
 			return ((ISingleResult<User>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.User_Update")]
+		public ISingleResult<User> User_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="WhereGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> whereGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> newGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewFirstname", DbType="VarChar(255)")] string newFirstname, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewMiddlename", DbType="VarChar(255)")] string newMiddlename, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewLastname", DbType="VarChar(255)")] string newLastname, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Newemail", DbType="VarChar(255)")] string newemail)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), whereGUID, newGUID, newFirstname, newMiddlename, newLastname, newemail);
+			return ((ISingleResult<User>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.PopulateWithDefaultData")]
+		public ISingleResult<PopulateWithDefaultDataResult> PopulateWithDefaultData()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<PopulateWithDefaultDataResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AuthenticationProvider")]
@@ -3365,6 +3379,86 @@ namespace Geckon.Portal.Data
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	public partial class PopulateWithDefaultDataResult
+	{
+		
+		private int _ID;
+		
+		private System.Guid _GUID;
+		
+		private string _Name;
+		
+		private System.DateTime _DateCreated;
+		
+		public PopulateWithDefaultDataResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid GUID
+		{
+			get
+			{
+				return this._GUID;
+			}
+			set
+			{
+				if ((this._GUID != value))
+				{
+					this._GUID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this._DateCreated = value;
+				}
 			}
 		}
 	}
