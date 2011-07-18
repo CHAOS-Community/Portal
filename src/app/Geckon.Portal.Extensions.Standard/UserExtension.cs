@@ -5,6 +5,7 @@ using Geckon.Portal.Core;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
+using Geckon.Portal.Data.Dto;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -90,12 +91,10 @@ namespace Geckon.Portal.Extensions.Standard
 
             using( PortalDataContext db = GetNewPortalDataContext() )
             {
-
-
-                Data.Dto.User updatedUser = Data.Dto.User.Create( db.User_Update( user.GUID, null, firstname, middlename, lastname, email ).First() );
+                int result = db.User_Delete( Guid.Parse( userGUID ) );
 
                 ResultBuilder.Add( "Geckon.Portal",
-                                   updatedUser );
+                                   new ScalarResult( result ) );
             }
 
             CallModules( new Parameter( "sessionID", sessionID ),

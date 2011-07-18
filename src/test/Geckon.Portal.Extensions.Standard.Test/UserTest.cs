@@ -49,7 +49,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             XDocument xdoc = XDocument.Parse( extension.Delete( Session.SessionID.ToString(), User.GUID.ToString() ).Content);
 
-            Assert.AreEqual("Firstname", xdoc.Descendants("Firstname").First().Value);
+            Assert.AreEqual("1", xdoc.Descendants("Value").First().Value);
         }
     }
 }
