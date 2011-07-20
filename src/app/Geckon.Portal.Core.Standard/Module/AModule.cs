@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
@@ -77,7 +76,7 @@ namespace Geckon.Portal.Core.Standard.Module
 
         public XmlSerialize InvokeMethod( IMethodQuery methodQuery )
         {
-            IMethodSignature method = RegisteredMethods[ methodQuery.EventType.EventName ];
+            IMethodSignature method = RegisteredMethods[ methodQuery.EventType.Type ];
 
             // TODO: Error Handling so nice Exceptions are thrown in case of signature mismatch 
             return ( XmlSerialize ) method.Method.Invoke( this, GetRelevantParameters( method.Parameters, methodQuery ) );
@@ -90,7 +89,7 @@ namespace Geckon.Portal.Core.Standard.Module
 
         public bool ContainsServiceHook( string extension, string action )
         {
-            return  RegisteredMethods.ContainsKey( extension ) && RegisteredMethods[ extension ].Datatype.Event == action;
+            return  RegisteredMethods.ContainsKey( action ) && RegisteredMethods[ action ].Datatype.EventType == extension;
         }
 
         private object[] GetRelevantParameters( Parameter[] parameters, IMethodQuery methodQuery )

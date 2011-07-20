@@ -37,9 +37,6 @@
     <Reference Include="geckon">
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
     </Reference>
-    <Reference Include="Geckon.Statistics.Data.Gateway">
-      <HintPath>..\..\..\lib\Geckon.Statistics.Data.Gateway.dll</HintPath>
-    </Reference>
     <Reference Include="Membase">
       <HintPath>..\..\..\lib\Membase.dll</HintPath>
     </Reference>

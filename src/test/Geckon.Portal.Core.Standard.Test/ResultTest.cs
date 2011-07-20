@@ -16,7 +16,7 @@ namespace Geckon.Portal.Core.Standard.Test
 
             result.Add( "Geckon.Portal.Extension.TestModule", new ContentResultTestDummy() );
 
-            Assert.AreEqual("<Geckon.Portal.Extension.TestModule><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy></Geckon.Portal.Extension.TestModule>", result.Content);
+            Assert.AreEqual("<Geckon.Portal.Extension.TestModule Count=\"1\"><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy></Geckon.Portal.Extension.TestModule>", result.Content);
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace Geckon.Portal.Core.Standard.Test
             
             result.Add( "Geckon.Portal.Extension.TestModule", range );
 
-            Assert.AreEqual("<Geckon.Portal.Extension.TestModule><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy></Geckon.Portal.Extension.TestModule>", result.Content);
+            Assert.AreEqual("<Geckon.Portal.Extension.TestModule Count=\"5\"><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><Geckon.Portal.Core.Standard.Test.ContentResultTestDummy><SomeValue>4</SomeValue></Geckon.Portal.Core.Standard.Test.ContentResultTestDummy></Geckon.Portal.Extension.TestModule>", result.Content);
         }
     }
 

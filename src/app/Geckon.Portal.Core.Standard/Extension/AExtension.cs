@@ -182,10 +182,15 @@ namespace Geckon.Portal.Core.Standard.Extension
         {
             foreach( IChecked<IModule> associatedModule in AssociatedModules.Values.Where( module => !module.IsChecked ) )
             {
+                Parameter[] methodParameters = new Parameter[ parameters.Length + 1 ];
+
+                methodParameters[0] = new Parameter( "extension", this );
+                parameters.CopyTo( methodParameters, 1 );
+
                 ResultBuilder.Add( associatedModule.Value.GetType().FullName, 
                                    associatedModule.Value.InvokeMethod( new MethodQuery( Controller, 
-                                                                                         Action, 
-                                                                                         parameters ) ) );
+                                                                                         Action,
+                                                                                         methodParameters ) ) );
 
                 associatedModule.IsChecked = true;
             }
@@ -193,12 +198,17 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         protected void CallModule<T>( string controller, string action, params Parameter[] parameters )
         {
+            Parameter[] methodParameters = new Parameter[ parameters.Length + 1 ];
+
+            methodParameters[0] = new Parameter( "extension", this );
+            parameters.CopyTo( methodParameters, 1 );
+            
             IChecked<IModule> associatedModule = AssociatedModules[ typeof( T ) ];
 
             ResultBuilder.Add( associatedModule.Value.GetType().FullName, 
                                associatedModule.Value.InvokeMethod( new MethodQuery( Controller, 
                                                                                      Action, 
-                                                                                     parameters ) ) );
+                                                                                     methodParameters ) ) );
 
             associatedModule.IsChecked = true;
         }
