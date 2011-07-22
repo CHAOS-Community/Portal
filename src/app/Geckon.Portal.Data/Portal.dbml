@@ -36,7 +36,7 @@
     </Type>
   </Table>
   <Table Name="dbo.[Group]" Member="Groups">
-    <Type Name="Group">
+    <Type Name="Group" Id="ID7">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
@@ -45,7 +45,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Group_User_Join" Member="Group_User_Joins">
-    <Type Name="Group_User_Join">
+    <Type Name="Group_User_Join" Id="ID8">
       <Column Name="GroupID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Permission" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -266,5 +266,23 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.Group_Get" Method="Group_Get">
+    <Parameter Name="GroupGUID" Parameter="groupGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType IdRef="ID7" />
+  </Function>
+  <Function Name="dbo.Group_Insert" Method="Group_Insert">
+    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(MAX)" />
+    <ElementType IdRef="ID7" />
+  </Function>
+  <Function Name="dbo.AssociateUserWithGroup" Method="AssociateUserWithGroup">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="GroupID" Parameter="groupID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="GroupGUID" Parameter="groupGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Permission" Parameter="permission" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID8" />
   </Function>
 </Database>

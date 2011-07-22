@@ -348,6 +348,27 @@ namespace Geckon.Portal.Data
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
 			return ((ISingleResult<PopulateWithDefaultDataResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Group_Get")]
+		public ISingleResult<Group> Group_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GroupGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> groupGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), groupGUID, userGUID);
+			return ((ISingleResult<Group>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Group_Insert")]
+		public ISingleResult<Group> Group_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(MAX)")] string name)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, name);
+			return ((ISingleResult<Group>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AssociateUserWithGroup")]
+		public ISingleResult<Group_User_Join> AssociateUserWithGroup([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GroupID", DbType="Int")] System.Nullable<int> groupID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GroupGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> groupGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Permission", DbType="Int")] System.Nullable<int> permission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, groupID, userGUID, groupGUID, permission);
+			return ((ISingleResult<Group_User_Join>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AuthenticationProvider")]

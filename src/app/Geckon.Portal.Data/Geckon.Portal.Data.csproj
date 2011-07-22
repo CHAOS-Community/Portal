@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\Group.cs" />
     <Compile Include="Dto\Module.cs" />
     <Compile Include="Dto\ScalarResult.cs" />
     <Compile Include="Dto\Session.cs" />
