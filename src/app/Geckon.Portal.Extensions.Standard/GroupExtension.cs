@@ -40,7 +40,12 @@ namespace Geckon.Portal.Extensions.Standard
             using( PortalDataContext db = GetNewPortalDataContext() )
             {
                 Data.Dto.Group group = Data.Dto.Group.Create( db.Group_Insert( null, name ).First() );
+
+                ResultBuilder.Add( "Geckon.Portal",
+                                   group );
             }
+
+
         }
 
         #endregion
