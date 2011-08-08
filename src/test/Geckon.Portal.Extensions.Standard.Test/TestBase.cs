@@ -11,8 +11,11 @@ namespace Geckon.Portal.Extensions.Standard.Test
     {
         #region Properties
 
-        public Session Session { get; set; }
-        public User    User { get; set; }
+        public Session  Session { get; set; }
+        public Session  AdminSession { get; set; }
+        public UserInfo User { get; set; }
+        public UserInfo AdminUser { get; set; }
+        public Group    AdminGroup { get; set; }
 
         #endregion
         #region Constructions
@@ -23,19 +26,17 @@ namespace Geckon.Portal.Extensions.Standard.Test
             using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
                 db.PopulateWithDefaultData();
-                User    = db.User_Insert(null, "Firstname", "Middlename", "Lastname", "Email@Email.com").First();
-                Session = db.Session_Insert( Guid.NewGuid(), User.GUID, 1 ).First();
+                Session      = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ), 1 ).First();
+                AdminSession = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ), 1 ).First();
+                User         = db.UserInfo_Get( Guid.Parse( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ), null, null, null, null ).First();
+                AdminUser    = db.UserInfo_Get( Guid.Parse( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ), null, null, null, null ).First();
+                AdminGroup   = db.Group_Get( Guid.Parse( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ), AdminUser.GUID ).First();
             }
         }
 
         [TearDown]
         public void TearDown()
         {
-            using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
-            {
-                db.User_Delete( User.GUID );
-                db.Session_Delete( Session.SessionID, null, null );
-            }
         }
 
         #endregion

@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmailPasswordTest.cs" />
+    <Compile Include="GroupTest.cs" />
     <Compile Include="PortalContextMock.cs" />
     <Compile Include="SessionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,6 +58,10 @@
     <Compile Include="UserTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\app\Geckon.Portal.Core.Exception\Geckon.Portal.Core.Exception.csproj">
+      <Project>{36F18B91-50D1-45C0-8F3E-ED53A8BD13BA}</Project>
+      <Name>Geckon.Portal.Core.Exception</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\app\Geckon.Portal.Core.Standard\Geckon.Portal.Core.Standard.csproj">
       <Project>{1202731E-A723-4C46-9C49-4CFAA83F3F0C}</Project>
       <Name>Geckon.Portal.Core.Standard</Name>

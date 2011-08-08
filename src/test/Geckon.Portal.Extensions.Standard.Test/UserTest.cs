@@ -38,7 +38,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             XDocument xdoc = XDocument.Parse(extension.Get(Session.SessionID.ToString()).Content);
 
-            Assert.AreEqual("Firstname", xdoc.Descendants("Firstname").First().Value);
+            Assert.AreEqual("Anonymous", xdoc.Descendants("Firstname").First().Value);
         }
 
         [Test]
