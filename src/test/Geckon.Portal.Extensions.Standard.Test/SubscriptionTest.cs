@@ -48,5 +48,25 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Delete( User.SessionID.ToString(), Subscription.GUID.ToString() );
         }
+
+        [Test]
+        public void Should_Update_Subscription()
+        {
+            SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );
+            extension.Init( new Result() );
+
+            XDocument xdoc = XDocument.Parse( extension.Update( AdminUser.SessionID.ToString(), Subscription.GUID.ToString(), "new subscription name" ).Content );
+
+            Assert.AreEqual( "new subscription name", xdoc.Descendants( "Name" ).First().Value );
+        }
+
+        [Test, ExpectedException( typeof(InsufficientPermissionsExcention) )]
+        public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Update_Subscription()
+        {
+            SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );
+            extension.Init( new Result() );
+
+            extension.Update( User.SessionID.ToString(), Subscription.GUID.ToString(), "new subscription name" );
+        }
     }
 }
