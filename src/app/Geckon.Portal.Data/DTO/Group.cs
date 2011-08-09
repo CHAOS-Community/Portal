@@ -8,7 +8,6 @@ namespace Geckon.Portal.Data.Dto
     {
         #region Properties
 
-        [Element("ID")]
         public int ID { get; set; }
 
         [Element("GUID")]
