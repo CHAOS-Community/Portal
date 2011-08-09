@@ -1,0 +1,2 @@
+-10 : Not all mandatory parameters was given to the Stored Procedure
+-100 : Insufficient Permissions for action

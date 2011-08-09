@@ -54,6 +54,7 @@
     <Compile Include="PortalContextMock.cs" />
     <Compile Include="SessionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubscriptionTest.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="UserTest.cs" />
   </ItemGroup>

@@ -391,6 +391,34 @@ namespace Geckon.Portal.Data
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, gUID, name, requestUserID);
 			return ((ISingleResult<Subscription>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Delete")]
+		public int Subscription_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionID", DbType="Int")] System.Nullable<int> subscriptionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> subscriptionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), subscriptionID, subscriptionGUID, requestUserID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Insert")]
+		public ISingleResult<Subscription> Subscription_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, name);
+			return ((ISingleResult<Subscription>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Delete")]
+		public int Subscription_Delete1([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionID", DbType="Int")] System.Nullable<int> subscriptionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> subscriptionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), subscriptionID, subscriptionGUID, requestUserID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Update")]
+		public int Subscription_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionID", DbType="Int")] System.Nullable<int> subscriptionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> subscriptionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewName", DbType="VarChar(255)")] string newName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), subscriptionID, subscriptionGUID, newName, requestUserID);
+			return ((int)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AuthenticationProvider")]
