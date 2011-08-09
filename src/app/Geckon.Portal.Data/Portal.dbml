@@ -308,4 +308,15 @@
     <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID9" />
   </Function>
+  <Function Name="dbo.Subscription_Delete" Method="Subscription_Delete">
+    <Parameter Name="SubscriptionID" Parameter="subscriptionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SubscriptionGUID" Parameter="subscriptionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Subscription_Insert" Method="Subscription_Insert">
+    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <ElementType IdRef="ID9" />
+  </Function>
 </Database>
