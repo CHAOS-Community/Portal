@@ -50,6 +50,7 @@
     <Compile Include="GroupExtension.cs" />
     <Compile Include="SessionExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubscriptionExtension.cs" />
     <Compile Include="UserExtension.cs" />
   </ItemGroup>
   <ItemGroup>

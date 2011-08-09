@@ -89,7 +89,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Subscription" Member="Subscriptions">
-    <Type Name="Subscription">
+    <Type Name="Subscription" Id="ID9">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
@@ -300,5 +300,12 @@
     <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="ErrorCode" Parameter="errorCode" Type="System.Int32" DbType="Int" Direction="InOut" />
     <ElementType IdRef="ID7" />
+  </Function>
+  <Function Name="dbo.Subscription_Get" Method="Subscription_Get">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID9" />
   </Function>
 </Database>

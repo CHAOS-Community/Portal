@@ -384,6 +384,13 @@ namespace Geckon.Portal.Data
 			errorCode = ((System.Nullable<int>)(result.GetParameterValue(5)));
 			return ((ISingleResult<Group>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Get")]
+		public ISingleResult<Subscription> Subscription_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, gUID, name, requestUserID);
+			return ((ISingleResult<Subscription>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AuthenticationProvider")]
