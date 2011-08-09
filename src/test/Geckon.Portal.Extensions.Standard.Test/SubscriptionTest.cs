@@ -57,7 +57,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             XDocument xdoc = XDocument.Parse( extension.Update( AdminUser.SessionID.ToString(), Subscription.GUID.ToString(), "new subscription name" ).Content );
 
-            Assert.AreEqual( "new subscription name", xdoc.Descendants( "Name" ).First().Value );
+            Assert.AreEqual( "1", xdoc.Descendants( "Value" ).First().Value );
         }
 
         [Test, ExpectedException( typeof(InsufficientPermissionsExcention) )]

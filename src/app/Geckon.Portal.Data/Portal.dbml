@@ -319,12 +319,17 @@
     <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
     <ElementType IdRef="ID9" />
   </Function>
+  <Function Name="dbo.Subscription_Delete" Method="Subscription_Delete1">
+    <Parameter Name="SubscriptionID" Parameter="subscriptionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SubscriptionGUID" Parameter="subscriptionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
   <Function Name="dbo.Subscription_Update" Method="Subscription_Update">
     <Parameter Name="SubscriptionID" Parameter="subscriptionID" Type="System.Int32" DbType="Int" />
     <Parameter Name="SubscriptionGUID" Parameter="subscriptionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="NewName" Parameter="newName" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="ErrorCode" Parameter="errorCode" Type="System.Int32" DbType="Int" Direction="InOut" />
-    <ElementType IdRef="ID9" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>

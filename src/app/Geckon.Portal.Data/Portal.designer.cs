@@ -406,12 +406,18 @@ namespace Geckon.Portal.Data
 			return ((ISingleResult<Subscription>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Update")]
-		public ISingleResult<Subscription> Subscription_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionID", DbType="Int")] System.Nullable<int> subscriptionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> subscriptionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewName", DbType="VarChar(255)")] string newName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ErrorCode", DbType="Int")] ref System.Nullable<int> errorCode)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Delete")]
+		public int Subscription_Delete1([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionID", DbType="Int")] System.Nullable<int> subscriptionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> subscriptionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), subscriptionID, subscriptionGUID, newName, requestUserID, errorCode);
-			errorCode = ((System.Nullable<int>)(result.GetParameterValue(4)));
-			return ((ISingleResult<Subscription>)(result.ReturnValue));
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), subscriptionID, subscriptionGUID, requestUserID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Update")]
+		public int Subscription_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionID", DbType="Int")] System.Nullable<int> subscriptionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> subscriptionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewName", DbType="VarChar(255)")] string newName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), subscriptionID, subscriptionGUID, newName, requestUserID);
+			return ((int)(result.ReturnValue));
 		}
 	}
 	

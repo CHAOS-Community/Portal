@@ -83,22 +83,19 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Update( string sessionID, string guid, string newName )
         {
-            UserInfo     user      = GetUserInfo( sessionID );
-            Subscription result    = null;
-            int?         errorCode = 0;
+            UserInfo user      = GetUserInfo( sessionID );
+            int      result    = 0;
 
             using( PortalDataContext db = GetNewPortalDataContext() )
             {
-                result = db.Subscription_Update( null, Guid.Parse( guid ), newName, user.ID, ref errorCode ).FirstOrDefault();
+                result = db.Subscription_Update( null, Guid.Parse( guid ), newName, user.ID );
             }
 
-            if( errorCode == -100 )
+            if( result == -100 )
                 throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
 
-            Data.Dto.Subscription subscription = Data.Dto.Subscription.Create( result );
-
             ResultBuilder.Add( "Geckon.Portal",
-                                   subscription );
+                               new ScalarResult( result ) );
 
             CallModules( new Parameter( "sessionID", sessionID ),
                          new Parameter( "guid", guid           ) );
