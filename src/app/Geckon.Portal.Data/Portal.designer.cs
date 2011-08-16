@@ -413,10 +413,10 @@ namespace Geckon.Portal.Data
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Insert")]
-		public ISingleResult<Subscription> Subscription_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
+		public int Subscription_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, name, requestUserID);
-			return ((ISingleResult<Subscription>)(result.ReturnValue));
+			return ((int)(result.ReturnValue));
 		}
 	}
 	

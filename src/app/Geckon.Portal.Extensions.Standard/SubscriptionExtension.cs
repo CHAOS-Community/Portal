@@ -54,12 +54,12 @@ namespace Geckon.Portal.Extensions.Standard
 
             using( PortalDataContext db = GetNewPortalDataContext() )
             {
-                var result = db.Subscription_Insert( Guid.NewGuid(), name, user.ID );
+                int result = db.Subscription_Insert( Guid.NewGuid(), name, user.ID );
 
-                if( (int) result.ReturnValue == -100 )
+                if( result == -100 )
                     throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
 
-                Data.Dto.Subscription subscription = Data.Dto.Subscription.Create( result.First() );
+                Data.Dto.Subscription subscription = Data.Dto.Subscription.Create( db.Subscription_Get( result, null, null, user.ID ).First() );
 
                 ResultBuilder.Add( "Geckon.Portal",
                                    subscription );

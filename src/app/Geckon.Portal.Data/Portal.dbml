@@ -336,6 +336,6 @@
     <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID8" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>
