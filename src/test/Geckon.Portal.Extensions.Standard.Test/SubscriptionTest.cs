@@ -30,6 +30,26 @@ namespace Geckon.Portal.Extensions.Standard.Test
         }
 
         [Test]
+        public void Should_Create_Subscription()
+        {
+            SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );
+            extension.Init( new Result() );
+
+            XDocument xdoc = XDocument.Parse( extension.Create( AdminUser.SessionID.ToString(), "some name" ).Content );
+
+            Assert.AreEqual( "some name", xdoc.Descendants( "Name" ).First().Value );
+        }
+
+        [Test, ExpectedException( typeof(InsufficientPermissionsExcention) )]
+        public void Should_Throw_InssurficientPermissionsException_On_Create_Subscription()
+        {
+            SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );
+            extension.Init( new Result() );
+
+            extension.Create( User.SessionID.ToString(), "some name" );
+        }
+
+        [Test]
         public void Should_Delete_Subscription()
         {
             SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );

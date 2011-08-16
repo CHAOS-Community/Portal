@@ -35,23 +35,14 @@
       <Association Name="XmlType_ClientSetting" Member="XmlType" ThisKey="XmlTypeID" OtherKey="ID" Type="XmlType" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.[Group]" Member="Groups">
-    <Type Name="Group" Id="ID7">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="DateCreadted" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="Group_Group_User_Join" Member="Group_User_Joins" ThisKey="ID" OtherKey="GroupID" Type="Group_User_Join" />
-    </Type>
-  </Table>
   <Table Name="dbo.Group_User_Join" Member="Group_User_Joins">
-    <Type Name="Group_User_Join" Id="ID8">
+    <Type Name="Group_User_Join" Id="ID7">
       <Column Name="GroupID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Permission" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="Group_Group_User_Join" Member="Group" ThisKey="GroupID" OtherKey="ID" Type="Group" IsForeignKey="true" />
       <Association Name="User_Group_User_Join" Member="User" ThisKey="UserID" OtherKey="ID" Type="User" IsForeignKey="true" />
+      <Association Name="Group_Group_User_Join" Member="Group" ThisKey="GroupID" OtherKey="ID" Type="Group" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Module" Member="Modules">
@@ -89,7 +80,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Subscription" Member="Subscriptions">
-    <Type Name="Subscription" Id="ID9">
+    <Type Name="Subscription" Id="ID8">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
@@ -164,6 +155,16 @@
       <Column Name="Fullname" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="Path" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Group]" Member="Groups">
+    <Type Name="Group" Id="ID9">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="SystemPermission" Type="System.Data.Linq.Binary" DbType="VarBinary(32) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreadted" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Group_Group_User_Join" Member="Group_User_Joins" ThisKey="ID" OtherKey="GroupID" Type="Group_User_Join" />
     </Type>
   </Table>
   <Function Name="dbo.Session_Update" Method="Session_Update">
@@ -267,38 +268,12 @@
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.Group_Get" Method="Group_Get">
-    <Parameter Name="GroupGUID" Parameter="groupGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <ElementType IdRef="ID7" />
-  </Function>
-  <Function Name="dbo.Group_Insert" Method="Group_Insert">
-    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(MAX)" />
-    <ElementType IdRef="ID7" />
-  </Function>
   <Function Name="dbo.AssociateUserWithGroup" Method="AssociateUserWithGroup">
     <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
     <Parameter Name="GroupID" Parameter="groupID" Type="System.Int32" DbType="Int" />
     <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="GroupGUID" Parameter="groupGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="Permission" Parameter="permission" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID8" />
-  </Function>
-  <Function Name="dbo.Group_Delete" Method="Group_Delete">
-    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
-    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.Group_Update" Method="Group_Update">
-    <Parameter Name="NewName" Parameter="newName" Type="System.String" DbType="VarChar(MAX)" />
-    <Parameter Name="GroupID" Parameter="groupID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="GroupGUID" Parameter="groupGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="ErrorCode" Parameter="errorCode" Type="System.Int32" DbType="Int" Direction="InOut" />
     <ElementType IdRef="ID7" />
   </Function>
   <Function Name="dbo.Subscription_Get" Method="Subscription_Get">
@@ -306,18 +281,13 @@
     <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID9" />
+    <ElementType IdRef="ID8" />
   </Function>
   <Function Name="dbo.Subscription_Delete" Method="Subscription_Delete">
     <Parameter Name="SubscriptionID" Parameter="subscriptionID" Type="System.Int32" DbType="Int" />
     <Parameter Name="SubscriptionGUID" Parameter="subscriptionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.Subscription_Insert" Method="Subscription_Insert">
-    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
-    <ElementType IdRef="ID9" />
   </Function>
   <Function Name="dbo.Subscription_Delete" Method="Subscription_Delete1">
     <Parameter Name="SubscriptionID" Parameter="subscriptionID" Type="System.Int32" DbType="Int" />
@@ -331,5 +301,41 @@
     <Parameter Name="NewName" Parameter="newName" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Group_Get" Method="Group_Get">
+    <Parameter Name="GroupID" Parameter="groupID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="GroupGUID" Parameter="groupGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID9" />
+  </Function>
+  <Function Name="dbo.Group_Delete" Method="Group_Delete">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Group_Update" Method="Group_Update">
+    <Parameter Name="NewName" Parameter="newName" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="NewSystemPermission" Parameter="newSystemPermission" Type="System.Int32" DbType="Int" />
+    <Parameter Name="GroupID" Parameter="groupID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="GroupGUID" Parameter="groupGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Group_Insert" Method="Group_Insert">
+    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Subscription_Insert" Method="Subscription_Insert">
+    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID8" />
   </Function>
 </Database>

@@ -42,9 +42,6 @@ namespace Geckon.Portal.Data
     partial void InsertClientSetting(ClientSetting instance);
     partial void UpdateClientSetting(ClientSetting instance);
     partial void DeleteClientSetting(ClientSetting instance);
-    partial void InsertGroup(Group instance);
-    partial void UpdateGroup(Group instance);
-    partial void DeleteGroup(Group instance);
     partial void InsertGroup_User_Join(Group_User_Join instance);
     partial void UpdateGroup_User_Join(Group_User_Join instance);
     partial void DeleteGroup_User_Join(Group_User_Join instance);
@@ -75,6 +72,9 @@ namespace Geckon.Portal.Data
     partial void InsertExtension(Extension instance);
     partial void UpdateExtension(Extension instance);
     partial void DeleteExtension(Extension instance);
+    partial void InsertGroup(Group instance);
+    partial void UpdateGroup(Group instance);
+    partial void DeleteGroup(Group instance);
     #endregion
 		
 		public PortalDataContext() : 
@@ -136,14 +136,6 @@ namespace Geckon.Portal.Data
 			get
 			{
 				return this.GetTable<ClientSetting>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Group> Groups
-		{
-			get
-			{
-				return this.GetTable<Group>();
 			}
 		}
 		
@@ -240,6 +232,14 @@ namespace Geckon.Portal.Data
 			get
 			{
 				return this.GetTable<Extension>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Group> Groups
+		{
+			get
+			{
+				return this.GetTable<Group>();
 			}
 		}
 		
@@ -349,40 +349,11 @@ namespace Geckon.Portal.Data
 			return ((ISingleResult<PopulateWithDefaultDataResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Group_Get")]
-		public ISingleResult<Group> Group_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GroupGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> groupGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), groupGUID, userGUID);
-			return ((ISingleResult<Group>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Group_Insert")]
-		public ISingleResult<Group> Group_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(MAX)")] string name)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, name);
-			return ((ISingleResult<Group>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AssociateUserWithGroup")]
 		public ISingleResult<Group_User_Join> AssociateUserWithGroup([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GroupID", DbType="Int")] System.Nullable<int> groupID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GroupGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> groupGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Permission", DbType="Int")] System.Nullable<int> permission)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, groupID, userGUID, groupGUID, permission);
 			return ((ISingleResult<Group_User_Join>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Group_Delete")]
-		public int Group_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, gUID, userID, userGUID);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Group_Update")]
-		public ISingleResult<Group> Group_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewName", DbType="VarChar(MAX)")] string newName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GroupID", DbType="Int")] System.Nullable<int> groupID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GroupGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> groupGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ErrorCode", DbType="Int")] ref System.Nullable<int> errorCode)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), newName, groupID, groupGUID, userID, userGUID, errorCode);
-			errorCode = ((System.Nullable<int>)(result.GetParameterValue(5)));
-			return ((ISingleResult<Group>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Get")]
@@ -399,13 +370,6 @@ namespace Geckon.Portal.Data
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Insert")]
-		public ISingleResult<Subscription> Subscription_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, name);
-			return ((ISingleResult<Subscription>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Delete")]
 		public int Subscription_Delete1([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionID", DbType="Int")] System.Nullable<int> subscriptionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> subscriptionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
 		{
@@ -418,6 +382,41 @@ namespace Geckon.Portal.Data
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), subscriptionID, subscriptionGUID, newName, requestUserID);
 			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Group_Get")]
+		public ISingleResult<Group> Group_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GroupID", DbType="Int")] System.Nullable<int> groupID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GroupGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> groupGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(MAX)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), groupID, groupGUID, name, requestUserID);
+			return ((ISingleResult<Group>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Group_Delete")]
+		public int Group_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, gUID, userID, userGUID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Group_Update")]
+		public int Group_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewName", DbType="VarChar(MAX)")] string newName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewSystemPermission", DbType="Int")] System.Nullable<int> newSystemPermission, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GroupID", DbType="Int")] System.Nullable<int> groupID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GroupGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> groupGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), newName, newSystemPermission, groupID, groupGUID, userID, userGUID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Group_Insert")]
+		public int Group_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(MAX)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, name, systemPermission, requestUserID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Insert")]
+		public ISingleResult<Subscription> Subscription_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, name, requestUserID);
+			return ((ISingleResult<Subscription>)(result.ReturnValue));
 		}
 	}
 	
@@ -1092,168 +1091,6 @@ namespace Geckon.Portal.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Group]")]
-	public partial class Group : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private System.Guid _GUID;
-		
-		private string _Name;
-		
-		private System.DateTime _DateCreadted;
-		
-		private EntitySet<Group_User_Join> _Group_User_Joins;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnGUIDChanging(System.Guid value);
-    partial void OnGUIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnDateCreadtedChanging(System.DateTime value);
-    partial void OnDateCreadtedChanged();
-    #endregion
-		
-		public Group()
-		{
-			this._Group_User_Joins = new EntitySet<Group_User_Join>(new Action<Group_User_Join>(this.attach_Group_User_Joins), new Action<Group_User_Join>(this.detach_Group_User_Joins));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid GUID
-		{
-			get
-			{
-				return this._GUID;
-			}
-			set
-			{
-				if ((this._GUID != value))
-				{
-					this.OnGUIDChanging(value);
-					this.SendPropertyChanging();
-					this._GUID = value;
-					this.SendPropertyChanged("GUID");
-					this.OnGUIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreadted", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreadted
-		{
-			get
-			{
-				return this._DateCreadted;
-			}
-			set
-			{
-				if ((this._DateCreadted != value))
-				{
-					this.OnDateCreadtedChanging(value);
-					this.SendPropertyChanging();
-					this._DateCreadted = value;
-					this.SendPropertyChanged("DateCreadted");
-					this.OnDateCreadtedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Group_Group_User_Join", Storage="_Group_User_Joins", ThisKey="ID", OtherKey="GroupID")]
-		public EntitySet<Group_User_Join> Group_User_Joins
-		{
-			get
-			{
-				return this._Group_User_Joins;
-			}
-			set
-			{
-				this._Group_User_Joins.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Group_User_Joins(Group_User_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.Group = this;
-		}
-		
-		private void detach_Group_User_Joins(Group_User_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.Group = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Group_User_Join")]
 	public partial class Group_User_Join : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1268,9 +1105,9 @@ namespace Geckon.Portal.Data
 		
 		private System.DateTime _DateCreated;
 		
-		private EntityRef<Group> _Group;
-		
 		private EntityRef<User> _User;
+		
+		private EntityRef<Group> _Group;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1288,8 +1125,8 @@ namespace Geckon.Portal.Data
 		
 		public Group_User_Join()
 		{
-			this._Group = default(EntityRef<Group>);
 			this._User = default(EntityRef<User>);
+			this._Group = default(EntityRef<Group>);
 			OnCreated();
 		}
 		
@@ -1381,40 +1218,6 @@ namespace Geckon.Portal.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Group_Group_User_Join", Storage="_Group", ThisKey="GroupID", OtherKey="ID", IsForeignKey=true)]
-		public Group Group
-		{
-			get
-			{
-				return this._Group.Entity;
-			}
-			set
-			{
-				Group previousValue = this._Group.Entity;
-				if (((previousValue != value) 
-							|| (this._Group.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Group.Entity = null;
-						previousValue.Group_User_Joins.Remove(this);
-					}
-					this._Group.Entity = value;
-					if ((value != null))
-					{
-						value.Group_User_Joins.Add(this);
-						this._GroupID = value.ID;
-					}
-					else
-					{
-						this._GroupID = default(int);
-					}
-					this.SendPropertyChanged("Group");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Group_User_Join", Storage="_User", ThisKey="UserID", OtherKey="ID", IsForeignKey=true)]
 		public User User
 		{
@@ -1445,6 +1248,40 @@ namespace Geckon.Portal.Data
 						this._UserID = default(int);
 					}
 					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Group_Group_User_Join", Storage="_Group", ThisKey="GroupID", OtherKey="ID", IsForeignKey=true)]
+		public Group Group
+		{
+			get
+			{
+				return this._Group.Entity;
+			}
+			set
+			{
+				Group previousValue = this._Group.Entity;
+				if (((previousValue != value) 
+							|| (this._Group.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Group.Entity = null;
+						previousValue.Group_User_Joins.Remove(this);
+					}
+					this._Group.Entity = value;
+					if ((value != null))
+					{
+						value.Group_User_Joins.Add(this);
+						this._GroupID = value.ID;
+					}
+					else
+					{
+						this._GroupID = default(int);
+					}
+					this.SendPropertyChanged("Group");
 				}
 			}
 		}
@@ -3451,6 +3288,192 @@ namespace Geckon.Portal.Data
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Group]")]
+	public partial class Group : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Guid _GUID;
+		
+		private System.Data.Linq.Binary _SystemPermission;
+		
+		private string _Name;
+		
+		private System.DateTime _DateCreadted;
+		
+		private EntitySet<Group_User_Join> _Group_User_Joins;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnGUIDChanging(System.Guid value);
+    partial void OnGUIDChanged();
+    partial void OnSystemPermissionChanging(System.Data.Linq.Binary value);
+    partial void OnSystemPermissionChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnDateCreadtedChanging(System.DateTime value);
+    partial void OnDateCreadtedChanged();
+    #endregion
+		
+		public Group()
+		{
+			this._Group_User_Joins = new EntitySet<Group_User_Join>(new Action<Group_User_Join>(this.attach_Group_User_Joins), new Action<Group_User_Join>(this.detach_Group_User_Joins));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid GUID
+		{
+			get
+			{
+				return this._GUID;
+			}
+			set
+			{
+				if ((this._GUID != value))
+				{
+					this.OnGUIDChanging(value);
+					this.SendPropertyChanging();
+					this._GUID = value;
+					this.SendPropertyChanged("GUID");
+					this.OnGUIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SystemPermission", DbType="VarBinary(32) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary SystemPermission
+		{
+			get
+			{
+				return this._SystemPermission;
+			}
+			set
+			{
+				if ((this._SystemPermission != value))
+				{
+					this.OnSystemPermissionChanging(value);
+					this.SendPropertyChanging();
+					this._SystemPermission = value;
+					this.SendPropertyChanged("SystemPermission");
+					this.OnSystemPermissionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreadted", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreadted
+		{
+			get
+			{
+				return this._DateCreadted;
+			}
+			set
+			{
+				if ((this._DateCreadted != value))
+				{
+					this.OnDateCreadtedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreadted = value;
+					this.SendPropertyChanged("DateCreadted");
+					this.OnDateCreadtedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Group_Group_User_Join", Storage="_Group_User_Joins", ThisKey="ID", OtherKey="GroupID")]
+		public EntitySet<Group_User_Join> Group_User_Joins
+		{
+			get
+			{
+				return this._Group_User_Joins;
+			}
+			set
+			{
+				this._Group_User_Joins.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Group_User_Joins(Group_User_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.Group = this;
+		}
+		
+		private void detach_Group_User_Joins(Group_User_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.Group = null;
 		}
 	}
 	

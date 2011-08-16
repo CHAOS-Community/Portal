@@ -52,6 +52,7 @@ namespace Geckon.Portal
         public void RegisterRoutes( RouteCollection routes )
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("favicon.ico");
             routes.IgnoreRoute("Scripts/");
 
             routes.MapRoute( "Default", // Route name

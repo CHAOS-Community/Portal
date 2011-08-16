@@ -1,0 +1,58 @@
+Maximum of 32 different permissions are possible on each relation
+
+Permission Relations:
+- User -> Subscription
+  + Owner
+  + Get
+  + Delete
+  + Update
+- User -> Folder
+  + Get
+  + Update (Rename)
+  + Delete
+  + Create subfolder
+  + Move object to folder
+  + RW-Link object to folder
+  + R-Link object to folder
+  + Move Object From Folder
+  + RW-Link Object From Folder
+  + R-Link Object From Folder
+  + Change folder type
+- User -> MetadataSchema
+  + Get
+  + Update
+  + Delete
+- Group -> System
+  + Manage Authentication Provider
+  + Manage Client Setting
+  + Manage Module
+  + Manage Extension
+  + Manage Types
+  + Manage Subscription
+- Group -> Subscription
+  + Get
+  + Delete
+  + Update
+- Group -> Folder
+  + Get
+  + Update (Rename)
+  + Delete
+  + Create subfolder
+  + Move object to folder
+  + RW-Link object to folder
+  + R-Link object to folder
+  + Move Object From Folder
+  + RW-Link Object From Folder
+  + R-Link Object From Folder
+  + Change folder type
+- Group -> MetadataSchema
+  + Get
+  + Update
+  + Delete
+  + Create
+- User -> Group
+  + Get
+  + Update
+  + Delete
+  + List users in group
+  + Add users to group

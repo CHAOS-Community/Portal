@@ -50,7 +50,25 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Create( string sessionID, string name )
         {
-            throw new NotImplementedException();
+            UserInfo user   = GetUserInfo( sessionID );
+
+            using( PortalDataContext db = GetNewPortalDataContext() )
+            {
+                var result = db.Subscription_Insert( Guid.NewGuid(), name, user.ID );
+
+                if( (int) result.ReturnValue == -100 )
+                    throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
+
+                Data.Dto.Subscription subscription = Data.Dto.Subscription.Create( result.First() );
+
+                ResultBuilder.Add( "Geckon.Portal",
+                                   subscription );
+            }
+
+            CallModules( new Parameter( "sessionID", sessionID ),
+                         new Parameter( "name", name           ) );
+
+            return GetContentResult();
         }
 
         #endregion

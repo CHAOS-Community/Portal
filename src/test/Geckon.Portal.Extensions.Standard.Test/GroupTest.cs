@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Linq;
 using System.Xml.Linq;
 using Geckon.Portal.Core.Exception;
@@ -17,7 +18,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             GroupExtension extension = new GroupExtension( new PortalContextMock() );
             extension.Init( new Result() );
 
-            XDocument xdoc = XDocument.Parse( extension.Get( AdminUser.SessionID.ToString() ).Content );
+            XDocument xdoc = XDocument.Parse( extension.Get( AdminUser.SessionID.ToString(), null ).Content );
             
             Assert.AreEqual( AdminGroup.GUID.ToString(), xdoc.Descendants("GUID").First().Value );
         }
@@ -28,9 +29,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
             GroupExtension extension = new GroupExtension( new PortalContextMock() );
             extension.Init( new Result() );
 
-            XDocument xdoc = XDocument.Parse( extension.Create( AdminUser.SessionID.ToString(), "my group" ).Content );
+            XDocument xdoc = XDocument.Parse( extension.Create( AdminUser.SessionID.ToString(), "my group", 0 ).Content );
             
-            Assert.AreEqual( "my group", xdoc.Descendants("Name").First().Value );
+            Assert.Greater( int.Parse( xdoc.Descendants("Value").First().Value ), 0 );
         }
 
         [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
@@ -39,7 +40,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             GroupExtension extension = new GroupExtension( new PortalContextMock( ) );
             extension.Init( new Result() );
 
-            extension.Create( User.SessionID.ToString(), "InsufficientPermissionsExcention" );
+            extension.Create( User.SessionID.ToString(), "InsufficientPermissionsExcention", 0 );
         }
 
         [Test]
@@ -70,9 +71,10 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
-                Data.Group group = db.Group_Insert( null, "no permission" ).First();
+                Guid guid = Guid.NewGuid();
+                int result = db.Group_Insert( guid, "no permission", 0, AdminUser.ID );
 
-                extension.Delete( User.SessionID.ToString(), group.GUID.ToString() );
+                extension.Delete( User.SessionID.ToString(), guid.ToString() );
             }            
         }
 
@@ -82,9 +84,14 @@ namespace Geckon.Portal.Extensions.Standard.Test
             GroupExtension extension = new GroupExtension(new PortalContextMock());
             extension.Init(new Result());
 
-            XDocument xdoc = XDocument.Parse( extension.Update( AdminUser.SessionID.ToString(), AdminGroup.GUID.ToString(), "success" ).Content );
-            
-            Assert.AreEqual( "success", xdoc.Descendants( "Name" ).First().Value );
+            XDocument xDoc = XDocument.Parse( extension.Update( AdminUser.SessionID.ToString(), AdminGroup.GUID.ToString(), "success", 0 ).Content ) ;
+
+            using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
+            {
+                Group group = db.Group_Get(int.Parse(xDoc.Descendants("Value").First().Value), null, null, AdminUser.ID).First();
+
+                Assert.AreEqual("success", group.Name );
+            }
         }
 
         [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
@@ -93,7 +100,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             GroupExtension extension = new GroupExtension(new PortalContextMock());
             extension.Init(new Result());
 
-            extension.Update(User.SessionID.ToString(), AdminGroup.GUID.ToString(), "hj");
+            extension.Update(User.SessionID.ToString(), AdminGroup.GUID.ToString(), "hj", BitConverter.ToInt32( AdminGroup.SystemPermission.ToArray(), 0 ) );
         }
     }
 }

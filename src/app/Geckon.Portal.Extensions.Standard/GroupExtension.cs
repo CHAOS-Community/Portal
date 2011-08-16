@@ -19,18 +19,20 @@ namespace Geckon.Portal.Extensions.Standard
         #endregion
         #region Get
 
-        public ContentResult Get( string sessionID )
+        public ContentResult Get( string sessionID, string guid )
         {
             using( PortalDataContext db = GetNewPortalDataContext() )
             {
-                Data.Dto.UserInfo user  = GetUserInfo( sessionID );
-                Data.Dto.Group    group = Data.Dto.Group.Create( db.Group_Get( null, user.GUID ).First() );
+                Guid?             groupGuid = string.IsNullOrEmpty( guid ) ? (Guid?) null : Guid.Parse( guid );
+                Data.Dto.UserInfo user      = GetUserInfo( sessionID );
+                Data.Dto.Group    group     = Data.Dto.Group.Create( db.Group_Get( null, groupGuid, null, user.ID ).First() );
 
                 ResultBuilder.Add( "Geckon.Portal",
                                    group );
             }
 
-            CallModules( new Parameter( "sessionID", sessionID ) );
+            CallModules( new Parameter( "sessionID", sessionID ),
+                         new Parameter( "guid", guid ) );
 
             return GetContentResult();
         }
@@ -38,7 +40,7 @@ namespace Geckon.Portal.Extensions.Standard
         #endregion
         #region Create
 
-        public ContentResult Create( string sessionID, string name )
+        public ContentResult Create( string sessionID, string name, int systemPermission )
         {
             Data.Dto.UserInfo user = GetUserInfo( sessionID );
 
@@ -47,10 +49,10 @@ namespace Geckon.Portal.Extensions.Standard
 
             using( PortalDataContext db = GetNewPortalDataContext() )
             {
-                Data.Dto.Group group = Data.Dto.Group.Create( db.Group_Insert( null, name ).First() );
+                int result = db.Group_Insert( null, name, systemPermission, user.ID );
 
                 ResultBuilder.Add( "Geckon.Portal",
-                                   group );
+                                   new ScalarResult( result ) );
             }
 
             CallModules( new Parameter( "sessionID", sessionID ),
@@ -89,27 +91,25 @@ namespace Geckon.Portal.Extensions.Standard
         #endregion
         #region Update
 
-        public ContentResult Update( string sessionID, string groupGUID, string newName )
+        public ContentResult Update( string sessionID, string groupGUID, string newName, int newSystemPermission )
         {
             Data.Dto.UserInfo user = GetUserInfo( sessionID );
 
-            //if( user.GUID == PortalContext.AnonymousUserGUID )
-            //    throw new InsufficientPermissionsExcention( "Anonymous users cannot delete groups" );
-
             using( PortalDataContext db = GetNewPortalDataContext() )
             {
-                int? errorcode = 0;
-                Data.Group group = db.Group_Update( newName, null, Guid.Parse( groupGUID ), user.ID, null, ref errorcode ).First();
+                int result = db.Group_Update( newName, newSystemPermission, null, Guid.Parse( groupGUID ), user.ID, null );
 
-                if( errorcode == -100 )
-                    throw new InsufficientPermissionsExcention("User has insufficient permissions to update groups");
+                if( result == -100 )
+                    throw new InsufficientPermissionsExcention( "User does not have permission to update group" );
 
                 ResultBuilder.Add( "Geckon.Portal",
-                                   Data.Dto.Group.Create( group ) );
+                                   new ScalarResult( result ) );
             }
 
             CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "groupGUID", groupGUID ) );
+                         new Parameter( "groupGUID", groupGUID ),
+                         new Parameter( "newName", newName ),
+                         new Parameter( "newSystemPermission", newSystemPermission ) );
 
             return GetContentResult( );
         }
