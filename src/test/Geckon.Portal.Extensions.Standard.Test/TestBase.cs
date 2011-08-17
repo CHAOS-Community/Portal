@@ -24,7 +24,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [SetUp]
         public void SetUp()
         {
-            using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 db.PopulateWithDefaultData();
                 Session      = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ), 1 ).First();

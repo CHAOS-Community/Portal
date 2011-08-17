@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checked.cs" />
+    <Compile Include="Extension\ICallContext.cs" />
     <Compile Include="Extension\IModuleResult.cs" />
     <Compile Include="IChecked.cs" />
     <Compile Include="Extension\IResult.cs" />

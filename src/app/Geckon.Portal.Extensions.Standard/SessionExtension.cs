@@ -31,7 +31,7 @@ namespace Geckon.Portal.Extensions.Standard
 
             if( session == null )
             {
-                using( PortalDataContext db = GetNewPortalDataContext() )
+                using( PortalDataContext db = PortalDataContext.Default() )
                 {
                     
                     session = Data.Dto.Session.Create( db.Session_Get( Guid.Parse( sessionID ), null, null, 0, null, ref totalCount ).First() );
@@ -59,7 +59,7 @@ namespace Geckon.Portal.Extensions.Standard
             // TODO: Check protocol version
             // TODO: Add Module filtering
 
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 ResultBuilder.Add( "Geckon.Portal", 
                                    Data.Dto.Session.Create( db.Session_Insert( null, 
@@ -78,7 +78,7 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Update( string sessionID )
         {
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 ResultBuilder.Add( "Geckon.Portal",
                                    Data.Dto.Session.Create( db.Session_Update( null, null, null, Guid.Parse( sessionID ), null, null  ).First() ) );
@@ -94,7 +94,7 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Delete( string sessionID )
         {
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 ResultBuilder.Add( "Geckon.Portal",
                                    new Data.Dto.ScalarResult( db.Session_Delete( Guid.Parse( sessionID ), null, null ) ) );

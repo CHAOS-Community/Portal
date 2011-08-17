@@ -219,14 +219,6 @@ namespace Geckon.Portal.Data
 			}
 		}
 		
-		public System.Data.Linq.Table<UserInfo> UserInfos
-		{
-			get
-			{
-				return this.GetTable<UserInfo>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Extension> Extensions
 		{
 			get
@@ -240,6 +232,14 @@ namespace Geckon.Portal.Data
 			get
 			{
 				return this.GetTable<Group>();
+			}
+		}
+		
+		public System.Data.Linq.Table<UserInfo> UserInfos
+		{
+			get
+			{
+				return this.GetTable<UserInfo>();
 			}
 		}
 		
@@ -305,13 +305,6 @@ namespace Geckon.Portal.Data
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sessionID, userID, clientSettingID, pageIndex, pageSize, totalCount);
 			totalCount = ((System.Nullable<int>)(result.GetParameterValue(5)));
 			return ((ISingleResult<Session>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserInfo_Get")]
-		public ISingleResult<UserInfo> UserInfo_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Email", DbType="VarChar(255)")] string email, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AuthenticationProviderUniqueidentifier", DbType="VarChar(255)")] string authenticationProviderUniqueidentifier, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AuthenticationProviderGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> authenticationProviderGUID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, sessionID, email, authenticationProviderUniqueidentifier, authenticationProviderGUID);
-			return ((ISingleResult<UserInfo>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AuthenticationProvider_User_Join_Get")]
@@ -417,6 +410,13 @@ namespace Geckon.Portal.Data
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, name, requestUserID);
 			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserInfo_Get")]
+		public ISingleResult<UserInfo> UserInfo_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Email", DbType="VarChar(255)")] string email, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AuthenticationProviderUniqueidentifier", DbType="VarChar(255)")] string authenticationProviderUniqueidentifier, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AuthenticationProviderGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> authenticationProviderGUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, sessionID, email, authenticationProviderUniqueidentifier, authenticationProviderGUID);
+			return ((ISingleResult<UserInfo>)(result.ReturnValue));
 		}
 	}
 	
@@ -2944,195 +2944,6 @@ namespace Geckon.Portal.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UserInfo")]
-	public partial class UserInfo
-	{
-		
-		private int _ID;
-		
-		private System.Guid _GUID;
-		
-		private System.Nullable<System.Guid> _SessionID;
-		
-		private string _Firstname;
-		
-		private string _Middlename;
-		
-		private string _Lastname;
-		
-		private string _Email;
-		
-		private System.Nullable<int> _ClientSettingID;
-		
-		private System.Nullable<System.DateTime> _DateModified;
-		
-		private System.Nullable<System.DateTime> _SessionDateCreated;
-		
-		public UserInfo()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this._ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid GUID
-		{
-			get
-			{
-				return this._GUID;
-			}
-			set
-			{
-				if ((this._GUID != value))
-				{
-					this._GUID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionID", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> SessionID
-		{
-			get
-			{
-				return this._SessionID;
-			}
-			set
-			{
-				if ((this._SessionID != value))
-				{
-					this._SessionID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Firstname", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string Firstname
-		{
-			get
-			{
-				return this._Firstname;
-			}
-			set
-			{
-				if ((this._Firstname != value))
-				{
-					this._Firstname = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Middlename", DbType="VarChar(255)")]
-		public string Middlename
-		{
-			get
-			{
-				return this._Middlename;
-			}
-			set
-			{
-				if ((this._Middlename != value))
-				{
-					this._Middlename = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lastname", DbType="VarChar(255)")]
-		public string Lastname
-		{
-			get
-			{
-				return this._Lastname;
-			}
-			set
-			{
-				if ((this._Lastname != value))
-				{
-					this._Lastname = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(255)")]
-		public string Email
-		{
-			get
-			{
-				return this._Email;
-			}
-			set
-			{
-				if ((this._Email != value))
-				{
-					this._Email = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientSettingID", DbType="Int")]
-		public System.Nullable<int> ClientSettingID
-		{
-			get
-			{
-				return this._ClientSettingID;
-			}
-			set
-			{
-				if ((this._ClientSettingID != value))
-				{
-					this._ClientSettingID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateModified", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DateModified
-		{
-			get
-			{
-				return this._DateModified;
-			}
-			set
-			{
-				if ((this._DateModified != value))
-				{
-					this._DateModified = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionDateCreated", DbType="DateTime")]
-		public System.Nullable<System.DateTime> SessionDateCreated
-		{
-			get
-			{
-				return this._SessionDateCreated;
-			}
-			set
-			{
-				if ((this._SessionDateCreated != value))
-				{
-					this._SessionDateCreated = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Extension")]
 	public partial class Extension : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3474,6 +3285,213 @@ namespace Geckon.Portal.Data
 		{
 			this.SendPropertyChanging();
 			entity.Group = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UserInfo")]
+	public partial class UserInfo
+	{
+		
+		private int _ID;
+		
+		private System.Guid _GUID;
+		
+		private System.Nullable<System.Guid> _SessionID;
+		
+		private System.Nullable<int> _SystemPermission;
+		
+		private string _Firstname;
+		
+		private string _Middlename;
+		
+		private string _Lastname;
+		
+		private string _Email;
+		
+		private System.Nullable<int> _ClientSettingID;
+		
+		private System.Nullable<System.DateTime> _DateModified;
+		
+		private System.Nullable<System.DateTime> _SessionDateCreated;
+		
+		public UserInfo()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid GUID
+		{
+			get
+			{
+				return this._GUID;
+			}
+			set
+			{
+				if ((this._GUID != value))
+				{
+					this._GUID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> SessionID
+		{
+			get
+			{
+				return this._SessionID;
+			}
+			set
+			{
+				if ((this._SessionID != value))
+				{
+					this._SessionID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SystemPermission", DbType="Int")]
+		public System.Nullable<int> SystemPermission
+		{
+			get
+			{
+				return this._SystemPermission;
+			}
+			set
+			{
+				if ((this._SystemPermission != value))
+				{
+					this._SystemPermission = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Firstname", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Firstname
+		{
+			get
+			{
+				return this._Firstname;
+			}
+			set
+			{
+				if ((this._Firstname != value))
+				{
+					this._Firstname = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Middlename", DbType="VarChar(255)")]
+		public string Middlename
+		{
+			get
+			{
+				return this._Middlename;
+			}
+			set
+			{
+				if ((this._Middlename != value))
+				{
+					this._Middlename = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lastname", DbType="VarChar(255)")]
+		public string Lastname
+		{
+			get
+			{
+				return this._Lastname;
+			}
+			set
+			{
+				if ((this._Lastname != value))
+				{
+					this._Lastname = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this._Email = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientSettingID", DbType="Int")]
+		public System.Nullable<int> ClientSettingID
+		{
+			get
+			{
+				return this._ClientSettingID;
+			}
+			set
+			{
+				if ((this._ClientSettingID != value))
+				{
+					this._ClientSettingID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateModified", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateModified
+		{
+			get
+			{
+				return this._DateModified;
+			}
+			set
+			{
+				if ((this._DateModified != value))
+				{
+					this._DateModified = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionDateCreated", DbType="DateTime")]
+		public System.Nullable<System.DateTime> SessionDateCreated
+		{
+			get
+			{
+				return this._SessionDateCreated;
+			}
+			set
+			{
+				if ((this._SessionDateCreated != value))
+				{
+					this._SessionDateCreated = value;
+				}
+			}
 		}
 	}
 	

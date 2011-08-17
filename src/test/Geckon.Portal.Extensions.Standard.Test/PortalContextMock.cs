@@ -16,7 +16,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
         public ISolr Solr
         {
-            get { throw new NotImplementedException(); }
+            get { return new MockSolr(); }
         }
 
         public void RegisterModule( IModule module )
@@ -48,6 +48,10 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             throw new NotImplementedException();
         }
+    }
+
+    public class MockSolr : ISolr
+    {
     }
 
     public class MockCache : ICache

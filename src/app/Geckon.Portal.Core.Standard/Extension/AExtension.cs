@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -8,7 +7,6 @@ using System.Web.Mvc;
 using System.Xml;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
-using Geckon.Portal.Data;
 using Geckon.Serialization.Xml;
 
 namespace Geckon.Portal.Core.Standard.Extension
@@ -38,6 +36,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         protected IDictionary<Type, IChecked<IModule>> AssociatedModules { get; set; }
         protected string Controller { get; set; }
         protected string Action { get; set; }
+        protected ICallContext CallContext { get; set; }
 
         #endregion
         #region Constructors
@@ -52,9 +51,10 @@ namespace Geckon.Portal.Core.Standard.Extension
             _PortalContext     = context;    
         }
 
-        public void Init( IResult result )
+        public void Init( IResult result, string sessionID )
         {
             ResultBuilder = result;
+            CallContext = new CallContext( PortalContext.Cache, PortalContext.Solr, sessionID );
         }
 
         /// <summary>
@@ -77,14 +77,6 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region Business Logic
 
-        #region Data
-
-        protected PortalDataContext GetNewPortalDataContext()
-        {
-            return new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString );
-        }
-
-        #endregion
         #region Override
 
         protected override void OnException( ExceptionContext filterContext )
@@ -154,28 +146,6 @@ namespace Geckon.Portal.Core.Standard.Extension
         }
 
         #endregion
-        #region UserInfo
-
-        protected Data.Dto.UserInfo GetUserInfo( string sessionID )
-        {
-            Data.Dto.UserInfo userInfo = PortalContext.Cache.Get<Data.Dto.UserInfo>( string.Format( "[UserInfo:sid={0}]", sessionID ) );
-
-            if( userInfo == null )
-            {
-                using( PortalDataContext db = GetNewPortalDataContext() )
-                {
-                    userInfo = Data.Dto.UserInfo.Create( db.UserInfo_Get( null, Guid.Parse( sessionID ), null, null, null ).First() );
-
-                    PortalContext.Cache.Put( string.Format( "[UserInfo:sid={0}]", sessionID ),
-                                             userInfo.ToXML().OuterXml,
-                                             new TimeSpan( 0, 1, 0 ) );
-                }
-            }
-
-            return userInfo;
-        }
-
-        #endregion
         #region Module
 
         protected void CallModules( params Parameter[] parameters )
@@ -184,7 +154,7 @@ namespace Geckon.Portal.Core.Standard.Extension
             {
                 Parameter[] methodParameters = new Parameter[ parameters.Length + 1 ];
 
-                methodParameters[0] = new Parameter( "extension", this );
+                methodParameters[0] = new Parameter( "callContext", CallContext );
                 parameters.CopyTo( methodParameters, 1 );
 
                 ResultBuilder.Add( associatedModule.Value.GetType().FullName, 
@@ -200,7 +170,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         {
             Parameter[] methodParameters = new Parameter[ parameters.Length + 1 ];
 
-            methodParameters[0] = new Parameter( "extension", this );
+            methodParameters[0] = new Parameter( "callContext", CallContext );
             parameters.CopyTo( methodParameters, 1 );
             
             IChecked<IModule> associatedModule = AssociatedModules[ typeof( T ) ];

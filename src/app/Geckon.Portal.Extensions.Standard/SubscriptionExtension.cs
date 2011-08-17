@@ -23,10 +23,10 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Get( string sessionID, string guid )
         {
-            UserInfo     user   = GetUserInfo( sessionID );
+            UserInfo     user   = CallContext.User;
             Subscription result = null;
 
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 result = db.Subscription_Get(null, Guid.Parse(guid), null, user.ID).FirstOrDefault();
             }
@@ -50,9 +50,9 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Create( string sessionID, string name )
         {
-            UserInfo user   = GetUserInfo( sessionID );
+            UserInfo user   = CallContext.User;
 
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 int result = db.Subscription_Insert( Guid.NewGuid(), name, user.ID );
 
@@ -76,10 +76,10 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Delete( string sessionID, string guid )
         {
-            UserInfo user   = GetUserInfo( sessionID );
+            UserInfo user   = CallContext.User;
             int      result = 0;
 
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 result = db.Subscription_Delete( null, Guid.Parse( guid ), user.ID );
             }
@@ -101,10 +101,10 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Update( string sessionID, string guid, string newName )
         {
-            UserInfo user      = GetUserInfo( sessionID );
+            UserInfo user      = CallContext.User;
             int      result    = 0;
 
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 result = db.Subscription_Update( null, Guid.Parse( guid ), newName, user.ID );
             }

@@ -26,7 +26,7 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Get( string sessionID )
         {
-            ResultBuilder.Add( "Geckon.Portal", GetUserInfo( sessionID ) );
+            ResultBuilder.Add( "Geckon.Portal", CallContext.User );
 
             CallModules( new Parameter( "sessionID", sessionID ) );
 
@@ -38,7 +38,7 @@ namespace Geckon.Portal.Extensions.Standard
         
         public ContentResult Create( string sessionID, string firstname, string middlename, string lastname, string email )
         {
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 Data.Dto.User user = Data.Dto.User.Create( db.User_Insert( null, firstname, middlename, lastname, email ).First() );
 
@@ -60,9 +60,9 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Update( string sessionID, string firstname, string middlename, string lastname, string email )
         {
-            Data.Dto.UserInfo user = GetUserInfo( sessionID );
+            Data.Dto.UserInfo user = CallContext.User;
 
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 Data.Dto.User updatedUser = Data.Dto.User.Create( db.User_Update( user.GUID, null, firstname, middlename, lastname, email ).First() );
 
@@ -84,12 +84,12 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Delete(string sessionID, string userGUID)
         {
-            Data.Dto.UserInfo user = GetUserInfo( sessionID );
+            Data.Dto.UserInfo user = CallContext.User;
 
             if( user.GUID.ToString() != userGUID )
                 throw new InsufficientPermissionsExcention( "The current user doesn't have permissions to delete the user with guid: " + userGUID );
 
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 int result = db.User_Delete( Guid.Parse( userGUID ) );
 

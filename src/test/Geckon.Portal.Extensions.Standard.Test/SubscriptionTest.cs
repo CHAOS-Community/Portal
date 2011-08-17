@@ -13,7 +13,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Get_Subscription()
         {
             SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );
-            extension.Init( new Result() );
+            extension.Init( new Result(), AdminSession.SessionID.ToString() );
 
             XDocument xdoc = XDocument.Parse( extension.Get( AdminUser.SessionID.ToString(), Subscription.GUID.ToString() ).Content );
 
@@ -24,7 +24,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Throw_InssurficientPermissionsException_On_Get_Subscription()
         {
             SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );
-            extension.Init( new Result() );
+            extension.Init( new Result(), Session.SessionID.ToString() );
 
             extension.Get( User.SessionID.ToString(), Subscription.GUID.ToString() );
         }
@@ -33,7 +33,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Create_Subscription()
         {
             SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );
-            extension.Init( new Result() );
+            extension.Init( new Result(), AdminSession.SessionID.ToString() );
 
             XDocument xdoc = XDocument.Parse( extension.Create( AdminUser.SessionID.ToString(), "some name" ).Content );
 
@@ -44,7 +44,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Throw_InssurficientPermissionsException_On_Create_Subscription()
         {
             SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );
-            extension.Init( new Result() );
+            extension.Init( new Result(), Session.SessionID.ToString() );
 
             extension.Create( User.SessionID.ToString(), "some name" );
         }
@@ -53,7 +53,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Delete_Subscription()
         {
             SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );
-            extension.Init( new Result() );
+            extension.Init( new Result(), AdminSession.SessionID.ToString() );
 
             XDocument xdoc = XDocument.Parse( extension.Delete( AdminUser.SessionID.ToString(), Subscription.GUID.ToString() ).Content );
 
@@ -64,7 +64,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Delete_Subscription()
         {
             SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );
-            extension.Init( new Result() );
+            extension.Init( new Result(), Session.SessionID.ToString() );
 
             extension.Delete( User.SessionID.ToString(), Subscription.GUID.ToString() );
         }
@@ -73,7 +73,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Update_Subscription()
         {
             SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );
-            extension.Init( new Result() );
+            extension.Init( new Result(), AdminSession.SessionID.ToString() );
 
             XDocument xdoc = XDocument.Parse( extension.Update( AdminUser.SessionID.ToString(), Subscription.GUID.ToString(), "new subscription name" ).Content );
 
@@ -84,7 +84,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Update_Subscription()
         {
             SubscriptionExtension extension = new SubscriptionExtension( new PortalContextMock() );
-            extension.Init( new Result() );
+            extension.Init( new Result(), Session.SessionID.ToString() );
 
             extension.Update( User.SessionID.ToString(), Subscription.GUID.ToString(), "new subscription name" );
         }

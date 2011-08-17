@@ -58,7 +58,7 @@ namespace Geckon.Portal.Data.Dto
         }
 
         [Element]
-        public string RepositoryName
+        public int SystemPermission
         {
             get;
             set;
@@ -91,7 +91,7 @@ namespace Geckon.Portal.Data.Dto
             newUserInfo.Middlename           = userInfo.Middlename;
             newUserInfo.Lastname             = userInfo.Lastname;
             newUserInfo.Email                = userInfo.Email;
-            newUserInfo.RepositoryName       = userInfo.RepositoryName;
+            newUserInfo.SystemPermission     = userInfo.SystemPermission.GetValueOrDefault();
             newUserInfo.ClientSettingID      = userInfo.ClientSettingID;
 
             return newUserInfo;

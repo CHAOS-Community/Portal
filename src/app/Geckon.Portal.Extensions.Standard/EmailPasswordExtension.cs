@@ -29,14 +29,14 @@ namespace Geckon.Portal.Extensions.Standard
         
         public ContentResult CreatePassword( string sessionID, string userGUID, string password )
         {
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 Data.Dto.UserInfo user = UserInfo.Create( db.UserInfo_Get( Guid.Parse( userGUID ), null, null, null, null ).First() );
 
                 // If other logins have been created, the sessionID has to match the user
                 if( db.AuthenticationProvider_User_Join_Get( user.ID, null, null ).Count() > 0 )
                 {
-                    if( !user.GUID.Equals( GetUserInfo( sessionID ).GUID ) )
+                    if( !user.GUID.Equals( CallContext.User.GUID ) )
                         throw new InsufficientPermissionsExcention( "Users can only change their own password" );
                 }
 
@@ -70,7 +70,7 @@ namespace Geckon.Portal.Extensions.Standard
 
             string hash = BitConverter.ToString( byteHash ).Replace("-","").ToLower();
 
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 Data.Dto.UserInfo user = Data.Dto.UserInfo.Create( db.UserInfo_Get( null, null, email, hash, EmailPasswordAuthenticationProviderGUID ).First() );
                 db.Session_Update( null, user.GUID, null, Guid.Parse( sessionID ), null, null ).First();

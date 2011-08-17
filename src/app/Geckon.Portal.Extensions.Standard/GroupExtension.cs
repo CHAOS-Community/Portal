@@ -21,10 +21,10 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Get( string sessionID, string guid )
         {
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 Guid?             groupGuid = string.IsNullOrEmpty( guid ) ? (Guid?) null : Guid.Parse( guid );
-                Data.Dto.UserInfo user      = GetUserInfo( sessionID );
+                Data.Dto.UserInfo user      = CallContext.User;
                 Data.Dto.Group    group     = Data.Dto.Group.Create( db.Group_Get( null, groupGuid, null, user.ID ).First() );
 
                 ResultBuilder.Add( "Geckon.Portal",
@@ -42,12 +42,12 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Create( string sessionID, string name, int systemPermission )
         {
-            Data.Dto.UserInfo user = GetUserInfo( sessionID );
+            Data.Dto.UserInfo user = CallContext.User;
 
             if( user.GUID == PortalContext.AnonymousUserGUID )
                 throw new InsufficientPermissionsExcention( "Anonymous users cannot create groups" );
 
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using (PortalDataContext db = PortalDataContext.Default())
             {
                 int result = db.Group_Insert( null, name, systemPermission, user.ID );
 
@@ -66,12 +66,12 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Delete( string sessionID, string groupGUID )
         {
-            Data.Dto.UserInfo user = GetUserInfo( sessionID );
+            Data.Dto.UserInfo user = CallContext.User;
 
             if( user.GUID == PortalContext.AnonymousUserGUID )
                 throw new InsufficientPermissionsExcention( "Anonymous users cannot delete groups" );
 
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 int result = db.Group_Delete( null, Guid.Parse( groupGUID ), user.ID, null );
 
@@ -93,9 +93,9 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Update( string sessionID, string groupGUID, string newName, int newSystemPermission )
         {
-            Data.Dto.UserInfo user = GetUserInfo( sessionID );
+            Data.Dto.UserInfo user = CallContext.User;
 
-            using( PortalDataContext db = GetNewPortalDataContext() )
+            using( PortalDataContext db = PortalDataContext.Default() )
             {
                 int result = db.Group_Update( newName, newSystemPermission, null, Guid.Parse( groupGUID ), user.ID, null );
 
