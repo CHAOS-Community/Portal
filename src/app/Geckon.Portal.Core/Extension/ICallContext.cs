@@ -6,5 +6,7 @@ namespace Geckon.Portal.Core.Extension
     {
         string SessionID { get; set; }
         UserInfo User { get; }
+        ICache Cache { get; set; }
+        ISolr Solr { get; set; }
     }
 }

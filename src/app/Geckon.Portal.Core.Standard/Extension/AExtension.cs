@@ -25,14 +25,17 @@ namespace Geckon.Portal.Core.Standard.Extension
             get
             {
                 if( _PortalContext == null )
+                {
                     _PortalContext = ((APortalApplication)HttpContext.ApplicationInstance).PortalContext;
+
+                    Init( _PortalContext );
+                }
 
                 return _PortalContext;
             }
         }
 
         protected IResult ResultBuilder { get; set; }
-
         protected IDictionary<Type, IChecked<IModule>> AssociatedModules { get; set; }
         protected string Controller { get; set; }
         protected string Action { get; set; }
@@ -54,7 +57,16 @@ namespace Geckon.Portal.Core.Standard.Extension
         public void Init( IResult result, string sessionID )
         {
             ResultBuilder = result;
-            CallContext = new CallContext( PortalContext.Cache, PortalContext.Solr, sessionID );
+            CallContext   = new CallContext
+                                {
+                                    SessionID = sessionID
+                                };
+        }
+        // TODO: This needs to be reviewed again, there has to be a better place to initialize the Cache and Solr
+        private void Init( IPortalContext portalContext )
+        {
+            CallContext.Cache = portalContext.Cache;
+            CallContext.Solr  = portalContext.Solr;
         }
 
         /// <summary>

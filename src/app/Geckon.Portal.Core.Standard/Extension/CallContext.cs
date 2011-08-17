@@ -9,8 +9,8 @@ namespace Geckon.Portal.Core.Standard.Extension
     {
         #region Properties
 
-        public ICache Cache { get; private set; }
-        public ISolr  Solr { get; private set; }
+        public ICache Cache { get; set; }
+        public ISolr  Solr { get; set; }
         public string SessionID { get; set; }
 
         public Data.Dto.UserInfo User
@@ -38,11 +38,16 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region Construction
 
-        public CallContext( ICache cache, ISolr solr, string sessionID )
+        public CallContext( ICache cache, ISolr solr, string sessionID ) : this()
         {
             Cache     = cache;
             Solr      = solr;
             SessionID = sessionID;
+        }
+
+        public CallContext()
+        {
+            
         }
 
         #endregion
