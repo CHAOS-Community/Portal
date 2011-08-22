@@ -29,7 +29,6 @@ namespace Geckon.Portal.Core.Standard
 
         public T Get<T>( string key ) where T : XmlSerialize, new()
         {
-            // TODO: Refactoring needed
             object obj = Get( key );
             
             if( obj == null )
@@ -39,7 +38,7 @@ namespace Geckon.Portal.Core.Standard
             xDoc.LoadXml( obj.ToString() );
 
             T result = new T();
-            XmlSerialize.FromXML(xDoc.DocumentElement, result);
+            XmlSerialize.FromXML( xDoc.DocumentElement, result );
             return result;
         }
 

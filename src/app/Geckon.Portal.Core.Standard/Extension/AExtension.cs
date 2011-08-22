@@ -88,11 +88,11 @@ namespace Geckon.Portal.Core.Standard.Extension
                 filterContext.Exception = filterContext.Exception.InnerException; 
             
             filterContext.ExceptionHandled = true;
-            filterContext.Result = GetContentResult( string.Format( "<Error><Exception>{0}</Exception><Message><![CDATA[{1}]]></Message><StackTrace><![CDATA[{2}]]></StackTrace></Error>" , 
-                                                           filterContext.Exception.GetType().FullName, 
-                                                           filterContext.Exception.Message,
-                                                           filterContext.Exception.StackTrace ) 
-                                                         );
+            filterContext.Result           = GetContentResult( string.Format( "<Error><Exception>{0}</Exception><Message><![CDATA[{1}]]></Message><StackTrace><![CDATA[{2}]]></StackTrace></Error>" , 
+                                                               filterContext.Exception.GetType().FullName, 
+                                                               filterContext.Exception.Message,
+                                                               filterContext.Exception.StackTrace ) 
+                                                             );
 
             // TODO: Not all clients support status codes, this should be dependant on ClientSettings
             filterContext.HttpContext.Response.StatusCode = 500;
@@ -111,7 +111,7 @@ namespace Geckon.Portal.Core.Standard.Extension
             ContentResult result = new ContentResult();
             
             result.Content         = string.Format("<PortalResult Duration=\"{0:F1}\">{1}</PortalResult>",
-                                     HttpContext == null ? 0 : DateTime.Now.Subtract(HttpContext.Timestamp).TotalMilliseconds,
+                                     HttpContext == null ? 0 : DateTime.Now.Subtract( HttpContext.Timestamp ).TotalMilliseconds,
                                      content);
             result.ContentType     = "text/xml";
             result.ContentEncoding = Encoding.UTF8;

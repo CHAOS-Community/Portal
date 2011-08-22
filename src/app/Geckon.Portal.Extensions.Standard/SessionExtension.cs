@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using Geckon.Data;
-using Geckon.Portal.Core;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
 
@@ -33,8 +32,6 @@ namespace Geckon.Portal.Extensions.Standard
             ResultBuilder.Add( "Geckon.Portal",
                                 session,
                                 new NameValue( "TotalCount", totalCount.ToString() ) );
-
-            //CallModules( new Parameter( "sessionID", sessionID ) );
 
             return GetContentResult();
         } 
@@ -69,8 +66,6 @@ namespace Geckon.Portal.Extensions.Standard
                                    Data.Dto.Session.Create( db.Session_Update( null, null, null, Guid.Parse( sessionID ), null, null  ).First() ) );
             }
 
-            //CallModules( new Parameter( "sessionID", sessionID ) );
-
             return GetContentResult();
         }
 
@@ -84,8 +79,6 @@ namespace Geckon.Portal.Extensions.Standard
                 ResultBuilder.Add( "Geckon.Portal",
                                    new Data.Dto.ScalarResult( db.Session_Delete( Guid.Parse( sessionID ), null, null ) ) );
             }
-
-            //CallModules( new Parameter( "sessionID", sessionID ) );
 
             return GetContentResult();
         }
