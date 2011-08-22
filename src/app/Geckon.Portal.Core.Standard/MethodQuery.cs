@@ -19,7 +19,7 @@ namespace Geckon.Portal.Core.Standard
             Parameters = parameters;
         }
 
-        public MethodQuery( string eventName, string type, params Parameter[] parameters )
+        public MethodQuery( string eventName, string type, IEnumerable<Parameter> parameters )
         {
             EventType  = new EventType( type, eventName );
             Parameters = new Dictionary<string, Parameter>();

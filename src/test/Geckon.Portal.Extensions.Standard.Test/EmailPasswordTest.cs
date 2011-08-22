@@ -11,8 +11,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [Test]
         public void Should_Create_Password_For_User()
         {
-            EmailPasswordExtension extension = new EmailPasswordExtension( new PortalContextMock() );
-            extension.Init( new Result(), Session.SessionID.ToString() );
+            EmailPasswordExtension extension = new EmailPasswordExtension( );
+            extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
 
             XDocument xdoc = XDocument.Parse( extension.CreatePassword( Session.SessionID.ToString(), User.GUID.ToString(), "pbvu7000" ).Content );
             
@@ -22,13 +22,13 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [Test]
         public void Should_Log_User_In()
         {
-            EmailPasswordExtension extension = new EmailPasswordExtension(new PortalContextMock());
-            extension.Init( new Result(), Session.SessionID.ToString() );
+            EmailPasswordExtension extension = new EmailPasswordExtension();
+            extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
 
             extension.CreatePassword(Session.SessionID.ToString(), User.GUID.ToString(), "pbvu7000");
 
-            extension = new EmailPasswordExtension(new PortalContextMock());
-            extension.Init( new Result(), Session.SessionID.ToString() );
+            extension = new EmailPasswordExtension();
+            extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
 
             XDocument xdoc = XDocument.Parse(extension.LoginEmailPassword( Session.SessionID.ToString(), User.Email, "pbvu7000" ).Content );
 

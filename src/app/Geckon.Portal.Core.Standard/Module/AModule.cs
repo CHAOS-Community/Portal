@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data;
 using Geckon.Serialization.Xml;
@@ -74,12 +75,26 @@ namespace Geckon.Portal.Core.Standard.Module
         #endregion
         #region Method call
 
-        public XmlSerialize InvokeMethod( IMethodQuery methodQuery )
+        public IEnumerable<XmlSerialize> InvokeMethod(IMethodQuery methodQuery)
         {
             IMethodSignature method = RegisteredMethods[ methodQuery.EventType.Type ];
-
+            
             // TODO: Error Handling so nice Exceptions are thrown in case of signature mismatch 
-            return ( XmlSerialize ) method.Method.Invoke( this, GetRelevantParameters( method.Parameters, methodQuery ) );
+            object result = method.Method.Invoke( this, GetRelevantParameters( method.Parameters, methodQuery ) );
+            
+            if( result is XmlSerialize )
+            {
+                IList<XmlSerialize> list = new List<XmlSerialize>();
+
+                list.Add( (XmlSerialize) result );
+
+                return list;
+            }
+            
+            if( result is IEnumerable<XmlSerialize> )
+                return (IEnumerable<XmlSerialize>) result;
+
+            throw new UnsupportedModuleReturnType( "Only a return type of XmlSerialize or IEnumerable<XmlSerialize> is supported" );
         }
 
         public bool ContainsMethodSignature( IMethodQuery methodQuery )

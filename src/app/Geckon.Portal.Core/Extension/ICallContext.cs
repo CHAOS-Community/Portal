@@ -1,4 +1,5 @@
-﻿using Geckon.Portal.Data.Dto;
+﻿using System.Collections.Generic;
+using Geckon.Portal.Data.Dto;
 
 namespace Geckon.Portal.Core.Extension
 {
@@ -8,5 +9,6 @@ namespace Geckon.Portal.Core.Extension
         UserInfo User { get; }
         ICache Cache { get; set; }
         ISolr Solr { get; set; }
+        IEnumerable<Parameter> Parameters { get; set; }
     }
 }

@@ -48,18 +48,7 @@ namespace Geckon.Portal.Core.Standard
             LoadedModules.Add( module.Name, module );
         }
 
-        public IEnumerable<XmlSerialize> CallModules( IExtension extension, IMethodQuery methodQuery )
-        {
-            methodQuery.Parameters.Add( "extension", new Parameter( "extension", extension ) );
 
-            foreach( IModule module in LoadedModules.Values )
-            {
-                if( !module.ContainsMethodSignature( methodQuery ) )
-                    continue;
-
-                yield return module.InvokeMethod( methodQuery );
-            }
-        }
 
         public T CallModule<T>( IExtension extension, IMethodQuery methodQuery ) where T : XmlSerialize
         {

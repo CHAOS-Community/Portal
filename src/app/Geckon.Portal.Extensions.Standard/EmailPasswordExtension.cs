@@ -13,18 +13,6 @@ namespace Geckon.Portal.Extensions.Standard
 {
     public class EmailPasswordExtension : AExtension
     {
-        #region Constructor
-
-        public EmailPasswordExtension()
-        {
-        }
-
-        public EmailPasswordExtension(IPortalContext context)
-            : base(context)
-        {
-        }
-
-        #endregion
         #region Create Password (Email/Password)
         
         public ContentResult CreatePassword( string sessionID, string userGUID, string password )
@@ -52,9 +40,9 @@ namespace Geckon.Portal.Extensions.Standard
                                    user );
             }
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "userGUID", userGUID ),
-                         new Parameter( "password", password ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "userGUID", userGUID ),
+            //             new Parameter( "password", password ) );
 
             return GetContentResult();
         }
@@ -79,9 +67,9 @@ namespace Geckon.Portal.Extensions.Standard
                                    user );
             }
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "email", email ), 
-                         new Parameter( "password", password ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "email", email ), 
+            //             new Parameter( "password", password ) );
 
             return GetContentResult();
         }

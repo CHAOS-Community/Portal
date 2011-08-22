@@ -15,25 +15,10 @@ namespace Geckon.Portal.Core.Standard.Extension
     {
         #region Fields
 
-        private IPortalContext _PortalContext;
-
         #endregion
         #region Properties
 
-        public IPortalContext PortalContext
-        {
-            get
-            {
-                if( _PortalContext == null )
-                {
-                    _PortalContext = ((APortalApplication)HttpContext.ApplicationInstance).PortalContext;
-
-                    Init( _PortalContext );
-                }
-
-                return _PortalContext;
-            }
-        }
+        public IPortalContext PortalContext { get; private set; }
 
         protected IResult ResultBuilder { get; set; }
         protected IDictionary<Type, IChecked<IModule>> AssociatedModules { get; set; }
@@ -49,31 +34,23 @@ namespace Geckon.Portal.Core.Standard.Extension
             AssociatedModules = new Dictionary<Type, IChecked<IModule>>();
         }
 
-        public AExtension( IPortalContext context ) : this()
+        public void Init( IPortalContext portalContext, IResult result, string sessionID )
         {
-            _PortalContext     = context;    
+            PortalContext = portalContext;
+            ResultBuilder = result;
+            CallContext   = new CallContext( portalContext.Cache, portalContext.Solr, sessionID );
         }
 
-        public void Init( IResult result, string sessionID )
-        {
-            ResultBuilder = result;
-            CallContext   = new CallContext
-                                {
-                                    SessionID = sessionID
-                                };
-        }
-        // TODO: This needs to be reviewed again, there has to be a better place to initialize the Cache and Solr
-        private void Init( IPortalContext portalContext )
-        {
-            CallContext.Cache = portalContext.Cache;
-            CallContext.Solr  = portalContext.Solr;
-        }
+        #endregion
+        #region Business Logic
+
+        #region Override
 
         /// <summary>
         /// Initializes the list of registered modules that wants calls from the current extension call
         /// </summary>
         /// <param name="filterContext"></param>
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        protected override void OnActionExecuting( ActionExecutingContext filterContext )
         {
             Controller = filterContext.RouteData.Values["Controller"].ToString();
             Action     = filterContext.RouteData.Values["Action"].ToString();
@@ -83,13 +60,25 @@ namespace Geckon.Portal.Core.Standard.Extension
                 AssociatedModules.Add( module.GetType(), new Checked<IModule>( module ) );
             }
 
+            // This Set the CallContext on the Method if specified
+            if( filterContext.ActionParameters.ContainsKey( "context" ) )
+                filterContext.ActionParameters["context"] = CallContext;
+
+            CallContext.Parameters = filterContext.ActionParameters.Select( (parameter) => new Parameter( parameter.Key, parameter.Value ) );
+
             base.OnActionExecuting(filterContext);
         }
 
-        #endregion
-        #region Business Logic
+        /// <summary>
+        /// This Method Call all modules subscriping to this Extension call, that haven't yet been checked
+        /// </summary>
+        /// <param name="filterContext"></param>
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            CallModules( CallContext.Parameters );
 
-        #region Override
+            base.OnActionExecuted(filterContext);
+        }
 
         protected override void OnException( ExceptionContext filterContext )
         {
@@ -160,39 +149,17 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region Module
 
-        protected void CallModules( params Parameter[] parameters )
+        private void CallModules( IEnumerable<Parameter> parameters )
         {
             foreach( IChecked<IModule> associatedModule in AssociatedModules.Values.Where( module => !module.IsChecked ) )
             {
-                Parameter[] methodParameters = new Parameter[ parameters.Length + 1 ];
-
-                methodParameters[0] = new Parameter( "callContext", CallContext );
-                parameters.CopyTo( methodParameters, 1 );
-
                 ResultBuilder.Add( associatedModule.Value.GetType().FullName, 
                                    associatedModule.Value.InvokeMethod( new MethodQuery( Controller, 
                                                                                          Action,
-                                                                                         methodParameters ) ) );
+                                                                                         parameters)));
 
                 associatedModule.IsChecked = true;
             }
-        }
-
-        protected void CallModule<T>( string controller, string action, params Parameter[] parameters )
-        {
-            Parameter[] methodParameters = new Parameter[ parameters.Length + 1 ];
-
-            methodParameters[0] = new Parameter( "callContext", CallContext );
-            parameters.CopyTo( methodParameters, 1 );
-            
-            IChecked<IModule> associatedModule = AssociatedModules[ typeof( T ) ];
-
-            ResultBuilder.Add( associatedModule.Value.GetType().FullName, 
-                               associatedModule.Value.InvokeMethod( new MethodQuery( Controller, 
-                                                                                     Action, 
-                                                                                     methodParameters ) ) );
-
-            associatedModule.IsChecked = true;
         }
 
         protected T GetModule<T>() where T : IModule

@@ -12,8 +12,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [Test]
         public void Should_Create_A_New_Session()
         {
-            SessionExtension sessionExtension = new SessionExtension( new PortalContextMock() );
-            sessionExtension.Init( new Result(), Session.SessionID.ToString() );
+            SessionExtension sessionExtension = new SessionExtension(  );
+            sessionExtension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
             
             ContentResult result = sessionExtension.Create( 1, 3 );
 
@@ -23,8 +23,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [Test]
         public void Should_Get_A_Session()
         {
-            SessionExtension sessionExtension = new SessionExtension( new PortalContextMock() );
-            sessionExtension.Init( new Result(), Session.SessionID.ToString() );
+            SessionExtension sessionExtension = new SessionExtension( );
+            sessionExtension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
             
             ContentResult create = sessionExtension.Create( 1, 3 );
             ContentResult result = sessionExtension.Get( XDocument.Parse( create.Content ).Descendants("SessionID").FirstOrDefault().Value );
@@ -35,8 +35,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [Test]
         public void Should_Update_A_Session()
         {
-            SessionExtension sessionExtension = new SessionExtension(new PortalContextMock());
-            sessionExtension.Init( new Result(), Session.SessionID.ToString() );
+            SessionExtension sessionExtension = new SessionExtension();
+            sessionExtension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
 
             ContentResult result = sessionExtension.Update( Session.SessionID.ToString() );
 
@@ -47,8 +47,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [Test]
         public void Should_Delete_A_Session()
         {
-            SessionExtension sessionExtension = new SessionExtension(new PortalContextMock());
-            sessionExtension.Init( new Result(), Session.SessionID.ToString() );
+            SessionExtension sessionExtension = new SessionExtension();
+            sessionExtension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
 
             ContentResult result = sessionExtension.Delete( Session.SessionID.ToString() );
 

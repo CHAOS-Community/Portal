@@ -11,24 +11,13 @@ namespace Geckon.Portal.Extensions.Standard
 {
     public class UserExtension : AExtension
     {
-        #region Constructor
-
-        public UserExtension()
-        {
-        }
-
-        public UserExtension( IPortalContext context ) : base(context)
-        {
-        }
-
-        #endregion
         #region Get
 
         public ContentResult Get( string sessionID )
         {
             ResultBuilder.Add( "Geckon.Portal", CallContext.User );
 
-            CallModules( new Parameter( "sessionID", sessionID ) );
+    //        CallModules( new Parameter( "sessionID", sessionID ) );
 
             return GetContentResult();
         }
@@ -46,11 +35,11 @@ namespace Geckon.Portal.Extensions.Standard
                                    user );
             }
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "firstname", firstname ),
-                         new Parameter( "middlename", middlename ),
-                         new Parameter( "lastname", lastname ),
-                         new Parameter( "email", email ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "firstname", firstname ),
+            //             new Parameter( "middlename", middlename ),
+            //             new Parameter( "lastname", lastname ),
+            //             new Parameter( "email", email ) );
 
             return GetContentResult();
         }
@@ -70,11 +59,11 @@ namespace Geckon.Portal.Extensions.Standard
                                    updatedUser );
             }
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "firstname", firstname ),
-                         new Parameter( "middlename", middlename ),
-                         new Parameter( "lastname", lastname ),
-                         new Parameter( "email", email ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "firstname", firstname ),
+            //             new Parameter( "middlename", middlename ),
+            //             new Parameter( "lastname", lastname ),
+            //             new Parameter( "email", email ) );
 
             return GetContentResult();
         }
@@ -97,8 +86,8 @@ namespace Geckon.Portal.Extensions.Standard
                                    new ScalarResult( result ) );
             }
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "userGUID", userGUID ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "userGUID", userGUID ) );
 
             return GetContentResult();
         }

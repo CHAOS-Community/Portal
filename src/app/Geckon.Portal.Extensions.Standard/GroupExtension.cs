@@ -11,12 +11,6 @@ namespace Geckon.Portal.Extensions.Standard
 {
     public class GroupExtension : AExtension
     {
-        #region Constructor
-
-        public GroupExtension(IPortalContext portalContext) : base(portalContext) { }
-        public GroupExtension() : base() { }
-
-        #endregion
         #region Get
 
         public ContentResult Get( string sessionID, string guid )
@@ -31,8 +25,8 @@ namespace Geckon.Portal.Extensions.Standard
                                    group );
             }
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "guid", guid ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "guid", guid ) );
 
             return GetContentResult();
         }
@@ -55,8 +49,8 @@ namespace Geckon.Portal.Extensions.Standard
                                    new ScalarResult( result ) );
             }
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "name", name ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "name", name ) );
 
             return GetContentResult( );
         }
@@ -82,8 +76,8 @@ namespace Geckon.Portal.Extensions.Standard
                                    new ScalarResult( result ) );
             }
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "groupGUID", groupGUID ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "groupGUID", groupGUID ) );
 
             return GetContentResult( );
         }
@@ -106,10 +100,10 @@ namespace Geckon.Portal.Extensions.Standard
                                    new ScalarResult( result ) );
             }
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "groupGUID", groupGUID ),
-                         new Parameter( "newName", newName ),
-                         new Parameter( "newSystemPermission", newSystemPermission ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "groupGUID", groupGUID ),
+            //             new Parameter( "newName", newName ),
+            //             new Parameter( "newSystemPermission", newSystemPermission ) );
 
             return GetContentResult( );
         }

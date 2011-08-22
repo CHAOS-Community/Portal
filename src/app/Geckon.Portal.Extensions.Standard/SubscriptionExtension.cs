@@ -13,12 +13,6 @@ namespace Geckon.Portal.Extensions.Standard
 {
     public class SubscriptionExtension : AExtension
     {
-        #region Construction
-
-        public SubscriptionExtension( IPortalContext portalContext ) : base( portalContext ) { }
-        public SubscriptionExtension() : base() { }
-
-        #endregion
         #region Get
 
         public ContentResult Get( string sessionID, string guid )
@@ -39,8 +33,8 @@ namespace Geckon.Portal.Extensions.Standard
             ResultBuilder.Add( "Geckon.Portal",
                                    subscription );
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "guid", guid           ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "guid", guid           ) );
 
             return GetContentResult();
         }
@@ -65,8 +59,8 @@ namespace Geckon.Portal.Extensions.Standard
                                    subscription );
             }
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "name", name           ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "name", name           ) );
 
             return GetContentResult();
         }
@@ -90,8 +84,8 @@ namespace Geckon.Portal.Extensions.Standard
             ResultBuilder.Add( "Geckon.Portal",
                                new ScalarResult( result ) );
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "guid", guid           ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "guid", guid           ) );
 
             return GetContentResult();
         }
@@ -115,8 +109,8 @@ namespace Geckon.Portal.Extensions.Standard
             ResultBuilder.Add( "Geckon.Portal",
                                new ScalarResult( result ) );
 
-            CallModules( new Parameter( "sessionID", sessionID ),
-                         new Parameter( "guid", guid           ) );
+            //CallModules( new Parameter( "sessionID", sessionID ),
+            //             new Parameter( "guid", guid           ) );
 
             return GetContentResult();
         }

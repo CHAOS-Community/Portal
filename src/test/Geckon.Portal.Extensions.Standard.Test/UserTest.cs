@@ -11,8 +11,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [Test]
         public void Should_Update_User()
         {
-            UserExtension extension = new UserExtension( new PortalContextMock() );
-            extension.Init( new Result(), Session.SessionID.ToString() );
+            UserExtension extension = new UserExtension(  );
+            extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
 
             XDocument xdoc = XDocument.Parse( extension.Update( Session.SessionID.ToString(), "new", null, null, null ).Content );
 
@@ -22,8 +22,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [Test]
         public void Should_Create_User()
         {
-            UserExtension extension = new UserExtension(new PortalContextMock());
-            extension.Init( new Result(), Session.SessionID.ToString() );
+            UserExtension extension = new UserExtension();
+            extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
 
             XDocument xdoc = XDocument.Parse(extension.Create(Session.SessionID.ToString(), "new", null, null, "email").Content);
 
@@ -33,8 +33,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [Test]
         public void Should_Get_User()
         {
-            UserExtension extension = new UserExtension(new PortalContextMock());
-            extension.Init( new Result(), Session.SessionID.ToString() );
+            UserExtension extension = new UserExtension();
+            extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
 
             XDocument xdoc = XDocument.Parse(extension.Get(Session.SessionID.ToString()).Content);
 
@@ -44,8 +44,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
         [Test]
         public void Should_Delete_User()
         {
-            UserExtension extension = new UserExtension(new PortalContextMock());
-            extension.Init( new Result(), Session.SessionID.ToString() );
+            UserExtension extension = new UserExtension();
+            extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
 
             XDocument xdoc = XDocument.Parse( extension.Delete( Session.SessionID.ToString(), User.GUID.ToString() ).Content);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Data;
@@ -12,6 +13,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         public ICache Cache { get; set; }
         public ISolr  Solr { get; set; }
         public string SessionID { get; set; }
+        public IEnumerable<Parameter> Parameters { get;  set; }
 
         public Data.Dto.UserInfo User
         {
@@ -47,7 +49,6 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         public CallContext()
         {
-            
         }
 
         #endregion
