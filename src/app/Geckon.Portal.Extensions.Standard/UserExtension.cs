@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using Geckon.Portal.Core;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
-using Geckon.Portal.Data.Dto;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -17,8 +15,6 @@ namespace Geckon.Portal.Extensions.Standard
         {
             ResultBuilder.Add( "Geckon.Portal", CallContext.User );
 
-    //        CallModules( new Parameter( "sessionID", sessionID ) );
-
             return GetContentResult();
         }
         
@@ -29,17 +25,11 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                Data.Dto.User user = Data.Dto.User.Create( db.User_Insert( null, firstname, middlename, lastname, email ).First() );
+                User user = db.User_Insert( null, firstname, middlename, lastname, email ).First();
 
                 ResultBuilder.Add( "Geckon.Portal",
                                    user );
             }
-
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "firstname", firstname ),
-            //             new Parameter( "middlename", middlename ),
-            //             new Parameter( "lastname", lastname ),
-            //             new Parameter( "email", email ) );
 
             return GetContentResult();
         }
@@ -49,21 +39,15 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Update( string sessionID, string firstname, string middlename, string lastname, string email )
         {
-            Data.Dto.UserInfo user = CallContext.User;
+            UserInfo user = CallContext.User;
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                Data.Dto.User updatedUser = Data.Dto.User.Create( db.User_Update( user.GUID, null, firstname, middlename, lastname, email ).First() );
+                User updatedUser = db.User_Update( user.GUID, null, firstname, middlename, lastname, email ).First();
 
                 ResultBuilder.Add( "Geckon.Portal",
                                    updatedUser );
             }
-
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "firstname", firstname ),
-            //             new Parameter( "middlename", middlename ),
-            //             new Parameter( "lastname", lastname ),
-            //             new Parameter( "email", email ) );
 
             return GetContentResult();
         }
@@ -73,7 +57,7 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Delete(string sessionID, string userGUID)
         {
-            Data.Dto.UserInfo user = CallContext.User;
+            UserInfo user = CallContext.User;
 
             if( user.GUID.ToString() != userGUID )
                 throw new InsufficientPermissionsExcention( "The current user doesn't have permissions to delete the user with guid: " + userGUID );
@@ -85,9 +69,6 @@ namespace Geckon.Portal.Extensions.Standard
                 ResultBuilder.Add( "Geckon.Portal",
                                    new ScalarResult( result ) );
             }
-
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "userGUID", userGUID ) );
 
             return GetContentResult();
         }

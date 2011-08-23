@@ -1,5 +1,5 @@
 ﻿using System.ServiceModel.Web;
-using Geckon.Portal.Data.Dto;
+using Geckon.Portal.Data;
 
 namespace Geckon.Portal.Login
 {

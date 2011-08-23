@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using Geckon.Portal.Core;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
-using Geckon.Portal.Data.Dto;
-using Subscription = Geckon.Portal.Data.Subscription;
-using UserInfo = Geckon.Portal.Data.Dto.UserInfo;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -28,13 +24,8 @@ namespace Geckon.Portal.Extensions.Standard
             if( result == null )
                 throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
 
-            Data.Dto.Subscription subscription = Data.Dto.Subscription.Create( result );
-
             ResultBuilder.Add( "Geckon.Portal",
-                                   subscription );
-
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "guid", guid           ) );
+                               result );
 
             return GetContentResult();
         }
@@ -53,14 +44,11 @@ namespace Geckon.Portal.Extensions.Standard
                 if( result == -100 )
                     throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
 
-                Data.Dto.Subscription subscription = Data.Dto.Subscription.Create( db.Subscription_Get( result, null, null, user.ID ).First() );
+                Subscription subscription = db.Subscription_Get( result, null, null, user.ID ).First();
 
                 ResultBuilder.Add( "Geckon.Portal",
                                    subscription );
             }
-
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "name", name           ) );
 
             return GetContentResult();
         }
@@ -84,9 +72,6 @@ namespace Geckon.Portal.Extensions.Standard
             ResultBuilder.Add( "Geckon.Portal",
                                new ScalarResult( result ) );
 
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "guid", guid           ) );
-
             return GetContentResult();
         }
 
@@ -109,12 +94,16 @@ namespace Geckon.Portal.Extensions.Standard
             ResultBuilder.Add( "Geckon.Portal",
                                new ScalarResult( result ) );
 
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "guid", guid           ) );
-
             return GetContentResult();
         }
 
         #endregion
+    }
+}
+
+namespace Geckon.Portal.Data.Dto
+{
+    public class UserInfo
+    {
     }
 }

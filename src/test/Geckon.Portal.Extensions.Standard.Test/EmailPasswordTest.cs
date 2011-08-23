@@ -33,7 +33,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             XDocument xdoc = XDocument.Parse(extension.LoginEmailPassword( Session.SessionID.ToString(), User.Email, "pbvu7000" ).Content );
 
             Assert.IsNotNull(xdoc.Descendants("GUID").FirstOrDefault());
-            Assert.AreEqual(1, xdoc.Descendants("Geckon.Portal.Data.Dto.UserInfo").Count() );
+            Assert.AreEqual(1, xdoc.Descendants("Geckon.Portal.Data.UserInfo").Count() );
         }
     }
 }

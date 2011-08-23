@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using Geckon.Portal.Core;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
 using Geckon.Portal.Data.Dto;
+using UserInfo = Geckon.Portal.Data.UserInfo;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -17,16 +17,13 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                Guid?             groupGuid = string.IsNullOrEmpty( guid ) ? (Guid?) null : Guid.Parse( guid );
-                Data.Dto.UserInfo user      = CallContext.User;
-                Data.Dto.Group    group     = Data.Dto.Group.Create( db.Group_Get( null, groupGuid, null, user.ID ).First() );
+                Guid?    groupGuid = string.IsNullOrEmpty( guid ) ? (Guid?) null : Guid.Parse( guid );
+                UserInfo user      = CallContext.User;
+                Group    group     = db.Group_Get( null, groupGuid, null, user.ID ).First();
 
                 ResultBuilder.Add( "Geckon.Portal",
                                    group );
             }
-
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "guid", guid ) );
 
             return GetContentResult();
         }
@@ -36,7 +33,7 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Create( string sessionID, string name, int systemPermission )
         {
-            Data.Dto.UserInfo user = CallContext.User;
+            UserInfo user = CallContext.User;
 
             if( user.GUID == PortalContext.AnonymousUserGUID )
                 throw new InsufficientPermissionsExcention( "Anonymous users cannot create groups" );
@@ -49,9 +46,6 @@ namespace Geckon.Portal.Extensions.Standard
                                    new ScalarResult( result ) );
             }
 
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "name", name ) );
-
             return GetContentResult( );
         }
 
@@ -60,7 +54,7 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Delete( string sessionID, string groupGUID )
         {
-            Data.Dto.UserInfo user = CallContext.User;
+            UserInfo user = CallContext.User;
 
             if( user.GUID == PortalContext.AnonymousUserGUID )
                 throw new InsufficientPermissionsExcention( "Anonymous users cannot delete groups" );
@@ -76,9 +70,6 @@ namespace Geckon.Portal.Extensions.Standard
                                    new ScalarResult( result ) );
             }
 
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "groupGUID", groupGUID ) );
-
             return GetContentResult( );
         }
 
@@ -87,7 +78,7 @@ namespace Geckon.Portal.Extensions.Standard
 
         public ContentResult Update( string sessionID, string groupGUID, string newName, int newSystemPermission )
         {
-            Data.Dto.UserInfo user = CallContext.User;
+            UserInfo user = CallContext.User;
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
@@ -99,11 +90,6 @@ namespace Geckon.Portal.Extensions.Standard
                 ResultBuilder.Add( "Geckon.Portal",
                                    new ScalarResult( result ) );
             }
-
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "groupGUID", groupGUID ),
-            //             new Parameter( "newName", newName ),
-            //             new Parameter( "newSystemPermission", newSystemPermission ) );
 
             return GetContentResult( );
         }

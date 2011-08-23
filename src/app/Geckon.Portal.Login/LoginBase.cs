@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.ServiceModel.Web;
 using Geckon.Portal.Data;
-using User = Geckon.Portal.Data.Dto.User;
 using System;
 
 namespace Geckon.Portal.Login

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Geckon.Portal.Data.Dto;
+using Geckon.Portal.Data;
 
 namespace Geckon.Portal.Core.Extension
 {

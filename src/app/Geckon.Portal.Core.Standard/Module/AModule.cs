@@ -39,7 +39,7 @@ namespace Geckon.Portal.Core.Standard.Module
                 {
                     Datatype datatype = (Datatype) attributes[0];
 
-                    RegisteredMethods.Add( datatype.Event == null ? method.Name : datatype.Event,
+                    RegisteredMethods.Add( datatype.ToString(),
                                            new MethodSignature( datatype, 
                                                                 method, 
                                                                 method.GetParameters().Select( info => new Parameter( info.Name, info.GetType() ) ).ToArray() ) 

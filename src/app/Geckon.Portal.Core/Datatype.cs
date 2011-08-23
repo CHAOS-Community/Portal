@@ -18,9 +18,12 @@ namespace Geckon.Portal.Core
             Event     = _Event;
         }
 
-        public Datatype( string extensionName )
+        #endregion
+        #region Override
+
+        public override string ToString()
         {
-            EventType = extensionName;
+            return String.Format( "{0}:{1}", EventType, Event );
         }
 
         #endregion

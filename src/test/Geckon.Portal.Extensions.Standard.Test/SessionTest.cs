@@ -52,7 +52,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             ContentResult result = sessionExtension.Delete( Session.SessionID.ToString() );
 
-            Assert.IsNotNull( XDocument.Parse( result.Content ).Descendants("Geckon.Portal.Data.Dto.ScalarResult").FirstOrDefault() );
+            Assert.IsNotNull( XDocument.Parse( result.Content ).Descendants("Geckon.Portal.Data.ScalarResult").FirstOrDefault() );
         }
     }
 }

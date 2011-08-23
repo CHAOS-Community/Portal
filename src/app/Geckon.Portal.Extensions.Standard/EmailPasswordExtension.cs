@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Mvc;
-using Geckon.Portal.Core;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
@@ -19,7 +18,7 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                Data.Dto.UserInfo user = UserInfo.Create( db.UserInfo_Get( Guid.Parse( userGUID ), null, null, null, null ).First() );
+                UserInfo user = db.UserInfo_Get( Guid.Parse( userGUID ), null, null, null, null ).First();
 
                 // If other logins have been created, the sessionID has to match the user
                 if( db.AuthenticationProvider_User_Join_Get( user.ID, null, null ).Count() > 0 )
@@ -40,10 +39,6 @@ namespace Geckon.Portal.Extensions.Standard
                                    user );
             }
 
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "userGUID", userGUID ),
-            //             new Parameter( "password", password ) );
-
             return GetContentResult();
         }
 
@@ -60,16 +55,12 @@ namespace Geckon.Portal.Extensions.Standard
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                Data.Dto.UserInfo user = Data.Dto.UserInfo.Create( db.UserInfo_Get( null, null, email, hash, EmailPasswordAuthenticationProviderGUID ).First() );
+                UserInfo user = db.UserInfo_Get( null, null, email, hash, EmailPasswordAuthenticationProviderGUID ).First();
                 db.Session_Update( null, user.GUID, null, Guid.Parse( sessionID ), null, null ).First();
                 
                 ResultBuilder.Add( "Geckon.Portal",
                                    user );
             }
-
-            //CallModules( new Parameter( "sessionID", sessionID ),
-            //             new Parameter( "email", email ), 
-            //             new Parameter( "password", password ) );
 
             return GetContentResult();
         }

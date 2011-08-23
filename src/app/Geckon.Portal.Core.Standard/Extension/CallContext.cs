@@ -15,17 +15,17 @@ namespace Geckon.Portal.Core.Standard.Extension
         public string SessionID { get; set; }
         public IEnumerable<Parameter> Parameters { get;  set; }
 
-        public Data.Dto.UserInfo User
+        public UserInfo User
         {
             get
             {
-                Data.Dto.UserInfo userInfo = Cache.Get<Data.Dto.UserInfo>( string.Format( "[UserInfo:sid={0}]", SessionID ) );
+                UserInfo userInfo = Cache.Get<UserInfo>( string.Format( "[UserInfo:sid={0}]", SessionID ) );
 
                 if (userInfo == null)
                 {
                     using( PortalDataContext db = PortalDataContext.Default() )
                     {
-                        userInfo = Data.Dto.UserInfo.Create( db.UserInfo_Get( null, Guid.Parse( SessionID ), null, null, null ).First() );
+                        userInfo = db.UserInfo_Get( null, Guid.Parse( SessionID ), null, null, null ).First();
 
                         Cache.Put( string.Format("[UserInfo:sid={0}]", SessionID ),
                                    userInfo.ToXML().OuterXml,
