@@ -77,7 +77,7 @@ namespace Geckon.Portal.Core.Standard.Module
 
         public IEnumerable<XmlSerialize> InvokeMethod(IMethodQuery methodQuery)
         {
-            IMethodSignature method = RegisteredMethods[ methodQuery.EventType.Type ];
+            IMethodSignature method = RegisteredMethods[ methodQuery.EventType.EventName + ":" + methodQuery.EventType.Type ];
             
             // TODO: Error Handling so nice Exceptions are thrown in case of signature mismatch 
             object result = method.Method.Invoke( this, GetRelevantParameters( method.Parameters, methodQuery ) );
@@ -97,14 +97,9 @@ namespace Geckon.Portal.Core.Standard.Module
             throw new UnsupportedModuleReturnType( "Only a return type of XmlSerialize or IEnumerable<XmlSerialize> is supported" );
         }
 
-        public bool ContainsMethodSignature( IMethodQuery methodQuery )
-        {
-            return RegisteredMethods.ContainsKey( methodQuery.EventType.EventName ) && RegisteredMethods[ methodQuery.EventType.EventName ].Datatype.EventType == methodQuery.EventType.Type;
-        }
-
         public bool ContainsServiceHook( string extension, string action )
         {
-            return  RegisteredMethods.ContainsKey( action ) && RegisteredMethods[ action ].Datatype.EventType == extension;
+            return  RegisteredMethods.ContainsKey( extension + ":" + action );
         }
 
         private object[] GetRelevantParameters( Parameter[] parameters, IMethodQuery methodQuery )

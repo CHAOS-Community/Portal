@@ -10,7 +10,7 @@ namespace Geckon.Portal.Core.Module
         void Init( IPortalContext portalContext, XDocument config );
         void Init( IPortalContext portalContext, XElement config );
         IEnumerable<XmlSerialize> InvokeMethod( IMethodQuery methodQuery );
-        bool ContainsMethodSignature( IMethodQuery methodQuery );
+    //    bool ContainsMethodSignature( IMethodQuery methodQuery );
         bool ContainsServiceHook(string extension, string action);
     }
 }

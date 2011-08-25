@@ -61,8 +61,8 @@ namespace Geckon.Portal.Core.Standard.Extension
             }
 
             // This Set the CallContext on the Method if specified
-            if( filterContext.ActionParameters.ContainsKey( "context" ) )
-                filterContext.ActionParameters["context"] = CallContext;
+            if( filterContext.ActionParameters.ContainsKey( "callContext" ) )
+                filterContext.ActionParameters["callContext"] = CallContext;
 
             CallContext.Parameters = filterContext.ActionParameters.Select( (parameter) => new Parameter( parameter.Key, parameter.Value ) );
 
@@ -75,7 +75,8 @@ namespace Geckon.Portal.Core.Standard.Extension
         /// <param name="filterContext"></param>
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            CallModules( CallContext.Parameters );
+            CallModules( CallContext.Parameters.ToList() );
+            
             //filterContext.Result = GetContentResult();
 
             base.OnActionExecuted(filterContext);
@@ -150,14 +151,21 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region Module
 
-        private void CallModules( IEnumerable<Parameter> parameters )
+        protected void CallModules( params Parameter[] parameters )
+        {
+            CallModules( parameters.Select( (parameter)=>parameter ).ToList() );
+        }
+
+        private void CallModules(IList<Parameter> parameters)
         {
             foreach( IChecked<IModule> associatedModule in AssociatedModules.Values.Where( module => !module.IsChecked ) )
             {
-                ResultBuilder.Add( associatedModule.Value.GetType().FullName, 
-                                   associatedModule.Value.InvokeMethod( new MethodQuery( Controller, 
+                parameters.Add( new Parameter( "callContext", CallContext ) );
+
+                ResultBuilder.Add( associatedModule.Value.GetType().FullName,
+                                   associatedModule.Value.InvokeMethod( new MethodQuery( Controller,
                                                                                          Action,
-                                                                                         parameters)));
+                                                                                         parameters ) ) );
 
                 associatedModule.IsChecked = true;
             }
