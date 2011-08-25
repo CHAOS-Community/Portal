@@ -76,6 +76,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             CallModules( CallContext.Parameters );
+            //filterContext.Result = GetContentResult();
 
             base.OnActionExecuted(filterContext);
         }

@@ -5,3 +5,4 @@ _ReSharper.Portal
 bin
 obj
 build
+/src/app/Geckon.Portal/Geckon.Portal.Publish.xml

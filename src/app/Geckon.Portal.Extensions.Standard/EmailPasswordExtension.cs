@@ -21,11 +21,8 @@ namespace Geckon.Portal.Extensions.Standard
                 UserInfo user = db.UserInfo_Get( Guid.Parse( userGUID ), null, null, null, null ).First();
 
                 // If other logins have been created, the sessionID has to match the user
-                if( db.AuthenticationProvider_User_Join_Get( user.ID, null, null ).Count() > 0 )
-                {
-                    if( !user.GUID.Equals( CallContext.User.GUID ) )
-                        throw new InsufficientPermissionsExcention( "Users can only change their own password" );
-                }
+                if( db.AuthenticationProvider_User_Join_Get( user.ID, null, null ).Count() > 0 && !user.GUID.Equals( CallContext.User.GUID ) )
+                    throw new InsufficientPermissionsExcention("Users can only change their own password");
 
                 SHA1Managed sha1 = new SHA1Managed();
 
