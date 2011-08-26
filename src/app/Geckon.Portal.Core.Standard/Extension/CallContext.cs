@@ -37,6 +37,17 @@ namespace Geckon.Portal.Core.Standard.Extension
             }
         }
 
+        public IEnumerable<Group> Groups
+        {
+            get
+            {
+                using( PortalDataContext db = PortalDataContext.Default() )
+                {
+                    return db.Group_Get( null, null, null, User.ID ).ToList();
+                }
+            }
+        }
+
         #endregion
         #region Construction
 

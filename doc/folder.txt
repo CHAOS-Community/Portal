@@ -1,0 +1,33 @@
+[Subscription]
+|
+|__[Repository 1]
+|  |
+|  |__[Public Folder]
+|  |  |
+|  |  |__[Public Subfolder]
+|  |
+|  |__[Users]
+|     |
+|     |__[Jesper Fyhr Knudsen]
+|     |  |
+|     |  |__[Personal subfolder]
+|     |
+|     |__[Hans Christian Andersen]
+|
+|__[Repository 2]
+   |
+   |__[Public Folder]
+   |  |
+   |  |__[Public Subfolder]
+   |
+   |__[Users]
+      |
+      |__[Jesper Fyhr Knudsen]
+      |  |
+      |  |__[Personal subfolder]
+      |  |
+      |  |__[Other subfolder]
+      |
+      |__[Hans Christian Andersen]
+         |
+         |__[Das Feuerzeug]

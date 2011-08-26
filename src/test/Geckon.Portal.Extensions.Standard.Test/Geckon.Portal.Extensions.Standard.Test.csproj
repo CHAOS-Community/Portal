@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CallContextTest.cs" />
     <Compile Include="EmailPasswordTest.cs" />
     <Compile Include="GroupTest.cs" />
     <Compile Include="PortalContextMock.cs" />
