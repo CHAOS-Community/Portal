@@ -14,7 +14,7 @@ namespace Geckon.Portal.Extensions.Standard
     {
         #region Create Password (Email/Password)
         
-        public ContentResult CreatePassword( string sessionID, string userGUID, string password )
+        public void CreatePassword( string sessionID, string userGUID, string password )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
@@ -35,14 +35,12 @@ namespace Geckon.Portal.Extensions.Standard
                 ResultBuilder.Add( "Geckon.Portal",
                                    user );
             }
-
-            return GetContentResult();
         }
 
         #endregion
         #region Login (Email/password)
 
-        public ContentResult LoginEmailPassword( string sessionID, string email, string password )
+        public void Login( string sessionID, string email, string password )
         {
             SHA1Managed sha1 = new SHA1Managed();
 
@@ -58,8 +56,6 @@ namespace Geckon.Portal.Extensions.Standard
                 ResultBuilder.Add( "Geckon.Portal",
                                    user );
             }
-
-            return GetContentResult();
         }
 
         private Guid? _EmailPasswordAuthenticationProviderID;

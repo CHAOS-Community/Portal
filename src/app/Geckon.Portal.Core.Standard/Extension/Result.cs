@@ -26,15 +26,15 @@ namespace Geckon.Portal.Core.Standard.Extension
                 foreach( KeyValuePair<string, IModuleResult> moduleResult in _Content )
                 {
                     sb.AppendFormat( "<{0}{1} Count=\"{2}\">", moduleResult.Key, 
-                                                     GetAttributeString( moduleResult.Value.Attributes ),
-                                                     moduleResult.Value.Elements.Count() );
+                                                               GetAttributeString( moduleResult.Value.Attributes ),
+                                                               moduleResult.Value.Elements.Count() );
 
                     foreach( XmlSerialize xmlSerialize in moduleResult.Value.Elements )
                     {
                         sb.Append( xmlSerialize.ToXML().OuterXml );
                     }
 
-                    sb.AppendFormat( "</{0}>", moduleResult.Key);
+                    sb.AppendFormat( "</{0}>", moduleResult.Key );
                 }
 
                 return sb.ToString();

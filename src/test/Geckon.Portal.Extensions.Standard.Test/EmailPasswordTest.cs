@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
+using Geckon.Portal.Core;
 using Geckon.Portal.Core.Standard.Extension;
 using NUnit.Framework;
 
@@ -13,10 +14,11 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             EmailPasswordExtension extension = new EmailPasswordExtension( );
             extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.CallContext.Parameters = new[] { new Parameter("sessionID", Session.SessionID.ToString()), new Parameter("userGUID", User.GUID.ToString()), new Parameter("password", "pbvu7000")};
 
-            XDocument xdoc = XDocument.Parse( extension.CreatePassword( Session.SessionID.ToString(), User.GUID.ToString(), "pbvu7000" ).Content );
+            extension.CreatePassword( Session.SessionID.ToString(), User.GUID.ToString(), "pbvu7000" );
             
-            Assert.IsNotNull( xdoc.Descendants( "GUID" ).FirstOrDefault() );
+            Assert.IsNotNull( XDocument.Parse(extension.GetContentResult().Content).Descendants( "GUID" ).FirstOrDefault() );
         }
 
         [Test]
@@ -24,16 +26,12 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             EmailPasswordExtension extension = new EmailPasswordExtension();
             extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.CallContext.Parameters = new[] { new Parameter("sessionID", AdminUser.SessionID.ToString()), new Parameter("email", AdminUser.Email), new Parameter("password", "pbvu7000")};
 
-            extension.CreatePassword(Session.SessionID.ToString(), User.GUID.ToString(), "pbvu7000");
+            extension.Login( AdminUser.SessionID.ToString(), AdminUser.Email, "pbvu7000" );
 
-            extension = new EmailPasswordExtension();
-            extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
-
-            XDocument xdoc = XDocument.Parse(extension.LoginEmailPassword( Session.SessionID.ToString(), User.Email, "pbvu7000" ).Content );
-
-            Assert.IsNotNull(xdoc.Descendants("GUID").FirstOrDefault());
-            Assert.AreEqual(1, xdoc.Descendants("Geckon.Portal.Data.UserInfo").Count() );
+            Assert.IsNotNull(XDocument.Parse(extension.GetContentResult().Content).Descendants("GUID").FirstOrDefault());
+            Assert.AreEqual(1, XDocument.Parse(extension.GetContentResult().Content).Descendants("Geckon.Portal.Data.UserInfo").Count());
         }
     }
 }

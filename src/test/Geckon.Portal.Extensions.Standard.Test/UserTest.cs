@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
+using Geckon.Portal.Core;
 using Geckon.Portal.Core.Standard.Extension;
 using NUnit.Framework;
 
@@ -13,10 +14,11 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             UserExtension extension = new UserExtension(  );
             extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.CallContext.Parameters = new Parameter[0];
 
-            XDocument xdoc = XDocument.Parse( extension.Update( Session.SessionID.ToString(), "new", null, null, null ).Content );
+            extension.Update( Session.SessionID.ToString(), "new", null, null, null  );
 
-            Assert.AreEqual( "new", xdoc.Descendants( "Firstname" ).First().Value );
+            Assert.AreEqual( "new", XDocument.Parse(extension.GetContentResult().Content).Descendants( "Firstname" ).First().Value );
         }
 
         [Test]
@@ -24,10 +26,11 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             UserExtension extension = new UserExtension();
             extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.CallContext.Parameters = new Parameter[0];
 
-            XDocument xdoc = XDocument.Parse(extension.Create(Session.SessionID.ToString(), "new", null, null, "email").Content);
+            extension.Create(Session.SessionID.ToString(), "new", null, null, "email");
 
-            Assert.AreEqual("new", xdoc.Descendants("Firstname").First().Value);
+            Assert.AreEqual("new", XDocument.Parse(extension.GetContentResult().Content).Descendants("Firstname").First().Value);
         }
 
         [Test]
@@ -35,10 +38,11 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             UserExtension extension = new UserExtension();
             extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.CallContext.Parameters = new Parameter[0];
 
-            XDocument xdoc = XDocument.Parse(extension.Get(Session.SessionID.ToString()).Content);
+            extension.Get(Session.SessionID.ToString());
 
-            Assert.AreEqual("Anonymous", xdoc.Descendants("Firstname").First().Value);
+            Assert.AreEqual("Anonymous", XDocument.Parse(extension.GetContentResult().Content).Descendants("Firstname").First().Value);
         }
 
         [Test]
@@ -46,10 +50,11 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             UserExtension extension = new UserExtension();
             extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.CallContext.Parameters = new Parameter[0];
 
-            XDocument xdoc = XDocument.Parse( extension.Delete( Session.SessionID.ToString(), User.GUID.ToString() ).Content);
+            extension.Delete( Session.SessionID.ToString(), User.GUID.ToString() );
 
-            Assert.AreEqual("1", xdoc.Descendants("Value").First().Value);
+            Assert.AreEqual("1", XDocument.Parse(extension.GetContentResult().Content).Descendants("Value").First().Value);
         }
     }
 }

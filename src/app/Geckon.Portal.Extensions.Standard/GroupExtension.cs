@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Web.Mvc;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
-using Geckon.Portal.Data.Dto;
-using UserInfo = Geckon.Portal.Data.UserInfo;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -13,7 +10,7 @@ namespace Geckon.Portal.Extensions.Standard
     {
         #region Get
 
-        public ContentResult Get( string sessionID, string guid )
+        public void Get( string sessionID, string guid )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
@@ -24,14 +21,12 @@ namespace Geckon.Portal.Extensions.Standard
                 ResultBuilder.Add( "Geckon.Portal",
                                    group );
             }
-
-            return GetContentResult();
         }
 
         #endregion
         #region Create
 
-        public ContentResult Create( string sessionID, string name, int systemPermission )
+        public void Create( string sessionID, string name, int systemPermission )
         {
             UserInfo user = CallContext.User;
 
@@ -45,14 +40,12 @@ namespace Geckon.Portal.Extensions.Standard
                 ResultBuilder.Add( "Geckon.Portal",
                                    new ScalarResult( result ) );
             }
-
-            return GetContentResult( );
         }
 
         #endregion
         #region Delete
 
-        public ContentResult Delete( string sessionID, string groupGUID )
+        public void Delete( string sessionID, string groupGUID )
         {
             UserInfo user = CallContext.User;
 
@@ -69,14 +62,12 @@ namespace Geckon.Portal.Extensions.Standard
                 ResultBuilder.Add( "Geckon.Portal",
                                    new ScalarResult( result ) );
             }
-
-            return GetContentResult( );
         }
 
         #endregion
         #region Update
 
-        public ContentResult Update( string sessionID, string groupGUID, string newName, int newSystemPermission )
+        public void Update( string sessionID, string groupGUID, string newName, int newSystemPermission )
         {
             UserInfo user = CallContext.User;
 
@@ -90,8 +81,6 @@ namespace Geckon.Portal.Extensions.Standard
                 ResultBuilder.Add( "Geckon.Portal",
                                    new ScalarResult( result ) );
             }
-
-            return GetContentResult( );
         }
 
         #endregion

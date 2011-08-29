@@ -24,7 +24,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         protected IDictionary<Type, IChecked<IModule>> AssociatedModules { get; set; }
         protected string Controller { get; set; }
         protected string Action { get; set; }
-        protected ICallContext CallContext { get; set; }
+        public ICallContext CallContext { get; set; }
 
         #endregion
         #region Constructors
@@ -75,9 +75,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         /// <param name="filterContext"></param>
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            CallModules( CallContext.Parameters.ToList() );
-            
-            //filterContext.Result = GetContentResult();
+            filterContext.Result = GetContentResult();
 
             base.OnActionExecuted(filterContext);
         }
@@ -103,8 +101,10 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region Result formatting
 
-        protected ContentResult GetContentResult()
+        public ContentResult GetContentResult()
         {
+            CallModules( CallContext.Parameters.ToList() );
+
             return GetContentResult( ResultBuilder.Content );
         }
 
@@ -121,22 +121,6 @@ namespace Geckon.Portal.Core.Standard.Extension
             return result;
         }
 
-        protected ContentResult GetContentResult( IEnumerable<XmlSerialize> contents )
-        {
-            return GetContentResult( ConvertToString( contents ) );
-        }
-
-        protected string ConvertToString( IEnumerable<XmlSerialize> contents )
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            foreach( XmlSerialize xml in contents )
-            {
-                stringBuilder.Append(xml.ToXML().OuterXml);
-            }
-
-            return stringBuilder.ToString();
-        }
 
         protected ContentResult GetContentResult( XmlDocument content )
         {

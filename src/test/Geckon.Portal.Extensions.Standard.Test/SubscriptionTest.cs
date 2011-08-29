@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
+using Geckon.Portal.Core;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using NUnit.Framework;
@@ -14,10 +15,11 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             SubscriptionExtension extension = new SubscriptionExtension( );
             extension.Init( new PortalContextMock(),new Result(), AdminSession.SessionID.ToString() );
+            extension.CallContext.Parameters = new Parameter[0];
 
-            XDocument xdoc = XDocument.Parse( extension.Get( AdminUser.SessionID.ToString(), Subscription.GUID.ToString() ).Content );
+            extension.Get( AdminUser.SessionID.ToString(), Subscription.GUID.ToString() );
 
-            Assert.AreEqual( Subscription.GUID.ToString(), xdoc.Descendants( "GUID" ).First().Value );
+            Assert.AreEqual( Subscription.GUID.ToString(), XDocument.Parse(extension.GetContentResult().Content).Descendants( "GUID" ).First().Value );
         }
 
         [Test, ExpectedException( typeof(InsufficientPermissionsExcention) )]
@@ -34,10 +36,11 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             SubscriptionExtension extension = new SubscriptionExtension( );
             extension.Init( new PortalContextMock(),new Result(), AdminSession.SessionID.ToString() );
+            extension.CallContext.Parameters = new Parameter[0];
 
-            XDocument xdoc = XDocument.Parse( extension.Create( AdminUser.SessionID.ToString(), "some name" ).Content );
+            extension.Create( AdminUser.SessionID.ToString(), "some name" );
 
-            Assert.AreEqual( "some name", xdoc.Descendants( "Name" ).First().Value );
+            Assert.AreEqual( "some name", XDocument.Parse(extension.GetContentResult().Content).Descendants( "Name" ).First().Value );
         }
 
         [Test, ExpectedException( typeof(InsufficientPermissionsExcention) )]
@@ -45,6 +48,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             SubscriptionExtension extension = new SubscriptionExtension(  );
             extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.CallContext.Parameters = new Parameter[0];
 
             extension.Create( User.SessionID.ToString(), "some name" );
         }
@@ -54,10 +58,11 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             SubscriptionExtension extension = new SubscriptionExtension(  );
             extension.Init( new PortalContextMock(),new Result(), AdminSession.SessionID.ToString() );
+            extension.CallContext.Parameters = new Parameter[0];
 
-            XDocument xdoc = XDocument.Parse( extension.Delete( AdminUser.SessionID.ToString(), Subscription.GUID.ToString() ).Content );
+            extension.Delete( AdminUser.SessionID.ToString(), Subscription.GUID.ToString() );
 
-            Assert.AreEqual( "1", xdoc.Descendants( "Value" ).First().Value );
+            Assert.AreEqual( "1", XDocument.Parse(extension.GetContentResult().Content).Descendants( "Value" ).First().Value );
         }
 
         [Test, ExpectedException( typeof(InsufficientPermissionsExcention) )]
@@ -65,6 +70,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             SubscriptionExtension extension = new SubscriptionExtension(  );
             extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.CallContext.Parameters = new Parameter[0];
 
             extension.Delete( User.SessionID.ToString(), Subscription.GUID.ToString() );
         }
@@ -74,10 +80,11 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             SubscriptionExtension extension = new SubscriptionExtension( );
             extension.Init( new PortalContextMock(),new Result(), AdminSession.SessionID.ToString() );
+            extension.CallContext.Parameters = new Parameter[0];
 
-            XDocument xdoc = XDocument.Parse( extension.Update( AdminUser.SessionID.ToString(), Subscription.GUID.ToString(), "new subscription name" ).Content );
+            extension.Update( AdminUser.SessionID.ToString(), Subscription.GUID.ToString(), "new subscription name" );
 
-            Assert.AreEqual( "1", xdoc.Descendants( "Value" ).First().Value );
+            Assert.AreEqual( "1", XDocument.Parse(extension.GetContentResult().Content).Descendants( "Value" ).First().Value );
         }
 
         [Test, ExpectedException( typeof(InsufficientPermissionsExcention) )]
@@ -85,6 +92,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             SubscriptionExtension extension = new SubscriptionExtension(  );
             extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.CallContext.Parameters = new Parameter[0];
 
             extension.Update( User.SessionID.ToString(), Subscription.GUID.ToString(), "new subscription name" );
         }

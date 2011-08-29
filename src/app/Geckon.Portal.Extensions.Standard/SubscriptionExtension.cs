@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Web.Mvc;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
@@ -11,7 +10,7 @@ namespace Geckon.Portal.Extensions.Standard
     {
         #region Get
 
-        public ContentResult Get( string sessionID, string guid )
+        public void Get( string sessionID, string guid )
         {
             UserInfo     user   = CallContext.User;
             Subscription result = null;
@@ -26,14 +25,12 @@ namespace Geckon.Portal.Extensions.Standard
 
             ResultBuilder.Add( "Geckon.Portal",
                                result );
-
-            return GetContentResult();
         }
 
         #endregion
         #region Create
 
-        public ContentResult Create( string sessionID, string name )
+        public void Create( string sessionID, string name )
         {
             UserInfo user   = CallContext.User;
 
@@ -49,14 +46,12 @@ namespace Geckon.Portal.Extensions.Standard
                 ResultBuilder.Add( "Geckon.Portal",
                                    subscription );
             }
-
-            return GetContentResult();
         }
 
         #endregion
         #region Delete
 
-        public ContentResult Delete( string sessionID, string guid )
+        public void Delete( string sessionID, string guid )
         {
             UserInfo user   = CallContext.User;
             int      result = 0;
@@ -71,14 +66,12 @@ namespace Geckon.Portal.Extensions.Standard
 
             ResultBuilder.Add( "Geckon.Portal",
                                new ScalarResult( result ) );
-
-            return GetContentResult();
         }
 
         #endregion
         #region Update
 
-        public ContentResult Update( string sessionID, string guid, string newName )
+        public void Update( string sessionID, string guid, string newName )
         {
             UserInfo user      = CallContext.User;
             int      result    = 0;
@@ -93,8 +86,6 @@ namespace Geckon.Portal.Extensions.Standard
 
             ResultBuilder.Add( "Geckon.Portal",
                                new ScalarResult( result ) );
-
-            return GetContentResult();
         }
 
         #endregion
