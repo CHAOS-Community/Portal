@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Portal" Class="PortalDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=192.168.56.101;Initial Catalog=Portal;Persist Security Info=True;User ID=sa" SettingsObjectName="Geckon.Portal.Data.Properties.Settings" SettingsPropertyName="PortalConnectionString7" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=192.168.56.101;Initial Catalog=Portal;Persist Security Info=True;User ID=sa" SettingsObjectName="Geckon.Portal.Data.Properties.Settings" SettingsPropertyName="PortalConnectionString8" Provider="System.Data.SqlClient" />
   <Table Name="dbo.AuthenticationProvider" Member="AuthenticationProviders">
     <Type Name="AuthenticationProvider">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -80,7 +80,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Subscription" Member="Subscriptions">
-    <Type Name="Subscription" Id="ID7">
+    <Type Name="Subscription">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
@@ -144,7 +144,7 @@
     </Type>
   </Table>
   <Table Name="dbo.[Group]" Member="Groups">
-    <Type Name="Group" Id="ID8">
+    <Type Name="Group" Id="ID7">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="SystemPermission" Type="System.Data.Linq.Binary" DbType="VarBinary(32) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
@@ -154,7 +154,7 @@
     </Type>
   </Table>
   <Table Name="dbo.UserInfo" Member="UserInfos">
-    <Type Name="UserInfo" Id="ID9">
+    <Type Name="UserInfo" Id="ID8">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="SessionID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
@@ -166,6 +166,16 @@
       <Column Name="ClientSettingID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="DateModified" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="SessionDateCreated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SubscriptionInfo" Member="SubscriptionInfos">
+    <Type Name="SubscriptionInfo" Id="ID9">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Permission" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Function Name="dbo.Session_Update" Method="Session_Update">
@@ -269,20 +279,7 @@
     <Parameter Name="Permission" Parameter="permission" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID6" />
   </Function>
-  <Function Name="dbo.Subscription_Get" Method="Subscription_Get">
-    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
-    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
-    <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID7" />
-  </Function>
   <Function Name="dbo.Subscription_Delete" Method="Subscription_Delete">
-    <Parameter Name="SubscriptionID" Parameter="subscriptionID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="SubscriptionGUID" Parameter="subscriptionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.Subscription_Delete" Method="Subscription_Delete1">
     <Parameter Name="SubscriptionID" Parameter="subscriptionID" Type="System.Int32" DbType="Int" />
     <Parameter Name="SubscriptionGUID" Parameter="subscriptionGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
@@ -300,7 +297,7 @@
     <Parameter Name="GroupGUID" Parameter="groupGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(MAX)" />
     <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID8" />
+    <ElementType IdRef="ID7" />
   </Function>
   <Function Name="dbo.Group_Delete" Method="Group_Delete">
     <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
@@ -337,6 +334,13 @@
     <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="AuthenticationProviderUniqueidentifier" Parameter="authenticationProviderUniqueidentifier" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="AuthenticationProviderGUID" Parameter="authenticationProviderGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <ElementType IdRef="ID8" />
+  </Function>
+  <Function Name="dbo.SubscriptionInfo_Get" Method="SubscriptionInfo_Get">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID9" />
   </Function>
 </Database>

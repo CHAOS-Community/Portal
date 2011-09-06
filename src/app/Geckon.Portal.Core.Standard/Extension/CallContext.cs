@@ -48,6 +48,17 @@ namespace Geckon.Portal.Core.Standard.Extension
             }
         }
 
+        public IEnumerable<SubscriptionInfo> Subscriptions
+        {
+            get
+            {
+                using (PortalDataContext db = PortalDataContext.Default())
+                {
+                    return db.SubscriptionInfo_Get( null, null, null, User.ID ).ToList();
+                }
+            }
+        }
+
         #endregion
         #region Construction
 

@@ -78,7 +78,7 @@ namespace Geckon.Portal.Data
     #endregion
 		
 		public PortalDataContext() : 
-				base(global::Geckon.Portal.Data.Properties.Settings.Default.PortalConnectionString7, mappingSource)
+				base(global::Geckon.Portal.Data.Properties.Settings.Default.PortalConnectionString8, mappingSource)
 		{
 			OnCreated();
 		}
@@ -243,6 +243,14 @@ namespace Geckon.Portal.Data
 			}
 		}
 		
+		public System.Data.Linq.Table<SubscriptionInfo> SubscriptionInfos
+		{
+			get
+			{
+				return this.GetTable<SubscriptionInfo>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Session_Update")]
 		public ISingleResult<Session> Session_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingID", DbType="Int")] System.Nullable<int> clientSettingID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="WhereSessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> whereSessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="WhereUserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> whereUserGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="WhereClientSettingID", DbType="Int")] System.Nullable<int> whereClientSettingID)
 		{
@@ -349,22 +357,8 @@ namespace Geckon.Portal.Data
 			return ((ISingleResult<Group_User_Join>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Get")]
-		public ISingleResult<Subscription> Subscription_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, gUID, name, requestUserID);
-			return ((ISingleResult<Subscription>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Delete")]
 		public int Subscription_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionID", DbType="Int")] System.Nullable<int> subscriptionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> subscriptionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), subscriptionID, subscriptionGUID, requestUserID);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Subscription_Delete")]
-		public int Subscription_Delete1([global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionID", DbType="Int")] System.Nullable<int> subscriptionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SubscriptionGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> subscriptionGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), subscriptionID, subscriptionGUID, requestUserID);
 			return ((int)(result.ReturnValue));
@@ -417,6 +411,13 @@ namespace Geckon.Portal.Data
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, sessionID, email, authenticationProviderUniqueidentifier, authenticationProviderGUID);
 			return ((ISingleResult<UserInfo>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SubscriptionInfo_Get")]
+		public ISingleResult<SubscriptionInfo> SubscriptionInfo_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, gUID, name, requestUserID);
+			return ((ISingleResult<SubscriptionInfo>)(result.ReturnValue));
 		}
 	}
 	
@@ -3490,6 +3491,123 @@ namespace Geckon.Portal.Data
 				if ((this._SessionDateCreated != value))
 				{
 					this._SessionDateCreated = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SubscriptionInfo")]
+	public partial class SubscriptionInfo
+	{
+		
+		private int _ID;
+		
+		private System.Guid _GUID;
+		
+		private string _Name;
+		
+		private int _UserID;
+		
+		private int _Permission;
+		
+		private System.DateTime _DateCreated;
+		
+		public SubscriptionInfo()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid GUID
+		{
+			get
+			{
+				return this._GUID;
+			}
+			set
+			{
+				if ((this._GUID != value))
+				{
+					this._GUID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
+		public int UserID
+		{
+			get
+			{
+				return this._UserID;
+			}
+			set
+			{
+				if ((this._UserID != value))
+				{
+					this._UserID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Permission", DbType="Int NOT NULL")]
+		public int Permission
+		{
+			get
+			{
+				return this._Permission;
+			}
+			set
+			{
+				if ((this._Permission != value))
+				{
+					this._Permission = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this._DateCreated = value;
 				}
 			}
 		}

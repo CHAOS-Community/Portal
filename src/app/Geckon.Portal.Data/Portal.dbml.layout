@@ -129,7 +129,7 @@
         <classShapeMoniker Id="6487c5ef-b4f9-42a4-8195-afe86bf30ed5" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 6.3997708374399); (3.06607443490112 : 6.71584527234102 : JumpStart); (3.18392556509888 : 6.83369640253878 : JumpEnd); (3.3125 : 6.9622708374399); (3.3125 : 8.53929768880208); (3.5 : 8.53929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 6.3997708374399); (3.3125 : 6.9622708374399); (3.3125 : 8.53929768880208); (3.5 : 8.53929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PortalDataContext/User/User_Subscription_User_Join" />
       <nodes>
         <classShapeMoniker Id="e8765bc2-da31-42fb-8454-a8bfa0bd4541" />
@@ -165,6 +165,12 @@
       <DataClassMoniker Name="/PortalDataContext/UserInfo" />
       <nestedChildShapes>
         <elementListCompartment Id="242215c7-720f-4de3-a07f-6f2e517d55af" absoluteBounds="7.14, 11.335, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="06d09d77-1df3-4f58-97ca-4a96ccf0ac56" absoluteBounds="9.625, 1.5, 2, 1.9631982421875">
+      <DataClassMoniker Name="/PortalDataContext/SubscriptionInfo" />
+      <nestedChildShapes>
+        <elementListCompartment Id="281c4578-81cf-415d-98e8-83339ccbbde5" absoluteBounds="9.64, 1.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

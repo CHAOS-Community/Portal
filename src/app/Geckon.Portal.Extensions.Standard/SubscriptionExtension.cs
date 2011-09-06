@@ -13,11 +13,11 @@ namespace Geckon.Portal.Extensions.Standard
         public void Get( string sessionID, string guid )
         {
             UserInfo     user   = CallContext.User;
-            Subscription result = null;
+            SubscriptionInfo result = null;
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                result = db.Subscription_Get(null, Guid.Parse(guid), null, user.ID).FirstOrDefault();
+                result = db.SubscriptionInfo_Get(null, Guid.Parse(guid), null, user.ID).FirstOrDefault();
             }
 
             if( result == null )
@@ -41,10 +41,10 @@ namespace Geckon.Portal.Extensions.Standard
                 if( result == -100 )
                     throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
 
-                Subscription subscription = db.Subscription_Get( result, null, null, user.ID ).First();
+                SubscriptionInfo subscriptionInfo = db.SubscriptionInfo_Get( result, null, null, user.ID ).First();
 
                 ResultBuilder.Add( "Geckon.Portal",
-                                   subscription );
+                                   subscriptionInfo );
             }
         }
 

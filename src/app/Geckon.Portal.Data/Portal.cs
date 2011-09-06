@@ -172,8 +172,8 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Document("Geckon.Portal.Data.Subscription")]
-    public partial class Subscription : XmlSerialize
+    [Document("Geckon.Portal.Data.SubscriptionInfo")]
+    public partial class SubscriptionInfo : XmlSerialize
     {
         #region Properties
 

@@ -1,2 +1,3 @@
 -10 : Not all mandatory parameters was given to the Stored Procedure
+-50 : You cannot delete non empty folder
 -100 : Insufficient Permissions for action

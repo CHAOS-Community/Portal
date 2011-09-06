@@ -14,5 +14,13 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             Assert.Greater(callContext.Groups.Count(),0);
         }
+
+        [Test]
+        public void Should_Get_Subscriptions()
+        {
+            CallContext callContext = new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString());
+
+            Assert.Greater(callContext.Subscriptions.Count(), 0);
+        }
     }
 }
