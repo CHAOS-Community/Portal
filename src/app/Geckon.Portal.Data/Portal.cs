@@ -298,6 +298,42 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
+    [Document("Geckon.Portal.Data.UserSettings")]
+    public partial class UserSetting : XmlSerialize
+    {
+        #region Properties
+
+        [Element("ClientSettingID")]
+        public int pClientSettingID
+        {
+            get { return ClientSettingID; }
+            set { ClientSettingID = value; }
+        }
+
+        [Element("UserID")]
+        public int pUserID
+        {
+            get { return UserID; }
+            set { UserID = value; }
+        }
+
+        [Element("Settings",true)]
+        public string pSetting
+        {
+            get { return Setting.ToString(); }
+            set { Setting = XElement.Parse( value ); }
+        }
+
+        [Element("DateCreated")]
+        public DateTime pDateCreated
+        {
+            get { return DateCreated; }
+            set { DateCreated = value; }
+        }
+
+        #endregion
+    }
+
     public partial class PortalDataContext
     {
         public static PortalDataContext Default()

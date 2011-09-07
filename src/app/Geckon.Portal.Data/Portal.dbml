@@ -32,6 +32,7 @@
       <Column Name="XmlTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="ClientSetting_Session" Member="Sessions" ThisKey="ID" OtherKey="ClientSettingID" Type="Session" />
+      <Association Name="ClientSetting_UserSetting" Member="UserSettings" ThisKey="ID" OtherKey="ClientSettingID" Type="UserSetting" />
       <Association Name="XmlType_ClientSetting" Member="XmlType" ThisKey="XmlTypeID" OtherKey="ID" Type="XmlType" IsForeignKey="true" />
     </Type>
   </Table>
@@ -122,6 +123,7 @@
       <Association Name="User_Group_User_Join" Member="Group_User_Joins" ThisKey="ID" OtherKey="UserID" Type="Group_User_Join" />
       <Association Name="User_Session" Member="Sessions" ThisKey="ID" OtherKey="UserID" Type="Session" />
       <Association Name="User_Subscription_User_Join" Member="Subscription_User_Joins" ThisKey="ID" OtherKey="UserID" Type="Subscription_User_Join" />
+      <Association Name="User_UserSetting" Member="UserSettings" ThisKey="ID" OtherKey="UserID" Type="UserSetting" />
     </Type>
   </Table>
   <Table Name="dbo.SessionInfo" Member="SessionInfos">
@@ -176,6 +178,16 @@
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Permission" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserSettings" Member="UserSettings">
+    <Type Name="UserSetting" Id="ID10">
+      <Column Name="ClientSettingID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Setting" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="ClientSetting_UserSetting" Member="ClientSetting" ThisKey="ClientSettingID" OtherKey="ID" Type="ClientSetting" IsForeignKey="true" />
+      <Association Name="User_UserSetting" Member="User" ThisKey="UserID" OtherKey="ID" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.Session_Update" Method="Session_Update">
@@ -342,5 +354,31 @@
     <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="RequestUserID" Parameter="requestUserID" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID9" />
+  </Function>
+  <Function Name="dbo.UserSettings_Get" Method="UserSettings_Get">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ClientSettingID" Parameter="clientSettingID" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID10" />
+  </Function>
+  <Function Name="dbo.UserSettings_Delete" Method="UserSettings_Delete">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ClientSettingID" Parameter="clientSettingID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.UserSettings_Create" Method="UserSettings_Create">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ClientSettingID" Parameter="clientSettingID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Setting" Parameter="setting" Type="System.Xml.Linq.XElement" DbType="Xml" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.UserSettings_Update" Method="UserSettings_Update">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ClientSettingID" Parameter="clientSettingID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NewSetting" Parameter="newSetting" Type="System.Xml.Linq.XElement" DbType="Xml" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>
