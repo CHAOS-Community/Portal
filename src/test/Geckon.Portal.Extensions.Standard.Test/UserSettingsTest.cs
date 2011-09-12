@@ -16,7 +16,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             extension.Init(new PortalContextMock(), new Result(), AdminUser.SessionID.ToString());
             extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Get( AdminUser.SessionID.ToString(), 1 );
+            extension.Get( AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString() );
 
             Assert.IsNotNull( XDocument.Parse( extension.GetContentResult().Content ).Descendants("Settings").FirstOrDefault() );
         }
@@ -28,7 +28,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             extension.Init(new PortalContextMock(), new Result(), Session.SessionID.ToString());
             extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Create( Session.SessionID.ToString(), 1, "<xml />" );
+            extension.Create(Session.SessionID.ToString(), ClientSettings.GUID.ToString(), "<xml />");
 
             Assert.IsNotNull( XDocument.Parse( extension.GetContentResult().Content ).Descendants("Settings").FirstOrDefault() );
         }
@@ -40,7 +40,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             extension.Init(new PortalContextMock(), new Result(), AdminUser.SessionID.ToString());
             extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Delete( AdminUser.SessionID.ToString(), 1 );
+            extension.Delete( AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString() );
 
             Assert.IsNotNull(XDocument.Parse(extension.GetContentResult().Content).Descendants("Value").FirstOrDefault());
         }
@@ -52,7 +52,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             extension.Init(new PortalContextMock(), new Result(), AdminUser.SessionID.ToString());
             extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Update( AdminUser.SessionID.ToString(), 1, "<xmllll />" );
+            extension.Update( AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString(), "<xmllll />" );
 
             Assert.IsNotNull( XDocument.Parse( extension.GetContentResult().Content ).Descendants("Value").FirstOrDefault() );
         }

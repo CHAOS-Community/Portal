@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CallContextTest.cs" />
+    <Compile Include="ClientSettingsTest.cs" />
     <Compile Include="EmailPasswordTest.cs" />
     <Compile Include="GroupTest.cs" />
     <Compile Include="PortalContextMock.cs" />

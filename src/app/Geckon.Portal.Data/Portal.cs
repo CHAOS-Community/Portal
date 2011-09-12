@@ -327,6 +327,42 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
+    [Document("Geckon.Portal.Data.ClientSettings")]
+    public partial class ClientSetting : XmlSerialize
+    {
+        #region Properties
+
+        [Element("GUID")]
+        public Guid pGUID
+        {
+            get { return GUID; }
+            set { GUID = value;  }
+        }
+
+        [Element("Title")]
+        public string pTitle
+        {
+            get { return Title; }
+            set { Title = value; }
+        }
+
+        [Element("XML",true)]
+        public string pXml
+        {
+            get { return Xml == null ? null : Xml.ToString(); }
+            set { Xml = XElement.Parse( value ); }
+        }
+
+        [Element("DateCreated")]
+        public DateTime pDateCreated
+        {
+            get { return DateCreated; }
+            set { DateCreated = value; }
+        }
+
+        #endregion
+    }
+
     public partial class PortalDataContext
     {
         public static PortalDataContext Default()

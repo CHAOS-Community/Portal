@@ -167,9 +167,6 @@ SELECT     SessionID, UserID, DateCreated, DateModified, DATEDIFF(minute, DateMo
 FROM         dbo.Session
 GO
 
-USE [Portal]
-GO
-
 ALTER VIEW [dbo].[UserInfo]
 AS
 SELECT     dbo.[User].ID, dbo.[User].GUID, dbo.Session.SessionID, dbo.GetUsersHighestSystemPermission(dbo.[User].ID) AS SystemPermission, dbo.[User].Firstname, 
@@ -394,3 +391,329 @@ BEGIN
 END
 GO
 
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.07.18
+-- 
+-- =============================================
+ALTER PROCEDURE [dbo].[PopulateWithDefaultData]
+
+AS
+BEGIN
+	
+IF( 1 = 1 )
+BEGIN
+
+	DELETE FROM [Session]
+	DELETE FROM UserSettings
+	DELETE FROM Subscription_User_Join
+	DELETE FROM Subscription
+	DELETE FROM AuthenticationProvider_User_Join
+	DELETE FROM [Group_User_Join]
+	DELETE FROM [Group]
+	DELETE FROM [User]
+	DELETE FROM ClientSetting
+	DELETE FROM Module
+	DELETE FROM Extension
+	DELETE FROM Permission
+	DELETE FROM AuthenticationProvider
+
+	DBCC CHECKIDENT ("AuthenticationProvider", RESEED,0)
+	DBCC CHECKIDENT ("Subscription", RESEED,0)
+	DBCC CHECKIDENT ("[User]", RESEED,0)
+	DBCC CHECKIDENT ("[Group]", RESEED,0)
+	DBCC CHECKIDENT ("Module", RESEED,0)
+	DBCC CHECKIDENT ("Extension", RESEED,0)
+	DBCC CHECKIDENT ("ClientSetting", RESEED,0)
+
+	DECLARE @SubscriptionIdentifier UNIQUEIDENTIFIER
+	SET @SubscriptionIdentifier = '9C4E8A99-A69B-41FD-B1C7-E28C54D1D304'
+
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','Create User',1,'Permissoin to Create new users')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','Get',2,'Permissoin to Get Subscription')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','Delete',4,'Permissoin to Delete Subscription')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','Update',8,'Permissoin to Update Subscription')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','MANAGE',16,'Permissoin to Manage Subscription')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('System','Create Group',1,'Permissoin to Create a Group')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('System','Create Subscription',2,'Permissoin to Create a Subscription')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('System','MANAGE',4,'Permissoin to Manage the system')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Group','Delete',1,'Permissoin to Delete Group')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Group','Update',2,'Permissoin to Update Group')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Group','Get',4,'Permissoin to Get Group')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Group','Add User',8,'Permission to Add a User to the group')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Group','List Users',16,'Permission to list users in the group')
+
+	EXECUTE Subscription_Insert @GUID = @SubscriptionIdentifier, @Name = 'Geckon'
+	EXECUTE User_Insert @Guid = 'C0B231E9-7D98-4F52-885E-AF4837FAA352', @Firstname = 'Anonymous', @Email = 'Anonymous@Geckon.com'
+	EXECUTE User_Insert @Guid = 'A0B231E9-7D98-4F52-885E-AF4837FAA352', @Firstname = 'Administrator', @Email = 'admin@Geckon.com'
+	EXECUTE ClientSetting_Insert 'D157698A-86AC-4FDF-A304-F5EA9FB6E0F5','XML + HTML Errorcode',null
+	EXECUTE Extension_Insert 'Session', 'Geckon.Portal.Extensions.Standard.SessionExtension','Geckon.Portal.Extensions.Standard.dll'
+	EXECUTE Extension_Insert 'Subscription', 'Geckon.Portal.Extensions.Standard.SubscriptionExtension','Geckon.Portal.Extensions.Standard.dll'
+	EXECUTE Extension_Insert 'User', 'Geckon.Portal.Extensions.Standard.UserExtension','Geckon.Portal.Extensions.Standard.dll'
+	EXECUTE Extension_Insert 'Group', 'Geckon.Portal.Extensions.Standard.GroupExtension','Geckon.Portal.Extensions.Standard.dll'
+	EXECUTE Extension_Insert 'Location', 'Geckon.GeoLocator.PortalExtension.LocationExtension','Geckon.GeoLocator.PortalExtension.dll'
+	EXECUTE Extension_Insert 'EmailPassword', 'Geckon.Portal.Extensions.Standard.EmailPasswordExtension','Geckon.Portal.Extensions.Standard.dll'
+	EXECUTE Extension_Insert 'Folder', 'Geckon.MCM.Extension.Folder.FolderExtension','Geckon.MCM.Extension.dll'
+	EXECUTE Extension_Insert 'FolderType', 'Geckon.MCM.Extension.FolderType.FolderTypeExtension','Geckon.MCM.Extension.dll'
+	EXECUTE Extension_Insert 'FormatType', 'Geckon.MCM.Extension.FormatType.FormatTypeExtension','Geckon.MCM.Extension.dll'
+	EXECUTE Extension_Insert 'Language', 'Geckon.MCM.Extension.Language.LanguageExtension','Geckon.MCM.Extension.dll'
+	EXECUTE Extension_Insert 'ObjectRelationType', 'Geckon.MCM.Extension.ObjectRelationType.ObjectRelationTypeExtension','Geckon.MCM.Extension.dll'
+	EXECUTE Extension_Insert 'ObjectType', 'Geckon.MCM.Extension.ObjectType.ObjectTypeExtension','Geckon.MCM.Extension.dll'
+	EXECUTE AuthenticationProvider_Insert 'Email Password', 'F9089905-3134-4A35-B475-9CA8EA9FDC26'
+	EXECUTE User_AssociateWithAuthenticationProvider @UserGUID = 'A0B231E9-7D98-4F52-885E-AF4837FAA352', @AuthenticationProviderGUID = 'F9089905-3134-4A35-B475-9CA8EA9FDC26', @UniqueIdentifier = '24ebbdee2640cdec50550a6c4bed6d3ab731342b'
+	EXECUTE Module_Insert 'GeoLocator', '<Settings ConnectionString="Data Source=10.4.0.1;Initial Catalog=GeoLocator;User ID=Application;Password=-l:bCU''S\923pc[0"/>', 'Geckon.GeoLocator.dll'
+	EXECUTE Module_Insert 'MCM', '<Settings ConnectionString="Data Source=192.168.56.102;Initial Catalog=MCM;Persist Security Info=True;User ID=sa;Password=GECKONpbvu7000"/>', 'Geckon.MCM.Module.dll'
+	EXECUTE [UserSettings_Create] @UserGUID = 'A0B231E9-7D98-4F52-885E-AF4837FAA352' ,@ClientSettingID = 1 ,@Setting = '<xml />' 
+	INSERT INTO [Subscription_User_Join]([SubscriptionID],[UserID],[Permission],[DateCreated]) VALUES (1,2,-1,GETDATE())
+
+	EXECUTE Group_Insert @GUID = 'A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA', @Name = 'Administrators', @SystemPermission = -1
+	
+	INSERT INTO [Group_User_Join] ([GroupID],[UserID],[Permission],[DateCreated])VALUES (1,2,-1,GETDATE())
+	
+END
+
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.09.12
+--				This SP is used to get ClientSettings
+-- =============================================
+CREATE PROCEDURE ClientSettings_Get
+	@ClientSettingsID	uniqueidentifier
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	SELECT	*
+	  FROM	ClientSetting
+	 WHERE	ClientSetting.[GUID] = @ClientSettingsID
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.09.07
+--				This SP is used to GET a user setting
+-- =============================================
+ALTER PROCEDURE [dbo].[UserSettings_Get]
+	@UserID				int				 = null,
+	@UserGUID			uniqueidentifier = null,
+	@ClientSettingsGUID	uniqueidentifier
+AS
+BEGIN
+
+	IF( @UserID IS NULL AND @UserGUID IS NULL )
+		RETURN -10
+
+	IF( @UserGUID IS NOT NULL )
+		SELECT	@UserID = ID
+		  FROM	[User]
+		 WHERE	[GUID] = @UserGUID
+
+	DECLARE @ClientSettingID INT
+
+	SELECT	@ClientSettingID = [ID]
+	  FROM	ClientSetting
+	 WHERE	[GUID] = @ClientSettingsGUID
+
+	SELECT	*
+	  FROM	UserSettings
+	 WHERE	ClientSettingID = @ClientSettingID AND
+			UserID          = @UserID
+
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.09.07
+--				This SP is used to create a user setting
+-- =============================================
+ALTER PROCEDURE [dbo].[UserSettings_Create] 
+	@UserID				int				 = null,
+	@UserGUID			uniqueidentifier = null,
+	@ClientSettingsGUID	uniqueidentifier,
+	@Setting			xml
+AS
+BEGIN
+
+	IF( @UserID IS NULL AND @UserGUID IS NULL )
+		RETURN -10
+
+	IF( @UserGUID IS NOT NULL )
+		SELECT	@UserID = ID
+		  FROM	[User]
+		 WHERE	[GUID] = @UserGUID
+
+	DECLARE @ClientSettingID INT
+
+	SELECT	@ClientSettingID = [ID]
+	  FROM	ClientSetting
+	 WHERE	[GUID] = @ClientSettingsGUID
+
+	INSERT INTO	[UserSettings]([ClientSettingID],[UserID],[Setting],[DateCreated])
+		 VALUES	(@ClientSettingID ,@UserID ,@Setting,GETDATE())
+
+	RETURN @@ROWCOUNT
+
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.09.07
+--				This SP is used to delete a user setting
+-- =============================================
+ALTER PROCEDURE [dbo].[UserSettings_Delete]
+	@UserID				int				 = null,
+	@UserGUID			uniqueidentifier = null,
+	@ClientSettingsGUID	uniqueidentifier
+AS
+BEGIN
+
+	IF( @UserID IS NULL AND @UserGUID IS NULL )
+		RETURN -10
+
+	IF( @UserGUID IS NOT NULL )
+		SELECT	@UserID = ID
+		  FROM	[User]
+		 WHERE	[GUID] = @UserGUID
+
+	DECLARE @ClientSettingID INT
+
+	SELECT	@ClientSettingID = [ID]
+	  FROM	ClientSetting
+	 WHERE	[GUID] = @ClientSettingsGUID
+
+	DELETE	UserSettings
+	 WHERE	ClientSettingID = @ClientSettingID AND
+			UserID          = @UserID
+
+	RETURN @@ROWCOUNT
+
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.09.07
+--				This SP is used to update a user setting
+-- =============================================
+ALTER PROCEDURE [dbo].[UserSettings_Update]
+	@UserID				int				 = null,
+	@UserGUID			uniqueidentifier = null,
+	@ClientSettingsGUID	uniqueidentifier,
+	@NewSetting			xml
+AS
+BEGIN
+
+	IF( @UserID IS NULL AND @UserGUID IS NULL )
+		RETURN -10
+
+	IF( @UserGUID IS NOT NULL )
+		SELECT	@UserID = ID
+		  FROM	[User]
+		 WHERE	[GUID] = @UserGUID
+
+	DECLARE @ClientSettingID INT
+
+	SELECT	@ClientSettingID = [ID]
+	  FROM	ClientSetting
+	 WHERE	[GUID] = @ClientSettingsGUID
+
+	UPDATE	[UserSettings]
+	   SET	[Setting] = @NewSetting
+	 WHERE	ClientSettingID = @ClientSettingID AND
+			UserID = @UserID
+
+	RETURN @@ROWCOUNT
+
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.07.18
+-- 
+-- =============================================
+ALTER PROCEDURE [dbo].[PopulateWithDefaultData]
+
+AS
+BEGIN
+	
+IF( 1 = 1 )
+BEGIN
+
+	DELETE FROM [Session]
+	DELETE FROM UserSettings
+	DELETE FROM Subscription_User_Join
+	DELETE FROM Subscription
+	DELETE FROM AuthenticationProvider_User_Join
+	DELETE FROM [Group_User_Join]
+	DELETE FROM [Group]
+	DELETE FROM [User]
+	DELETE FROM ClientSetting
+	DELETE FROM Module
+	DELETE FROM Extension
+	DELETE FROM Permission
+	DELETE FROM AuthenticationProvider
+
+	DBCC CHECKIDENT ("AuthenticationProvider", RESEED,0)
+	DBCC CHECKIDENT ("Subscription", RESEED,0)
+	DBCC CHECKIDENT ("[User]", RESEED,0)
+	DBCC CHECKIDENT ("[Group]", RESEED,0)
+	DBCC CHECKIDENT ("Module", RESEED,0)
+	DBCC CHECKIDENT ("Extension", RESEED,0)
+	DBCC CHECKIDENT ("ClientSetting", RESEED,0)
+
+	DECLARE @SubscriptionIdentifier UNIQUEIDENTIFIER
+	SET @SubscriptionIdentifier = '9C4E8A99-A69B-41FD-B1C7-E28C54D1D304'
+
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','Create User',1,'Permissoin to Create new users')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','Get',2,'Permissoin to Get Subscription')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','Delete',4,'Permissoin to Delete Subscription')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','Update',8,'Permissoin to Update Subscription')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','MANAGE',16,'Permissoin to Manage Subscription')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('System','Create Group',1,'Permissoin to Create a Group')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('System','Create Subscription',2,'Permissoin to Create a Subscription')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('System','MANAGE',4,'Permissoin to Manage the system')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Group','Delete',1,'Permissoin to Delete Group')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Group','Update',2,'Permissoin to Update Group')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Group','Get',4,'Permissoin to Get Group')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Group','Add User',8,'Permission to Add a User to the group')
+	INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Group','List Users',16,'Permission to list users in the group')
+
+	EXECUTE Subscription_Insert @GUID = @SubscriptionIdentifier, @Name = 'Geckon'
+	EXECUTE User_Insert @Guid = 'C0B231E9-7D98-4F52-885E-AF4837FAA352', @Firstname = 'Anonymous', @Email = 'Anonymous@Geckon.com'
+	EXECUTE User_Insert @Guid = 'A0B231E9-7D98-4F52-885E-AF4837FAA352', @Firstname = 'Administrator', @Email = 'admin@Geckon.com'
+	EXECUTE ClientSetting_Insert 'D157698A-86AC-4FDF-A304-F5EA9FB6E0F5','XML + HTML Errorcode',null
+	EXECUTE Extension_Insert 'Session', 'Geckon.Portal.Extensions.Standard.SessionExtension','Geckon.Portal.Extensions.Standard.dll'
+	EXECUTE Extension_Insert 'Subscription', 'Geckon.Portal.Extensions.Standard.SubscriptionExtension','Geckon.Portal.Extensions.Standard.dll'
+	EXECUTE Extension_Insert 'User', 'Geckon.Portal.Extensions.Standard.UserExtension','Geckon.Portal.Extensions.Standard.dll'
+	EXECUTE Extension_Insert 'Group', 'Geckon.Portal.Extensions.Standard.GroupExtension','Geckon.Portal.Extensions.Standard.dll'
+	EXECUTE Extension_Insert 'Location', 'Geckon.GeoLocator.PortalExtension.LocationExtension','Geckon.GeoLocator.PortalExtension.dll'
+	EXECUTE Extension_Insert 'EmailPassword', 'Geckon.Portal.Extensions.Standard.EmailPasswordExtension','Geckon.Portal.Extensions.Standard.dll'
+	EXECUTE Extension_Insert 'Folder', 'Geckon.MCM.Extension.Folder.FolderExtension','Geckon.MCM.Extension.dll'
+	EXECUTE Extension_Insert 'FolderType', 'Geckon.MCM.Extension.FolderType.FolderTypeExtension','Geckon.MCM.Extension.dll'
+	EXECUTE Extension_Insert 'FormatType', 'Geckon.MCM.Extension.FormatType.FormatTypeExtension','Geckon.MCM.Extension.dll'
+	EXECUTE Extension_Insert 'Language', 'Geckon.MCM.Extension.Language.LanguageExtension','Geckon.MCM.Extension.dll'
+	EXECUTE Extension_Insert 'ObjectRelationType', 'Geckon.MCM.Extension.ObjectRelationType.ObjectRelationTypeExtension','Geckon.MCM.Extension.dll'
+	EXECUTE Extension_Insert 'ObjectType', 'Geckon.MCM.Extension.ObjectType.ObjectTypeExtension','Geckon.MCM.Extension.dll'
+	EXECUTE AuthenticationProvider_Insert 'Email Password', 'F9089905-3134-4A35-B475-9CA8EA9FDC26'
+	EXECUTE User_AssociateWithAuthenticationProvider @UserGUID = 'A0B231E9-7D98-4F52-885E-AF4837FAA352', @AuthenticationProviderGUID = 'F9089905-3134-4A35-B475-9CA8EA9FDC26', @UniqueIdentifier = '24ebbdee2640cdec50550a6c4bed6d3ab731342b'
+	EXECUTE Module_Insert 'GeoLocator', '<Settings ConnectionString="Data Source=10.4.0.1;Initial Catalog=GeoLocator;User ID=Application;Password=-l:bCU''S\923pc[0"/>', 'Geckon.GeoLocator.dll'
+	EXECUTE Module_Insert 'MCM', '<Settings ConnectionString="Data Source=192.168.56.102;Initial Catalog=MCM;Persist Security Info=True;User ID=sa;Password=GECKONpbvu7000"/>', 'Geckon.MCM.Module.dll'
+	EXECUTE [UserSettings_Create] @UserGUID = 'A0B231E9-7D98-4F52-885E-AF4837FAA352' ,@ClientSettingsGUID = 'D157698A-86AC-4FDF-A304-F5EA9FB6E0F5' ,@Setting = '<xml />' 
+	INSERT INTO [Subscription_User_Join]([SubscriptionID],[UserID],[Permission],[DateCreated]) VALUES (1,2,-1,GETDATE())
+
+	EXECUTE Group_Insert @GUID = 'A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA', @Name = 'Administrators', @SystemPermission = -1
+	
+	INSERT INTO [Group_User_Join] ([GroupID],[UserID],[Permission],[DateCreated])VALUES (1,2,-1,GETDATE())
+	
+END
+
+END
