@@ -20,7 +20,7 @@ namespace Geckon.Portal.Extensions.Standard
                 using( PortalDataContext db = PortalDataContext.Default() )
                 {
                     
-                    session = db.Session_Get( Guid.Parse( sessionID ), null, null, 0, null, ref totalCount ).First();
+                    session = db.Session_Get( Guid.Parse( sessionID ), null, 0, null, ref totalCount ).First();
 
                     PortalContext.Cache.Put( string.Format("[Session:sid={0}]", sessionID), 
                                              session.ToXML().OuterXml, 
@@ -36,7 +36,7 @@ namespace Geckon.Portal.Extensions.Standard
         #endregion
         #region Create
 
-        public void Create( int clientSettingID, int protocolVersion )
+        public void Create(  int protocolVersion )
         {
             // TODO: Check protocol version
             // TODO: Add Module filtering
@@ -45,8 +45,7 @@ namespace Geckon.Portal.Extensions.Standard
             {
                 ResultBuilder.Add( "Geckon.Portal", 
                                    db.Session_Insert( null, 
-                                                      PortalContext.AnonymousUserGUID, 
-                                                      clientSettingID ).First() );
+                                                      PortalContext.AnonymousUserGUID ).First() );
             }
         }
 
@@ -58,7 +57,7 @@ namespace Geckon.Portal.Extensions.Standard
             using( PortalDataContext db = PortalDataContext.Default() )
             {
                 ResultBuilder.Add( "Geckon.Portal",
-                                   db.Session_Update( null, null, null, Guid.Parse( sessionID ), null, null  ).First() );
+                                   db.Session_Update( null, null, Guid.Parse( sessionID ), null ).First() );
             }
         }
 
@@ -70,7 +69,7 @@ namespace Geckon.Portal.Extensions.Standard
             using( PortalDataContext db = PortalDataContext.Default() )
             {
                 ResultBuilder.Add( "Geckon.Portal",
-                                   new ScalarResult( db.Session_Delete( Guid.Parse( sessionID ), null, null ) ) );
+                                   new ScalarResult( db.Session_Delete( Guid.Parse( sessionID ), null ) ) );
             }
         }
 

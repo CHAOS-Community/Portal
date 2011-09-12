@@ -225,14 +225,172 @@ GO
 -- =============================================
 ALTER PROCEDURE [dbo].[ClientSetting_Insert]
 	@GUID	uniqueidentifier,
-	@Title	varchar(255)
+	@Title	varchar(255),
+	@Xml	xml = null
 AS
 BEGIN
 
-	INSERT INTO [ClientSetting]([GUID],[Title],DateCreated)
-		 VALUES (@GUID,@Title,GETDATE())
+	INSERT INTO [ClientSetting]([GUID],[Title],[Xml],DateCreated)
+		 VALUES (@GUID,@Title,@Xml,GETDATE())
 		 
 	RETURN @@IDENTITY
 
 END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2010.06.13
+-- Description:	This stored procedure inserts a new session
+-- =============================================
+ALTER PROCEDURE [dbo].[Session_Insert]
+	@SessionID			uniqueidentifier = NULL,
+	@UserGUID			uniqueidentifier
+AS
+BEGIN
+
+	IF( @SessionID IS NULL )
+		SET @SessionID = NEWID()
+
+	DECLARE @UserID INT
+	
+	SELECT	@UserID = ID
+	  FROM	[User]
+	 WHERE	[User].GUID = @UserGUID
+
+	INSERT
+	  INTO	[Session]([SessionID],[UserID])
+	VALUES	(@SessionID,@UserID)
+	
+	SELECT	*
+	  FROM	[Session]
+	 WHERE	[Session].SessionID = @SessionID
+
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2010.06.29
+-- Description:	This stored procedure will delete
+-- =============================================
+ALTER PROCEDURE [dbo].[Session_Delete]
+	@SessionID			uniqueidentifier	= null,
+	@UserID				int					= null
+AS
+BEGIN
+
+	IF( @SessionID IS NULL AND @UserID IS NULL )
+		RAISERROR ('Either @SessionID or @UserID must be set', 16, 1)
+	
+	DELETE FROM	[Session]
+		  WHERE ( @SessionID IS NULL OR [Session].SessionID = @SessionID ) AND
+				( @UserID IS NULL OR [Session].UserID = @UserID )
+
+	RETURN @@ROWCOUNT
+	
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2010.07.01
+-- Description:	This stored procedure is used to select sessions
+-- =============================================
+ALTER PROCEDURE [dbo].[Session_Get]
+	@SessionID			uniqueidentifier = NULL,
+	@UserID				int				 = NULL,
+	@PageIndex			int				 = 0,
+	@PageSize			int				 = 10,
+	@TotalCount			int	output
+
+AS
+BEGIN
+
+	DELETE
+	  FROM	[Session]
+	 WHERE	SessionID IN ( SELECT	SessionID
+							 FROM	SessionInfo
+							WHERE	MinutesSinceRenewal > 20 )
+
+	IF( @PageIndex IS NULL )
+		SET @PageIndex = 0
+		
+	IF( @PageSize IS NULL )
+		SET @PageSize = 10;
+
+	DECLARE @PagedResults AS TABLE (
+		[RowNumber]			int,
+		[TotalCount]		int,
+	    [SessionID]			uniqueidentifier,
+        [UserID]			int,
+        [DateCreated]		datetime,
+        [DateModified]		datetime
+	);
+
+	WITH OrdersRN AS
+	(
+		SELECT ROW_NUMBER() OVER(ORDER BY SessionID, SessionID) AS RowNumber,
+			   COUNT(*) OVER() AS TotalCount,
+			   [SessionID],[UserID],[DateCreated],[DateModified]
+		  FROM	[Session]
+		 WHERE	( @SessionID IS NULL OR [Session].SessionID = @SessionID ) AND
+				( @UserID IS NULL OR [Session].UserID = @UserID )
+	)
+
+	INSERT INTO @PagedResults
+		SELECT	* 
+		  FROM	OrdersRN
+		 WHERE RowNumber BETWEEN (@PageIndex) * @PageSize + 1 
+					     AND (@PageIndex + 1) * @PageSize
+	  
+	SELECT TOP 1 @TotalCount = TotalCount
+	  FROM	@PagedResults
+	  
+	SELECT	*
+	  FROM	@PagedResults  
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2010.07.07
+-- Description:	This stored procedure is used to update a session
+-- =============================================
+ALTER PROCEDURE [dbo].[Session_Update]
+	@SessionID				uniqueidentifier = NULL,
+	@UserGUID				uniqueidentifier = NULL,
+	@WhereSessionID			uniqueidentifier = NULL,
+	@WhereUserGUID			uniqueidentifier = NULL
+AS
+BEGIN
+
+	IF( @WhereSessionID IS NULL AND @WhereUserGUID IS NULL )
+		RETURN -10
+
+	DECLARE @UserID INT
+	DECLARE @WhereUserID INT
+	
+	SELECT	@UserID = [User].ID
+	  FROM	[User]
+	 WHERE	[User].GUID = @UserGUID
+		
+	SELECT	@WhereUserID = [User].ID
+	  FROM	[User]
+	 WHERE	[User].GUID = @WhereUserGUID
+
+	UPDATE [Session]
+	   SET [SessionID]       = ISNULL(@SessionID,[SessionID])
+		  ,[UserID]          = ISNULL(@UserID,[UserID] )
+		  ,[DateModified]    = getdate()
+	 WHERE ( @WhereSessionID IS NULL OR [Session].SessionID = @WhereSessionID ) AND
+		   ( @WhereUserID IS NULL OR [Session].UserID = @WhereUserID )
+		   
+	 SELECT	*
+	   FROM	[Session]
+	  WHERE ( @WhereSessionID IS NULL OR [Session].SessionID = @WhereSessionID ) AND
+		    ( @WhereUserID IS NULL OR [Session].UserID = @WhereUserID )
+
+END
+GO
 

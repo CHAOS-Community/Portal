@@ -27,8 +27,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
             using( PortalDataContext db = PortalDataContext.Default() )
             {
                 db.PopulateWithDefaultData();
-                Session          = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ), 1 ).First();
-                AdminSession     = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ), 1 ).First();
+                Session          = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ) ).First();
+                AdminSession     = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ) ).First();
                 User             = db.UserInfo_Get( Guid.Parse( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ), null, null, null, null ).First();
                 AdminUser        = db.UserInfo_Get( Guid.Parse( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ), null, null, null, null ).First();
                 AdminGroup       = db.Group_Get( null, Guid.Parse( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ), null, AdminUser.ID ).First();

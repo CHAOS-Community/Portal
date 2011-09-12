@@ -51,7 +51,7 @@ namespace Geckon.Portal.Extensions.Standard
             using( PortalDataContext db = PortalDataContext.Default() )
             {
                 UserInfo user = db.UserInfo_Get( null, null, email, hash, EmailPasswordAuthenticationProviderGUID ).First();
-                db.Session_Update( null, user.GUID, null, Guid.Parse( sessionID ), null, null ).First();
+                db.Session_Update( null, user.GUID, Guid.Parse( sessionID ), null ).First();
                 
                 ResultBuilder.Add( "Geckon.Portal",
                                    user );

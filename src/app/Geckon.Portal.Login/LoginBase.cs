@@ -21,7 +21,7 @@ namespace Geckon.Portal.Login
         {
             using( PortalDataContext db = new PortalDataContext() )
             {
-                return db.Session_Update( null, userGUID, null, userInfo.SessionID, null, null ).First().SessionID.ToString();
+                return db.Session_Update( null, userGUID, userInfo.SessionID, null ).First().SessionID.ToString();
             }
         }
 

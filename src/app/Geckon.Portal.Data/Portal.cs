@@ -18,13 +18,6 @@ namespace Geckon.Portal.Data
             set { SessionID = value; }
         }
 
-        [Element("ClientSettingID")]
-        public int pClientSettingID
-        {
-            get { return ClientSettingID; }
-            set { ClientSettingID = value; }
-        }
-
         [Element("DateCreated")]
         public DateTime pDateCreated
         {

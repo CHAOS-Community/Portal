@@ -16,7 +16,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             sessionExtension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
             sessionExtension.CallContext.Parameters = new[] { new Parameter( "clientSettingID", 1 ), new Parameter( "protocolVersion",3 ) };
 
-            sessionExtension.Create( 1, 3 );
+            sessionExtension.Create( 3 );
 
             Assert.IsNotNull( XDocument.Parse( sessionExtension.GetContentResult().Content ).Descendants("SessionID").FirstOrDefault() );
         }
