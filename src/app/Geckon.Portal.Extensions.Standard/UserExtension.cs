@@ -18,11 +18,11 @@ namespace Geckon.Portal.Extensions.Standard
         #endregion
         #region Create
         
-        public void Create( string sessionID, string firstname, string middlename, string lastname, string email )
+        public void Create( string sessionID, string firstName, string middleName, string lastName, string email )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                User user = db.User_Insert( null, firstname, middlename, lastname, email ).First();
+                User user = db.User_Insert( null, firstName, middleName, lastName, email ).First();
 
                 ResultBuilder.Add( "Geckon.Portal",
                                    user );
@@ -32,13 +32,13 @@ namespace Geckon.Portal.Extensions.Standard
         #endregion
         #region Update
 
-        public void Update( string sessionID, string firstname, string middlename, string lastname, string email )
+        public void Update( string sessionID, string firstName, string middleName, string lastName, string email )
         {
             UserInfo user = CallContext.User;
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                User updatedUser = db.User_Update( user.GUID, null, firstname, middlename, lastname, email ).First();
+                User updatedUser = db.User_Update( user.GUID, null, firstName, middleName, lastName, email ).First();
 
                 ResultBuilder.Add( "Geckon.Portal",
                                    updatedUser );
@@ -48,16 +48,16 @@ namespace Geckon.Portal.Extensions.Standard
         #endregion
         #region Delete
 
-        public void Delete(string sessionID, string userGUID)
+        public void Delete( string sessionID, string guid )
         {
             UserInfo user = CallContext.User;
 
-            if( user.GUID.ToString() != userGUID )
-                throw new InsufficientPermissionsExcention( "The current user doesn't have permissions to delete the user with guid: " + userGUID );
+            if( user.GUID.ToString() != guid )
+                throw new InsufficientPermissionsExcention( "The current user doesn't have permissions to delete the user with guid: " + guid );
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                int result = db.User_Delete( Guid.Parse( userGUID ) );
+                int result = db.User_Delete( Guid.Parse( guid ) );
 
                 ResultBuilder.Add( "Geckon.Portal",
                                    new ScalarResult( result ) );

@@ -45,7 +45,7 @@ namespace Geckon.Portal.Extensions.Standard
         #endregion
         #region Delete
 
-        public void Delete( string sessionID, string groupGUID )
+        public void Delete( string sessionID, string guid )
         {
             UserInfo user = CallContext.User;
 
@@ -54,7 +54,7 @@ namespace Geckon.Portal.Extensions.Standard
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                int result = db.Group_Delete( null, Guid.Parse( groupGUID ), user.ID, null );
+                int result = db.Group_Delete( null, Guid.Parse( guid ), user.ID, null );
 
                 if( result == -100 )
                     throw new InsufficientPermissionsExcention("User has insufficient permissions to delete groups");
@@ -67,13 +67,13 @@ namespace Geckon.Portal.Extensions.Standard
         #endregion
         #region Update
 
-        public void Update( string sessionID, string groupGUID, string newName, int newSystemPermission )
+        public void Update( string sessionID, string guid, string newName, int newSystemPermission )
         {
             UserInfo user = CallContext.User;
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                int result = db.Group_Update( newName, newSystemPermission, null, Guid.Parse( groupGUID ), user.ID, null );
+                int result = db.Group_Update( newName, newSystemPermission, null, Guid.Parse( guid ), user.ID, null );
 
                 if( result == -100 )
                     throw new InsufficientPermissionsExcention( "User does not have permission to update group" );
