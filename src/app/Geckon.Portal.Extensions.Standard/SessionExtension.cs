@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Geckon.Data;
 using Geckon.Portal.Core.Standard.Extension;
@@ -30,7 +31,7 @@ namespace Geckon.Portal.Extensions.Standard
 
             ResultBuilder.Add( "Geckon.Portal",
                                 session,
-                                new NameValue( "TotalCount", totalCount.ToString() ) );
+                                new KeyValuePair<string, object>( "TotalCount", totalCount.ToString() ) );
         } 
 
         #endregion

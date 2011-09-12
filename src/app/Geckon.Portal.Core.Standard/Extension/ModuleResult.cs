@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Geckon.Data;
+﻿using System.Collections.Generic;
 using Geckon.Portal.Core.Extension;
 using Geckon.Serialization.Xml;
 
@@ -10,13 +8,13 @@ namespace Geckon.Portal.Core.Standard.Extension
     {
         #region Fields
 
-        private IList<NameValue>    _Attributes;
-        private IList<XmlSerialize> _Elements;
+        private IList<KeyValuePair<string, object>> _Attributes;
+        private IList<XmlSerialize>                   _Elements;
 
         #endregion
         #region Properties
 
-        public IEnumerable<NameValue> Attributes
+        public IEnumerable<KeyValuePair<string, object>> Attributes
         {
             get { return _Attributes; }
         }
@@ -31,14 +29,14 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         public ModuleResult()
         {
-            _Attributes = new List<NameValue>();
+            _Attributes = new List<KeyValuePair<string, object>>();
             _Elements   = new List<XmlSerialize>();
         }
 
         #endregion
         #region Business Logic
 
-        public void AddAttribute( NameValue nameValue )
+        public void AddAttribute( KeyValuePair<string, object> nameValue )
         {
             _Attributes.Add( nameValue );
         }
@@ -48,9 +46,9 @@ namespace Geckon.Portal.Core.Standard.Extension
             _Elements.Add( value );
         }
 
-        public void AddAttribute( NameValue[] attributes )
+        public void AddAttribute( params KeyValuePair<string, object>[] attributes )
         {
-            foreach( NameValue nameValue in attributes )
+            foreach( KeyValuePair<string, object> nameValue in attributes )
             {
                 AddAttribute( nameValue );
             }

@@ -71,14 +71,9 @@ namespace Geckon.Portal.Data
     }
 
     [Document("Geckon.Portal.Data.UserInfo")]
-    public partial class UserInfo : XmlSerialize, IUser
+    public partial class UserInfo : XmlSerialize
     {
         #region Properties
-
-        string IUser.SessionID
-        {
-            get { return SessionID.ToString(); }
-        }
 
         [Element("SessionID")]
         public Guid? pSessionID

@@ -17,6 +17,8 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region Properties
 
+        private DateTime Timestamp { get; set; }
+
         public string Content
         {
             get
@@ -37,26 +39,36 @@ namespace Geckon.Portal.Core.Standard.Extension
                     sb.AppendFormat( "</{0}>", moduleResult.Key );
                 }
 
-                return sb.ToString();
+                return string.Format( "<PortalResult Duration=\"{0:F1}\">{1}</PortalResult>",
+                                      DateTime.Now.Subtract( Timestamp ).TotalMilliseconds,
+                                      sb.ToString() );
             }
         }
 
-        private string GetAttributeString( IEnumerable<Geckon.Data.NameValue> nameValues )
+        private string GetAttributeString( IEnumerable<KeyValuePair<string, object>> nameValues )
         {
             StringBuilder sb = new StringBuilder();
 
-            foreach( NameValue nameValue in nameValues )
+            foreach( KeyValuePair<string, object> nameValue in nameValues )
             {
-                sb.Append( String.Format( " {0}=\"{1}\"", nameValue.Name, nameValue.Value ) );
+                sb.Append( String.Format( " {0}=\"{1}\"", nameValue.Key, nameValue.Value ) );
             }
 
             return sb.ToString();
         }
 
         #endregion
+        #region Construction
+
+        public Result(  )
+        {
+            Timestamp = DateTime.Now;
+        }
+        
+        #endregion
         #region Business Logic
 
-        public void Add( string moduleName, XmlSerialize obj, params NameValue[] attributes )
+        public void Add( string moduleName, XmlSerialize obj, params KeyValuePair<string, object>[] attributes )
         {
             if( _Content.ContainsKey( moduleName ) )
             {
@@ -71,7 +83,7 @@ namespace Geckon.Portal.Core.Standard.Extension
             }
         }
 
-        public void Add( string moduleName, IEnumerable<XmlSerialize> objs, params NameValue[] attributes )
+        public void Add( string moduleName, IEnumerable<XmlSerialize> objs, params KeyValuePair<string, object>[] attributes )
         {
             foreach( XmlSerialize xmlSerialize in objs )
             {

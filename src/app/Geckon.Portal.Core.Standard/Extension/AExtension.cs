@@ -112,9 +112,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         {
             ContentResult result = new ContentResult();
             
-            result.Content         = string.Format("<PortalResult Duration=\"{0:F1}\">{1}</PortalResult>",
-                                     HttpContext == null ? 0 : DateTime.Now.Subtract( HttpContext.Timestamp ).TotalMilliseconds,
-                                     content);
+            result.Content         = content;
             result.ContentType     = "text/xml";
             result.ContentEncoding = Encoding.UTF8;
             
