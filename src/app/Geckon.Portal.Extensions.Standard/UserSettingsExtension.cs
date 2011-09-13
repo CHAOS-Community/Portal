@@ -15,7 +15,7 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                ResultBuilder.Add( "Geckon.Portal", db.UserSettings_Get( CallContext.User.ID, null, Guid.Parse( guid ) ).First() );
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( db.UserSettings_Get( CallContext.User.ID, null, Guid.Parse( guid ) ).First() );
             }
         }
 
@@ -31,7 +31,7 @@ namespace Geckon.Portal.Extensions.Standard
                 if( result == -10 )
                     throw new InvalidProtocolException(  );
 
-                ResultBuilder.Add( "Geckon.Portal", db.UserSettings_Get( CallContext.User.ID, null, Guid.Parse( guid ) ).First() );
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( db.UserSettings_Get( CallContext.User.ID, null, Guid.Parse( guid ) ).First() );
             }
         }
 
@@ -47,7 +47,7 @@ namespace Geckon.Portal.Extensions.Standard
                 if( result == -10 )
                     throw new InvalidProtocolException(  );
 
-                ResultBuilder.Add( "Geckon.Portal", new ScalarResult( result ) );
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
             }
         }
 
@@ -63,7 +63,7 @@ namespace Geckon.Portal.Extensions.Standard
                 if( result == -10 )
                     throw new InvalidProtocolException();
 
-                ResultBuilder.Add( "Geckon.Portal", new ScalarResult( result ) );
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
             }
         }
 

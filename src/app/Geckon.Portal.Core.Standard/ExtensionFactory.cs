@@ -26,8 +26,7 @@ namespace Geckon.Portal.Core.Standard
 
                 AExtension extension = (AExtension) map.Assembly.CreateInstance( map.Type.FullName );
                 
-                extension.Init( ((APortalApplication)requestContext.HttpContext.ApplicationInstance).PortalContext, 
-                                new Result(), 
+                extension.Init( ((APortalApplication)requestContext.HttpContext.ApplicationInstance).PortalContext,
                                 requestContext.HttpContext.Request.QueryString["sessionID"] );
                 
                 return (IController) extension;

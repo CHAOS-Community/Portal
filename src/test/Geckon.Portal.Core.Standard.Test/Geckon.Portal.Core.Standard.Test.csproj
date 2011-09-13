@@ -58,6 +58,10 @@
       <Project>{D9388656-291A-40A3-B062-C9BF25465B4B}</Project>
       <Name>Geckon.Portal.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\app\Geckon.Portal.Data\Geckon.Portal.Data.csproj">
+      <Project>{97DCBF2B-F655-46C1-8130-201F12B3AE82}</Project>
+      <Name>Geckon.Portal.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

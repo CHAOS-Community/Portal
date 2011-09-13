@@ -13,7 +13,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Update_User()
         {
             UserExtension extension = new UserExtension(  );
-            extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.Init( new PortalContextMock(), Session.SessionID.ToString() );
             extension.CallContext.Parameters = new Parameter[0];
 
             extension.Update( Session.SessionID.ToString(), "new", null, null, null  );
@@ -25,7 +25,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Create_User()
         {
             UserExtension extension = new UserExtension();
-            extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.Init( new PortalContextMock(), Session.SessionID.ToString() );
             extension.CallContext.Parameters = new Parameter[0];
 
             extension.Create(Session.SessionID.ToString(), "new", null, null, "email");
@@ -37,7 +37,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Get_User()
         {
             UserExtension extension = new UserExtension();
-            extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.Init( new PortalContextMock(), Session.SessionID.ToString() );
             extension.CallContext.Parameters = new Parameter[0];
 
             extension.Get(Session.SessionID.ToString());
@@ -49,7 +49,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Delete_User()
         {
             UserExtension extension = new UserExtension();
-            extension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            extension.Init( new PortalContextMock(), Session.SessionID.ToString() );
             extension.CallContext.Parameters = new Parameter[0];
 
             extension.Delete( Session.SessionID.ToString(), User.GUID.ToString() );

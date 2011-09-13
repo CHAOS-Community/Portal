@@ -49,9 +49,7 @@
   <ItemGroup>
     <Compile Include="Checked.cs" />
     <Compile Include="Extension\ICallContext.cs" />
-    <Compile Include="Extension\IModuleResult.cs" />
     <Compile Include="IChecked.cs" />
-    <Compile Include="Extension\IResult.cs" />
     <Compile Include="APortalApplication.cs" />
     <Compile Include="AssemblyTypeMap.cs" />
     <Compile Include="Datatype.cs" />
@@ -65,7 +63,6 @@
     <Compile Include="ISolr.cs" />
     <Compile Include="MethodSignature.cs" />
     <Compile Include="Parameter.cs" />
-    <Compile Include="PortalDelegates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,31 +1,31 @@
 using System;
 using System.Configuration;
 using System.Xml.Linq;
-using Geckon.Security.Web;
-using Geckon.Serialization.Xml;
+using Geckon.Serialization;
+using Geckon.Serialization.XML;
 
 namespace Geckon.Portal.Data
 {
-    [Document("Geckon.Portal.Data.Session")]
-    public partial class Session : XmlSerialize
+    [Serialize("Geckon.Portal.Data.Session")]
+    public partial class Session : Result.Standard.Result
     {
         #region Properties
 
-        [Element("SessionID")]
+        [Serialize("SessionID")]
         public Guid pSessionID
         {
             get { return SessionID; }
             set { SessionID = value; }
         }
 
-        [Element("DateCreated")]
+        [Serialize("DateCreated")]
         public DateTime pDateCreated
         {
             get { return DateCreated; }
             set { DateCreated = value; }
         }
 
-        [Element("DateModified")]
+        [Serialize("DateModified")]
         public DateTime pDateModified
         {
             get { return DateModified; }
@@ -35,8 +35,8 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Document("Geckon.Portal.Data.Group")]
-    public partial class Group : XmlSerialize
+    [Serialize("Geckon.Portal.Data.Group")]
+    public partial class Group : Result.Standard.Result
     {
         #region Properties
 
@@ -46,21 +46,21 @@ namespace Geckon.Portal.Data
             set { ID = value; }
         }
 
-        [Element("GUID")]
+        [Serialize("GUID")]
         public Guid pGUID
         {
             get { return GUID; }
             set { GUID = value; }
         }
 
-        [Element("Name")]
+        [Serialize("Name")]
         public string pName
         {
             get { return Name; }
             set { Name = value; }
         }
 
-        [Element("DateCreadted")]
+        [Serialize("DateCreadted")]
         public DateTime pDateCreated
         {
             get { return DateCreadted; }
@@ -70,68 +70,68 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Document("Geckon.Portal.Data.UserInfo")]
-    public partial class UserInfo : XmlSerialize
+    [Serialize("Geckon.Portal.Data.UserInfo")]
+    public partial class UserInfo : Result.Standard.Result
     {
         #region Properties
 
-        [Element("SessionID")]
+        [Serialize("SessionID")]
         public Guid? pSessionID
         {
             get { return SessionID; }
             set { SessionID = value; }
         }
 
-        [Element("ID")]
+        [Serialize("ID")]
         public int pID
         {
             get { return ID; }
             set { ID = value; }
         }
 
-        [Element("GUID")]
+        [Serialize("GUID")]
         public Guid pGUID
         {
             get { return GUID; }
             set { GUID = value; }
         }
 
-        [Element("Firstname")]
+        [Serialize("Firstname")]
         public string pFirstname
         {
             get { return Firstname; }
             set { Firstname = value; }
         }
 
-        [Element("Middlename")]
+        [Serialize("Middlename")]
         public string pMiddlename
         {
             get { return Middlename; }
             set { Middlename = value; }
         }
 
-        [Element("Lastname")]
+        [Serialize("Lastname")]
         public string pLastname
         {
             get { return Lastname; }
             set { Lastname = value; }
         }
 
-        [Element("Email")]
+        [Serialize("Email")]
         public string pEmail
         {
             get { return Email; }
             set { Email = value; }
         }
 
-        [Element("SystemPermission")]
+        [Serialize("SystemPermission")]
         public int? pSystemPermission
         {
             get { return SystemPermission; }
             set { SystemPermission = value; }
         }
 
-        [Element("ClientSettingID")]
+        [Serialize("ClientSettingID")]
         public int? pClientSettingID
         {
             get { return ClientSettingID; }
@@ -141,12 +141,12 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Document("Geckon.Portal.Data.ScalarResult")]
-    public class ScalarResult : XmlSerialize
+    [Serialize("Geckon.Portal.Data.ScalarResult")]
+    public class ScalarResult : Result.Standard.Result
     {
         #region Properties
 
-        [Element]
+        [Serialize("Value")]
         public object Value { get; set; }
 
         #endregion
@@ -160,26 +160,26 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Document("Geckon.Portal.Data.SubscriptionInfo")]
-    public partial class SubscriptionInfo : XmlSerialize
+    [Serialize("Geckon.Portal.Data.SubscriptionInfo")]
+    public partial class SubscriptionInfo : Result.Standard.Result
     {
         #region Properties
 
-        [Element("GUID")]
+        [Serialize("GUID")]
         public Guid pGUID
         {
             get { return GUID; }
             set { GUID = value; }
         }
 
-        [Element("Name")]
+        [Serialize("Name")]
         public string pName
         {
             get { return Name; }
             set { Name = value; }
         }
 
-        [Element("DateCreated")]
+        [Serialize("DateCreated")]
         public DateTime pDateCreated
         {
             get { return DateCreated; }
@@ -189,40 +189,41 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Document("Geckon.Portal.Data.Module")]
-    public partial class Module : XmlSerialize
+    [Serialize("Geckon.Portal.Data.Module")]
+    public partial class Module : Result.Standard.Result
     {
         #region Properties
 
-        [Element("ID")]
+        [Serialize("ID")]
         public int pID
         {
             get { return ID; }
             set { ID = value; }
         }
 
-        [Element("Name")]
+        [Serialize("Name")]
         public string pName
         {
             get { return Name; }
             set { Name = value; }
         }
 
-        [Element("Path")]
+        [Serialize("Path")]
         public string pPath
         {
             get { return Path; }
             set { Path = value; }
         }
 
-        [Element("Configuration",true)]
+        [SerializeXML(false,true)]
+        [Serialize("Configuration")]
         public string pConfiguration
         {
             get { return Configuration.Value; }
             set { Configuration = XDocument.Parse(value).Root; }
         }
 
-        [Element("DateCreated")]
+        [Serialize("DateCreated")]
         public DateTime pDateCreated
         {
             get { return DateCreated; }
@@ -233,50 +234,50 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Document("Geckon.Portal.Data.User")]
-    public partial class User : XmlSerialize, IUser
+    [Serialize("Geckon.Portal.Data.User")]
+    public partial class User : Result.Standard.Result
     {
         #region Properties
 
-        [Element("SessionID")]
+        [Serialize("SessionID")]
         public string SessionID { get; set; }
 
-        [Element("ID")]
+        [Serialize("ID")]
         public int pID
         {
             get { return ID; }
             set { ID = value; }
         }
 
-        [Element("GUID")]
+        [Serialize("GUID")]
         public Guid pGUID
         {
             get { return GUID; }
             set { GUID = value; }
         }
 
-        [Element("Firstname")]
+        [Serialize("Firstname")]
         public string pFirstname
         {
             get { return Firstname; }
             set { Firstname = value; }
         }
 
-        [Element("Middlename")]
+        [Serialize("Middlename")]
         public string pMiddlename
         {
             get { return Middlename; }
             set { Middlename = value; }
         }
 
-        [Element("Lastname")]
+        [Serialize("Lastname")]
         public string pLastname
         {
             get { return Lastname; }
             set { Lastname = value; }
         }
 
-        [Element("Email")]
+        [Serialize("Email")]
         public string pEmail
         {
             get { return Email; }
@@ -286,33 +287,34 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Document("Geckon.Portal.Data.UserSettings")]
-    public partial class UserSetting : XmlSerialize
+    [Serialize("Geckon.Portal.Data.UserSettings")]
+    public partial class UserSetting : Result.Standard.Result
     {
         #region Properties
 
-        [Element("ClientSettingID")]
+        [Serialize("ClientSettingID")]
         public int pClientSettingID
         {
             get { return ClientSettingID; }
             set { ClientSettingID = value; }
         }
 
-        [Element("UserID")]
+        [Serialize("UserID")]
         public int pUserID
         {
             get { return UserID; }
             set { UserID = value; }
         }
 
-        [Element("Settings",true)]
+        [SerializeXML(false, true)]
+        [Serialize("Settings")]
         public string pSetting
         {
             get { return Setting.ToString(); }
             set { Setting = XElement.Parse( value ); }
         }
 
-        [Element("DateCreated")]
+        [Serialize("DateCreated")]
         public DateTime pDateCreated
         {
             get { return DateCreated; }
@@ -322,33 +324,34 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Document("Geckon.Portal.Data.ClientSettings")]
-    public partial class ClientSetting : XmlSerialize
+    [Serialize("Geckon.Portal.Data.ClientSettings")]
+    public partial class ClientSetting : Result.Standard.Result
     {
         #region Properties
 
-        [Element("GUID")]
+        [Serialize("GUID")]
         public Guid pGUID
         {
             get { return GUID; }
             set { GUID = value;  }
         }
 
-        [Element("Title")]
+        [Serialize("Title")]
         public string pTitle
         {
             get { return Title; }
             set { Title = value; }
         }
 
-        [Element("XML",true)]
+        [SerializeXML(false, true)]
+        [Serialize("XML")]
         public string pXml
         {
             get { return Xml == null ? null : Xml.ToString(); }
             set { Xml = XElement.Parse( value ); }
         }
 
-        [Element("DateCreated")]
+        [Serialize("DateCreated")]
         public DateTime pDateCreated
         {
             get { return DateCreated; }

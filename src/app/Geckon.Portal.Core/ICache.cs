@@ -1,5 +1,5 @@
 ﻿using System;
-using Geckon.Serialization.Xml;
+using Geckon.Portal.Data.Result;
 
 namespace Geckon.Portal.Core
 {
@@ -9,6 +9,6 @@ namespace Geckon.Portal.Core
         bool Put( string key, object value, DateTime dateTime );
         bool Remove( string key );
         object Get( string key );
-        T Get<T>( string key ) where T: XmlSerialize, new();
+        T Get<T>( string key ) where T: IResult, new();
     }
 }

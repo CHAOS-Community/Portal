@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Geckon.Portal.Core.Extension;
-using Geckon.Portal.Core.Standard.Extension;
-using Geckon.Serialization.Xml;
+using Geckon.Portal.Data.Result.Standard;
+using Geckon.Serialization;
+using Geckon.Serialization.Standard.String;
 using NUnit.Framework;
 
 namespace Geckon.Portal.Core.Standard.Test
@@ -12,17 +12,17 @@ namespace Geckon.Portal.Core.Standard.Test
         [Test]
         public void Should_Add_Content_To_Result()
         {
-            IResult result = new Result();
+            PortalResult portalResult = new PortalResult();
 
-            result.Add( "Geckon.Portal.Extension.TestModule", new ContentResultTestDummy() );
+            portalResult.GetModule( "Geckon.Portal.Extension.TestModule").AddResult( new ContentResultTestDummy() );
 
-            Assert.Greater( result.Content.Length, 50 );
+            Assert.Greater( new Serialization.Standard.XML.XMLSerializer( new StringSerializer() ).Serialize( portalResult, false ).ToString().Length, 50 );
         }
 
         [Test]
         public void Should_Add_Content_Range_To_Result()
         {
-            IResult result = new Result();
+            PortalResult portalResult = new PortalResult();
             IList<ContentResultTestDummy> range = new List<ContentResultTestDummy>();
 
             range.Add( new ContentResultTestDummy() );
@@ -31,15 +31,15 @@ namespace Geckon.Portal.Core.Standard.Test
             range.Add( new ContentResultTestDummy() );
             range.Add( new ContentResultTestDummy() );
             
-            result.Add( "Geckon.Portal.Extension.TestModule", range );
+            portalResult.GetModule( "Geckon.Portal.Extension.TestModule" ).AddResult( range );
 
-            Assert.Greater(result.Content.Length, 50);
+            Assert.Greater( new Serialization.Standard.XML.XMLSerializer( new StringSerializer() ).Serialize( portalResult, false ).ToString().Length, 50 );
         }
     }
 
-    public class ContentResultTestDummy : XmlSerialize
+    public class ContentResultTestDummy : Result
     {
-        [Element]
+        [Serialize("SomeValue")]
         public int SomeValue
         {
             get { return 4; }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml;
 using Enyim.Caching.Memcached;
-using Geckon.Serialization.Xml;
+using Geckon.Portal.Data.Result;
 using Membase;
 
 namespace Geckon.Portal.Core.Standard
@@ -27,19 +27,21 @@ namespace Geckon.Portal.Core.Standard
             return Store( StoreMode.Set, key, value, dateTime );
         }
 
-        public T Get<T>( string key ) where T : XmlSerialize, new()
+        public T Get<T>( string key ) where T : IResult, new()
         {
-            object obj = Get( key );
+            throw new NotImplementedException();
+
+            //object obj = Get( key );
             
-            if( obj == null )
-                return null;
+            //if( obj == null )
+            //    return null;
 
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.LoadXml( obj.ToString() );
+            //XmlDocument xDoc = new XmlDocument();
+            //xDoc.LoadXml( obj.ToString() );
 
-            T result = new T();
-            XmlSerialize.FromXML( xDoc.DocumentElement, result );
-            return result;
+            //T result = new T();
+            //XmlSerialize.FromXML( xDoc.DocumentElement, result );
+            //return result;
         }
 
         #endregion

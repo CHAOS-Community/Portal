@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
-using Geckon.Serialization.Xml;
+using Geckon.Portal.Data.Result;
 
 namespace Geckon.Portal.Core.Module
 {
@@ -9,8 +9,7 @@ namespace Geckon.Portal.Core.Module
         string Name { get; }
         void Init( IPortalContext portalContext, XDocument config );
         void Init( IPortalContext portalContext, XElement config );
-        IEnumerable<XmlSerialize> InvokeMethod( IMethodQuery methodQuery );
-    //    bool ContainsMethodSignature( IMethodQuery methodQuery );
+        IEnumerable<IResult> InvokeMethod(IMethodQuery methodQuery);
         bool ContainsServiceHook(string extension, string action);
     }
 }

@@ -32,8 +32,7 @@ namespace Geckon.Portal.Extensions.Standard
 
                 db.User_AssociateWithAuthenticationProvider( user.GUID, EmailPasswordAuthenticationProviderGUID, hash );
 
-                ResultBuilder.Add( "Geckon.Portal",
-                                   user );
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( user );
             }
         }
 
@@ -53,8 +52,7 @@ namespace Geckon.Portal.Extensions.Standard
                 UserInfo user = db.UserInfo_Get( null, null, email, hash, EmailPasswordAuthenticationProviderGUID ).First();
                 db.Session_Update( null, user.GUID, Guid.Parse( sessionID ), null ).First();
                 
-                ResultBuilder.Add( "Geckon.Portal",
-                                   user );
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( user );
             }
         }
 

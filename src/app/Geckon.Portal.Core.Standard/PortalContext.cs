@@ -2,8 +2,8 @@
 using System.Configuration;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
-using Geckon.Serialization.Xml;
 using System;
+using Geckon.Portal.Data.Result;
 
 namespace Geckon.Portal.Core.Standard
 {
@@ -50,7 +50,7 @@ namespace Geckon.Portal.Core.Standard
 
 
 
-        public T CallModule<T>( IExtension extension, IMethodQuery methodQuery ) where T : XmlSerialize
+        public T CallModule<T>( IExtension extension, IMethodQuery methodQuery ) where T : IResult
         {
             methodQuery.Parameters.Add( "extension", new Parameter( "extension", extension ) );
 

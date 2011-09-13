@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
 using Geckon.Portal.Core;
-using Geckon.Portal.Core.Standard.Extension;
 using NUnit.Framework;
 
 namespace Geckon.Portal.Extensions.Standard.Test
@@ -13,7 +12,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Create_A_New_Session()
         {
             SessionExtension sessionExtension = new SessionExtension(  );
-            sessionExtension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            sessionExtension.Init( new PortalContextMock(), Session.SessionID.ToString() );
             sessionExtension.CallContext.Parameters = new[] { new Parameter( "clientSettingID", 1 ), new Parameter( "protocolVersion",3 ) };
 
             sessionExtension.Create( 3 );
@@ -25,7 +24,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Get_A_Session()
         {
             SessionExtension sessionExtension = new SessionExtension( );
-            sessionExtension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            sessionExtension.Init( new PortalContextMock(),Session.SessionID.ToString() );
             sessionExtension.CallContext.Parameters = new[] { new Parameter("sessionID", Session.SessionID.ToString()) };
 
             sessionExtension.Get( Session.SessionID.ToString() );
@@ -37,7 +36,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Update_A_Session()
         {
             SessionExtension sessionExtension = new SessionExtension();
-            sessionExtension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            sessionExtension.Init( new PortalContextMock(), Session.SessionID.ToString() );
             sessionExtension.CallContext.Parameters = new[] { new Parameter("sessionID", Session.SessionID.ToString()) };
 
             sessionExtension.Update( Session.SessionID.ToString() );
@@ -50,7 +49,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Delete_A_Session()
         {
             SessionExtension sessionExtension = new SessionExtension();
-            sessionExtension.Init( new PortalContextMock(),new Result(), Session.SessionID.ToString() );
+            sessionExtension.Init( new PortalContextMock(), Session.SessionID.ToString() );
             sessionExtension.CallContext.Parameters = new[] { new Parameter("sessionID", Session.SessionID.ToString()) };
 
             sessionExtension.Delete( Session.SessionID.ToString() );

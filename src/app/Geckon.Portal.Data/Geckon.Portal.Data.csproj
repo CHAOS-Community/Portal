@@ -65,6 +65,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Result\IModuleResult.cs" />
+    <Compile Include="Result\IPortalResult.cs" />
+    <Compile Include="Result\IResult.cs" />
+    <Compile Include="Result\Standard\ModuleResult.cs" />
+    <Compile Include="Result\Standard\PortalResult.cs" />
+    <Compile Include="Result\Standard\Result.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Portal.dbml.layout">
@@ -90,9 +96,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dto\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

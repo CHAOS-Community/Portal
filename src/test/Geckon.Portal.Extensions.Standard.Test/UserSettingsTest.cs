@@ -13,7 +13,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Get_UserSettings()
         {
             UserSettingsExtension extension = new UserSettingsExtension();
-            extension.Init(new PortalContextMock(), new Result(), AdminUser.SessionID.ToString());
+            extension.Init(new PortalContextMock(), AdminUser.SessionID.ToString());
             extension.CallContext.Parameters = new Parameter[0];
 
             extension.Get( AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString() );
@@ -25,7 +25,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Create_UserSettings()
         {
             UserSettingsExtension extension = new UserSettingsExtension();
-            extension.Init(new PortalContextMock(), new Result(), Session.SessionID.ToString());
+            extension.Init(new PortalContextMock(), Session.SessionID.ToString());
             extension.CallContext.Parameters = new Parameter[0];
 
             extension.Create(Session.SessionID.ToString(), ClientSettings.GUID.ToString(), "<xml />");
@@ -37,7 +37,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Delete_UserSettings()
         {
             UserSettingsExtension extension = new UserSettingsExtension();
-            extension.Init(new PortalContextMock(), new Result(), AdminUser.SessionID.ToString());
+            extension.Init(new PortalContextMock(), AdminUser.SessionID.ToString());
             extension.CallContext.Parameters = new Parameter[0];
 
             extension.Delete( AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString() );
@@ -49,7 +49,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Update_UserSettings()
         {
             UserSettingsExtension extension = new UserSettingsExtension();
-            extension.Init(new PortalContextMock(), new Result(), AdminUser.SessionID.ToString());
+            extension.Init(new PortalContextMock(), AdminUser.SessionID.ToString());
             extension.CallContext.Parameters = new Parameter[0];
 
             extension.Update( AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString(), "<xmllll />" );

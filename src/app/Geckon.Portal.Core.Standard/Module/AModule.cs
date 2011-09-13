@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data;
-using Geckon.Serialization.Xml;
+using Geckon.Portal.Data.Result;
 
 namespace Geckon.Portal.Core.Standard.Module
 {
@@ -75,26 +75,35 @@ namespace Geckon.Portal.Core.Standard.Module
         #endregion
         #region Method call
 
-        public IEnumerable<XmlSerialize> InvokeMethod(IMethodQuery methodQuery)
+        public IEnumerable<IResult> InvokeMethod(IMethodQuery methodQuery)
         {
             IMethodSignature method = RegisteredMethods[ methodQuery.EventType.EventName + ":" + methodQuery.EventType.Type ];
-            
-            // TODO: Error Handling so nice Exceptions are thrown in case of signature mismatch 
-            object result = method.Method.Invoke( this, GetRelevantParameters( method.Parameters, methodQuery ) );
-            
-            if( result is XmlSerialize )
+
+            try
             {
-                IList<XmlSerialize> list = new List<XmlSerialize>();
-
-                list.Add( (XmlSerialize) result );
-
-                return list;
-            }
+                object result = method.Method.Invoke( this, GetRelevantParameters( method.Parameters, methodQuery ) );
             
-            if( result is IEnumerable<XmlSerialize> )
-                return (IEnumerable<XmlSerialize>) result;
+                if( result is IResult )
+                    return ToList( (IResult) result );
 
-            throw new UnsupportedModuleReturnType( "Only a return type of XmlSerialize or IEnumerable<XmlSerialize> is supported" );
+                if( result is IEnumerable<IResult> )
+                    return (IEnumerable<IResult>) result;
+            }
+            catch( System.Exception ex )
+            {
+                return ToList( new Error( ex ) );
+            }
+
+            throw new UnsupportedModuleReturnType( "Only a return type of IResult or IEnumerable<IResult> is supported" );
+        }
+
+        private IList<IResult> ToList( IResult result )
+        {
+            IList<IResult> list = new List<IResult>();
+
+            list.Add( result );
+
+            return list;
         }
 
         public bool ContainsServiceHook( string extension, string action )

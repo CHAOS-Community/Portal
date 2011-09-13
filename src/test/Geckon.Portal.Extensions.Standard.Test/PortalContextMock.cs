@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Geckon.Portal.Core;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
-using Geckon.Serialization.Xml;
+using Geckon.Portal.Data.Result;
 
 namespace Geckon.Portal.Extensions.Standard.Test
 {
@@ -24,12 +24,12 @@ namespace Geckon.Portal.Extensions.Standard.Test
             throw new NotImplementedException();
         }
 
-        public IEnumerable<XmlSerialize> CallModules(IExtension extension, IMethodQuery methodQuery)
+        public IEnumerable< IResult > CallModules(IExtension extension, IMethodQuery methodQuery)
         {
             yield break;
         }
 
-        public T CallModule<T>(IExtension extension, IMethodQuery methodQuery) where T : XmlSerialize
+        public T CallModule<T>(IExtension extension, IMethodQuery methodQuery) where T : IResult
         {
             throw new NotImplementedException();
         }
@@ -76,7 +76,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             return null;
         }
 
-        public T Get<T>(string key) where T : XmlSerialize, new()
+        public T Get<T>(string key) where T : IResult, new()
         {
             return (T) Get(key);
         }

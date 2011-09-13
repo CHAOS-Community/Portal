@@ -12,7 +12,7 @@ namespace Geckon.Portal.Extensions.Standard
 
         public void Get( string sessionID )
         {
-            ResultBuilder.Add( "Geckon.Portal", CallContext.User );
+            PortalResult.GetModule( "Geckon.Portal" ).AddResult( CallContext.User );
         }
         
         #endregion
@@ -24,8 +24,7 @@ namespace Geckon.Portal.Extensions.Standard
             {
                 User user = db.User_Insert( null, firstName, middleName, lastName, email ).First();
 
-                ResultBuilder.Add( "Geckon.Portal",
-                                   user );
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( user );
             }
         }
 
@@ -40,8 +39,7 @@ namespace Geckon.Portal.Extensions.Standard
             {
                 User updatedUser = db.User_Update( user.GUID, null, firstName, middleName, lastName, email ).First();
 
-                ResultBuilder.Add( "Geckon.Portal",
-                                   updatedUser );
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( updatedUser );
             }
         }
 
@@ -59,8 +57,7 @@ namespace Geckon.Portal.Extensions.Standard
             {
                 int result = db.User_Delete( Guid.Parse( guid ) );
 
-                ResultBuilder.Add( "Geckon.Portal",
-                                   new ScalarResult( result ) );
+                PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult(result));
             }
         }
 

@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Web.Mvc;
-using System.Xml;
+using System.Xml.Linq;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
-using Geckon.Serialization.Xml;
+using Geckon.Portal.Data.Result;
+using Geckon.Portal.Data.Result.Standard;
+using Geckon.Serialization;
+using Geckon.Serialization.Standard.String;
+using Geckon.Serialization.Standard.XML;
 
 namespace Geckon.Portal.Core.Standard.Extension
 {
@@ -20,11 +26,12 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         public IPortalContext PortalContext { get; private set; }
 
-        protected IResult ResultBuilder { get; set; }
+        protected PortalResult PortalResult { get; set; }
         protected IDictionary<Type, IChecked<IModule>> AssociatedModules { get; set; }
         protected string Controller { get; set; }
         protected string Action { get; set; }
         public ICallContext CallContext { get; set; }
+        private Stopwatch Timestamp { get; set; }
 
         #endregion
         #region Constructors
@@ -32,12 +39,15 @@ namespace Geckon.Portal.Core.Standard.Extension
         public AExtension()
         {
             AssociatedModules = new Dictionary<Type, IChecked<IModule>>();
+            Timestamp         = new Stopwatch();
         }
 
-        public void Init( IPortalContext portalContext, IResult result, string sessionID )
+        public void Init( IPortalContext portalContext, string sessionID )
         {
+            Timestamp.Start();
+
             PortalContext = portalContext;
-            ResultBuilder = result;
+            PortalResult  = new PortalResult( Timestamp ); 
             CallContext   = new CallContext( portalContext.Cache, portalContext.Solr, sessionID );
         }
 
@@ -88,46 +98,33 @@ namespace Geckon.Portal.Core.Standard.Extension
                 filterContext.Exception = filterContext.Exception.InnerException; 
             
             filterContext.ExceptionHandled = true;
-            filterContext.Result           = GetContentResult( string.Format( "<Error><Exception>{0}</Exception><Message><![CDATA[{1}]]></Message><StackTrace><![CDATA[{2}]]></StackTrace></Error>" , 
-                                                               filterContext.Exception.GetType().FullName, 
-                                                               filterContext.Exception.Message,
-                                                               filterContext.Exception.StackTrace ) 
-                                                             );
+            filterContext.Result           = GetContentResult( new ExtensionError( filterContext.Exception, Timestamp ) );
 
             // TODO: Not all clients support status codes, this should be dependant on ClientSettings
-            filterContext.HttpContext.Response.StatusCode = 500;
+            filterContext.HttpContext.Response.StatusCode = 200;
         }
 
         #endregion
-        #region Result formatting
+        #region portalResult formatting
 
         public ContentResult GetContentResult()
         {
             CallModules( CallContext.Parameters.ToList() );
 
-            return GetContentResult( ResultBuilder.Content );
+            return GetContentResult( PortalResult );
         }
 
-        protected ContentResult GetContentResult( string content )
+        private static ContentResult GetContentResult( IPortalResult portalResult )
         {
             ContentResult result = new ContentResult();
+
+            ISerializer<XDocument> serializer = new XMLSerializer( new StringSerializer( CultureInfo.InvariantCulture ) ); 
             
-            result.Content         = content;
+            result.Content         = serializer.Serialize( portalResult, false ).ToString( SaveOptions.DisableFormatting );
             result.ContentType     = "text/xml";
-            result.ContentEncoding = Encoding.UTF8;
-            
+            result.ContentEncoding = Encoding.Unicode;
+
             return result;
-        }
-
-
-        protected ContentResult GetContentResult( XmlDocument content )
-        {
-            return GetContentResult( content.OuterXml );
-        }
-
-        protected ContentResult GetContentResult( XmlSerialize content )
-        {
-            return GetContentResult( content.ToXML().OuterXml );
         }
 
         #endregion
@@ -144,11 +141,9 @@ namespace Geckon.Portal.Core.Standard.Extension
             {
                 parameters.Add( new Parameter( "callContext", CallContext ) );
 
-                ResultBuilder.Add( associatedModule.Value.GetType().FullName,
-                                   associatedModule.Value.InvokeMethod( new MethodQuery( Controller,
-                                                                                         Action,
-                                                                                         parameters ) ) );
-
+                PortalResult.GetModule( associatedModule.Value.GetType().FullName ).AddResult( associatedModule.Value.InvokeMethod( new MethodQuery( Controller,
+                                                                                                                                    Action,
+                                                                                                                                    parameters ) ) );
                 associatedModule.IsChecked = true;
             }
         }
