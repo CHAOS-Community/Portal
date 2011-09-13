@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Geckon.Serialization;
 using Geckon.Serialization.XML;
 
@@ -15,9 +16,9 @@ namespace Geckon.Portal.Data.Result.Standard
 
         [Serialize("Duration")]
         [SerializeXML(true)]
-        public double Duration
+        public long Duration
         {
-            get { return 0.0; }
+            get { return Timestamp.ElapsedMilliseconds; }
         }
 
         [Serialize("Count")]
@@ -30,11 +31,16 @@ namespace Geckon.Portal.Data.Result.Standard
         [Serialize("Results")]
         public IList<IResult> Results { get; set; }
 
+        private Stopwatch Timestamp { get; set; }
+
         #endregion
         #region Construction
 
         public ModuleResult( string fullname )
         {
+            Timestamp = new Stopwatch();
+            Timestamp.Start();
+
             Fullname = fullname;
             Results  = new List<IResult>();
         }

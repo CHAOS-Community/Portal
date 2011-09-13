@@ -91,7 +91,7 @@ namespace Geckon.Portal.Core.Standard.Module
             }
             catch( System.Exception ex )
             {
-                return ToList( new Error( ex ) );
+                return ToList( new Error( ex.InnerException ) );
             }
 
             throw new UnsupportedModuleReturnType( "Only a return type of IResult or IEnumerable<IResult> is supported" );
