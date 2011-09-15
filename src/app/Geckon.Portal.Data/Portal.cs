@@ -6,7 +6,6 @@ using Geckon.Serialization.XML;
 
 namespace Geckon.Portal.Data
 {
-    [Serialize("Geckon.Portal.Data.Session")]
     public partial class Session : Result.Standard.Result
     {
         #region Properties
@@ -35,7 +34,6 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Serialize("Geckon.Portal.Data.Group")]
     public partial class Group : Result.Standard.Result
     {
         #region Properties
@@ -70,7 +68,6 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Serialize("Geckon.Portal.Data.UserInfo")]
     public partial class UserInfo : Result.Standard.Result
     {
         #region Properties
@@ -141,7 +138,6 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Serialize("Geckon.Portal.Data.ScalarResult")]
     public class ScalarResult : Result.Standard.Result
     {
         #region Properties
@@ -160,7 +156,6 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Serialize("Geckon.Portal.Data.SubscriptionInfo")]
     public partial class SubscriptionInfo : Result.Standard.Result
     {
         #region Properties
@@ -189,7 +184,6 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Serialize("Geckon.Portal.Data.Module")]
     public partial class Module : Result.Standard.Result
     {
         #region Properties
@@ -234,7 +228,6 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Serialize("Geckon.Portal.Data.User")]
     public partial class User : Result.Standard.Result
     {
         #region Properties
@@ -287,7 +280,6 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Serialize("Geckon.Portal.Data.UserSettings")]
     public partial class UserSetting : Result.Standard.Result
     {
         #region Properties
@@ -324,7 +316,6 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    [Serialize("Geckon.Portal.Data.ClientSettings")]
     public partial class ClientSetting : Result.Standard.Result
     {
         #region Properties

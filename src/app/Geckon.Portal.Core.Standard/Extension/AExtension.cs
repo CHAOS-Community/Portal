@@ -32,6 +32,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         protected string Action { get; set; }
         public ICallContext CallContext { get; set; }
         private Stopwatch Timestamp { get; set; }
+        private ReturnFormat ReturnFormat { get; set; }
 
         #endregion
         #region Constructors
@@ -44,11 +45,18 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         public void Init( IPortalContext portalContext, string sessionID )
         {
+            // TODO: Find better name for XML + No Error code Format
+            Init( portalContext, sessionID, "XML_SIMPLE" );
+        }
+
+        public void Init( IPortalContext portalContext, string sessionID, string format )
+        {
             Timestamp.Start();
 
             PortalContext = portalContext;
             PortalResult  = new PortalResult( Timestamp ); 
             CallContext   = new CallContext( portalContext.Cache, portalContext.Solr, sessionID );
+            ReturnFormat  = ( ReturnFormat ) Enum.Parse( typeof( ReturnFormat ), format.ToUpper() );
         }
 
         #endregion
@@ -97,11 +105,26 @@ namespace Geckon.Portal.Core.Standard.Extension
             if( filterContext.Exception is TargetInvocationException )
                 filterContext.Exception = filterContext.Exception.InnerException; 
             
-            filterContext.ExceptionHandled = true;
-            filterContext.Result           = GetContentResult( new ExtensionError( filterContext.Exception, Timestamp ) );
+            filterContext.ExceptionHandled                = true;
+            filterContext.Result                          = GetContentResult( ReturnFormat, new ExtensionError( filterContext.Exception, Timestamp ) );
+            filterContext.HttpContext.Response.StatusCode = GetErrorStatusCode(  );
+        }
 
-            // TODO: Not all clients support status codes, this should be dependant on ClientSettings
-            filterContext.HttpContext.Response.StatusCode = 200;
+        private int GetErrorStatusCode()
+        {
+            switch( ReturnFormat )
+            {
+                case ReturnFormat.XML_SIMPLE:
+                    return 200;
+                case ReturnFormat.XML_ERRORCODE:
+                    return 500;
+                case ReturnFormat.JSON_SIMPLE:
+                    return 200;
+                case ReturnFormat.JSONP_SIMPLE:
+                    return 200;
+                default:
+                    return 500;
+            }
         }
 
         #endregion
@@ -111,20 +134,37 @@ namespace Geckon.Portal.Core.Standard.Extension
         {
             CallModules( CallContext.Parameters.ToList() );
 
-            return GetContentResult( PortalResult );
+            return GetContentResult( ReturnFormat, PortalResult );
         }
 
-        private static ContentResult GetContentResult( IPortalResult portalResult )
+        private static ContentResult GetContentResult( ReturnFormat returnFormat, IPortalResult portalResult )
         {
+            // TODO: Implement Serializers depending on ReturnFormat choice
             ContentResult result = new ContentResult();
 
-            ISerializer<XDocument> serializer = new XMLSerializer( new StringSerializer( CultureInfo.InvariantCulture ) ); 
-            
-            result.Content         = serializer.Serialize( portalResult, false ).ToString( SaveOptions.DisableFormatting );
+            result.Content         = SerializePortalResult( returnFormat, portalResult ); 
             result.ContentType     = "text/xml";
             result.ContentEncoding = Encoding.Unicode;
 
             return result;
+        }
+
+        private static string SerializePortalResult( ReturnFormat returnFormat, IPortalResult portalResult )
+        {
+            switch( returnFormat )
+            {
+                case ReturnFormat.XML_SIMPLE:
+                case ReturnFormat.XML_ERRORCODE:
+                    ISerializer<XDocument> serializer = new XMLSerializer( new StringSerializer( CultureInfo.InvariantCulture ) ); 
+            
+                    return serializer.Serialize( portalResult, false ).ToString( SaveOptions.DisableFormatting );
+                case ReturnFormat.JSON_SIMPLE:
+                    return "";
+                case ReturnFormat.JSONP_SIMPLE:
+                    return "";
+                default:
+                    throw new NotImplementedException( "Format is unknown" );
+            }
         }
 
         #endregion
