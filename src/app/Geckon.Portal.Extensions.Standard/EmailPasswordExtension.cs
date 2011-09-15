@@ -3,10 +3,10 @@ using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web.Mvc;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
+using Geckon.Portal.Data.Result;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -16,6 +16,8 @@ namespace Geckon.Portal.Extensions.Standard
         
         public void CreatePassword( string sessionID, string userGUID, string password )
         {
+            IModuleResult result = PortalResult.GetModule("Geckon.Portal");
+
             using( PortalDataContext db = PortalDataContext.Default() )
             {
                 UserInfo user = db.UserInfo_Get( Guid.Parse( userGUID ), null, null, null, null ).First();
@@ -32,7 +34,7 @@ namespace Geckon.Portal.Extensions.Standard
 
                 db.User_AssociateWithAuthenticationProvider( user.GUID, EmailPasswordAuthenticationProviderGUID, hash );
 
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( user );
+                result.AddResult( user );
             }
         }
 
@@ -41,7 +43,8 @@ namespace Geckon.Portal.Extensions.Standard
 
         public void Login( string sessionID, string email, string password )
         {
-            SHA1Managed sha1 = new SHA1Managed();
+            IModuleResult result = PortalResult.GetModule( "Geckon.Portal" );
+            SHA1Managed   sha1   = new SHA1Managed();
 
             byte[] byteHash =  sha1.ComputeHash( Encoding.UTF8.GetBytes( password ) );
 
@@ -51,8 +54,8 @@ namespace Geckon.Portal.Extensions.Standard
             {
                 UserInfo user = db.UserInfo_Get( null, null, email, hash, EmailPasswordAuthenticationProviderGUID ).First();
                 db.Session_Update( null, user.GUID, Guid.Parse( sessionID ), null ).First();
-                
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( user );
+
+                result.AddResult( user );
             }
         }
 

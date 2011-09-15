@@ -16,10 +16,7 @@ namespace Geckon.Portal.Data.Result.Standard
 
         [Serialize("Duration")]
         [SerializeXML(true)]
-        public long Duration
-        {
-            get { return Timestamp.ElapsedMilliseconds; }
-        }
+        public long Duration { get; private set; }
 
         [Serialize("Count")]
         [SerializeXML(true)]
@@ -54,11 +51,15 @@ namespace Geckon.Portal.Data.Result.Standard
             {
                 AddResult( result );
             }
+
+            Duration = Timestamp.ElapsedMilliseconds;
         }
 
         public void AddResult( IResult result )
         {
             Results.Add( result );
+
+            Duration = Timestamp.ElapsedMilliseconds;
         }
 
         #endregion

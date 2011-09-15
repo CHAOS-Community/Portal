@@ -33,7 +33,7 @@ namespace Geckon.Portal.Data.Result.Standard
 
         public PortalResult( Stopwatch timestamp )
         {
-            Modules = new List<IModuleResult>();
+            Modules   = new List<IModuleResult>();
             Timestamp = timestamp;
 
             Timestamp.Start();

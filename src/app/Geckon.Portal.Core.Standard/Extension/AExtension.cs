@@ -175,15 +175,17 @@ namespace Geckon.Portal.Core.Standard.Extension
             CallModules( parameters.Select( (parameter)=>parameter ).ToList() );
         }
 
-        private void CallModules(IList<Parameter> parameters)
+        private void CallModules( IList<Parameter> parameters )
         {
             foreach( IChecked<IModule> associatedModule in AssociatedModules.Values.Where( module => !module.IsChecked ) )
             {
+                IModuleResult result = PortalResult.GetModule( associatedModule.Value.GetType().FullName );
+                
                 parameters.Add( new Parameter( "callContext", CallContext ) );
 
-                PortalResult.GetModule( associatedModule.Value.GetType().FullName ).AddResult( associatedModule.Value.InvokeMethod( new MethodQuery( Controller,
-                                                                                                                                    Action,
-                                                                                                                                    parameters ) ) );
+                result.AddResult( associatedModule.Value.InvokeMethod( new MethodQuery( Controller,
+                                                                                        Action,
+                                                                                        parameters ) ) );
                 associatedModule.IsChecked = true;
             }
         }
