@@ -45,6 +45,10 @@ namespace Geckon.Portal.Data.Result.Standard
         #endregion
         #region Business Logic
 
+        /// <summary>
+        /// Adds an IEnumerable<IResult>.
+        /// </summary>
+        /// <param name="results"></param>
         public void AddResult( IEnumerable<IResult> results )
         {
             foreach( IResult result in results )
@@ -55,6 +59,10 @@ namespace Geckon.Portal.Data.Result.Standard
             Duration = Timestamp.ElapsedMilliseconds;
         }
 
+        /// <summary>
+        /// Adds a single result. If you need to add a list of results use AddResult( IEnumerable<IResult> results ) for better performance
+        /// </summary>
+        /// <param name="result"></param>
         public void AddResult( IResult result )
         {
             Results.Add( result );

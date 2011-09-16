@@ -2,10 +2,9 @@
 {
     public enum ReturnFormat
     {
-        XML_SIMPLE, // XML + No HTTP Errorcodes
-        XML_ERRORCODE,
-        JSON_SIMPLE,
-        JSONP_SIMPLE,
+        XML,
+        JSON,
+        JSONP,
         UNKNOWN
     }
 }
