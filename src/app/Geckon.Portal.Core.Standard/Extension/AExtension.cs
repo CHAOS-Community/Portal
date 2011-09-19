@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -12,8 +11,8 @@ using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data.Result;
 using Geckon.Portal.Data.Result.Standard;
 using Geckon.Serialization;
-using Geckon.Serialization.Standard.String;
-using Geckon.Serialization.Standard.XML;
+using Geckon.Serialization.JSON;
+using Geckon.Serialization.Standard;
 
 namespace Geckon.Portal.Core.Standard.Extension
 {
@@ -131,26 +130,29 @@ namespace Geckon.Portal.Core.Standard.Extension
             return GetContentResult( ReturnFormat, PortalResult );
         }
 
-        private static ContentResult GetContentResult( ReturnFormat returnFormat, IPortalResult portalResult )
+        private ContentResult GetContentResult( ReturnFormat returnFormat, IPortalResult portalResult )
         {
             ContentResult result = new ContentResult();
-
+            
             switch( returnFormat )
             {
                 case ReturnFormat.XML:
-                    ISerializer<XDocument> serializer = new XMLSerializer( new StringSerializer( CultureInfo.InvariantCulture ) ); 
-                    serializer.Map( typeof( IList<> ), typeof( List<> ) );
+                    ISerializer<XDocument> xmlSerializer = SerializerFactory.Get<XDocument>();
 
-                    result.Content     = serializer.Serialize( portalResult, false ).ToString( SaveOptions.DisableFormatting );
+                    result.Content     = xmlSerializer.Serialize( portalResult, false ).ToString( SaveOptions.DisableFormatting );
                     result.ContentType = "text/xml";
                     break;
                 case ReturnFormat.JSON:
-                    throw new NotImplementedException("Format is not implemented");
+                    ISerializer<JSON> jsonSerializer = SerializerFactory.Get<JSON>();
+
+                    result.Content     = jsonSerializer.Serialize( portalResult, false ).Value;
                     result.ContentType = "application/json";
                     break;
                 case ReturnFormat.JSONP:
-                    throw new NotImplementedException("Format is not implemented");
-                    result.ContentType = "application/json";
+                    ISerializer<JSON> jsonpSerializer = SerializerFactory.Get<JSON>();
+
+                    result.Content     = jsonpSerializer.Serialize( portalResult, false ).GetAsJSONP( HttpContext.Request.QueryString[ "jsonp"] );
+                    result.ContentType = "application/javascript";
                     break;
                 default:
                     throw new NotImplementedException( "Format is unknown" );

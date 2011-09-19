@@ -7,17 +7,20 @@ Permission Relations:
   + Delete
   + Update
 - User -> Folder
-  + Get
-  + Update (Rename)
-  + Delete
-  + Create subfolder
-  + Move object to folder
+  + Get							| GET
+  + Update (Rename)				| UPDATE
+  + Change folder type			| UPDATE
+  + Delete						| DELETE
+  + Create subfolder            | CREATE
+  + Move object to folder		| CREATE_UPDATE_OBJECTS
   + RW-Link object to folder
   + R-Link object to folder
-  + Move Object From Folder
+  + Move Object From Folder     | MOVE_OBJECT_FROM
   + RW-Link Object From Folder
   + R-Link Object From Folder
-  + Change folder type
+  + Get Objects					| GET_OBJECTS
+  + Create/Update Objects		| CREATE_UPDATE_OBJECTS
+  + Delete Objects				| DELETE_OBJECTS
 - User -> MetadataSchema
   + Get
   + Update
@@ -34,17 +37,20 @@ Permission Relations:
   + Delete
   + Update
 - Group -> Folder
-  + Get
-  + Update (Rename)
-  + Delete
-  + Create subfolder
-  + Move object to folder
+  + Get							| GET
+  + Update (Rename)				| UPDATE
+  + Change folder type			| UPDATE
+  + Delete						| DELETE
+  + Create subfolder            | CREATE
+  + Move object to folder		| CREATE_UPDATE_OBJECTS
   + RW-Link object to folder
   + R-Link object to folder
-  + Move Object From Folder
+  + Move Object From Folder     | MOVE_OBJECT_FROM
   + RW-Link Object From Folder
   + R-Link Object From Folder
-  + Change folder type
+  + Get Objects					| GET_OBJECTS
+  + Create/Update Objects		| CREATE_UPDATE_OBJECTS
+  + Delete Objects				| DELETE_OBJECTS
 - Group -> MetadataSchema
   + Get
   + Update
