@@ -28,7 +28,7 @@ namespace Geckon.Portal.Core.Standard
                 
                 extension.Init( ((APortalApplication)requestContext.HttpContext.ApplicationInstance).PortalContext,
                                 requestContext.HttpContext.Request.QueryString["sessionID"],
-                                requestContext.HttpContext.Request.QueryString["format"] ?? "XML",
+                                requestContext.HttpContext.Request.QueryString["format"] ?? "GXML",
                                 requestContext.HttpContext.Request.QueryString["useHttpStatusCodes"] ?? "true" );
                 
                 return (IController) extension;

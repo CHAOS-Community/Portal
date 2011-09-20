@@ -45,8 +45,7 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         public void Init( IPortalContext portalContext, string sessionID )
         {
-            // TODO: Find better name for XML + No Error code Format
-            Init( portalContext, sessionID, "XML", "true" );
+            Init( portalContext, sessionID, "GXML", "true" );
         }
 
         public void Init( IPortalContext portalContext, string sessionID, string format, string useHttpStatusCodes )

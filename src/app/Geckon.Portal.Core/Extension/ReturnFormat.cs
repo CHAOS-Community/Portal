@@ -2,7 +2,7 @@
 {
     public enum ReturnFormat
     {
-        XML,
+        GXML,
         JSON,
         JSONP,
         UNKNOWN
