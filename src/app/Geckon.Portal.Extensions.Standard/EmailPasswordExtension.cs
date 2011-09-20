@@ -52,7 +52,11 @@ namespace Geckon.Portal.Extensions.Standard
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                UserInfo user = db.UserInfo_Get( null, null, email, hash, EmailPasswordAuthenticationProviderGUID ).First();
+                UserInfo user = db.UserInfo_Get( null, null, email, hash, EmailPasswordAuthenticationProviderGUID ).FirstOrDefault();
+
+                if( user == null )
+                    throw new LoginException( "Login failed, either email or password is incorrect" );
+
                 db.Session_Update( null, user.GUID, Guid.Parse( sessionID ), null ).First();
 
                 result.AddResult( user );

@@ -19,7 +19,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         {
             get
             {
-                UserInfo userInfo = null;//Cache.Get<UserInfo>( string.Format( "[UserInfo:sid={0}]", SessionID ) );
+                UserInfo userInfo = Cache.Get<UserInfo>( string.Format( "[UserInfo:sid={0}]", SessionID ) );
 
                 if (userInfo == null)
                 {
@@ -27,9 +27,9 @@ namespace Geckon.Portal.Core.Standard.Extension
                     {
                         userInfo = db.UserInfo_Get( null, Guid.Parse( SessionID ), null, null, null ).First();
 
-                        //Cache.Put( string.Format("[UserInfo:sid={0}]", SessionID ),
-                        //           userInfo.ToXML().OuterXml,
-                        //           new TimeSpan(0, 1, 0));
+                        Cache.Put( string.Format("[UserInfo:sid={0}]", SessionID),
+                                   userInfo,
+                                   new TimeSpan(0, 1, 0) );
                     }
                 }
 

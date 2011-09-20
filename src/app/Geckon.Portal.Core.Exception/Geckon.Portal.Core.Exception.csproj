@@ -43,6 +43,7 @@
     <Compile Include="ExtensionMissingException.cs" />
     <Compile Include="InsufficientPermissionsExcention.cs" />
     <Compile Include="InvalidProtocolException.cs" />
+    <Compile Include="LoginException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnsupportedModuleReturnType.cs" />
   </ItemGroup>

@@ -4,6 +4,7 @@ using Geckon.Portal.Core;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data.Result;
+using Geckon.Portal.Data.Result.Standard;
 
 namespace Geckon.Portal.Extensions.Standard.Test
 {
@@ -56,12 +57,12 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
     public class MockCache : ICache
     {
-        public bool Put(string key, object value, TimeSpan timeSpan)
+        public bool Put(string key, IResult value, TimeSpan timeSpan)
         {
             return true;
         }
 
-        public bool Put(string key, object value, DateTime dateTime)
+        public bool Put(string key, IResult value, DateTime dateTime)
         {
             return true;
         }
