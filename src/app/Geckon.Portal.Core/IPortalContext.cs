@@ -8,6 +8,10 @@ namespace Geckon.Portal.Core
 {
     public interface IPortalContext
     {
+        IDictionary<string, IExtensionLoader> LoadedExtensions { get; }
+        IDictionary<string, IModule>          LoadedModules { get;}
+
+        void RegisterExtension( IExtensionLoader extensionLoader );
         void RegisterModule( IModule module );
         T CallModule<T>( IExtension extension, IMethodQuery methodQuery ) where T : IResult;
         Guid AnonymousUserGUID { get; }

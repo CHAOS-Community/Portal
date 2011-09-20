@@ -23,7 +23,7 @@ namespace Geckon.Portal.Extensions.Standard
             if( result == null )
                 throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
 
-            PortalResult.GetModule( "Geckon.Portal" ).AddResult( result );
+            CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(result);
         }
 
         #endregion
@@ -42,7 +42,7 @@ namespace Geckon.Portal.Extensions.Standard
 
                 SubscriptionInfo subscriptionInfo = db.SubscriptionInfo_Get( result, null, null, user.ID ).First();
 
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( subscriptionInfo );
+                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(subscriptionInfo);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Geckon.Portal.Extensions.Standard
             if( result == -100 )
                 throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to delete the subscription" );
 
-            PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
+            CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
         }
 
         #endregion
@@ -81,7 +81,7 @@ namespace Geckon.Portal.Extensions.Standard
             if( result == -100 )
                 throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
 
-            PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
+            CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
         }
 
         #endregion

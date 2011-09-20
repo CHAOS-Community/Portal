@@ -17,7 +17,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.CreatePassword( Session.SessionID.ToString(), User.GUID.ToString(), "pbvu7000" );
             
-            Assert.IsNotNull( XDocument.Parse(extension.GetContentResult().Content).Descendants( "GUID" ).FirstOrDefault() );
+            Assert.IsNotNull( XDocument.Parse(extension.Result).Descendants( "GUID" ).FirstOrDefault() );
         }
 
         [Test]
@@ -29,8 +29,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Login( AdminUser.SessionID.ToString(), AdminUser.Email, "pbvu7000" );
 
-            Assert.IsNotNull(XDocument.Parse(extension.GetContentResult().Content).Descendants("GUID").FirstOrDefault());
-            Assert.AreEqual(1, XDocument.Parse(extension.GetContentResult().Content).Descendants("Geckon.Portal.Data.UserInfo").Count());
+            Assert.IsNotNull(XDocument.Parse(extension.Result).Descendants("GUID").FirstOrDefault());
+            Assert.AreEqual(1, XDocument.Parse( extension.Result ).Descendants("Result").Count());
         }
     }
 }

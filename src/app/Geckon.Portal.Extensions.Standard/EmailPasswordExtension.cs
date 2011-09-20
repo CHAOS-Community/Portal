@@ -16,7 +16,7 @@ namespace Geckon.Portal.Extensions.Standard
         
         public void CreatePassword( string sessionID, string userGUID, string password )
         {
-            IModuleResult result = PortalResult.GetModule("Geckon.Portal");
+            IModuleResult result = CallContext.PortalResult.GetModule("Geckon.Portal");
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
@@ -43,7 +43,7 @@ namespace Geckon.Portal.Extensions.Standard
 
         public void Login( string sessionID, string email, string password )
         {
-            IModuleResult result = PortalResult.GetModule( "Geckon.Portal" );
+            IModuleResult result = CallContext.PortalResult.GetModule("Geckon.Portal");
             SHA1Managed   sha1   = new SHA1Managed();
 
             byte[] byteHash =  sha1.ComputeHash( Encoding.UTF8.GetBytes( password ) );

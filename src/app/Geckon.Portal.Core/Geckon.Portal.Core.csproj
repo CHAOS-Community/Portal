@@ -57,6 +57,7 @@
     <Compile Include="ICache.cs" />
     <Compile Include="Extension\IExtension.cs" />
     <Compile Include="IEventType.cs" />
+    <Compile Include="IExtensionLoader.cs" />
     <Compile Include="IMethodQuery.cs" />
     <Compile Include="IMethodSignature.cs" />
     <Compile Include="Module\IModule.cs" />

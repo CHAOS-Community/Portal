@@ -60,6 +60,7 @@
     <Compile Include="Extension\AExtension.cs" />
     <Compile Include="Extension\CallContext.cs" />
     <Compile Include="Extension\ExtensionError.cs" />
+    <Compile Include="Extension\ExtensionLoader.cs" />
     <Compile Include="Membase.cs" />
     <Compile Include="MethodQuery.cs" />
     <Compile Include="Module\AModule.cs" />

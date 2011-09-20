@@ -27,7 +27,7 @@ namespace Geckon.Portal.Extensions.Standard
                 }
             }
 
-            PortalResult.GetModule( "Geckon.Portal" ).AddResult( session );
+            CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(session);
                                 
                                 //new KeyValuePair<string, object>( "TotalCount", totalCount.ToString() ) );
         } 
@@ -42,7 +42,7 @@ namespace Geckon.Portal.Extensions.Standard
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( db.Session_Insert( null, 
+                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(db.Session_Insert(null, 
                                                                                         PortalContext.AnonymousUserGUID ).First() );
             }
         }
@@ -54,7 +54,7 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( db.Session_Update( null, 
+                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(db.Session_Update(null, 
                                                                                         null, 
                                                                                         Guid.Parse( sessionID ), 
                                                                                         null ).First() );
@@ -68,7 +68,7 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( db.Session_Delete( Guid.Parse( sessionID ), 
+                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(db.Session_Delete(Guid.Parse(sessionID), 
                                                                                                           null ) ) );
             }
         }

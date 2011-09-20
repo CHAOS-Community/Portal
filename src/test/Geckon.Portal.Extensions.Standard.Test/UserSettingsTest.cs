@@ -18,7 +18,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Get( AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString() );
 
-            Assert.IsNotNull( XDocument.Parse( extension.GetContentResult().Content ).Descendants("Settings").FirstOrDefault() );
+            Assert.IsNotNull( XDocument.Parse( extension.Result ).Descendants("Settings").FirstOrDefault() );
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Create(Session.SessionID.ToString(), ClientSettings.GUID.ToString(), "<xml />");
 
-            Assert.IsNotNull( XDocument.Parse( extension.GetContentResult().Content ).Descendants("Settings").FirstOrDefault() );
+            Assert.IsNotNull( XDocument.Parse( extension.Result ).Descendants("Settings").FirstOrDefault() );
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Delete( AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString() );
 
-            Assert.IsNotNull(XDocument.Parse(extension.GetContentResult().Content).Descendants("Value").FirstOrDefault());
+            Assert.IsNotNull(XDocument.Parse(extension.Result).Descendants("Value").FirstOrDefault());
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Update( AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString(), "<xmllll />" );
 
-            Assert.IsNotNull( XDocument.Parse( extension.GetContentResult().Content ).Descendants("Value").FirstOrDefault() );
+            Assert.IsNotNull( XDocument.Parse( extension.Result ).Descendants("Value").FirstOrDefault() );
         }
     }
 }

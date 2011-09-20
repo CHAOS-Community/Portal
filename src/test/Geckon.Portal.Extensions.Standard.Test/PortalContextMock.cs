@@ -4,7 +4,6 @@ using Geckon.Portal.Core;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data.Result;
-using Geckon.Portal.Data.Result.Standard;
 
 namespace Geckon.Portal.Extensions.Standard.Test
 {
@@ -18,6 +17,21 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public ISolr Solr
         {
             get { return new MockSolr(); }
+        }
+
+        public IDictionary<string, IExtensionLoader> LoadedExtensions
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IDictionary<string, IModule> LoadedModules
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public void RegisterExtension(IExtensionLoader extensionLoader)
+        {
+            throw new NotImplementedException();
         }
 
         public void RegisterModule( IModule module )
@@ -46,6 +60,16 @@ namespace Geckon.Portal.Extensions.Standard.Test
         }
 
         public IEnumerable<IModule> GetModules(string extension, string action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IExtensionLoader GetExtension(string extensionName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsExtensionLoaded(string extensionName)
         {
             throw new NotImplementedException();
         }

@@ -15,7 +15,7 @@ namespace Geckon.Portal.Extensions.Standard
             {
                 ClientSetting client = db.ClientSettings_Get( Guid.Parse( guid ) ).First();
 
-                PortalResult.GetModule("Geckon.Portal").AddResult( client );
+                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(client);
             }
         }
 

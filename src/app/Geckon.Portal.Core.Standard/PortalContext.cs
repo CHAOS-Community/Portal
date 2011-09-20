@@ -14,9 +14,10 @@ namespace Geckon.Portal.Core.Standard
         #endregion
         #region Properties
 
-        public IDictionary<string, IModule> LoadedModules { get; protected set; }
-        public ICache                       Cache         { get; private set; }
-        public ISolr                        Solr          { get; private set; }
+        public IDictionary<string, IExtensionLoader> LoadedExtensions { get; protected set; }
+        public IDictionary<string, IModule>          LoadedModules    { get; protected set; }
+        public ICache                                Cache            { get; private set; }
+        public ISolr                                 Solr             { get; private set; }
 
         public Guid AnonymousUserGUID
         {
@@ -36,19 +37,33 @@ namespace Geckon.Portal.Core.Standard
 
         public PortalContext()
         {
-            LoadedModules = new Dictionary<string, IModule>();
-            Cache         = new Membase();
+            LoadedExtensions = new Dictionary<string, IExtensionLoader>();
+            LoadedModules    = new Dictionary<string, IModule>();
+            Cache            = new Membase();
         }
 
         #endregion
         #region Business Logic
 
+        public void RegisterExtension( IExtensionLoader extension )
+        {
+            LoadedExtensions.Add( extension.Extension.Map,extension );
+        }
+
+        public IExtensionLoader GetExtension(string extensionName)
+        {
+            return LoadedExtensions[extensionName];
+        }
+
+        public bool IsExtensionLoaded(string extensionName)
+        {
+            return LoadedExtensions.ContainsKey(extensionName);
+        }
+
         public void RegisterModule( IModule module )
         {
             LoadedModules.Add( module.Name, module );
         }
-
-
 
         public T CallModule<T>( IExtension extension, IMethodQuery methodQuery ) where T : IResult
         {

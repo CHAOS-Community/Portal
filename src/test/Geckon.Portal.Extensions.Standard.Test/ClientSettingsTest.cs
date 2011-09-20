@@ -17,7 +17,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Get(AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString() );
 
-            Assert.AreEqual(ClientSettings.GUID.ToString(), XDocument.Parse(extension.GetContentResult().Content).Descendants("GUID").First().Value);
+            Assert.AreEqual(ClientSettings.GUID.ToString(), XDocument.Parse(extension.Result).Descendants("GUID").First().Value);
         }
     }
 }

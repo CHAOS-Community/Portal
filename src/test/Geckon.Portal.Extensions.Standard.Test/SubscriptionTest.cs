@@ -19,7 +19,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Get( AdminUser.SessionID.ToString(), SubscriptionInfo.GUID.ToString() );
 
-            Assert.AreEqual( SubscriptionInfo.GUID.ToString(), XDocument.Parse(extension.GetContentResult().Content).Descendants( "GUID" ).First().Value );
+            Assert.AreEqual( SubscriptionInfo.GUID.ToString(), XDocument.Parse(extension.Result).Descendants( "GUID" ).First().Value );
         }
 
         [Test, ExpectedException( typeof(InsufficientPermissionsExcention) )]
@@ -40,7 +40,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Create( AdminUser.SessionID.ToString(), "some name" );
 
-            Assert.AreEqual( "some name", XDocument.Parse(extension.GetContentResult().Content).Descendants( "Name" ).First().Value );
+            Assert.AreEqual( "some name", XDocument.Parse(extension.Result).Descendants( "Name" ).First().Value );
         }
 
         [Test, ExpectedException( typeof(InsufficientPermissionsExcention) )]
@@ -62,7 +62,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Delete( AdminUser.SessionID.ToString(), SubscriptionInfo.GUID.ToString() );
 
-            Assert.AreEqual( "1", XDocument.Parse(extension.GetContentResult().Content).Descendants( "Value" ).First().Value );
+            Assert.AreEqual( "1", XDocument.Parse(extension.Result).Descendants( "Value" ).First().Value );
         }
 
         [Test, ExpectedException( typeof(InsufficientPermissionsExcention) )]
@@ -84,7 +84,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Update( AdminUser.SessionID.ToString(), SubscriptionInfo.GUID.ToString(), "new subscription name" );
 
-            Assert.AreEqual( "1", XDocument.Parse(extension.GetContentResult().Content).Descendants( "Value" ).First().Value );
+            Assert.AreEqual( "1", XDocument.Parse(extension.Result).Descendants( "Value" ).First().Value );
         }
 
         [Test, ExpectedException( typeof(InsufficientPermissionsExcention) )]

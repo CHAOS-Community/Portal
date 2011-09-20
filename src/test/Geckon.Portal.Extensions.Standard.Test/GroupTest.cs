@@ -22,7 +22,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Get( AdminUser.SessionID.ToString(), null );
             
-            Assert.AreEqual( AdminGroup.GUID.ToString(), XDocument.Parse( extension.GetContentResult().Content ).Descendants("GUID").First().Value );
+            Assert.AreEqual( AdminGroup.GUID.ToString(), XDocument.Parse( extension.Result ).Descendants("GUID").First().Value );
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Create( AdminUser.SessionID.ToString(), "my group", 0 );
             
-            Assert.Greater( int.Parse( XDocument.Parse( extension.GetContentResult().Content ).Descendants("Value").First().Value ), 0 );
+            Assert.Greater( int.Parse( XDocument.Parse( extension.Result ).Descendants("Value").First().Value ), 0 );
         }
 
         [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
@@ -56,7 +56,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Delete( AdminUser.SessionID.ToString(), AdminGroup.GUID.ToString() );
 
-            Assert.AreEqual("1", XDocument.Parse( extension.GetContentResult().Content ).Descendants("Value").First().Value);
+            Assert.AreEqual("1", XDocument.Parse( extension.Result ).Descendants("Value").First().Value);
         }
 
         [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
@@ -96,7 +96,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
-                Group group = db.Group_Get( int.Parse( XDocument.Parse( extension.GetContentResult().Content ).Descendants("Value").First().Value), null, null, AdminUser.ID).First();
+                Group group = db.Group_Get( int.Parse( XDocument.Parse( extension.Result ).Descendants("Value").First().Value), null, null, AdminUser.ID).First();
 
                 Assert.AreEqual("success", group.Name );
             }

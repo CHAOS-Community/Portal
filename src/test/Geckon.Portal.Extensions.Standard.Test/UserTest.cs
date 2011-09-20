@@ -18,7 +18,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Update( Session.SessionID.ToString(), "new", null, null, null  );
 
-            Assert.AreEqual( "new", XDocument.Parse(extension.GetContentResult().Content).Descendants( "Firstname" ).First().Value );
+            Assert.AreEqual( "new", XDocument.Parse(extension.Result).Descendants( "Firstname" ).First().Value );
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Create(Session.SessionID.ToString(), "new", null, null, "email");
 
-            Assert.AreEqual("new", XDocument.Parse(extension.GetContentResult().Content).Descendants("Firstname").First().Value);
+            Assert.AreEqual("new", XDocument.Parse(extension.Result).Descendants("Firstname").First().Value);
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Get(Session.SessionID.ToString());
 
-            Assert.AreEqual("Anonymous", XDocument.Parse(extension.GetContentResult().Content).Descendants("Firstname").First().Value);
+            Assert.AreEqual("Anonymous", XDocument.Parse(extension.Result).Descendants("Firstname").First().Value);
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             extension.Delete( Session.SessionID.ToString(), User.GUID.ToString() );
 
-            Assert.AreEqual("1", XDocument.Parse(extension.GetContentResult().Content).Descendants("Value").First().Value);
+            Assert.AreEqual("1", XDocument.Parse(extension.Result).Descendants("Value").First().Value);
         }
     }
 }

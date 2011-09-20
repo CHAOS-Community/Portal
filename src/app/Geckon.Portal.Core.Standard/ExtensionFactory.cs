@@ -20,18 +20,18 @@ namespace Geckon.Portal.Core.Standard
         #endregion
         public override IController CreateController( System.Web.Routing.RequestContext requestContext, string controllerName )
         {
-            if( Application.LoadedExtensions.ContainsKey( controllerName ) )
+            if( Application.PortalContext.LoadedExtensions.ContainsKey( controllerName ) )
             {
-                AssemblyTypeMap map  = Application.LoadedExtensions[ controllerName ];
-
-                AExtension extension = (AExtension) map.Assembly.CreateInstance( map.Type.FullName );
+                IExtensionLoader loader = Application.PortalContext.LoadedExtensions[controllerName];
                 
-                extension.Init( ((APortalApplication)requestContext.HttpContext.ApplicationInstance).PortalContext,
+                AExtension extension = (AExtension) loader.Assembly.CreateInstance( loader.Extension.Fullname );
+                
+                extension.Init( Application.PortalContext,
                                 requestContext.HttpContext.Request.QueryString["sessionID"],
                                 requestContext.HttpContext.Request.QueryString["format"] ?? "GXML",
                                 requestContext.HttpContext.Request.QueryString["useHttpStatusCodes"] ?? "true" );
                 
-                return (IController) extension;
+                return extension;
             }
 
             return base.CreateController( requestContext, controllerName );

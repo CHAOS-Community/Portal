@@ -17,7 +17,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             sessionExtension.Create( 3 );
 
-            Assert.IsNotNull( XDocument.Parse( sessionExtension.GetContentResult().Content ).Descendants("SessionID").FirstOrDefault() );
+            Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionID").FirstOrDefault() );
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             sessionExtension.Get( Session.SessionID.ToString() );
 
-            Assert.IsNotNull( XDocument.Parse( sessionExtension.GetContentResult().Content ).Descendants("SessionID").FirstOrDefault() );
+            Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionID").FirstOrDefault() );
         }
 
         [Test]
@@ -41,8 +41,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             sessionExtension.Update( Session.SessionID.ToString() );
 
-            Assert.IsNotNull( XDocument.Parse( sessionExtension.GetContentResult().Content ).Descendants("SessionID").FirstOrDefault() );
-            Assert.AreNotEqual( Session.DateModified.ToString(), XDocument.Parse( sessionExtension.GetContentResult().Content ).Descendants("DateModified").FirstOrDefault().Value );
+            Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionID").FirstOrDefault() );
+            Assert.AreNotEqual( Session.DateModified.ToString(), XDocument.Parse( sessionExtension.Result ).Descendants("DateModified").FirstOrDefault().Value );
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             sessionExtension.Delete( Session.SessionID.ToString() );
 
-            Assert.IsNotNull( XDocument.Parse( sessionExtension.GetContentResult().Content ).Descendants("Geckon.Portal.Data.ScalarResult").FirstOrDefault() );
+            Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("Geckon.Portal.Data.ScalarResult").FirstOrDefault() );
         }
     }
 }

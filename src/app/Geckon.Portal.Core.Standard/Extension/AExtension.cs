@@ -9,7 +9,6 @@ using System.Xml.Linq;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data.Result;
-using Geckon.Portal.Data.Result.Standard;
 using Geckon.Serialization;
 using Geckon.Serialization.JSON;
 using Geckon.Serialization.Standard;
@@ -25,7 +24,6 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         public IPortalContext PortalContext { get; private set; }
 
-        protected PortalResult PortalResult { get; set; }
         protected IDictionary<Type, IChecked<IModule>> AssociatedModules { get; set; }
         protected string Controller { get; set; }
         protected string Action { get; set; }
@@ -33,6 +31,24 @@ namespace Geckon.Portal.Core.Standard.Extension
         private Stopwatch Timestamp { get; set; }
         private ReturnFormat ReturnFormat { get; set; }
         private bool UseHttpStatusCodes { get; set; }
+
+        public string Result
+        {
+            get
+            {
+                switch( ReturnFormat )
+                {
+                    case ReturnFormat.GXML:
+                        return SerializerFactory.Get<XDocument>().Serialize( CallContext.PortalResult, false ).ToString( SaveOptions.DisableFormatting );
+                    case ReturnFormat.JSON:
+                        return SerializerFactory.Get<JSON>().Serialize( CallContext.PortalResult, false ).Value;
+                    case ReturnFormat.JSONP:
+                        return SerializerFactory.Get<JSON>().Serialize( CallContext.PortalResult, false ).GetAsJSONP( HttpContext.Request.QueryString[ "callback"] );
+                    default:
+                        throw new NotImplementedException( "Format is unknown" );
+                }
+            }
+        }
 
         #endregion
         #region Constructors
@@ -53,7 +69,6 @@ namespace Geckon.Portal.Core.Standard.Extension
             Timestamp.Start();
 
             PortalContext      = portalContext;
-            PortalResult       = new PortalResult( Timestamp ); 
             CallContext        = new CallContext( portalContext.Cache, portalContext.Solr, sessionID );
             ReturnFormat       = ( ReturnFormat ) Enum.Parse( typeof( ReturnFormat ), format.ToUpper() );
             UseHttpStatusCodes = bool.Parse( useHttpStatusCodes );
@@ -122,20 +137,20 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region portalResult formatting
 
-        public ContentResult GetContentResult()
+        protected ContentResult GetContentResult()
         {
             CallModules( CallContext.Parameters.ToList() );
 
-            return GetContentResult( ReturnFormat, PortalResult );
+            return GetContentResult( ReturnFormat, CallContext.PortalResult );
         }
 
-        private ContentResult GetContentResult( ReturnFormat returnFormat, IPortalResult portalResult )
+        protected ContentResult GetContentResult(ReturnFormat returnFormat, IPortalResult portalResult)
         {
             ContentResult result = new ContentResult();
             
             switch( returnFormat )
             {
-                case ReturnFormat.XML:
+                case ReturnFormat.GXML:
                     ISerializer<XDocument> xmlSerializer = SerializerFactory.Get<XDocument>();
 
                     result.Content     = xmlSerializer.Serialize( portalResult, false ).ToString( SaveOptions.DisableFormatting );
@@ -174,7 +189,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         {
             foreach( IChecked<IModule> associatedModule in AssociatedModules.Values.Where( module => !module.IsChecked ) )
             {
-                IModuleResult result = PortalResult.GetModule( associatedModule.Value.GetType().FullName );
+                IModuleResult result = CallContext.PortalResult.GetModule( associatedModule.Value.GetType().FullName );
                 
                 parameters.Add( new Parameter( "callContext", CallContext ) );
 

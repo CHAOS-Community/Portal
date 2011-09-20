@@ -18,7 +18,7 @@ namespace Geckon.Portal.Extensions.Standard
                 UserInfo user      = CallContext.User;
                 Group    group     = db.Group_Get( null, groupGuid, null, user.ID ).First();
 
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( group );
+                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(group);
             }
         }
 
@@ -36,7 +36,7 @@ namespace Geckon.Portal.Extensions.Standard
             {
                 int result = db.Group_Insert( null, name, systemPermission, user.ID );
 
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
+                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
             }
         }
 
@@ -57,7 +57,7 @@ namespace Geckon.Portal.Extensions.Standard
                 if( result == -100 )
                     throw new InsufficientPermissionsExcention("User has insufficient permissions to delete groups");
 
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
+                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
             }
         }
 
@@ -75,7 +75,7 @@ namespace Geckon.Portal.Extensions.Standard
                 if( result == -100 )
                     throw new InsufficientPermissionsExcention( "User does not have permission to update group" );
 
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
+                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
             }
         }
 

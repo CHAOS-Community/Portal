@@ -6,6 +6,74 @@ using Geckon.Serialization.XML;
 
 namespace Geckon.Portal.Data
 {
+    public partial class ExtensionMethod : Result.Standard.Result
+    {
+        #region Properties
+
+        [Serialize("Extension")]
+        public string Extension { get; set; }
+
+        [Serialize("Method")]
+        public string Method { get; set; }
+
+        [Serialize("Parameters")]
+        public string Parameters { get; set; }
+
+        #endregion
+        #region Construction
+
+        public ExtensionMethod(string extension, string method, string parameters)
+        { 
+            Extension  = extension;
+            Method     = method;
+            Parameters = parameters;
+        }
+
+        #endregion
+    }
+
+    public partial class Extension : Result.Standard.Result
+    {
+        #region Properties
+
+        [Serialize("ID")]
+        public int pID
+        {
+            get { return ID; }
+            set { ID = value; }
+        }
+
+        [Serialize("Map")]
+        public string pMap
+        {
+            get { return Map; }
+            set { Map = value; }
+        }
+
+        [Serialize("Fullname")]
+        public string pFullName
+        {
+            get { return Fullname; }
+            set { Fullname = value; }
+        }
+
+        [Serialize("Path")]
+        public string pPath
+        {
+            get { return Path; }
+            set { Path = value; }
+        }
+
+        [Serialize("DateCreated")]
+        public DateTime pDateCreated
+        {
+            get { return DateCreated; }
+            set { DateCreated = value; }
+        }
+
+        #endregion
+    }
+
     public partial class Session : Result.Standard.Result
     {
         #region Properties

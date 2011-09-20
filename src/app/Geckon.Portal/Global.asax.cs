@@ -4,14 +4,11 @@ using System.IO;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Xml.Linq;
 using Geckon.Portal.Core;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Core.Standard;
+using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
-using Geckon.Portal.Data.Result;
-using Geckon.Portal.Data.Result.Standard;
-using Geckon.Serialization.Standard;
 
 namespace Geckon.Portal
 {
@@ -24,28 +21,7 @@ namespace Geckon.Portal
         {
             base.Init();
 
-            PortalContext = new PortalContext();
-
-            // TODO: Implement way of loading modules on the fly
-            using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
-            {
-                foreach( Data.Module module in db.Module_Get( null, null ) )
-                {
-                    Assembly assembly = Assembly.LoadFile( Path.Combine( ServiceDirectoryPath, "Modules", module.Path ) );
-
-                    foreach( Type classType in assembly.GetTypes() )
-                    {
-                        if( classType.GetInterface( typeof( IModule ).FullName) != null )
-                        {
-                            IModule portalModule = (IModule) assembly.CreateInstance( classType.FullName );
-
-                            portalModule.Init( PortalContext, module.Configuration );
-
-                            PortalContext.RegisterModule( portalModule );
-                        }
-                    }
-                }
-            }
+            
         }
 
         public void RegisterGlobalFilters( GlobalFilterCollection filters )
@@ -67,14 +43,35 @@ namespace Geckon.Portal
 
         protected void Application_Start()
         {
+            PortalContext = new PortalContext();
+
             // TODO: Assemblies should not just be loaded at application start
             using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
                 foreach( Extension extension in db.Extension_Get( null, null ) )
                 {
-                    Assembly assembly = Assembly.LoadFile( Path.Combine( ServiceDirectoryPath, "Extensions", extension.Path ) );
+                    PortalContext.RegisterExtension( new ExtensionLoader( extension, this ) );
+                }
+            }
 
-                    LoadedExtensions.Add( extension.Map, new AssemblyTypeMap( assembly, assembly.GetType( extension.Fullname ) ) );
+            // TODO: Implement way of loading modules on the fly
+            using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
+            {
+                foreach( Data.Module module in db.Module_Get( null, null ) )
+                {
+                    Assembly assembly = Assembly.LoadFile( Path.Combine( ServiceDirectoryPath, "Modules", module.Path ) );
+
+                    foreach( Type classType in assembly.GetTypes() )
+                    {
+                        if( classType.GetInterface( typeof( IModule ).FullName) != null )
+                        {
+                            IModule portalModule = (IModule) assembly.CreateInstance( classType.FullName );
+
+                            portalModule.Init( PortalContext, module.Configuration );
+
+                            PortalContext.RegisterModule( portalModule );
+                        }
+                    }
                 }
             }
 
