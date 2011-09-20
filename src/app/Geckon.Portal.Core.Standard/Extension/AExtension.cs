@@ -151,7 +151,7 @@ namespace Geckon.Portal.Core.Standard.Extension
                 case ReturnFormat.JSONP:
                     ISerializer<JSON> jsonpSerializer = SerializerFactory.Get<JSON>();
 
-                    result.Content     = jsonpSerializer.Serialize( portalResult, false ).GetAsJSONP( HttpContext.Request.QueryString[ "jsonp"] );
+                    result.Content     = jsonpSerializer.Serialize( portalResult, false ).GetAsJSONP( HttpContext.Request.QueryString[ "callback"] );
                     result.ContentType = "application/javascript";
                     break;
                 default:
