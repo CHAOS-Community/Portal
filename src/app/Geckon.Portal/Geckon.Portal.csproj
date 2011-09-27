@@ -85,6 +85,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Extensions\Geckon.GeoLocator.PortalExtension.dll" />
+    <Content Include="Extensions\Geckon.MCM.Extension.dll" />
+    <Content Include="Extensions\Geckon.Portal.Extensions.Object.Standard.dll" />
+    <Content Include="Extensions\Geckon.Portal.Extensions.Session.Standard.dll" />
+    <Content Include="Extensions\Geckon.Portal.Extensions.Standard.dll" />
+    <Content Include="Extensions\Geckon.Portal.Extensions.WorkflowJob.dll" />
+    <Content Include="Extensions\SecureCookieExtension.dll" />
     <Content Include="Global.asax" />
     <Content Include="Grapthics\Global.css" />
     <Content Include="Grapthics\Header\435.gif" />
@@ -105,6 +112,9 @@
     <Content Include="Grapthics\smoothness\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Grapthics\smoothness\jquery-ui-1.8.14.custom.css" />
     <Content Include="Grapthics\smoothness\ui.jqgrid.css" />
+    <Content Include="Modules\Geckon.GeoLocator.dll" />
+    <Content Include="Modules\Geckon.MCM.Module.dll" />
+    <Content Include="Modules\SecureCookieModule.dll" />
     <Content Include="Scripts\i18n\grid.locale-en.js" />
     <Content Include="Scripts\jquery.jqGrid.min.js" />
     <Content Include="Views\Home\Index.aspx" />
@@ -119,9 +129,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Extensions\" />
     <Folder Include="Models\" />
-    <Folder Include="Modules\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Geckon.Portal.Core.Standard\Geckon.Portal.Core.Standard.csproj">

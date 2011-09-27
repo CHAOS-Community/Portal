@@ -9,6 +9,7 @@ namespace Geckon.Portal.Core.Standard
     {
         #region Properties
 
+        [SerializeXML(true)]
         [Serialize("Fullname")]
         public string Fullname { get; private set; }
 

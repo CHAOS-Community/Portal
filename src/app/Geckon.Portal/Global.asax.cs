@@ -63,7 +63,7 @@ namespace Geckon.Portal
 
                     foreach( Type classType in assembly.GetTypes() )
                     {
-                        if( classType.GetInterface( typeof( IModule ).FullName) != null )
+                        if( classType.IsClass && classType.GetInterface( typeof( IModule ).FullName) != null )
                         {
                             IModule portalModule = (IModule) assembly.CreateInstance( classType.FullName );
 
