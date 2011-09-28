@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientSettingsExtension.cs" />
-    <Compile Include="EmailPasswordExtension.cs" />
     <Compile Include="ExtensionExtension.cs" />
     <Compile Include="GroupExtension.cs" />
     <Compile Include="SessionExtension.cs" />

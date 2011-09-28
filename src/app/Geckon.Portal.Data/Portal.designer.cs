@@ -30,12 +30,6 @@ namespace Geckon.Portal.Data
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertAuthenticationProvider(AuthenticationProvider instance);
-    partial void UpdateAuthenticationProvider(AuthenticationProvider instance);
-    partial void DeleteAuthenticationProvider(AuthenticationProvider instance);
-    partial void InsertAuthenticationProvider_User_Join(AuthenticationProvider_User_Join instance);
-    partial void UpdateAuthenticationProvider_User_Join(AuthenticationProvider_User_Join instance);
-    partial void DeleteAuthenticationProvider_User_Join(AuthenticationProvider_User_Join instance);
     partial void InsertGroup_User_Join(Group_User_Join instance);
     partial void UpdateGroup_User_Join(Group_User_Join instance);
     partial void DeleteGroup_User_Join(Group_User_Join instance);
@@ -105,22 +99,6 @@ namespace Geckon.Portal.Data
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<AuthenticationProvider> AuthenticationProviders
-		{
-			get
-			{
-				return this.GetTable<AuthenticationProvider>();
-			}
-		}
-		
-		public System.Data.Linq.Table<AuthenticationProvider_User_Join> AuthenticationProvider_User_Joins
-		{
-			get
-			{
-				return this.GetTable<AuthenticationProvider_User_Join>();
-			}
 		}
 		
 		public System.Data.Linq.Table<Group_User_Join> Group_User_Joins
@@ -278,20 +256,6 @@ namespace Geckon.Portal.Data
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.AuthenticationProvider_User_Join_Get")]
-		public ISingleResult<AuthenticationProvider_User_Join> AuthenticationProvider_User_Join_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AuthenticationProviderID", DbType="Int")] System.Nullable<int> authenticationProviderID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UniqueIdentifier", DbType="VarChar(255)")] string uniqueIdentifier)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, authenticationProviderID, uniqueIdentifier);
-			return ((ISingleResult<AuthenticationProvider_User_Join>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.User_AssociateWithAuthenticationProvider")]
-		public ISingleResult<AuthenticationProvider_User_Join> User_AssociateWithAuthenticationProvider([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AuthenticationProviderGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> authenticationProviderGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UniqueIdentifier", DbType="VarChar(255)")] string uniqueIdentifier)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userGUID, authenticationProviderGUID, uniqueIdentifier);
-			return ((ISingleResult<AuthenticationProvider_User_Join>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.User_Insert")]
 		public ISingleResult<User> User_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Firstname", DbType="VarChar(255)")] string firstname, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Middlename", DbType="VarChar(255)")] string middlename, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Lastname", DbType="VarChar(255)")] string lastname, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Email", DbType="VarChar(255)")] string email)
 		{
@@ -369,13 +333,6 @@ namespace Geckon.Portal.Data
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserInfo_Get")]
-		public ISingleResult<UserInfo> UserInfo_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Email", DbType="VarChar(255)")] string email, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AuthenticationProviderUniqueidentifier", DbType="VarChar(255)")] string authenticationProviderUniqueidentifier, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AuthenticationProviderGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> authenticationProviderGUID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, sessionID, email, authenticationProviderUniqueidentifier, authenticationProviderGUID);
-			return ((ISingleResult<UserInfo>)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SubscriptionInfo_Get")]
 		public ISingleResult<SubscriptionInfo> SubscriptionInfo_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="RequestUserID", DbType="Int")] System.Nullable<int> requestUserID)
 		{
@@ -446,383 +403,12 @@ namespace Geckon.Portal.Data
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, userGUID, clientSettingsGUID, newSetting);
 			return ((int)(result.ReturnValue));
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AuthenticationProvider")]
-	public partial class AuthenticationProvider : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private System.Guid _GUID;
-		
-		private string _Title;
-		
-		private string _Fullname;
-		
-		private string _AssemblyPath;
-		
-		private EntitySet<AuthenticationProvider_User_Join> _AuthenticationProvider_User_Joins;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnGUIDChanging(System.Guid value);
-    partial void OnGUIDChanged();
-    partial void OnTitleChanging(string value);
-    partial void OnTitleChanged();
-    partial void OnFullnameChanging(string value);
-    partial void OnFullnameChanged();
-    partial void OnAssemblyPathChanging(string value);
-    partial void OnAssemblyPathChanged();
-    #endregion
-		
-		public AuthenticationProvider()
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserInfo_Get")]
+		public ISingleResult<UserInfo> UserInfo_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Email", DbType="VarChar(255)")] string email)
 		{
-			this._AuthenticationProvider_User_Joins = new EntitySet<AuthenticationProvider_User_Join>(new Action<AuthenticationProvider_User_Join>(this.attach_AuthenticationProvider_User_Joins), new Action<AuthenticationProvider_User_Join>(this.detach_AuthenticationProvider_User_Joins));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid GUID
-		{
-			get
-			{
-				return this._GUID;
-			}
-			set
-			{
-				if ((this._GUID != value))
-				{
-					this.OnGUIDChanging(value);
-					this.SendPropertyChanging();
-					this._GUID = value;
-					this.SendPropertyChanged("GUID");
-					this.OnGUIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(255)")]
-		public string Title
-		{
-			get
-			{
-				return this._Title;
-			}
-			set
-			{
-				if ((this._Title != value))
-				{
-					this.OnTitleChanging(value);
-					this.SendPropertyChanging();
-					this._Title = value;
-					this.SendPropertyChanged("Title");
-					this.OnTitleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fullname", DbType="VarChar(512) NOT NULL", CanBeNull=false)]
-		public string Fullname
-		{
-			get
-			{
-				return this._Fullname;
-			}
-			set
-			{
-				if ((this._Fullname != value))
-				{
-					this.OnFullnameChanging(value);
-					this.SendPropertyChanging();
-					this._Fullname = value;
-					this.SendPropertyChanged("Fullname");
-					this.OnFullnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssemblyPath", DbType="VarChar(512) NOT NULL", CanBeNull=false)]
-		public string AssemblyPath
-		{
-			get
-			{
-				return this._AssemblyPath;
-			}
-			set
-			{
-				if ((this._AssemblyPath != value))
-				{
-					this.OnAssemblyPathChanging(value);
-					this.SendPropertyChanging();
-					this._AssemblyPath = value;
-					this.SendPropertyChanged("AssemblyPath");
-					this.OnAssemblyPathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AuthenticationProvider_AuthenticationProvider_User_Join", Storage="_AuthenticationProvider_User_Joins", ThisKey="ID", OtherKey="AuthenticationProviderID")]
-		public EntitySet<AuthenticationProvider_User_Join> AuthenticationProvider_User_Joins
-		{
-			get
-			{
-				return this._AuthenticationProvider_User_Joins;
-			}
-			set
-			{
-				this._AuthenticationProvider_User_Joins.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_AuthenticationProvider_User_Joins(AuthenticationProvider_User_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.AuthenticationProvider = this;
-		}
-		
-		private void detach_AuthenticationProvider_User_Joins(AuthenticationProvider_User_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.AuthenticationProvider = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AuthenticationProvider_User_Join")]
-	public partial class AuthenticationProvider_User_Join : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _AuthenticationProviderID;
-		
-		private int _UserID;
-		
-		private string _UniqueIdentifier;
-		
-		private EntityRef<AuthenticationProvider> _AuthenticationProvider;
-		
-		private EntityRef<User> _User;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnAuthenticationProviderIDChanging(int value);
-    partial void OnAuthenticationProviderIDChanged();
-    partial void OnUserIDChanging(int value);
-    partial void OnUserIDChanged();
-    partial void OnUniqueIdentifierChanging(string value);
-    partial void OnUniqueIdentifierChanged();
-    #endregion
-		
-		public AuthenticationProvider_User_Join()
-		{
-			this._AuthenticationProvider = default(EntityRef<AuthenticationProvider>);
-			this._User = default(EntityRef<User>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AuthenticationProviderID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int AuthenticationProviderID
-		{
-			get
-			{
-				return this._AuthenticationProviderID;
-			}
-			set
-			{
-				if ((this._AuthenticationProviderID != value))
-				{
-					if (this._AuthenticationProvider.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAuthenticationProviderIDChanging(value);
-					this.SendPropertyChanging();
-					this._AuthenticationProviderID = value;
-					this.SendPropertyChanged("AuthenticationProviderID");
-					this.OnAuthenticationProviderIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					if (this._User.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._UserID = value;
-					this.SendPropertyChanged("UserID");
-					this.OnUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UniqueIdentifier", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string UniqueIdentifier
-		{
-			get
-			{
-				return this._UniqueIdentifier;
-			}
-			set
-			{
-				if ((this._UniqueIdentifier != value))
-				{
-					this.OnUniqueIdentifierChanging(value);
-					this.SendPropertyChanging();
-					this._UniqueIdentifier = value;
-					this.SendPropertyChanged("UniqueIdentifier");
-					this.OnUniqueIdentifierChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AuthenticationProvider_AuthenticationProvider_User_Join", Storage="_AuthenticationProvider", ThisKey="AuthenticationProviderID", OtherKey="ID", IsForeignKey=true)]
-		public AuthenticationProvider AuthenticationProvider
-		{
-			get
-			{
-				return this._AuthenticationProvider.Entity;
-			}
-			set
-			{
-				AuthenticationProvider previousValue = this._AuthenticationProvider.Entity;
-				if (((previousValue != value) 
-							|| (this._AuthenticationProvider.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._AuthenticationProvider.Entity = null;
-						previousValue.AuthenticationProvider_User_Joins.Remove(this);
-					}
-					this._AuthenticationProvider.Entity = value;
-					if ((value != null))
-					{
-						value.AuthenticationProvider_User_Joins.Add(this);
-						this._AuthenticationProviderID = value.ID;
-					}
-					else
-					{
-						this._AuthenticationProviderID = default(int);
-					}
-					this.SendPropertyChanged("AuthenticationProvider");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_AuthenticationProvider_User_Join", Storage="_User", ThisKey="UserID", OtherKey="ID", IsForeignKey=true)]
-		public User User
-		{
-			get
-			{
-				return this._User.Entity;
-			}
-			set
-			{
-				User previousValue = this._User.Entity;
-				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._User.Entity = null;
-						previousValue.AuthenticationProvider_User_Joins.Remove(this);
-					}
-					this._User.Entity = value;
-					if ((value != null))
-					{
-						value.AuthenticationProvider_User_Joins.Add(this);
-						this._UserID = value.ID;
-					}
-					else
-					{
-						this._UserID = default(int);
-					}
-					this.SendPropertyChanged("User");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, sessionID, email);
+			return ((ISingleResult<UserInfo>)(result.ReturnValue));
 		}
 	}
 	
@@ -2046,8 +1632,6 @@ namespace Geckon.Portal.Data
 		
 		private string _Email;
 		
-		private EntitySet<AuthenticationProvider_User_Join> _AuthenticationProvider_User_Joins;
-		
 		private EntitySet<Group_User_Join> _Group_User_Joins;
 		
 		private EntitySet<Subscription_User_Join> _Subscription_User_Joins;
@@ -2076,7 +1660,6 @@ namespace Geckon.Portal.Data
 		
 		public User()
 		{
-			this._AuthenticationProvider_User_Joins = new EntitySet<AuthenticationProvider_User_Join>(new Action<AuthenticationProvider_User_Join>(this.attach_AuthenticationProvider_User_Joins), new Action<AuthenticationProvider_User_Join>(this.detach_AuthenticationProvider_User_Joins));
 			this._Group_User_Joins = new EntitySet<Group_User_Join>(new Action<Group_User_Join>(this.attach_Group_User_Joins), new Action<Group_User_Join>(this.detach_Group_User_Joins));
 			this._Subscription_User_Joins = new EntitySet<Subscription_User_Join>(new Action<Subscription_User_Join>(this.attach_Subscription_User_Joins), new Action<Subscription_User_Join>(this.detach_Subscription_User_Joins));
 			this._UserSettings = new EntitySet<UserSetting>(new Action<UserSetting>(this.attach_UserSettings), new Action<UserSetting>(this.detach_UserSettings));
@@ -2204,19 +1787,6 @@ namespace Geckon.Portal.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_AuthenticationProvider_User_Join", Storage="_AuthenticationProvider_User_Joins", ThisKey="ID", OtherKey="UserID")]
-		public EntitySet<AuthenticationProvider_User_Join> AuthenticationProvider_User_Joins
-		{
-			get
-			{
-				return this._AuthenticationProvider_User_Joins;
-			}
-			set
-			{
-				this._AuthenticationProvider_User_Joins.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Group_User_Join", Storage="_Group_User_Joins", ThisKey="ID", OtherKey="UserID")]
 		public EntitySet<Group_User_Join> Group_User_Joins
 		{
@@ -2287,18 +1857,6 @@ namespace Geckon.Portal.Data
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_AuthenticationProvider_User_Joins(AuthenticationProvider_User_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_AuthenticationProvider_User_Joins(AuthenticationProvider_User_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
 		}
 		
 		private void attach_Group_User_Joins(Group_User_Join entity)

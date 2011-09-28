@@ -30,7 +30,7 @@ namespace Geckon.Portal.Core.Standard.Extension
                 {
                     using( PortalDataContext db = PortalDataContext.Default() )
                     {
-                        userInfo = db.UserInfo_Get( null, Guid.Parse( SessionID ), null, null, null ).First();
+                        userInfo = db.UserInfo_Get( null, Guid.Parse( SessionID ), null ).First();
 
                         Cache.Put( string.Format("[UserInfo:sid={0}]", SessionID),
                                    userInfo,

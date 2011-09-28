@@ -211,14 +211,18 @@ namespace Geckon.Portal.Data
         #region Properties
 
         [Serialize("Value")]
-        public object Value { get; set; }
+        public int Value { get; set; }
 
         #endregion
         #region Constructors
 
-        public ScalarResult(object value)
+        public ScalarResult (int value )
         {
             Value = value;
+        }
+
+        public ScalarResult()
+        {
         }
 
         #endregion

@@ -36,7 +36,7 @@ namespace Geckon.Portal.Extensions.Standard
             {
                 int result = db.Group_Insert( null, name, systemPermission, user.ID );
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
+                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( result ) );
             }
         }
 

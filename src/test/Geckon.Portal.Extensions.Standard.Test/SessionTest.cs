@@ -54,7 +54,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             sessionExtension.Delete( Session.SessionID.ToString() );
 
-            Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("Geckon.Portal.Data.ScalarResult").FirstOrDefault() );
+            Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("Result").FirstOrDefault() );
         }
     }
 }

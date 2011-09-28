@@ -85,6 +85,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Extensions\EmailPasswordExtension.dll" />
     <Content Include="Extensions\Geckon.GeoLocator.PortalExtension.dll" />
     <Content Include="Extensions\Geckon.MCM.Extension.dll" />
     <Content Include="Extensions\Geckon.Portal.Extensions.Object.Standard.dll" />
@@ -112,6 +113,7 @@
     <Content Include="Grapthics\smoothness\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Grapthics\smoothness\jquery-ui-1.8.14.custom.css" />
     <Content Include="Grapthics\smoothness\ui.jqgrid.css" />
+    <Content Include="Modules\EmailPasswordModule.dll" />
     <Content Include="Modules\Geckon.GeoLocator.dll" />
     <Content Include="Modules\Geckon.MCM.Module.dll" />
     <Content Include="Modules\SecureCookieModule.dll" />
