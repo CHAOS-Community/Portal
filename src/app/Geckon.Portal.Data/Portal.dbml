@@ -151,6 +151,17 @@
       <Association Name="User_Session" Member="User" ThisKey="UserID" OtherKey="ID" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.TicketInfo" Member="TicketInfos">
+    <Type Name="TicketInfo" Id="ID11">
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="TicketTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="XML" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Callback" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateUsed" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.Module_Get" Method="Module_Get">
     <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
     <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
@@ -326,5 +337,22 @@
     <Parameter Name="SessionID" Parameter="sessionID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(255)" />
     <ElementType IdRef="ID10" />
+  </Function>
+  <Function Name="dbo.TicketInfo_Get" Method="TicketInfo_Get">
+    <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="IsUnUsed" Parameter="isUnUsed" Type="System.Boolean" DbType="Bit" />
+    <ElementType IdRef="ID11" />
+  </Function>
+  <Function Name="dbo.Ticket_Create" Method="Ticket_Create">
+    <Parameter Name="TicketTypeID" Parameter="ticketTypeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="XML" Parameter="xML" Type="System.Xml.Linq.XElement" DbType="Xml" />
+    <Parameter Name="Callback" Parameter="callback" Type="System.String" DbType="VarChar(MAX)" />
+    <ElementType Name="Ticket_CreateResult">
+      <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Ticket_Update" Method="Ticket_Update">
+    <Parameter Name="WhereGUID" Parameter="whereGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>

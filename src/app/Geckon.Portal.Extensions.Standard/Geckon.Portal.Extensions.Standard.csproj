@@ -52,6 +52,7 @@
     <Compile Include="SessionExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubscriptionExtension.cs" />
+    <Compile Include="TicketExtension.cs" />
     <Compile Include="UserExtension.cs" />
     <Compile Include="UserSettingsExtension.cs" />
   </ItemGroup>

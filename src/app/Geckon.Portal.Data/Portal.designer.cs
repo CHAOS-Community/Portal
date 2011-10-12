@@ -221,6 +221,14 @@ namespace Geckon.Portal.Data
 			}
 		}
 		
+		public System.Data.Linq.Table<TicketInfo> TicketInfos
+		{
+			get
+			{
+				return this.GetTable<TicketInfo>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Module_Get")]
 		public ISingleResult<Module> Module_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name)
 		{
@@ -409,6 +417,27 @@ namespace Geckon.Portal.Data
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, sessionID, email);
 			return ((ISingleResult<UserInfo>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.TicketInfo_Get")]
+		public ISingleResult<TicketInfo> TicketInfo_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IsUnUsed", DbType="Bit")] System.Nullable<bool> isUnUsed)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, isUnUsed);
+			return ((ISingleResult<TicketInfo>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Ticket_Create")]
+		public ISingleResult<Ticket_CreateResult> Ticket_Create([global::System.Data.Linq.Mapping.ParameterAttribute(Name="TicketTypeID", DbType="Int")] System.Nullable<int> ticketTypeID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="XML", DbType="Xml")] System.Xml.Linq.XElement xML, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Callback", DbType="VarChar(MAX)")] string callback)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), ticketTypeID, xML, callback);
+			return ((ISingleResult<Ticket_CreateResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Ticket_Update")]
+		public int Ticket_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="WhereGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> whereGUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), whereGUID);
+			return ((int)(result.ReturnValue));
 		}
 	}
 	
@@ -3153,6 +3182,141 @@ namespace Geckon.Portal.Data
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TicketInfo")]
+	public partial class TicketInfo
+	{
+		
+		private System.Guid _GUID;
+		
+		private int _TicketTypeID;
+		
+		private string _Name;
+		
+		private System.Xml.Linq.XElement _XML;
+		
+		private string _Callback;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.Nullable<System.DateTime> _DateUsed;
+		
+		public TicketInfo()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid GUID
+		{
+			get
+			{
+				return this._GUID;
+			}
+			set
+			{
+				if ((this._GUID != value))
+				{
+					this._GUID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TicketTypeID", DbType="Int NOT NULL")]
+		public int TicketTypeID
+		{
+			get
+			{
+				return this._TicketTypeID;
+			}
+			set
+			{
+				if ((this._TicketTypeID != value))
+				{
+					this._TicketTypeID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NChar(10)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_XML", DbType="Xml", UpdateCheck=UpdateCheck.Never)]
+		public System.Xml.Linq.XElement XML
+		{
+			get
+			{
+				return this._XML;
+			}
+			set
+			{
+				if ((this._XML != value))
+				{
+					this._XML = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Callback", DbType="VarChar(MAX)")]
+		public string Callback
+		{
+			get
+			{
+				return this._Callback;
+			}
+			set
+			{
+				if ((this._Callback != value))
+				{
+					this._Callback = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this._DateCreated = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateUsed", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateUsed
+		{
+			get
+			{
+				return this._DateUsed;
+			}
+			set
+			{
+				if ((this._DateUsed != value))
+				{
+					this._DateUsed = value;
+				}
+			}
+		}
+	}
+	
 	public partial class PopulateWithDefaultDataResult
 	{
 		
@@ -3228,6 +3392,32 @@ namespace Geckon.Portal.Data
 				if ((this._DateCreated != value))
 				{
 					this._DateCreated = value;
+				}
+			}
+		}
+	}
+	
+	public partial class Ticket_CreateResult
+	{
+		
+		private System.Nullable<System.Guid> _GUID;
+		
+		public Ticket_CreateResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> GUID
+		{
+			get
+			{
+				return this._GUID;
+			}
+			set
+			{
+				if ((this._GUID != value))
+				{
+					this._GUID = value;
 				}
 			}
 		}

@@ -71,6 +71,7 @@
     <Compile Include="Result\Standard\ModuleResult.cs" />
     <Compile Include="Result\Standard\PortalResult.cs" />
     <Compile Include="Result\Standard\Result.cs" />
+    <Compile Include="TicketType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Portal.dbml.layout">
@@ -98,6 +99,9 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\PortalSDK\$(TargetFileName)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

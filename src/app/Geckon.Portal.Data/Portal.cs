@@ -206,6 +206,67 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
+    public partial class TicketInfo : Result.Standard.Result
+    {
+        #region Properties
+
+        public TicketType TicketType
+        {
+            get { return (TicketType) TicketTypeID; }
+        }
+
+        [Serialize("GUID")]
+        public Guid pGUID
+        {
+            get { return GUID; }
+            set { GUID = value; }
+        }
+
+        [Serialize("TicketTypeID")]
+        public int pTicketTypeID
+        {
+            get { return TicketTypeID; }
+            set { TicketTypeID = value; }
+        }
+
+        [Serialize("TicketTypeName")]
+        public string pName
+        {
+            get { return Name; }
+            set { Name = value; }
+        }
+
+        [Serialize("XML")]
+        public XElement pXML
+        {
+            get { return XML; }
+            set { XML = value; }
+        }
+
+        [Serialize("Callback")]
+        public string pCallback
+        {
+            get { return Callback; }
+            set { Callback = value; }
+        }
+
+        [Serialize("DateCreated")]
+        public DateTime pDateCreated
+        {
+            get { return DateCreated; }
+            set { DateCreated = value; }
+        }
+
+        [Serialize("DateUsed")]
+        public DateTime? pDateUsed
+        {
+            get { return DateUsed; }
+            set { DateUsed = value; }
+        }
+
+        #endregion
+    }
+
     public class ScalarResult : Result.Standard.Result
     {
         #region Properties

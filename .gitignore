@@ -1,8 +1,9 @@
-*.suo
-*.user
-*.ReSharper
-_ReSharper.Portal
+_ReSharper*
 bin
+!/bin
 obj
-build
-/src/app/Geckon.Portal/Geckon.Portal.Publish.xml
+.DS_Store
+Thumbs.db
+*.user
+*.suo
+*.xap
