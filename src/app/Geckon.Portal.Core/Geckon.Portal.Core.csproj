@@ -51,7 +51,6 @@
     <Compile Include="Extension\ICallContext.cs" />
     <Compile Include="Extension\ReturnFormat.cs" />
     <Compile Include="IChecked.cs" />
-    <Compile Include="APortalApplication.cs" />
     <Compile Include="AssemblyTypeMap.cs" />
     <Compile Include="Datatype.cs" />
     <Compile Include="ICache.cs" />

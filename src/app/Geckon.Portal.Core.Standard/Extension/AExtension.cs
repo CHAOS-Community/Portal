@@ -12,6 +12,7 @@ using Geckon.Portal.Data.Result;
 using Geckon.Serialization;
 using Geckon.Serialization.JSON;
 using Geckon.Serialization.Standard;
+using Geckon.Portal.Data.Result.Standard;
 
 namespace Geckon.Portal.Core.Standard.Extension
 {
@@ -23,14 +24,16 @@ namespace Geckon.Portal.Core.Standard.Extension
         #region Properties
 
         public IPortalContext PortalContext { get; private set; }
+        
+        public PortalResult  PortalResult { get; set; }
 
         protected IDictionary<Type, IChecked<IModule>> AssociatedModules { get; set; }
         protected string Controller { get; set; }
         protected string Action { get; set; }
-        public ICallContext CallContext { get; set; }
-        private Stopwatch Timestamp { get; set; }
+
         private ReturnFormat ReturnFormat { get; set; }
         private bool UseHttpStatusCodes { get; set; }
+        private ICallContext CallContext { get; set; } 
 
         public string Result
         {
@@ -39,11 +42,11 @@ namespace Geckon.Portal.Core.Standard.Extension
                 switch( ReturnFormat )
                 {
                     case ReturnFormat.GXML:
-                        return SerializerFactory.Get<XDocument>().Serialize( CallContext.PortalResult, false ).ToString( SaveOptions.DisableFormatting );
+                        return SerializerFactory.Get<XDocument>().Serialize( PortalResult, false ).ToString( SaveOptions.DisableFormatting );
                     case ReturnFormat.JSON:
-                        return SerializerFactory.Get<JSON>().Serialize( CallContext.PortalResult, false ).Value;
+                        return SerializerFactory.Get<JSON>().Serialize( PortalResult, false ).Value;
                     case ReturnFormat.JSONP:
-                        return SerializerFactory.Get<JSON>().Serialize( CallContext.PortalResult, false ).GetAsJSONP( HttpContext.Request.QueryString[ "callback"] );
+                        return SerializerFactory.Get<JSON>().Serialize( PortalResult, false ).GetAsJSONP( HttpContext.Request.QueryString[ "callback"] );
                     default:
                         throw new NotImplementedException( "Format is unknown" );
                 }
@@ -56,20 +59,17 @@ namespace Geckon.Portal.Core.Standard.Extension
         public AExtension()
         {
             AssociatedModules = new Dictionary<Type, IChecked<IModule>>();
-            Timestamp         = new Stopwatch();
         }
 
-        public void Init( IPortalContext portalContext, string sessionID )
+        public void Init( IPortalContext portalContext, ICallContext callContext )
         {
-            Init( portalContext, sessionID, "GXML", "true" );
+            Init( portalContext,callContext, "GXML", "true" );
         }
 
-        public void Init( IPortalContext portalContext, string sessionID, string format, string useHttpStatusCodes )
+        public void Init( IPortalContext portalContext, ICallContext callContext, string format, string useHttpStatusCodes )
         {
-            Timestamp.Start();
-
             PortalContext      = portalContext;
-            CallContext        = new CallContext( portalContext.Cache, portalContext.Solr, sessionID );
+            CallContext        = callContext;
             ReturnFormat       = ( ReturnFormat ) Enum.Parse( typeof( ReturnFormat ), format.ToUpper() );
             UseHttpStatusCodes = bool.Parse( useHttpStatusCodes );
         }
@@ -93,11 +93,7 @@ namespace Geckon.Portal.Core.Standard.Extension
                 AssociatedModules.Add( module.GetType(), new Checked<IModule>( module ) );
             }
 
-            // This Set the CallContext on the Method if specified
-            if( filterContext.ActionParameters.ContainsKey( "callContext" ) )
-                filterContext.ActionParameters["callContext"] = CallContext;
-
-            CallContext.Parameters = filterContext.ActionParameters.Select( (parameter) => new Parameter( parameter.Key, parameter.Value ) );
+            CallContext.Parameters = filterContext.ActionParameters.Select((parameter) => new Parameter(parameter.Key, parameter.Value));
 
             base.OnActionExecuting(filterContext);
         }
@@ -106,11 +102,11 @@ namespace Geckon.Portal.Core.Standard.Extension
         /// This Method Call all modules subscriping to this Extension call, that haven't yet been checked
         /// </summary>
         /// <param name="filterContext"></param>
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        protected override void OnActionExecuted( ActionExecutedContext filterContext )
         {
             filterContext.Result = GetContentResult();
 
-            base.OnActionExecuted(filterContext);
+            base.OnActionExecuted( filterContext );
         }
 
         #region Exception Result
@@ -123,10 +119,14 @@ namespace Geckon.Portal.Core.Standard.Extension
                 filterContext.Exception = filterContext.Exception.InnerException; 
             
             filterContext.ExceptionHandled                = true;
-            filterContext.Result                          = GetContentResult( ReturnFormat, new ExtensionError( filterContext.Exception, Timestamp ) );
+            filterContext.Result                          = GetContentResult( ReturnFormat, new ExtensionError( filterContext.Exception, PortalContext.TimeStamp ) );
             filterContext.HttpContext.Response.StatusCode = GetErrorStatusCode(  );
         }
 
+        /// <summary>
+        /// Returns either error code 500 or 200, depending on the UseHttpStatusCodes property
+        /// </summary>
+        /// <returns></returns>
         private int GetErrorStatusCode()
         {
             return UseHttpStatusCodes ? 500 : 200;
@@ -137,14 +137,14 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region portalResult formatting
 
-        protected ContentResult GetContentResult()
+        protected ContentResult GetContentResult( )
         {
             CallModules( CallContext.Parameters.ToList() );
 
-            return GetContentResult( ReturnFormat, CallContext.PortalResult );
+            return GetContentResult( ReturnFormat, PortalResult );
         }
 
-        protected ContentResult GetContentResult(ReturnFormat returnFormat, IPortalResult portalResult)
+        protected ContentResult GetContentResult( ReturnFormat returnFormat, IPortalResult portalResult )
         {
             ContentResult result = new ContentResult();
             
@@ -189,7 +189,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         {
             foreach( IChecked<IModule> associatedModule in AssociatedModules.Values.Where( module => !module.IsChecked ) )
             {
-                IModuleResult result = CallContext.PortalResult.GetModule( associatedModule.Value.GetType().FullName );
+                IModuleResult result = PortalResult.GetModule( associatedModule.Value.GetType().FullName );
                 
                 parameters.Add( new Parameter( "callContext", CallContext ) );
 

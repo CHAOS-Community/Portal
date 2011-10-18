@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Xml.Linq;
+using System.Collections.Generic;
+using System.Linq;
 using Enyim.Caching.Memcached;
 using Geckon.Portal.Data.Result;
-using Geckon.Portal.Data.Result.Standard;
 using Geckon.Serialization;
 using Geckon.Serialization.Standard;
 using Membase;
@@ -23,26 +24,39 @@ namespace Geckon.Portal.Core.Standard
         {
             ISerializer<XDocument> serializer = SerializerFactory.Get<XDocument>();
 
-            return Store( StoreMode.Set, key, serializer.Serialize( value, false ).ToString( SaveOptions.DisableFormatting ), timeSpan );
+            return base.Store( StoreMode.Set, key, serializer.Serialize( value, false ).ToString( SaveOptions.DisableFormatting ), timeSpan );
         }
 
-        public bool Put( string key, IResult value, DateTime dateTime )
+        public bool Put(string key, IResult value, DateTime dateTime)
         {
             ISerializer<XDocument> serializer = SerializerFactory.Get<XDocument>();
 
-            return Store( StoreMode.Set, key, serializer.Serialize( value, false ).ToString( SaveOptions.DisableFormatting ), dateTime );
+            return base.Store( StoreMode.Set, key, serializer.Serialize( value, false ).ToString( SaveOptions.DisableFormatting ), dateTime );
         }
 
-        public T Get<T>( string key ) where T : IResult, new()
+        public T Get<T>(string key) where T : IResult, new()
         {
-            object obj = Get(key);
-
+            object obj = base.Get(key);
+            
             if( obj == null )
                 return default(T);
 
             ISerializer<XDocument> serializer = SerializerFactory.Get<XDocument>();
 
-            return serializer.Deserialize<T>( XDocument.Parse( (string) obj ), false); ;
+            return serializer.Deserialize<T>( XDocument.Parse( (string) obj ), false);
+        }
+
+        /// <summary>
+        /// Retrieve multiple objects from the caches
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        public IEnumerable<T> Get<T>(IEnumerable<string> keys) where T : IResult, new()
+        {
+            IDictionary<string, object> results = base.Get( keys );
+            ISerializer<XDocument> serializer = SerializerFactory.Get<XDocument>();
+
+            return results.Select( obj => serializer.Deserialize<T>( XDocument.Parse( ( string ) obj.Value ), false) );
         }
 
         #endregion

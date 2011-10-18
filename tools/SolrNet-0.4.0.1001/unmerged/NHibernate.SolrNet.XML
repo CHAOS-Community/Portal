@@ -1,0 +1,246 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NHibernate.SolrNet</name>
+    </assembly>
+    <members>
+        <member name="T:NHibernate.SolrNet.CfgHelper">
+            <summary>
+            Helper class to configure NHibernate-SolrNet integration.
+            </summary>
+        </member>
+        <member name="M:NHibernate.SolrNet.CfgHelper.#ctor(SolrNet.IReadOnlyMappingManager,System.IServiceProvider)">
+            <summary>
+            Gets SolrNet components from a <see cref="T:System.IServiceProvider"/>, except for the <see cref="T:SolrNet.IReadOnlyMappingManager"/>
+            </summary>
+            <param name="mapper">Use this mapper for NHibernate-SolrNet integration</param>
+            <param name="provider">Used to fetch SolrNet components</param>
+        </member>
+        <member name="M:NHibernate.SolrNet.CfgHelper.#ctor(System.IServiceProvider)">
+            <summary>
+            Gets SolrNet components from a <see cref="T:System.IServiceProvider"/>
+            </summary>
+            <param name="provider">Used to fetch SolrNet components</param>
+        </member>
+        <member name="M:NHibernate.SolrNet.CfgHelper.#ctor">
+            <summary>
+            Gets SolrNet components from the current <see cref="T:Microsoft.Practices.ServiceLocation.ServiceLocator"/>
+            </summary>
+        </member>
+        <member name="M:NHibernate.SolrNet.CfgHelper.Configure(NHibernate.Cfg.Configuration,System.Boolean)">
+            <summary>
+            Registers SolrNet's NHibernate listeners
+            </summary>
+            <param name="config">NHibernate configuration</param>
+            <param name="autoCommit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.CfgHelper.Configure(NHibernate.Cfg.Configuration,System.Boolean,SolrNet.AddParameters)">
+            <summary>
+            Registers SolrNet's NHibernate listeners
+            </summary>
+            <param name="config">NHibernate configuration</param>
+            <param name="autoCommit">if set to <c>true</c> [auto commit].</param>
+            <param name="parameters">The add parameters to use when adding a document to the index.</param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.CfgHelper.OpenSession(NHibernate.ISession)">
+            <summary>
+            Wraps a NHibernate <see cref="T:NHibernate.ISession"/> and adds Solr operations
+            </summary>
+            <param name="session"><see cref="T:NHibernate.ISession"/> to wrap</param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.CfgHelper.OpenSession(NHibernate.ISessionFactory)">
+            <summary>
+            Opens a new NHibernate <see cref="T:NHibernate.ISession"/> and wraps it to add Solr operations
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:NHibernate.SolrNet.Impl.IListenerSettings.Commit">
+            <summary>
+            Automatically commit Solr after each update
+            </summary>
+        </member>
+        <member name="P:NHibernate.SolrNet.Impl.IListenerSettings.AddParameters">
+            <summary>
+            Gets or sets the parameters to use when adding a document to the index.
+            </summary>
+            <value>The parameters to use when adding a document to the index.</value>
+        </member>
+        <member name="T:NHibernate.SolrNet.INHSolrQuery">
+            <summary>
+            NHibernate <see cref="T:NHibernate.IQuery"/> for SolrNet queries
+            </summary>
+        </member>
+        <member name="M:NHibernate.SolrNet.INHSolrQuery.SetMaxResults(System.Int32)">
+            <summary>
+            Set the maximum number of rows to retrieve.
+            </summary>
+            <param name="maxResults">The maximum number of rows to retreive</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.INHSolrQuery.SetFirstResult(System.Int32)">
+            <summary>
+            Sets the first row to retrieve.
+            </summary>
+            <param name="firstResult">The first row to retreive.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.INHSolrQuery.SetSort(NHibernate.Criterion.Order)">
+            <summary>
+            Sets sort order
+            </summary>
+            <param name="o">Sort order</param>
+            <returns>this</returns>
+        </member>
+        <member name="T:NHibernate.SolrNet.ISolrSession">
+            <summary>
+            NHibernate <see cref="T:NHibernate.ISession"/> with SolrNet extensions for querying
+            </summary>
+        </member>
+        <member name="M:NHibernate.SolrNet.ISolrSession.CreateSolrQuery(System.String)">
+            <summary>
+            Creates a Solr query
+            </summary>
+            <param name="query">Solr query</param>
+            <returns>query object</returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.ISolrSession.CreateSolrQuery(SolrNet.ISolrQuery)">
+            <summary>
+            Creates a Solr query
+            </summary>
+            <param name="query">Solr query</param>
+            <returns>query object</returns>
+        </member>
+        <member name="T:NHibernate.SolrNet.Impl.NHSolrQueryImpl">
+            <summary>
+            NHibernate <see cref="T:NHibernate.IQuery"/> for SolrNet queries
+            </summary>
+        </member>
+        <member name="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.SetLockMode(System.String,NHibernate.LockMode)">
+            <summary>
+            Ignored
+            </summary>
+            <param name="alias"></param>
+            <param name="lockMode"></param>
+            <returns>this</returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.ExecuteUpdate">
+            <summary>
+            Operation not supported. For Solr updates use the SolrNet interfaces
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.Enumerable">
+            <summary>
+            Operation not supported. Please use <see cref="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.Enumerable``1"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.Enumerable``1">
+            <summary>
+            Return the query results as an <see cref="T:System.Collections.Generic.IEnumerable`1"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <remarks>This is not a lazy IEnumerable</remarks>
+        </member>
+        <member name="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.List">
+            <summary>
+            Operation not supported. Please use <see cref="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.List``1"/> instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.List(System.Collections.IList)">
+            <summary>
+            Operation not supported. Please use <see cref="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.List``1"/> instead.
+            </summary>
+            <param name="results"></param>
+        </member>
+        <member name="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.List``1">
+            <summary>
+            Return the query results as an <see cref="T:System.Collections.Generic.List`1"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.SetMaxResults(System.Int32)">
+            <summary>
+            Set the maximum number of rows to retrieve.
+            </summary>
+            <param name="maxResults">The maximum number of rows to retreive</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.SetFirstResult(System.Int32)">
+            <summary>
+            Sets the first row to retrieve.
+            </summary>
+            <param name="firstResult">The first row to retreive.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.Impl.NHSolrQueryImpl.SetSort(NHibernate.Criterion.Order)">
+            <summary>
+            Sets sort order
+            </summary>
+            <param name="o">Sort order</param>
+            <returns>this</returns>
+        </member>
+        <member name="P:NHibernate.SolrNet.Impl.NHSolrQueryImpl.LockModes">
+            <summary>
+            Null
+            </summary>
+        </member>
+        <member name="T:NHibernate.SolrNet.Impl.SolrNetListener`1">
+            <summary>
+            NHibernate event listener for updating Solr index
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:NHibernate.SolrNet.Impl.SolrNetListener`1.Commit">
+            <summary>
+            Automatically commit Solr after each update
+            </summary>
+        </member>
+        <member name="P:NHibernate.SolrNet.Impl.SolrNetListener`1.AddParameters">
+            <summary>
+            Gets or sets the parameters to use when adding a document to the index.
+            </summary>
+            <value>The parameters to use when adding a document to the index.</value>
+        </member>
+        <member name="T:NHibernate.SolrNet.SolrSession">
+            <summary>
+            NHibernate <see cref="T:NHibernate.ISession"/> with SolrNet extensions for querying
+            </summary>
+        </member>
+        <member name="M:NHibernate.SolrNet.SolrSession.#ctor(NHibernate.ISession)">
+            <summary>
+            Creates a session using the current <see cref="T:Microsoft.Practices.ServiceLocation.ServiceLocator"/>
+            </summary>
+            <param name="session">NHibernate session to wrap</param>
+            <remarks>The wrapped session is owned by this session. It will be disposed when this session is disposed</remarks>
+        </member>
+        <member name="M:NHibernate.SolrNet.SolrSession.#ctor(NHibernate.ISession,System.IServiceProvider)">
+            <summary>
+            Creates a session using a defined <see cref="T:System.IServiceProvider"/> to fetch SolrNet components
+            </summary>
+            <param name="session">NHibernate session to wrap</param>
+            <param name="provider">Used to fetch SolrNet components</param>
+            <remarks>The wrapped session is owned by this session. It will be disposed when this session is disposed</remarks>
+        </member>
+        <member name="M:NHibernate.SolrNet.SolrSession.CreateSolrQuery(System.String)">
+            <summary>
+            Creates a Solr query
+            </summary>
+            <param name="query">Solr query</param>
+            <returns>query object</returns>
+        </member>
+        <member name="M:NHibernate.SolrNet.SolrSession.CreateSolrQuery(SolrNet.ISolrQuery)">
+            <summary>
+            Creates a Solr query
+            </summary>
+            <param name="query">Solr query</param>
+            <returns>query object</returns>
+        </member>
+    </members>
+</doc>

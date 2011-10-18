@@ -20,8 +20,6 @@ namespace Geckon.Portal
         public override void Init()
         {
             base.Init();
-
-            
         }
 
         public void RegisterGlobalFilters( GlobalFilterCollection filters )
@@ -34,7 +32,7 @@ namespace Geckon.Portal
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("favicon.ico");
             routes.IgnoreRoute("Scripts/");
-
+            
             routes.MapRoute( "Default", // Route name
                              "{controller}/{action}/{id}", // URL with parameters
                              new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults

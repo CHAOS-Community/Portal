@@ -8,15 +8,13 @@ namespace Geckon.Portal.Core
 {
     public interface IPortalContext
     {
+        System.Diagnostics.Stopwatch TimeStamp { get; }
         IDictionary<string, IExtensionLoader> LoadedExtensions { get; }
         IDictionary<string, IModule>          LoadedModules { get;}
 
         void RegisterExtension( IExtensionLoader extensionLoader );
         void RegisterModule( IModule module );
         T CallModule<T>( IExtension extension, IMethodQuery methodQuery ) where T : IResult;
-        Guid AnonymousUserGUID { get; }
-        ICache Cache { get; }
-        ISolr Solr { get; }
         T GetModule<T>() where T : IModule;
         IEnumerable<IModule> GetModules( string extension, string action );
     }

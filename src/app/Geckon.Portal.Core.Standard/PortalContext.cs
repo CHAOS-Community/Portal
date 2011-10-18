@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Configuration;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
 using System;
 using Geckon.Portal.Data.Result;
+using System.Diagnostics;
 
 namespace Geckon.Portal.Core.Standard
 {
@@ -16,21 +16,7 @@ namespace Geckon.Portal.Core.Standard
 
         public IDictionary<string, IExtensionLoader> LoadedExtensions { get; protected set; }
         public IDictionary<string, IModule>          LoadedModules    { get; protected set; }
-        public ICache                                Cache            { get; private set; }
-        public ISolr                                 Solr             { get; private set; }
-
-        public Guid AnonymousUserGUID
-        {
-            get
-            {
-                string guid = ( string ) Cache.Get( "AnonymousUserGUID" );
-                
-                if( string.IsNullOrEmpty( guid ) )
-                    guid = ConfigurationManager.AppSettings["AnonymousUserGUID"];
-
-                return new Guid( guid );
-            }
-        }
+        public Stopwatch                             TimeStamp        { get; protected set; } 
 
         #endregion
         #region Constructors
@@ -39,7 +25,9 @@ namespace Geckon.Portal.Core.Standard
         {
             LoadedExtensions = new Dictionary<string, IExtensionLoader>();
             LoadedModules    = new Dictionary<string, IModule>();
-            Cache            = new Membase();
+            TimeStamp        = new Stopwatch();
+            
+            TimeStamp.Start();
         }
 
         #endregion

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>StructureMap.SolrNetIntegration</name>
+    </assembly>
+    <members>
+        <member name="M:StructureMap.SolrNetIntegration.SolrNetRegistry.RegisterCore(StructureMap.SolrNetIntegration.SolrCore)">
+            <summary>
+            Registers a new core in the container.
+            This method is meant to be used after the facility initialization
+            </summary>
+            <param name="core"></param>
+        </member>
+    </members>
+</doc>

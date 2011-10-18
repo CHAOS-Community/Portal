@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Castle.Facilities.SolrNetIntegration</name>
+    </assembly>
+    <members>
+        <member name="T:Castle.Facilities.SolrNetIntegration.SolrCore">
+            <summary>
+            Represents a Solr core for configuration
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.SolrNetIntegration.SolrCore.#ctor(System.String,System.Type,System.String)">
+            <summary>
+            Creates a new Solr core for configuration
+            </summary>
+            <param name="id">Component name for <see cref="T:SolrNet.ISolrOperations`1"/></param>
+            <param name="documentType">Document type</param>
+            <param name="url">Core url</param>
+        </member>
+        <member name="M:Castle.Facilities.SolrNetIntegration.SolrCore.#ctor(System.Type,System.String)">
+            <summary>
+            Creates a new Solr core for configuration
+            </summary>
+            <param name="documentType">Document type</param>
+            <param name="url">Core url</param>
+        </member>
+        <member name="T:Castle.Facilities.SolrNetIntegration.SolrNetFacility">
+            <summary>
+            Configures SolrNet in a Windsor container
+            </summary>
+        </member>
+        <member name="M:Castle.Facilities.SolrNetIntegration.SolrNetFacility.RegisterCore(Castle.Facilities.SolrNetIntegration.SolrCore)">
+            <summary>
+            Registers a new core in the container.
+            This method is meant to be used after the facility initialization
+            </summary>
+            <param name="core"></param>
+        </member>
+        <member name="M:Castle.Facilities.SolrNetIntegration.SolrNetFacility.AddCore(System.Type,System.String)">
+            <summary>
+            Adds a new core configuration to the facility
+            </summary>
+            <param name="documentType"></param>
+            <param name="coreUrl"></param>
+        </member>
+        <member name="M:Castle.Facilities.SolrNetIntegration.SolrNetFacility.AddCore(System.String,System.Type,System.String)">
+            <summary>
+            Adds a new core configuration to the facility
+            </summary>
+            <param name="coreId">Component name for <see cref="T:SolrNet.ISolrOperations`1"/></param>
+            <param name="documentType"></param>
+            <param name="coreUrl"></param>
+        </member>
+        <member name="P:Castle.Facilities.SolrNetIntegration.SolrNetFacility.Mapper">
+            <summary>
+            Default mapper override
+            </summary>
+        </member>
+    </members>
+</doc>

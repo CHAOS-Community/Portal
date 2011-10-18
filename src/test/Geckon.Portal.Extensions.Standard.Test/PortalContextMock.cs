@@ -9,6 +9,13 @@ namespace Geckon.Portal.Extensions.Standard.Test
 {
     public class PortalContextMock : IPortalContext
     {
+        public System.Diagnostics.Stopwatch TimeStamp
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
         public ICache Cache
         {
             get { return new MockCache(); }
@@ -104,6 +111,12 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public T Get<T>(string key) where T : IResult, new()
         {
             return (T) Get(key);
+        }
+
+
+        public IEnumerable<T> Get<T>(IEnumerable<string> keys) where T : IResult, new()
+        {
+            throw new NotImplementedException();
         }
     }
 }

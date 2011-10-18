@@ -2,6 +2,7 @@
 using System.Linq;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
+using Geckon.Portal.Data.Result;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -9,17 +10,19 @@ namespace Geckon.Portal.Extensions.Standard
     {
         #region Get
 
-        public void Get( string sessionID )
+        public void Get(CallContext callContext)
         {
+            IModuleResult module = CallContext.PortalResult.GetModule("Geckon.Portal");
+
             Session session = null;// PortalContext.Cache.Get<Session>( string.Format( "[Session:sid={0}]", sessionID ) );
             int? totalCount = 1;
 
-            if( session == null )
+            if (session == null)
             {
-                using( PortalDataContext db = PortalDataContext.Default() )
+                using (PortalDataContext db = PortalDataContext.Default())
                 {
-                    
-                    session = db.Session_Get( Guid.Parse( sessionID ), null, 0, null, ref totalCount ).First();
+
+                    session = db.Session_Get(Guid.Parse(callContext.SessionID), null, 0, null, ref totalCount).First();
 
                     //PortalContext.Cache.Put( string.Format("[Session:sid={0}]", sessionID), 
                     //                         session.ToXML().OuterXml, 
@@ -27,9 +30,10 @@ namespace Geckon.Portal.Extensions.Standard
                 }
             }
 
-            CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(session);
-                                
-                                //new KeyValuePair<string, object>( "TotalCount", totalCount.ToString() ) );
+            
+            module.AddResult(session);
+
+            //new KeyValuePair<string, object>( "TotalCount", totalCount.ToString() ) );
         } 
 
         #endregion

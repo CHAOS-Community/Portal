@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 
-namespace Geckon.Portal.Core
+namespace Geckon.Portal.Core.Standard
 {
     public class APortalApplication : System.Web.HttpApplication
     {

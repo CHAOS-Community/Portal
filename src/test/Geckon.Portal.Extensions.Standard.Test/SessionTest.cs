@@ -27,7 +27,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             sessionExtension.Init( new PortalContextMock(),Session.SessionID.ToString() );
             sessionExtension.CallContext.Parameters = new[] { new Parameter("sessionID", Session.SessionID.ToString()) };
 
-            sessionExtension.Get( Session.SessionID.ToString() );
+      //      sessionExtension.Get( Session.SessionID.ToString() );
 
             Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionID").FirstOrDefault() );
         }

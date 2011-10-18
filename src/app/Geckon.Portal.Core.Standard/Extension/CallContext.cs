@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Data;
-using Geckon.Portal.Data.Result.Standard;
+using System.Configuration;
 
 namespace Geckon.Portal.Core.Standard.Extension
 {
@@ -12,13 +11,10 @@ namespace Geckon.Portal.Core.Standard.Extension
     {
         #region Properties
 
-        public ICache Cache { get; set; }
-        public ISolr  Solr { get; set; }
+        public ICache Cache { get; private set; }
+        public ISolr Solr { get; private set; }
         public string SessionID { get; set; }
         public IEnumerable<Parameter> Parameters { get;  set; }
-        public PortalResult PortalResult { get; set; }
-
-        private Stopwatch Timestamp;
 
         public UserInfo User
         {
@@ -39,6 +35,19 @@ namespace Geckon.Portal.Core.Standard.Extension
                 }
 
                 return userInfo;
+            }
+        }
+
+        public Guid AnonymousUserGUID
+        {
+            get
+            {
+                string guid = ( string ) Cache.Get( "AnonymousUserGUID" );
+                
+                if( string.IsNullOrEmpty( guid ) )
+                    guid = ConfigurationManager.AppSettings["AnonymousUserGUID"];
+
+                return new Guid( guid );
             }
         }
 
@@ -76,10 +85,7 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         public CallContext()
         {
-            Timestamp = new Stopwatch();
-            Timestamp.Start();
 
-            PortalResult = new PortalResult( Timestamp );
         }
 
         #endregion
