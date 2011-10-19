@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Geckon.Portal.Data;
 using System;
+using Geckon.Portal.Core.Index;
 
 namespace Geckon.Portal.Core.Extension
 {
@@ -10,6 +11,6 @@ namespace Geckon.Portal.Core.Extension
         UserInfo User { get; }
         Guid AnonymousUserGUID { get; }
         ICache Cache { get; }
-        ISolr Solr { get; }
+        IIndex Solr { get; }
     }
 }

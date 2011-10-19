@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Geckon.Portal.Core
+namespace Geckon.Portal.Core.Standard
 {
-    public class Parameter
+    public class Parameter : IParameter
     {
         #region Properties
 

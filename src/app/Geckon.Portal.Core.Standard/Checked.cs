@@ -1,4 +1,4 @@
-﻿namespace Geckon.Portal.Core
+﻿namespace Geckon.Portal.Core.Standard
 {
     public class Checked<T> : IChecked<T>
     {

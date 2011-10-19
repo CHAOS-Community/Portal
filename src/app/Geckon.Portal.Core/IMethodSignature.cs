@@ -4,8 +4,8 @@ namespace Geckon.Portal.Core
 {
     public interface IMethodSignature
     {
-        Datatype Datatype { get; }
+        IDatatype Datatype { get; }
         MethodInfo Method { get; }
-        Parameter[] Parameters { get; }
+        IParameter[] Parameters { get; }
     }
 }

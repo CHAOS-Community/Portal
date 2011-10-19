@@ -8,23 +8,23 @@ namespace Geckon.Portal.Core.Standard
         #region Properties
 
         public IEventType EventType { get; protected set; }
-        public IDictionary<string, Parameter> Parameters { get; protected set; }
+        public IDictionary<string, IParameter> Parameters { get; protected set; }
 
         #endregion
         #region Construction
 
-        public MethodQuery( string eventName, string type, IDictionary<string, Parameter> parameters )
+        public MethodQuery( string eventName, string type, IDictionary<string, IParameter> parameters )
         {
             EventType  = new EventType( type, eventName );
             Parameters = parameters;
         }
 
-        public MethodQuery( string eventName, string type, IEnumerable<Parameter> parameters )
+        public MethodQuery( string eventName, string type, IEnumerable<IParameter> parameters )
         {
             EventType  = new EventType( type, eventName );
-            Parameters = new Dictionary<string, Parameter>();
+            Parameters = new Dictionary<string, IParameter>();
 
-            foreach( Parameter parameter in parameters )
+            foreach( IParameter parameter in parameters )
             {
                 Parameters.Add( parameter.ParameterName, parameter );
             }

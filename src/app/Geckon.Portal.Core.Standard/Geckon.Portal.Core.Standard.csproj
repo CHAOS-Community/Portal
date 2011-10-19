@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APortalApplication.cs" />
+    <Compile Include="Checked.cs" />
+    <Compile Include="Datatype.cs" />
     <Compile Include="ErrorResult.cs" />
     <Compile Include="EventType.cs" />
     <Compile Include="ExtensionFactory.cs" />
@@ -67,11 +69,13 @@
     <Compile Include="Extension\ExtensionLoader.cs" />
     <Compile Include="Membase.cs" />
     <Compile Include="MethodQuery.cs" />
+    <Compile Include="MethodSignature.cs" />
     <Compile Include="ModelBinders\CallContextModelBinder.cs" />
     <Compile Include="Module\AModule.cs" />
+    <Compile Include="Parameter.cs" />
     <Compile Include="PortalContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Solr.cs" />
+    <Compile Include="Index\Solr.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Geckon.Portal.Core.Exception\Geckon.Portal.Core.Exception.csproj">

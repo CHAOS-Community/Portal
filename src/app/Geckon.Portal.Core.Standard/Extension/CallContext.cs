@@ -4,6 +4,7 @@ using System.Linq;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Data;
 using System.Configuration;
+using Geckon.Portal.Core.Index;
 
 namespace Geckon.Portal.Core.Standard.Extension
 {
@@ -12,7 +13,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         #region Properties
 
         public ICache Cache { get; private set; }
-        public ISolr Solr { get; private set; }
+        public IIndex Solr { get; private set; }
         public Guid? SessionID { get; set; }
 
         public UserInfo User
@@ -75,7 +76,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region Construction
 
-        public CallContext( ICache cache, ISolr solr, string sessionID )
+        public CallContext( ICache cache, IIndex solr, string sessionID )
         {
             Cache      = cache;
             Solr       = solr;

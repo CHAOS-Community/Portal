@@ -4,6 +4,7 @@ using Geckon.Portal.Core;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data.Result;
+using Geckon.Portal.Core.Index;
 
 namespace Geckon.Portal.Extensions.Standard.Test
 {
@@ -21,7 +22,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             get { return new MockCache(); }
         }
 
-        public ISolr Solr
+        public IIndex Solr
         {
             get { return new MockSolr(); }
         }
@@ -82,8 +83,17 @@ namespace Geckon.Portal.Extensions.Standard.Test
         }
     }
 
-    public class MockSolr : ISolr
+    public class MockSolr : IIndex
     {
+        public void Set(IEnumerable<IIndexable> items)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<IResult> Get(IQuery query)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MockCache : ICache

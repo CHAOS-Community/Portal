@@ -112,7 +112,7 @@ namespace Geckon.Portal.Core.Standard.Module
             return  RegisteredMethods.ContainsKey( extension + ":" + action );
         }
 
-        private object[] GetRelevantParameters( Parameter[] parameters, IMethodQuery methodQuery )
+        private object[] GetRelevantParameters( IParameter[] parameters, IMethodQuery methodQuery )
         {
             return parameters.Select( parameter => methodQuery.Parameters[ parameter.ParameterName ].Value ).ToArray();
         }
