@@ -63,7 +63,7 @@ namespace Geckon.Portal.Core.Standard.Extension
             TimeStamp = new Stopwatch();
             TimeStamp.Start();
 
-            Parameters        = new Parameter[0];
+            Parameters = new Parameter[0];
             PortalResult      = new PortalResult(TimeStamp);
             AssociatedModules = new Dictionary<Type, IChecked<IModule>>();
         }

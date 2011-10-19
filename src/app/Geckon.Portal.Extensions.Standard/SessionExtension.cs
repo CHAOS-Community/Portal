@@ -14,7 +14,7 @@ namespace Geckon.Portal.Extensions.Standard
         {
             IModuleResult module = PortalResult.GetModule("Geckon.Portal");
 
-            Session session = null;// PortalContext.Cache.Get<Session>( string.Format( "[Session:sid={0}]", sessionID ) );
+            Session session = callContext.Cache.Get<Session>( string.Format( "[Session:sid={0}]", callContext.SessionID ) );
             int? totalCount = 1;
 
             if (session == null)
@@ -24,16 +24,14 @@ namespace Geckon.Portal.Extensions.Standard
 
                     session = db.Session_Get( callContext.SessionID, null, 0, null, ref totalCount).First();
 
-                    //PortalContext.Cache.Put( string.Format("[Session:sid={0}]", sessionID), 
-                    //                         session.ToXML().OuterXml, 
-                    //                         new TimeSpan( 0, 1, 0 ) );
+                    callContext.Cache.Put( string.Format( "[Session:sid={0}]", callContext.SessionID ),
+                                           session,
+                                           new TimeSpan(0, 1, 0));
                 }
             }
 
             
             module.AddResult(session);
-
-            //new KeyValuePair<string, object>( "TotalCount", totalCount.ToString() ) );
         } 
 
         #endregion
