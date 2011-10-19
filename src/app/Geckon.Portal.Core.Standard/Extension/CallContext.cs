@@ -14,7 +14,6 @@ namespace Geckon.Portal.Core.Standard.Extension
         public ICache Cache { get; private set; }
         public ISolr Solr { get; private set; }
         public Guid? SessionID { get; set; }
-        public IEnumerable<Parameter> Parameters { get;  set; }
 
         public UserInfo User
         {
@@ -42,12 +41,12 @@ namespace Geckon.Portal.Core.Standard.Extension
         {
             get
             {
-                string guid = ( string ) Cache.Get( "AnonymousUserGUID" );
-                
-                if( string.IsNullOrEmpty( guid ) )
+                string guid = (string)Cache.Get("AnonymousUserGUID");
+
+                if (string.IsNullOrEmpty(guid))
                     guid = ConfigurationManager.AppSettings["AnonymousUserGUID"];
 
-                return new Guid( guid );
+                return new Guid(guid);
             }
         }
 
@@ -76,12 +75,11 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region Construction
 
-        public CallContext( ICache cache, ISolr solr, string sessionID, IEnumerable<Parameter> parameters )
+        public CallContext( ICache cache, ISolr solr, string sessionID )
         {
             Cache      = cache;
             Solr       = solr;
             SessionID  = String.IsNullOrEmpty( sessionID ) ? (Guid?) null : Guid.Parse( sessionID );
-            Parameters = parameters;
         }
 
         #endregion

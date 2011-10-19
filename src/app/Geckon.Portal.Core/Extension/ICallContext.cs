@@ -11,6 +11,5 @@ namespace Geckon.Portal.Core.Extension
         Guid AnonymousUserGUID { get; }
         ICache Cache { get; }
         ISolr Solr { get; }
-        IEnumerable<Parameter> Parameters { get; set; }
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using Geckon.Portal.Core.Extension;
+using Geckon.Portal.Core.Standard.Extension;
 
 namespace Geckon.Portal.Core.Standard
 {
@@ -24,7 +26,11 @@ namespace Geckon.Portal.Core.Standard
 
         public APortalApplication()
         {
+            if( !System.Web.Mvc.ModelBinders.Binders.ContainsKey( typeof(ICallContext) ) )
+                System.Web.Mvc.ModelBinders.Binders.Add( typeof( ICallContext ), new ModelBinders.CallContextModelBinder() );
 
+            if( !System.Web.Mvc.ModelBinders.Binders.ContainsKey( typeof( CallContext ) ) )
+                System.Web.Mvc.ModelBinders.Binders.Add( typeof( CallContext ), new ModelBinders.CallContextModelBinder() );
         }
 
         #endregion

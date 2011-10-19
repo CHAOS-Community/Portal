@@ -35,6 +35,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         private bool UseHttpStatusCodes { get; set; }
         private ICallContext CallContext { get; set; }
         private Stopwatch TimeStamp { get; set; }
+        private IEnumerable<Parameter> Parameters { get; set; }
 
         public string Result
         {
@@ -62,6 +63,7 @@ namespace Geckon.Portal.Core.Standard.Extension
             TimeStamp = new Stopwatch();
             TimeStamp.Start();
 
+            Parameters        = new Parameter[0];
             PortalResult      = new PortalResult(TimeStamp);
             AssociatedModules = new Dictionary<Type, IChecked<IModule>>();
         }
@@ -97,12 +99,14 @@ namespace Geckon.Portal.Core.Standard.Extension
                 AssociatedModules.Add( module.GetType(), new Checked<IModule>( module ) );
             }
 
-            CallContext = new CallContext( new Membase(),
-                                           new Solr(),
-                                           filterContext.HttpContext.Request.QueryString["sessionID"],
-                                           filterContext.ActionParameters.Select( ( parameter ) => new Parameter( parameter.Key, parameter.Value ) ) );
-
-            filterContext.ActionParameters.Add( new KeyValuePair<string,object>( "callContext", CallContext ) );
+            if( filterContext.ActionParameters.ContainsKey( "callContext" ) )
+                CallContext = (ICallContext) filterContext.ActionParameters["callContext"];
+            else
+                CallContext = new CallContext( new Membase(),
+                                               new Solr(),
+                                               filterContext.HttpContext.Request.QueryString["sessionID"] );
+            
+            Parameters = filterContext.ActionParameters.Select( ( parameter ) => new Parameter( parameter.Key, parameter.Value ) );
 
             base.OnActionExecuting(filterContext);
         }
@@ -148,7 +152,7 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         protected ContentResult GetContentResult( )
         {
-            CallModules( CallContext.Parameters.ToList() );
+            CallModules( Parameters.ToList() );
 
             return GetContentResult( ReturnFormat, PortalResult );
         }

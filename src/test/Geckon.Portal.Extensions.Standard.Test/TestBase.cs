@@ -42,8 +42,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
                 UserSetting      = db.UserSettings_Get( AdminUser.ID, null, ClientSettings.GUID ).First();
             }
 
-            AdminCallContext = new CallContext( new MockCache(), new MockSolr(), AdminSession.SessionID.ToString(), new Parameter[0] );
-            AnonCallContext  = new CallContext( new MockCache(), new MockSolr(), Session.SessionID.ToString(), new Parameter[0] );
+            AdminCallContext = new CallContext( new MockCache(), new MockSolr(), AdminSession.SessionID.ToString() );
+            AnonCallContext  = new CallContext( new MockCache(), new MockSolr(), Session.SessionID.ToString() );
         }
 
         [TearDown]
