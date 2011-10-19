@@ -13,10 +13,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Get_UserSettings()
         {
             UserSettingsExtension extension = new UserSettingsExtension();
-            extension.Init(new PortalContextMock(), AdminUser.SessionID.ToString());
-            extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Get( AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString() );
+            extension.Init( new PortalContextMock() );
+            extension.Get( AdminCallContext, ClientSettings.GUID.ToString() );
 
             Assert.IsNotNull( XDocument.Parse( extension.Result ).Descendants("Settings").FirstOrDefault() );
         }
@@ -25,10 +24,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Create_UserSettings()
         {
             UserSettingsExtension extension = new UserSettingsExtension();
-            extension.Init(new PortalContextMock(), Session.SessionID.ToString());
-            extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Create(Session.SessionID.ToString(), ClientSettings.GUID.ToString(), "<xml />");
+            extension.Init(new PortalContextMock() );
+            extension.Create( AnonCallContext, ClientSettings.GUID.ToString(), "<xml />");
 
             Assert.IsNotNull( XDocument.Parse( extension.Result ).Descendants("Settings").FirstOrDefault() );
         }
@@ -37,10 +35,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Delete_UserSettings()
         {
             UserSettingsExtension extension = new UserSettingsExtension();
-            extension.Init(new PortalContextMock(), AdminUser.SessionID.ToString());
-            extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Delete( AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString() );
+            extension.Init( new PortalContextMock() );
+            extension.Delete( AdminCallContext, ClientSettings.GUID.ToString() );
 
             Assert.IsNotNull(XDocument.Parse(extension.Result).Descendants("Value").FirstOrDefault());
         }
@@ -49,10 +46,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Update_UserSettings()
         {
             UserSettingsExtension extension = new UserSettingsExtension();
-            extension.Init(new PortalContextMock(), AdminUser.SessionID.ToString());
-            extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Update( AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString(), "<xmllll />" );
+            extension.Init( new PortalContextMock() );
+            extension.Update( AdminCallContext, ClientSettings.GUID.ToString(), "<xmllll />" );
 
             Assert.IsNotNull( XDocument.Parse( extension.Result ).Descendants("Value").FirstOrDefault() );
         }

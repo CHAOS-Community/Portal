@@ -8,7 +8,6 @@ namespace Geckon.Portal.Core
 {
     public interface IPortalContext
     {
-        System.Diagnostics.Stopwatch TimeStamp { get; }
         IDictionary<string, IExtensionLoader> LoadedExtensions { get; }
         IDictionary<string, IModule>          LoadedModules { get;}
 

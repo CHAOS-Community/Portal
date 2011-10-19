@@ -10,45 +10,46 @@ namespace Geckon.Portal.Extensions.Standard
     {
         #region Get
 
-        public void Get( string sessionID )
+        public void Get( CallContext callContext )
         {
-            CallContext.PortalResult.GetModule( "Geckon.Portal" ).AddResult( CallContext.User );
+            PortalResult.GetModule( "Geckon.Portal" ).AddResult( callContext.User );
         }
         
         #endregion
         #region Create
         
-        public void Create( string sessionID, string firstName, string middleName, string lastName, string email )
+        public void Create( CallContext callContext, string firstName, string middleName, string lastName, string email )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
                 User user = db.User_Insert( null, firstName, middleName, lastName, email ).First();
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(user);
+                PortalResult.GetModule("Geckon.Portal").AddResult(user);
             }
         }
 
         #endregion
         #region Update
 
-        public void Update( string sessionID, string firstName, string middleName, string lastName, string email )
+        // TODO: It should not be possible to change email, without email confirmation
+        public void Update( CallContext callContext, string firstName, string middleName, string lastName, string email )
         {
-            UserInfo user = CallContext.User;
+            UserInfo user = callContext.User;
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
                 User updatedUser = db.User_Update( user.GUID, null, firstName, middleName, lastName, email ).First();
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(updatedUser);
+                PortalResult.GetModule("Geckon.Portal").AddResult(updatedUser);
             }
         }
 
         #endregion
         #region Delete
 
-        public void Delete( string sessionID, string guid )
+        public void Delete( CallContext callContext, string guid )
         {
-            UserInfo user = CallContext.User;
+            UserInfo user = callContext.User;
 
             if( user.GUID.ToString() != guid )
                 throw new InsufficientPermissionsExcention( "The current user doesn't have permissions to delete the user with guid: " + guid );
@@ -57,7 +58,7 @@ namespace Geckon.Portal.Extensions.Standard
             {
                 int result = db.User_Delete( Guid.Parse( guid ) );
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
+                PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( result ) );
             }
         }
 

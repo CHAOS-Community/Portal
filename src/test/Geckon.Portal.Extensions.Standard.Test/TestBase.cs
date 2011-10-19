@@ -2,6 +2,8 @@
 using System.Linq;
 using Geckon.Portal.Data;
 using NUnit.Framework;
+using Geckon.Portal.Core.Standard.Extension;
+using Geckon.Portal.Core;
 
 namespace Geckon.Portal.Extensions.Standard.Test
 {
@@ -18,6 +20,8 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public SubscriptionInfo SubscriptionInfo { get; set; }
         public UserSetting      UserSetting { get; set; }
         public ClientSetting    ClientSettings { get; set; }
+        public CallContext      AdminCallContext { get; set; }
+        public CallContext      AnonCallContext { get; set; }
 
         #endregion
         #region Constructions
@@ -37,6 +41,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
                 ClientSettings   = (from clientSetting in db.ClientSettings where clientSetting.GUID.Equals( Guid.Parse("D157698A-86AC-4FDF-A304-F5EA9FB6E0F5") ) select clientSetting).First();  
                 UserSetting      = db.UserSettings_Get( AdminUser.ID, null, ClientSettings.GUID ).First();
             }
+
+            AdminCallContext = new CallContext( new MockCache(), new MockSolr(), AdminSession.SessionID.ToString(), new Parameter[0] );
+            AnonCallContext  = new CallContext( new MockCache(), new MockSolr(), Session.SessionID.ToString(), new Parameter[0] );
         }
 
         [TearDown]

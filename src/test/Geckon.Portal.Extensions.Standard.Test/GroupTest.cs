@@ -17,10 +17,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Get_Group()
         {
             GroupExtension extension = new GroupExtension(  );
-            extension.Init( new PortalContextMock(), AdminUser.SessionID.ToString() );
-            extension.CallContext.Parameters = new Parameter[0];
-
-            extension.Get( AdminUser.SessionID.ToString(), null );
+            
+            extension.Init( new PortalContextMock() );
+            extension.Get( AdminCallContext, null );
             
             Assert.AreEqual( AdminGroup.GUID.ToString(), XDocument.Parse( extension.Result ).Descendants("GUID").First().Value );
         }
@@ -29,10 +28,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Create_Group()
         {
             GroupExtension extension = new GroupExtension(  );
-            extension.Init( new PortalContextMock(), AdminSession.SessionID.ToString() );
-            extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Create( AdminUser.SessionID.ToString(), "my group", 0 );
+            extension.Init( new PortalContextMock() );
+            extension.Create( AdminCallContext, "my group", 0 );
             
             Assert.Greater( int.Parse( XDocument.Parse( extension.Result ).Descendants("Value").First().Value ), 0 );
         }
@@ -41,20 +39,18 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Create_Group()
         {
             GroupExtension extension = new GroupExtension( );
-            extension.Init( new PortalContextMock(), Session.SessionID.ToString() );
-            extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Create( User.SessionID.ToString(), "InsufficientPermissionsExcention", 0 );
+            extension.Init( new PortalContextMock() );
+            extension.Create( AnonCallContext, "InsufficientPermissionsExcention", 0 );
         }
 
         [Test]
         public void Should_Delete_Group()
         {
             GroupExtension extension = new GroupExtension();
-            extension.Init( new PortalContextMock(), AdminUser.SessionID.ToString() );
-            extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Delete( AdminUser.SessionID.ToString(), AdminGroup.GUID.ToString() );
+            extension.Init( new PortalContextMock() );
+            extension.Delete( AdminCallContext, AdminGroup.GUID.ToString() );
 
             Assert.AreEqual("1", XDocument.Parse( extension.Result ).Descendants("Value").First().Value);
         }
@@ -63,25 +59,23 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Delete_Group()
         {
             GroupExtension extension = new GroupExtension();
-            extension.Init( new PortalContextMock(), Session.SessionID.ToString() );
-            extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Delete( User.SessionID.ToString(), AdminGroup.GUID.ToString() );
+            extension.Init( new PortalContextMock() );
+            extension.Delete( AnonCallContext, AdminGroup.GUID.ToString() );
         }
 
         [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Delete_Group2()
         {
             GroupExtension extension = new GroupExtension();
-            extension.Init( new PortalContextMock(), Session.SessionID.ToString() );
-            extension.CallContext.Parameters = new Parameter[0];
+            extension.Init( new PortalContextMock() );
 
             using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
                 Guid guid = Guid.NewGuid();
                 int result = db.Group_Insert( guid, "no permission", 0, AdminUser.ID );
 
-                extension.Delete( User.SessionID.ToString(), guid.ToString() );
+                extension.Delete( AnonCallContext, guid.ToString() );
             }            
         }
 
@@ -89,10 +83,10 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Update_Group()
         {
             GroupExtension extension = new GroupExtension();
-            extension.Init( new PortalContextMock(), AdminSession.SessionID.ToString() );
-            extension.CallContext.Parameters = new Parameter[0];
+
+            extension.Init( new PortalContextMock() );
             
-            extension.Update( AdminUser.SessionID.ToString(), AdminGroup.GUID.ToString(), "success", 0 );
+            extension.Update( AdminCallContext, AdminGroup.GUID.ToString(), "success", 0 );
 
             using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
@@ -106,9 +100,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Update_Group()
         {
             GroupExtension extension = new GroupExtension();
-            extension.Init( new PortalContextMock(), Session.SessionID.ToString() );
 
-            extension.Update(User.SessionID.ToString(), AdminGroup.GUID.ToString(), "hj", BitConverter.ToInt32( AdminGroup.SystemPermission.ToArray(), 0 ) );
+            extension.Init( new PortalContextMock() );
+            extension.Update( AnonCallContext, AdminGroup.GUID.ToString(), "hj", BitConverter.ToInt32( AdminGroup.SystemPermission.ToArray(), 0 ) );
         }
     }
 }

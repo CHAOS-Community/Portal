@@ -12,7 +12,7 @@ namespace Geckon.Portal.Extensions.Standard
 
         public void Get(CallContext callContext)
         {
-            IModuleResult module = CallContext.PortalResult.GetModule("Geckon.Portal");
+            IModuleResult module = PortalResult.GetModule("Geckon.Portal");
 
             Session session = null;// PortalContext.Cache.Get<Session>( string.Format( "[Session:sid={0}]", sessionID ) );
             int? totalCount = 1;
@@ -22,7 +22,7 @@ namespace Geckon.Portal.Extensions.Standard
                 using (PortalDataContext db = PortalDataContext.Default())
                 {
 
-                    session = db.Session_Get(Guid.Parse(callContext.SessionID), null, 0, null, ref totalCount).First();
+                    session = db.Session_Get( callContext.SessionID, null, 0, null, ref totalCount).First();
 
                     //PortalContext.Cache.Put( string.Format("[Session:sid={0}]", sessionID), 
                     //                         session.ToXML().OuterXml, 
@@ -39,28 +39,28 @@ namespace Geckon.Portal.Extensions.Standard
         #endregion
         #region Create
 
-        public void Create(  int protocolVersion )
+        public void Create( CallContext callContext, int protocolVersion )
         {
             // TODO: Check protocol version
             // TODO: Add Module filtering
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(db.Session_Insert(null, 
-                                                                                        PortalContext.AnonymousUserGUID ).First() );
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( db.Session_Insert( null, 
+                                                                                        callContext.AnonymousUserGUID ).First() );
             }
         }
 
         #endregion
         #region Update
 
-        public void Update( string sessionID )
+        public void Update( CallContext callContext )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(db.Session_Update(null, 
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( db.Session_Update( null, 
                                                                                         null, 
-                                                                                        Guid.Parse( sessionID ), 
+                                                                                        callContext.SessionID, 
                                                                                         null ).First() );
             }
         }
@@ -68,11 +68,11 @@ namespace Geckon.Portal.Extensions.Standard
         #endregion
         #region Delete
 
-        public void Delete( string sessionID )
+        public void Delete( CallContext callContext )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(db.Session_Delete(Guid.Parse(sessionID), 
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( db.Session_Delete( callContext.SessionID, 
                                                                                                           null ) ) );
             }
         }

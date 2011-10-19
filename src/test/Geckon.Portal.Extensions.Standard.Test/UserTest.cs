@@ -13,10 +13,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Update_User()
         {
             UserExtension extension = new UserExtension(  );
-            extension.Init( new PortalContextMock(), Session.SessionID.ToString() );
-            extension.CallContext.Parameters = new Parameter[0];
+            extension.Init( new PortalContextMock() );
 
-            extension.Update( Session.SessionID.ToString(), "new", null, null, null  );
+            extension.Update( AnonCallContext, "new", null, null, null  );
 
             Assert.AreEqual( "new", XDocument.Parse(extension.Result).Descendants( "Firstname" ).First().Value );
         }
@@ -25,10 +24,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Create_User()
         {
             UserExtension extension = new UserExtension();
-            extension.Init( new PortalContextMock(), Session.SessionID.ToString() );
-            extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Create(Session.SessionID.ToString(), "new", null, null, "email");
+            extension.Init( new PortalContextMock() );
+            extension.Create( AnonCallContext, "new", null, null, "email");
 
             Assert.AreEqual("new", XDocument.Parse(extension.Result).Descendants("Firstname").First().Value);
         }
@@ -37,10 +35,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Get_User()
         {
             UserExtension extension = new UserExtension();
-            extension.Init( new PortalContextMock(), Session.SessionID.ToString() );
-            extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Get(Session.SessionID.ToString());
+            extension.Init( new PortalContextMock() );
+            extension.Get( AnonCallContext );
 
             Assert.AreEqual("Anonymous", XDocument.Parse(extension.Result).Descendants("Firstname").First().Value);
         }
@@ -49,10 +46,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Delete_User()
         {
             UserExtension extension = new UserExtension();
-            extension.Init( new PortalContextMock(), Session.SessionID.ToString() );
-            extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Delete( Session.SessionID.ToString(), User.GUID.ToString() );
+            extension.Init( new PortalContextMock() );
+            extension.Delete( AnonCallContext, User.GUID.ToString() );
 
             Assert.AreEqual("1", XDocument.Parse(extension.Result).Descendants("Value").First().Value);
         }

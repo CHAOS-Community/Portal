@@ -16,7 +16,6 @@ namespace Geckon.Portal.Core.Standard
 
         public IDictionary<string, IExtensionLoader> LoadedExtensions { get; protected set; }
         public IDictionary<string, IModule>          LoadedModules    { get; protected set; }
-        public Stopwatch                             TimeStamp        { get; protected set; } 
 
         #endregion
         #region Constructors
@@ -25,9 +24,6 @@ namespace Geckon.Portal.Core.Standard
         {
             LoadedExtensions = new Dictionary<string, IExtensionLoader>();
             LoadedModules    = new Dictionary<string, IModule>();
-            TimeStamp        = new Stopwatch();
-            
-            TimeStamp.Start();
         }
 
         #endregion

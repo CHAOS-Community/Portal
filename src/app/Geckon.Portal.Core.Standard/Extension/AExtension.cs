@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -13,6 +12,7 @@ using Geckon.Serialization;
 using Geckon.Serialization.JSON;
 using Geckon.Serialization.Standard;
 using Geckon.Portal.Data.Result.Standard;
+using System.Diagnostics;
 
 namespace Geckon.Portal.Core.Standard.Extension
 {
@@ -33,7 +33,8 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         private ReturnFormat ReturnFormat { get; set; }
         private bool UseHttpStatusCodes { get; set; }
-        private ICallContext CallContext { get; set; } 
+        private ICallContext CallContext { get; set; }
+        private Stopwatch TimeStamp { get; set; }
 
         public string Result
         {
@@ -58,18 +59,21 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         public AExtension()
         {
+            TimeStamp = new Stopwatch();
+            TimeStamp.Start();
+
+            PortalResult      = new PortalResult(TimeStamp);
             AssociatedModules = new Dictionary<Type, IChecked<IModule>>();
         }
 
-        public void Init( IPortalContext portalContext, ICallContext callContext )
+        public void Init( IPortalContext portalContext )
         {
-            Init( portalContext,callContext, "GXML", "true" );
+            Init( portalContext, "GXML", "true" );
         }
 
-        public void Init( IPortalContext portalContext, ICallContext callContext, string format, string useHttpStatusCodes )
+        public void Init( IPortalContext portalContext, string format, string useHttpStatusCodes )
         {
             PortalContext      = portalContext;
-            CallContext        = callContext;
             ReturnFormat       = ( ReturnFormat ) Enum.Parse( typeof( ReturnFormat ), format.ToUpper() );
             UseHttpStatusCodes = bool.Parse( useHttpStatusCodes );
         }
@@ -93,7 +97,12 @@ namespace Geckon.Portal.Core.Standard.Extension
                 AssociatedModules.Add( module.GetType(), new Checked<IModule>( module ) );
             }
 
-            CallContext.Parameters = filterContext.ActionParameters.Select((parameter) => new Parameter(parameter.Key, parameter.Value));
+            CallContext = new CallContext( new Membase(),
+                                           new Solr(),
+                                           filterContext.HttpContext.Request.QueryString["sessionID"],
+                                           filterContext.ActionParameters.Select( ( parameter ) => new Parameter( parameter.Key, parameter.Value ) ) );
+
+            filterContext.ActionParameters.Add( new KeyValuePair<string,object>( "callContext", CallContext ) );
 
             base.OnActionExecuting(filterContext);
         }
@@ -119,7 +128,7 @@ namespace Geckon.Portal.Core.Standard.Extension
                 filterContext.Exception = filterContext.Exception.InnerException; 
             
             filterContext.ExceptionHandled                = true;
-            filterContext.Result                          = GetContentResult( ReturnFormat, new ExtensionError( filterContext.Exception, PortalContext.TimeStamp ) );
+            filterContext.Result                          = GetContentResult( ReturnFormat, new ExtensionError( filterContext.Exception, TimeStamp ) );
             filterContext.HttpContext.Response.StatusCode = GetErrorStatusCode(  );
         }
 

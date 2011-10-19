@@ -12,10 +12,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Get_ClientSettings()
         {
             ClientSettingsExtension extension = new ClientSettingsExtension();
-            extension.Init( new PortalContextMock(), AdminSession.SessionID.ToString());
-            extension.CallContext.Parameters = new Parameter[0];
 
-            extension.Get(AdminUser.SessionID.ToString(), ClientSettings.GUID.ToString() );
+            extension.Init( new PortalContextMock() );
+            extension.Get( AdminCallContext, ClientSettings.GUID.ToString() );
 
             Assert.AreEqual(ClientSettings.GUID.ToString(), XDocument.Parse(extension.Result).Descendants("GUID").First().Value);
         }

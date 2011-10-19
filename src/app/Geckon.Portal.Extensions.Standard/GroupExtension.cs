@@ -10,44 +10,44 @@ namespace Geckon.Portal.Extensions.Standard
     {
         #region Get
 
-        public void Get( string sessionID, string guid )
+        public void Get( CallContext callContext, string guid )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
                 Guid?    groupGuid = string.IsNullOrEmpty( guid ) ? (Guid?) null : Guid.Parse( guid );
-                UserInfo user      = CallContext.User;
+                UserInfo user      = callContext.User;
                 Group    group     = db.Group_Get( null, groupGuid, null, user.ID ).First();
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(group);
+                PortalResult.GetModule("Geckon.Portal").AddResult(group);
             }
         }
 
         #endregion
         #region Create
 
-        public void Create( string sessionID, string name, int systemPermission )
+        public void Create( CallContext callContext, string name, int systemPermission )
         {
-            UserInfo user = CallContext.User;
+            UserInfo user = callContext.User;
 
-            if( user.GUID == PortalContext.AnonymousUserGUID )
+            if( user.GUID == callContext.AnonymousUserGUID )
                 throw new InsufficientPermissionsExcention( "Anonymous users cannot create groups" );
 
             using (PortalDataContext db = PortalDataContext.Default())
             {
                 int result = db.Group_Insert( null, name, systemPermission, user.ID );
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( result ) );
+                PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( result ) );
             }
         }
 
         #endregion
         #region Delete
 
-        public void Delete( string sessionID, string guid )
+        public void Delete( CallContext callContext, string guid )
         {
-            UserInfo user = CallContext.User;
+            UserInfo user = callContext.User;
 
-            if( user.GUID == PortalContext.AnonymousUserGUID )
+            if( user.GUID == callContext.AnonymousUserGUID )
                 throw new InsufficientPermissionsExcention( "Anonymous users cannot delete groups" );
 
             using( PortalDataContext db = PortalDataContext.Default() )
@@ -57,16 +57,16 @@ namespace Geckon.Portal.Extensions.Standard
                 if( result == -100 )
                     throw new InsufficientPermissionsExcention("User has insufficient permissions to delete groups");
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
+                PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
             }
         }
 
         #endregion
         #region Update
 
-        public void Update( string sessionID, string guid, string newName, int newSystemPermission )
+        public void Update( CallContext callContext, string guid, string newName, int newSystemPermission )
         {
-            UserInfo user = CallContext.User;
+            UserInfo user = callContext.User;
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
@@ -75,7 +75,7 @@ namespace Geckon.Portal.Extensions.Standard
                 if( result == -100 )
                     throw new InsufficientPermissionsExcention( "User does not have permission to update group" );
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
+                PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
             }
         }
 

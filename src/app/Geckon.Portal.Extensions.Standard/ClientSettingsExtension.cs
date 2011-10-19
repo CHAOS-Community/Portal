@@ -9,13 +9,13 @@ namespace Geckon.Portal.Extensions.Standard
     {
         #region GET
 
-        public void Get( string sessionID, string guid )
+        public void Get( CallContext callContext, string guid )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
                 ClientSetting client = db.ClientSettings_Get( Guid.Parse( guid ) ).First();
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(client);
+                PortalResult.GetModule("Geckon.Portal").AddResult(client);
             }
         }
 

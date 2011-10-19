@@ -12,10 +12,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Create_A_New_Session()
         {
             SessionExtension sessionExtension = new SessionExtension(  );
-            sessionExtension.Init( new PortalContextMock(), Session.SessionID.ToString() );
-            sessionExtension.CallContext.Parameters = new[] { new Parameter( "clientSettingID", 1 ), new Parameter( "protocolVersion",3 ) };
 
-            sessionExtension.Create( 3 );
+            sessionExtension.Init( new PortalContextMock() );
+            sessionExtension.Create( AnonCallContext, 3 );
 
             Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionID").FirstOrDefault() );
         }
@@ -24,10 +23,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Get_A_Session()
         {
             SessionExtension sessionExtension = new SessionExtension( );
-            sessionExtension.Init( new PortalContextMock(),Session.SessionID.ToString() );
-            sessionExtension.CallContext.Parameters = new[] { new Parameter("sessionID", Session.SessionID.ToString()) };
 
-      //      sessionExtension.Get( Session.SessionID.ToString() );
+            sessionExtension.Init( new PortalContextMock() );
+            sessionExtension.Get( AnonCallContext );
 
             Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionID").FirstOrDefault() );
         }
@@ -36,10 +34,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Update_A_Session()
         {
             SessionExtension sessionExtension = new SessionExtension();
-            sessionExtension.Init( new PortalContextMock(), Session.SessionID.ToString() );
-            sessionExtension.CallContext.Parameters = new[] { new Parameter("sessionID", Session.SessionID.ToString()) };
 
-            sessionExtension.Update( Session.SessionID.ToString() );
+            sessionExtension.Init( new PortalContextMock() );
+            sessionExtension.Update( AnonCallContext );
 
             Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionID").FirstOrDefault() );
             Assert.AreNotEqual( Session.DateModified.ToString(), XDocument.Parse( sessionExtension.Result ).Descendants("DateModified").FirstOrDefault().Value );
@@ -49,10 +46,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
         public void Should_Delete_A_Session()
         {
             SessionExtension sessionExtension = new SessionExtension();
-            sessionExtension.Init( new PortalContextMock(), Session.SessionID.ToString() );
-            sessionExtension.CallContext.Parameters = new[] { new Parameter("sessionID", Session.SessionID.ToString()) };
 
-            sessionExtension.Delete( Session.SessionID.ToString() );
+            sessionExtension.Init( new PortalContextMock() );
+            sessionExtension.Delete( AnonCallContext );
 
             Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("Result").FirstOrDefault() );
         }

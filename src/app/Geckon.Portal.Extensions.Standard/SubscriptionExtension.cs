@@ -10,28 +10,28 @@ namespace Geckon.Portal.Extensions.Standard
     {
         #region Get
 
-        public void Get( string sessionID, string guid )
+        public void Get( CallContext callContext, string guid )
         {
-            UserInfo     user   = CallContext.User;
+            UserInfo         user   = callContext.User;
             SubscriptionInfo result = null;
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                result = db.SubscriptionInfo_Get(null, Guid.Parse(guid), null, user.ID).FirstOrDefault();
+                result = db.SubscriptionInfo_Get( null, Guid.Parse( guid ), null, user.ID ).FirstOrDefault();
             }
 
             if( result == null )
                 throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
 
-            CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(result);
+            PortalResult.GetModule("Geckon.Portal").AddResult(result);
         }
 
         #endregion
         #region Create
 
-        public void Create( string sessionID, string name )
+        public void Create( CallContext callContext, string name )
         {
-            UserInfo user   = CallContext.User;
+            UserInfo user = callContext.User;
 
             using( PortalDataContext db = PortalDataContext.Default() )
             {
@@ -42,16 +42,16 @@ namespace Geckon.Portal.Extensions.Standard
 
                 SubscriptionInfo subscriptionInfo = db.SubscriptionInfo_Get( result, null, null, user.ID ).First();
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(subscriptionInfo);
+                PortalResult.GetModule("Geckon.Portal").AddResult(subscriptionInfo);
             }
         }
 
         #endregion
         #region Delete
 
-        public void Delete( string sessionID, string guid )
+        public void Delete( CallContext callContext, string guid )
         {
-            UserInfo user   = CallContext.User;
+            UserInfo user   = callContext.User;
             int      result = 0;
 
             using( PortalDataContext db = PortalDataContext.Default() )
@@ -62,15 +62,15 @@ namespace Geckon.Portal.Extensions.Standard
             if( result == -100 )
                 throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to delete the subscription" );
 
-            CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
+            PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
         }
 
         #endregion
         #region Update
 
-        public void Update( string sessionID, string guid, string newName )
+        public void Update( CallContext callContext, string guid, string newName )
         {
-            UserInfo user      = CallContext.User;
+            UserInfo user      = callContext.User;
             int      result    = 0;
 
             using( PortalDataContext db = PortalDataContext.Default() )
@@ -81,16 +81,9 @@ namespace Geckon.Portal.Extensions.Standard
             if( result == -100 )
                 throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
 
-            CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
+            PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
         }
 
         #endregion
-    }
-}
-
-namespace Geckon.Portal.Data.Dto
-{
-    public class UserInfo
-    {
     }
 }

@@ -14,7 +14,7 @@ namespace Geckon.Portal.Extensions.Standard
     {
         #region GET
 
-        public void Get( string sessionID )
+        public void Get( CallContext callContext )
         {
             foreach( IExtensionLoader loader in PortalContext.LoadedExtensions.Values )
             {
@@ -32,7 +32,7 @@ namespace Geckon.Portal.Extensions.Standard
                             parameters += string.Format( "{0} {1},", parameterInfo.Name, parameterInfo.ParameterType.FullName );
                         }
 
-                        CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ExtensionMethod(loader.Extension.Map, methodInfo.Name, "(" + parameters.Substring(0, parameters.Length - 1) + ")"));
+                        PortalResult.GetModule("Geckon.Portal").AddResult(new ExtensionMethod(loader.Extension.Map, methodInfo.Name, "(" + parameters.Substring(0, parameters.Length - 1) + ")"));
                     }
                 }
             }

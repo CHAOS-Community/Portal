@@ -11,59 +11,59 @@ namespace Geckon.Portal.Extensions.Standard
     {
         #region GET
 
-        public void Get( string sessionID, string guid )
+        public void Get( CallContext callContext, string guid )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(db.UserSettings_Get(CallContext.User.ID, null, Guid.Parse(guid)).First());
+                PortalResult.GetModule("Geckon.Portal").AddResult(db.UserSettings_Get( callContext.User.ID, null, Guid.Parse(guid)).First());
             }
         }
 
         #endregion
         #region CREATE
 
-        public void Create( string sessionID, string guid, string settings )
+        public void Create( CallContext callContext, string guid, string settings )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                int result = db.UserSettings_Create( CallContext.User.ID, null, Guid.Parse( guid ), XElement.Parse( settings ) );
+                int result = db.UserSettings_Create( callContext.User.ID, null, Guid.Parse( guid ), XElement.Parse( settings ) );
 
                 if( result == -10 )
                     throw new InvalidProtocolException(  );
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(db.UserSettings_Get(CallContext.User.ID, null, Guid.Parse(guid)).First());
+                PortalResult.GetModule("Geckon.Portal").AddResult(db.UserSettings_Get( callContext.User.ID, null, Guid.Parse(guid)).First());
             }
         }
 
         #endregion
         #region UPDATE
 
-        public void Update( string sessionID, string guid, string newSettings )
+        public void Update( CallContext callContext, string guid, string newSettings )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                int result = db.UserSettings_Update( CallContext.User.ID, null, Guid.Parse( guid ), XElement.Parse( newSettings ) );
+                int result = db.UserSettings_Update( callContext.User.ID, null, Guid.Parse( guid ), XElement.Parse( newSettings ) );
 
                 if( result == -10 )
                     throw new InvalidProtocolException(  );
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
+                PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
             }
         }
 
         #endregion
         #region DELETE
 
-        public void Delete( string sessionID, string guid )
+        public void Delete( CallContext callContext, string guid )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                int result = db.UserSettings_Delete( CallContext.User.ID, null, Guid.Parse( guid ) );
+                int result = db.UserSettings_Delete( callContext.User.ID, null, Guid.Parse( guid ) );
 
                 if( result == -10 )
                     throw new InvalidProtocolException();
 
-                CallContext.PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
+                PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
             }
         }
 

@@ -13,7 +13,7 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         public ICache Cache { get; private set; }
         public ISolr Solr { get; private set; }
-        public string SessionID { get; set; }
+        public Guid? SessionID { get; set; }
         public IEnumerable<Parameter> Parameters { get;  set; }
 
         public UserInfo User
@@ -26,7 +26,7 @@ namespace Geckon.Portal.Core.Standard.Extension
                 {
                     using( PortalDataContext db = PortalDataContext.Default() )
                     {
-                        userInfo = db.UserInfo_Get( null, Guid.Parse( SessionID ), null ).First();
+                        userInfo = db.UserInfo_Get( null, SessionID, null ).First();
 
                         Cache.Put( string.Format("[UserInfo:sid={0}]", SessionID),
                                    userInfo,
@@ -76,16 +76,12 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region Construction
 
-        public CallContext( ICache cache, ISolr solr, string sessionID ) : this()
+        public CallContext( ICache cache, ISolr solr, string sessionID, IEnumerable<Parameter> parameters )
         {
-            Cache     = cache;
-            Solr      = solr;
-            SessionID = sessionID;
-        }
-
-        public CallContext()
-        {
-
+            Cache      = cache;
+            Solr       = solr;
+            SessionID  = String.IsNullOrEmpty( sessionID ) ? (Guid?) null : Guid.Parse( sessionID );
+            Parameters = parameters;
         }
 
         #endregion
