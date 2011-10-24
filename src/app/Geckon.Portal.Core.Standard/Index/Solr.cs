@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using SolrNet;
 using Geckon.Portal.Core.Index;
 
 namespace Geckon.Portal.Core.Standard
