@@ -204,7 +204,8 @@ namespace Geckon.Portal.Core.Standard.Extension
             {
                 IModuleResult result = PortalResult.GetModule( associatedModule.Value.GetType().FullName );
                 
-                parameters.Add( new Parameter( "callContext", CallContext ) );
+                if( parameters.Where( parameter => parameter.ParameterName == "callContext" ).FirstOrDefault() == null )
+                    parameters.Add( new Parameter( "callContext", CallContext ) );
 
                 result.AddResult( associatedModule.Value.InvokeMethod( new MethodQuery( Controller,
                                                                                         Action,

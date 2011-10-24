@@ -5,6 +5,7 @@ using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data.Result;
 using Geckon.Portal.Core.Index;
+using Geckon.Portal.Core.Cache;
 
 namespace Geckon.Portal.Extensions.Standard.Test
 {

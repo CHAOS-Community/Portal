@@ -2,7 +2,7 @@
 using Geckon.Portal.Data.Result;
 using System.Collections.Generic;
 
-namespace Geckon.Portal.Core
+namespace Geckon.Portal.Core.Cache
 {
     public interface ICache
     {

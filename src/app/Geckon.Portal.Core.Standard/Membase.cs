@@ -7,6 +7,7 @@ using Geckon.Portal.Data.Result;
 using Geckon.Serialization;
 using Geckon.Serialization.Standard;
 using Membase;
+using Geckon.Portal.Core.Cache;
 
 namespace Geckon.Portal.Core.Standard
 {

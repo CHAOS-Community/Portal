@@ -50,7 +50,7 @@
     <Compile Include="Extension\ICallContext.cs" />
     <Compile Include="Extension\ReturnFormat.cs" />
     <Compile Include="IChecked.cs" />
-    <Compile Include="ICache.cs" />
+    <Compile Include="Cache\ICache.cs" />
     <Compile Include="Extension\IExtension.cs" />
     <Compile Include="IDatatype.cs" />
     <Compile Include="IEventType.cs" />
