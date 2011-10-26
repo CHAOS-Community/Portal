@@ -9,14 +9,14 @@ namespace Geckon.Portal.Core.Standard
     {
         #region Properties
 
-
+        public IList<SolrCoreConnection> Cores { get; set; }
 
         #endregion
         #region Construction
 
         public Solr()
         {
-
+            Cores = new List<SolrCoreConnection>();
         }
 
         #endregion
@@ -30,6 +30,11 @@ namespace Geckon.Portal.Core.Standard
         public IEnumerable<Data.Result.IResult> Get( IQuery query )
         {
             throw new NotImplementedException();
+        }
+
+        public void AddCore( SolrCoreConnection connection )
+        {
+            Cores.Add( connection );
         }
 
         #endregion

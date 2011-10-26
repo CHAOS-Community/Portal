@@ -58,6 +58,8 @@
     <Compile Include="Index\IIndexable.cs" />
     <Compile Include="IMethodQuery.cs" />
     <Compile Include="IMethodSignature.cs" />
+    <Compile Include="Index\IIndexConnection.cs" />
+    <Compile Include="Index\IIndexManager.cs" />
     <Compile Include="Index\IQuery.cs" />
     <Compile Include="IParameter.cs" />
     <Compile Include="Module\IModule.cs" />
