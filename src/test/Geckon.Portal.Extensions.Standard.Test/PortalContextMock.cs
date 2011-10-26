@@ -95,6 +95,12 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             throw new NotImplementedException();
         }
+
+
+        public void Set(IIndexable item)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MockCache : ICache
