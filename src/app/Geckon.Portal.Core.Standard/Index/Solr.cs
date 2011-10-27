@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Geckon.Portal.Core.Index;
 using System.Text;
+using System.Net;
+using System.Xml.Linq;
 
 namespace Geckon.Portal.Core.Standard
 {
@@ -27,6 +29,7 @@ namespace Geckon.Portal.Core.Standard
         {
             foreach( IIndexable item in items )
             {
+                // TODO: Can be improved by just sending one Add call to solr
                 Set( item );
             }
         }
@@ -35,7 +38,8 @@ namespace Geckon.Portal.Core.Standard
         {
             foreach( SolrCoreConnection connection in Cores )
             {
-                throw new NotImplementedException();
+                SendRequest( connection, "POST", "<add>" + ConvertToSolrDocument( item ) + "</add>" );
+                SendRequest( connection, "POST", "<commit/>" );
             }
         }
 
@@ -53,7 +57,32 @@ namespace Geckon.Portal.Core.Standard
         public void RemoveAll()
         {
             // TODO: Probably a good idea to add some sort of permissions on this call
-            
+            string deleteAll = "<delete><query>*:*</query></delete>";
+        }
+
+        private void SendRequest( SolrCoreConnection core, string method, string data )
+        {
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create( string.Format( "{0}/{1}", core.URL, "update" )  );
+
+            request.Method      = method;
+            request.ContentType = "text/xml";
+
+            using( System.IO.Stream stream = request.GetRequestStream() )
+            {
+                byte[] buffer = System.Text.Encoding.Unicode.GetBytes( "<?xml version=\"1.0\" encoding=\"utf-16\"?>" + data ); 
+
+                stream.Write( buffer, 0, buffer.Length );
+
+                stream.Flush();
+                stream.Close();
+            }
+
+            WebResponse response = request.GetResponse();
+
+            using( System.IO.StreamReader stream = new System.IO.StreamReader( response.GetResponseStream() ) )
+            {
+                string s = stream.ReadToEnd();
+            }
         }
 
         /// <summary>

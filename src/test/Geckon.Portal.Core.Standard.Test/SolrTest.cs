@@ -14,8 +14,8 @@ namespace Geckon.Portal.Core.Standard.Test
         {
             Solr solr = new Solr();
 
-            solr.AddCore( new SolrCoreConnection( "http://192.168.56.102:8080/solr/core0" ) );
-            solr.AddCore( new SolrCoreConnection( "http://192.168.56.102:8080/solr/core1" ) );
+            solr.AddCore( new SolrCoreConnection( "http://192.168.56.103:8080/solr/core0" ) );
+            solr.AddCore( new SolrCoreConnection( "http://192.168.56.103:8080/solr/core1" ) );
 
             solr.Set( new DemoIndexItem( Guid.NewGuid(), DateTime.Now ) );
         }
