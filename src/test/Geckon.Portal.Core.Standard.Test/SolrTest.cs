@@ -3,21 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Geckon.Portal.Core.Index;
+using Geckon.Portal.Core.Standard.Index;
+using Geckon.Portal.Data.Result;
+using Geckon.Portal.Data;
 
 namespace Geckon.Portal.Core.Standard.Test
 {
     [TestFixture]
-    public class SolrTest
+    public class SolrTest : SolrBaseTest
     {
         [Test]
         public void Should_Add_To_SolrIndex()
         {
-            Solr solr = new Solr();
+            Solr.Set( new DemoIndexItem( Guid.NewGuid(), DateTime.Now ) );
+        }
 
-            solr.AddCore( new SolrCoreConnection( "http://192.168.56.103:8080/solr/core0" ) );
-            solr.AddCore( new SolrCoreConnection( "http://192.168.56.103:8080/solr/core1" ) );
+        [Test]
+        public void Should_Get_All_From_SolrIndex()
+        {
+            Solr.Set( new DemoIndexItem( Guid.NewGuid(), DateTime.Now ) );
+            Solr.Set( new DemoIndexItem( Guid.NewGuid(), DateTime.Now ) );
+            Solr.Set( new DemoIndexItem( Guid.NewGuid(), DateTime.Now ) );
+            Solr.Set( new DemoIndexItem( Guid.NewGuid(), DateTime.Now ) );
 
-            solr.Set( new DemoIndexItem( Guid.NewGuid(), DateTime.Now ) );
+            SolrQuery query = new SolrQuery();
+            query.Init( "*:*" );
+
+            IEnumerable<IResult> results = Solr.Get( query );
+
+            Assert.AreEqual( 4, results.Count() );
+            
+            foreach( GuidResult guid in results )
+            {
+                Assert.AreNotEqual( Guid.Empty, guid.Guid );
+            }
         }
 
         [Test]
@@ -26,7 +45,7 @@ namespace Geckon.Portal.Core.Standard.Test
             Guid     guid = Guid.Parse( "02f0174c-a7e0-4e80-aeef-ceb18e28e2b7" );
             DateTime date = DateTime.Parse( "26-10-2011 17:59:49" );
 
-            string document = Solr.ConvertToSolrDocument( new DemoIndexItem( guid, date ) );
+            string document = Solr.ConvertToSolrDocument( new DemoIndexItem( guid, date ) ).ToString( System.Xml.Linq.SaveOptions.DisableFormatting );
 
             Assert.AreEqual( "<doc><field name=\"guid\">02f0174c-a7e0-4e80-aeef-ceb18e28e2b7</field><field name=\"date\">2011-10-26T17:59:49Z</field></doc>", document );
         }

@@ -5,6 +5,6 @@ namespace Geckon.Portal.Core.Index
 {
     public interface IQuery
     {
-
+        void Init( string query );
     }
 }

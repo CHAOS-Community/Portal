@@ -64,8 +64,11 @@
     <Compile Include="Extension\CallContext.cs" />
     <Compile Include="Extension\ExtensionError.cs" />
     <Compile Include="Extension\ExtensionLoader.cs" />
+    <Compile Include="Index\HttpMethod.cs" />
     <Compile Include="Index\SolrCoreConnection.cs" />
     <Compile Include="Index\SolrCoreManager.cs" />
+    <Compile Include="Index\SolrQuery.cs" />
+    <Compile Include="Index\SolrResponse.cs" />
     <Compile Include="Membase.cs" />
     <Compile Include="MethodQuery.cs" />
     <Compile Include="MethodSignature.cs" />

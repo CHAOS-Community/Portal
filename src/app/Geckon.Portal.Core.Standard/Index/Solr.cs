@@ -5,6 +5,7 @@ using Geckon.Portal.Core.Index;
 using System.Text;
 using System.Net;
 using System.Xml.Linq;
+using Geckon.Portal.Core.Standard.Index;
 
 namespace Geckon.Portal.Core.Standard
 {
@@ -27,10 +28,10 @@ namespace Geckon.Portal.Core.Standard
 
         public void Set( IEnumerable<IIndexable> items )
         {
-            foreach( IIndexable item in items )
+            foreach( SolrCoreConnection connection in Cores )
             {
-                // TODO: Can be improved by just sending one Add call to solr
-                Set( item );
+                SendRequest( connection, HttpMethod.POST, "update", new XElement( "add", items.Select( item => ConvertToSolrDocument( item ) ) ) );
+                SendRequest( connection, HttpMethod.POST, "update", new XElement( "commit" ) );
             }
         }
 
@@ -38,14 +39,16 @@ namespace Geckon.Portal.Core.Standard
         {
             foreach( SolrCoreConnection connection in Cores )
             {
-                SendRequest( connection, "POST", "<add>" + ConvertToSolrDocument( item ) + "</add>" );
-                SendRequest( connection, "POST", "<commit/>" );
+                SendRequest( connection, HttpMethod.POST, "update", new XElement( "add", ConvertToSolrDocument( item ) ) );
+                SendRequest( connection, HttpMethod.POST, "update", new XElement( "commit" ) );
             }
         }
 
         public IEnumerable<Data.Result.IResult> Get( IQuery query )
         {
-            throw new NotImplementedException();
+            SolrResponse result = SendRequest( Cores[0], HttpMethod.GET, "select", ((SolrQuery)query).SolrQueryString );
+
+            return result.Result.Results;
         }
 
         public void AddCore( SolrCoreConnection connection )
@@ -53,36 +56,59 @@ namespace Geckon.Portal.Core.Standard
             Cores.Add( connection );
         }
 
-
         public void RemoveAll()
         {
             // TODO: Probably a good idea to add some sort of permissions on this call
-            string deleteAll = "<delete><query>*:*</query></delete>";
+
+            foreach( SolrCoreConnection connection in Cores )
+            {
+                SendRequest( connection, HttpMethod.POST, "update", XElement.Parse( "<delete><query>*:*</query></delete>" ) );
+                SendRequest( connection, HttpMethod.POST, "update", new XElement( "commit" ) );
+            }
         }
 
-        private void SendRequest( SolrCoreConnection core, string method, string data )
+        private static SolrResponse SendRequest( SolrCoreConnection core, HttpMethod method, string command, string data)
         {
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create( string.Format( "{0}/{1}", core.URL, "update" )  );
+            HttpWebRequest request = null;
 
-            request.Method      = method;
-            request.ContentType = "text/xml";
-
-            using( System.IO.Stream stream = request.GetRequestStream() )
+            switch( method )
             {
-                byte[] buffer = System.Text.Encoding.Unicode.GetBytes( "<?xml version=\"1.0\" encoding=\"utf-16\"?>" + data ); 
+               case HttpMethod.GET:
+                    
+                   request = (HttpWebRequest) WebRequest.Create( string.Format( "{0}/{1}?{2}", core.URL, command, data )  );
 
-                stream.Write( buffer, 0, buffer.Length );
+                    request.Method      = "GET";
+                    request.ContentType = "text/xml";
 
-                stream.Flush();
-                stream.Close();
+                    break;
+               case HttpMethod.POST:
+                    request = (HttpWebRequest) WebRequest.Create( string.Format( "{0}/{1}", core.URL, command )  );
+
+                    request.Method      = "POST";
+                    request.ContentType = "text/xml";
+
+                    using( System.IO.Stream stream = request.GetRequestStream() )
+                    {
+                        byte[] buffer = Encoding.Unicode.GetBytes( data ); 
+
+                        stream.Write( buffer, 0, buffer.Length );
+                    }
+                    break;
+               case HttpMethod.PUT:
+                    throw new NotImplementedException();
+               case HttpMethod.DELETE:
+                    throw new NotImplementedException();
             }
 
-            WebResponse response = request.GetResponse();
-
-            using( System.IO.StreamReader stream = new System.IO.StreamReader( response.GetResponseStream() ) )
+            using( System.IO.StreamReader stream = new System.IO.StreamReader( request.GetResponse().GetResponseStream() ) )
             {
-                string s = stream.ReadToEnd();
+                return new SolrResponse( stream.ReadToEnd() );
             }
+        }
+
+        private static SolrResponse SendRequest(SolrCoreConnection core, HttpMethod method, string command, XElement data)
+        {
+            return SendRequest( core, method, command, new XDeclaration("1.0", "UTF-16", null ) + data.ToString( SaveOptions.DisableFormatting ) );
         }
 
         /// <summary>
@@ -90,21 +116,17 @@ namespace Geckon.Portal.Core.Standard
         /// </summary>
         /// <param name="item">the object to index</param>
         /// <returns></returns>
-        public static string ConvertToSolrDocument( IIndexable item )
+        public static XElement ConvertToSolrDocument(IIndexable item)
         {
             // TODO: Look into using Geckon XML serializer to construct solr documents
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append( "<doc>" );
+            XElement doc = new XElement( "doc" );
 
             foreach( KeyValuePair<string,string> field in item.GetIndexableFields() )
             {
-                sb.Append( string.Format( "<field name=\"{0}\">{1}</field>",field.Key, field.Value ) );
+                doc.Add( new XElement( "field", new XAttribute( "name", field.Key ), field.Value ) );
             }
 
-            sb.Append( "</doc>" );
-
-            return sb.ToString();
+            return doc;
         }
 
         #endregion
