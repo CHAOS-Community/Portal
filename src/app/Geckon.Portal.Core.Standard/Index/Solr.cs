@@ -26,22 +26,16 @@ namespace Geckon.Portal.Core.Standard
         #endregion
         #region Business Logic
 
+        #region IIndex
+
         public void Set( IEnumerable<IIndexable> items )
         {
-            foreach( SolrCoreConnection connection in Cores )
-            {
-                SendRequest( connection, HttpMethod.POST, "update", new XElement( "add", items.Select( item => ConvertToSolrDocument( item ) ) ) );
-                SendRequest( connection, HttpMethod.POST, "update", new XElement( "commit" ) );
-            }
+           Set( items, true );
         }
 
         public void Set( IIndexable item )
         {
-            foreach( SolrCoreConnection connection in Cores )
-            {
-                SendRequest( connection, HttpMethod.POST, "update", new XElement( "add", ConvertToSolrDocument( item ) ) );
-                SendRequest( connection, HttpMethod.POST, "update", new XElement( "commit" ) );
-            }
+            Set( item, true );
         }
 
         public IEnumerable<Data.Result.IResult> Get( IQuery query )
@@ -51,20 +45,53 @@ namespace Geckon.Portal.Core.Standard
             return result.Result.Results;
         }
 
+        #endregion
+
+        public void Set( IEnumerable<IIndexable> items, bool doCommit )
+        {
+            foreach( SolrCoreConnection connection in Cores )
+            {
+                SendRequest( connection, HttpMethod.POST, "update", new XElement( "add", items.Select( item => ConvertToSolrDocument( item ) ) ) );
+            }
+
+            if( doCommit )
+                Commit();
+        }
+
+        public void Set( IIndexable item, bool doCommit )
+        {
+            foreach( SolrCoreConnection connection in Cores )
+            {
+                SendRequest( connection, HttpMethod.POST, "update", new XElement( "add", ConvertToSolrDocument( item ) ) );
+            }
+
+            if( doCommit )
+                Commit();
+        }
+
+        public void Commit()
+        { 
+            foreach( SolrCoreConnection connection in Cores )
+            {
+                SendRequest( connection, HttpMethod.POST, "update", new XElement( "commit" ) );
+            }
+        }
+
         public void AddCore( SolrCoreConnection connection )
         {
             Cores.Add( connection );
         }
 
-        public void RemoveAll()
+        public void RemoveAll( bool doCommit )
         {
             // TODO: Probably a good idea to add some sort of permissions on this call
-
             foreach( SolrCoreConnection connection in Cores )
             {
                 SendRequest( connection, HttpMethod.POST, "update", XElement.Parse( "<delete><query>*:*</query></delete>" ) );
-                SendRequest( connection, HttpMethod.POST, "update", new XElement( "commit" ) );
             }
+
+            if( doCommit )
+                Commit();
         }
 
         private static SolrResponse SendRequest( SolrCoreConnection core, HttpMethod method, string command, string data)
@@ -74,8 +101,7 @@ namespace Geckon.Portal.Core.Standard
             switch( method )
             {
                case HttpMethod.GET:
-                    
-                   request = (HttpWebRequest) WebRequest.Create( string.Format( "{0}/{1}?{2}", core.URL, command, data )  );
+                    request = (HttpWebRequest) WebRequest.Create( string.Format( "{0}/{1}?{2}", core.URL, command, data )  );
 
                     request.Method      = "GET";
                     request.ContentType = "text/xml";
@@ -93,6 +119,7 @@ namespace Geckon.Portal.Core.Standard
 
                         stream.Write( buffer, 0, buffer.Length );
                     }
+
                     break;
                case HttpMethod.PUT:
                     throw new NotImplementedException();

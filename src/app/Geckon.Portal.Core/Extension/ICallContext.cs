@@ -12,6 +12,6 @@ namespace Geckon.Portal.Core.Extension
         UserInfo User { get; }
         Guid AnonymousUserGUID { get; }
         ICache Cache { get; }
-        IIndex Solr { get; }
+        IIndexManager IndexManager { get; }
     }
 }

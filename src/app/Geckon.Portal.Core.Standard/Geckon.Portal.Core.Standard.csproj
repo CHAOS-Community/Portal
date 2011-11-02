@@ -73,6 +73,7 @@
     <Compile Include="MethodQuery.cs" />
     <Compile Include="MethodSignature.cs" />
     <Compile Include="ModelBinders\CallContextModelBinder.cs" />
+    <Compile Include="ModelBinders\SolrQueryModelBinder.cs" />
     <Compile Include="Module\AModule.cs" />
     <Compile Include="Parameter.cs" />
     <Compile Include="PortalContext.cs" />

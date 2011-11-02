@@ -84,22 +84,46 @@ namespace Geckon.Portal.Extensions.Standard.Test
         }
     }
 
-    public class MockSolr : IIndex
+    public class MockSolrManager : IIndexManager
     {
-        public void Set(IEnumerable<IIndexable> items)
+
+        public IIndex GetIndex<T>() where T : IModule
+        {
+            return new MockSolr();
+        }
+
+        public IIndex GetIndex(string fullName)
+        {
+            return new MockSolr();
+        }
+
+        public void AddIndex<T>(IIndexConnection connection) where T : IModule
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<IResult> Get(IQuery query)
+        public void AddIndex(string fullName, IIndexConnection connection)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public class MockSolr : IIndex
+    {
+        public void Set(IEnumerable<IIndexable> items)
+        {
+            
+        }
+
+        public IEnumerable<IResult> Get(IQuery query)
+        {
+            yield break;
         }
 
 
         public void Set(IIndexable item)
         {
-            throw new NotImplementedException();
+            
         }
     }
 

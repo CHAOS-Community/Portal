@@ -102,8 +102,8 @@ namespace Geckon.Portal.Core.Standard.Extension
             if( filterContext.ActionParameters.ContainsKey( "callContext" ) )
                 CallContext = (ICallContext) filterContext.ActionParameters["callContext"];
             else
-                CallContext = new CallContext( new Membase(),
-                                               new Solr(),
+                CallContext = new CallContext( APortalApplication.Cache,
+                                               APortalApplication.IndexManager,
                                                filterContext.HttpContext.Request.QueryString["sessionID"] );
             
             Parameters = filterContext.ActionParameters.Select( ( parameter ) => new Parameter( parameter.Key, parameter.Value ) );

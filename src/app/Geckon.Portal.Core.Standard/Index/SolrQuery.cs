@@ -21,11 +21,24 @@ namespace Geckon.Portal.Core.Standard.Index
         }
 
         #endregion
+        #region Construction
+
+        public SolrQuery( string query, string sort )
+        {
+            Init( query, sort );
+        }
+
+        public SolrQuery( )
+        {
+        }
+
+        #endregion
         #region Business Logic
 
-        public void Init( string query )
+        public void Init( string query, string sort )
         {
             Query = query;
+            Sort  = sort;
         }
 
         #endregion

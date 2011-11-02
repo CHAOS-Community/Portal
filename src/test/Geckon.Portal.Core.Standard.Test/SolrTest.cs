@@ -21,13 +21,14 @@ namespace Geckon.Portal.Core.Standard.Test
         [Test]
         public void Should_Get_All_From_SolrIndex()
         {
-            Solr.Set( new DemoIndexItem( Guid.NewGuid(), DateTime.Now ) );
-            Solr.Set( new DemoIndexItem( Guid.NewGuid(), DateTime.Now ) );
-            Solr.Set( new DemoIndexItem( Guid.NewGuid(), DateTime.Now ) );
-            Solr.Set( new DemoIndexItem( Guid.NewGuid(), DateTime.Now ) );
+            Solr.Set( new DemoIndexItem( Guid.Parse("0876EBF6-E30F-4A43-9B6E-F8A479F38427"), DateTime.Now ), false );
+            Solr.Set( new DemoIndexItem( Guid.Parse("0876EBF6-E30F-4A43-9B6E-F8A479F38430"), DateTime.Now ), false );
+            Solr.Set( new DemoIndexItem( Guid.Parse("0876EBF6-E30F-4A43-9B6E-F8A479F38433"), DateTime.Now ), false );
+            Solr.Set( new DemoIndexItem( Guid.Parse("0876EBF6-E30F-4A43-9B6E-F8A479F38435"), DateTime.Now ), false );
+            Solr.Commit();
 
             SolrQuery query = new SolrQuery();
-            query.Init( "*:*" );
+            query.Init( "*:*", null );
 
             IEnumerable<IResult> results = Solr.Get( query );
 
@@ -47,7 +48,7 @@ namespace Geckon.Portal.Core.Standard.Test
 
             string document = Solr.ConvertToSolrDocument( new DemoIndexItem( guid, date ) ).ToString( System.Xml.Linq.SaveOptions.DisableFormatting );
 
-            Assert.AreEqual( "<doc><field name=\"guid\">02f0174c-a7e0-4e80-aeef-ceb18e28e2b7</field><field name=\"date\">2011-10-26T17:59:49Z</field></doc>", document );
+            Assert.AreEqual( "<doc><field name=\"guid\">02f0174c-a7e0-4e80-aeef-ceb18e28e2b7</field><field name=\"datecreated\">2011-10-26T17:59:49Z</field></doc>", document );
         }
     }
 
@@ -65,7 +66,7 @@ namespace Geckon.Portal.Core.Standard.Test
         public IEnumerable<KeyValuePair<string, string>> GetIndexableFields()
         {
             yield return new KeyValuePair<string, string>( "guid", Guid.ToString() );
-            yield return new KeyValuePair<string, string>( "date", Date.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ));
+            yield return new KeyValuePair<string, string>( "datecreated", Date.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ));
         }
     }
 }

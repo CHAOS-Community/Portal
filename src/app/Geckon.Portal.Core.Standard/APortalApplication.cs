@@ -4,14 +4,18 @@ using System.Configuration;
 using System.IO;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Standard.Extension;
+using Geckon.Portal.Core.Index;
+using Geckon.Portal.Core.Cache;
 
 namespace Geckon.Portal.Core.Standard
 {
-    public class APortalApplication : System.Web.HttpApplication
+    public abstract class APortalApplication : System.Web.HttpApplication
     {
         #region Properties
 
         public IPortalContext PortalContext { get; protected set; }
+        public static ICache Cache { get; protected set; }
+        public static IIndexManager IndexManager { get; protected set; }
 
         public string ServiceDirectoryPath
         {
@@ -26,11 +30,7 @@ namespace Geckon.Portal.Core.Standard
 
         public APortalApplication()
         {
-            if( !System.Web.Mvc.ModelBinders.Binders.ContainsKey( typeof(ICallContext) ) )
-                System.Web.Mvc.ModelBinders.Binders.Add( typeof( ICallContext ), new ModelBinders.CallContextModelBinder() );
 
-            if( !System.Web.Mvc.ModelBinders.Binders.ContainsKey( typeof( CallContext ) ) )
-                System.Web.Mvc.ModelBinders.Binders.Add( typeof( CallContext ), new ModelBinders.CallContextModelBinder() );
         }
 
         #endregion
@@ -39,6 +39,22 @@ namespace Geckon.Portal.Core.Standard
         protected IEnumerable<FileInfo> GetAllExtensionFiles()
         {
             return new DirectoryInfo( Path.Combine( ServiceDirectoryPath, "Extensions" ) ).GetFiles( "*.dll" );
+        }
+
+        protected void InitializePortalApplication()
+        {
+            if( !System.Web.Mvc.ModelBinders.Binders.ContainsKey( typeof(ICallContext) ) )
+                System.Web.Mvc.ModelBinders.Binders.Add( typeof( ICallContext ), new ModelBinders.CallContextModelBinder() );
+
+            if( !System.Web.Mvc.ModelBinders.Binders.ContainsKey( typeof( CallContext ) ) )
+                System.Web.Mvc.ModelBinders.Binders.Add( typeof( CallContext ), new ModelBinders.CallContextModelBinder() );
+
+            // Sets the modelbinding of index queries
+            if( !System.Web.Mvc.ModelBinders.Binders.ContainsKey( typeof( IQuery ) ) )
+                System.Web.Mvc.ModelBinders.Binders.Add( typeof( IQuery ), new ModelBinders.SolrQueryModelBinder() );
+
+            Cache        = new Membase();
+            IndexManager = new SolrCoreManager();
         }
 
         #endregion

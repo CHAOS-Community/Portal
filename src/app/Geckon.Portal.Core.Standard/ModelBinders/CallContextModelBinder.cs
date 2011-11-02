@@ -10,11 +10,9 @@ namespace Geckon.Portal.Core.Standard.ModelBinders
     {
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            var qs = controllerContext.HttpContext.Request.QueryString;
-
-            return new CallContext( new Membase(),
-                                    new Solr(),
-                                    qs["sessionID"] );
+            return new CallContext( APortalApplication.Cache,
+                                    APortalApplication.IndexManager,
+                                    controllerContext.HttpContext.Request.QueryString["sessionID"] );
         }
     }
 }

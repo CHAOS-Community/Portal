@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Geckon.Portal.Core;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Core.Standard;
 using Geckon.Portal.Core.Standard.Extension;
@@ -39,8 +39,11 @@ namespace Geckon.Portal
                            );
         }
 
+        // REVIEW: Refactoring needed, portal initialization logic should recide in the base class
         protected void Application_Start()
         {
+            InitializePortalApplication();
+
             PortalContext = new PortalContext();
 
             // TODO: Assemblies should not just be loaded at application start
@@ -68,6 +71,17 @@ namespace Geckon.Portal
                             portalModule.Init( PortalContext, module.Configuration );
 
                             PortalContext.RegisterModule( portalModule );
+
+                            // Initializes index per module
+                            IndexSetting indexSettings = db.IndexSettings_Get( module.ID ).FirstOrDefault();
+                    
+                            if( indexSettings != null )
+                            {
+                                foreach( string url in indexSettings.Settings.Elements("Core").Select( core => core.Attribute( "url" ).Value ) )
+	                            {
+                                    IndexManager.AddIndex( portalModule.Name, new SolrCoreConnection( url ) );
+	                            }    
+                            }
                         }
                     }
                 }

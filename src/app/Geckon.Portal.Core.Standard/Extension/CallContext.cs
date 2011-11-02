@@ -14,7 +14,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         #region Properties
 
         public ICache Cache { get; private set; }
-        public IIndex Solr { get; private set; }
+        public IIndexManager IndexManager { get; private set; }
         public Guid? SessionID { get; set; }
 
         public UserInfo User
@@ -77,11 +77,11 @@ namespace Geckon.Portal.Core.Standard.Extension
         #endregion
         #region Construction
 
-        public CallContext( ICache cache, IIndex solr, string sessionID )
+        public CallContext( ICache cache, IIndexManager indexManager, string sessionID )
         {
-            Cache      = cache;
-            Solr       = solr;
-            SessionID  = String.IsNullOrEmpty( sessionID ) ? (Guid?) null : Guid.Parse( sessionID );
+            Cache        = cache;
+            IndexManager = indexManager;
+            SessionID    = String.IsNullOrEmpty( sessionID ) ? (Guid?) null : Guid.Parse( sessionID );
         }
 
         #endregion
