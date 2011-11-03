@@ -4,8 +4,10 @@ using System.Configuration;
 using System.IO;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Standard.Extension;
-using Geckon.Portal.Core.Index;
+using Geckon.Index;
 using Geckon.Portal.Core.Cache;
+using Geckon.Portal.Data;
+using Geckon.Index.Solr;
 
 namespace Geckon.Portal.Core.Standard
 {
@@ -54,7 +56,7 @@ namespace Geckon.Portal.Core.Standard
                 System.Web.Mvc.ModelBinders.Binders.Add( typeof( IQuery ), new ModelBinders.SolrQueryModelBinder() );
 
             Cache        = new Membase();
-            IndexManager = new SolrCoreManager();
+            IndexManager = new SolrCoreManager<GuidResult>();
         }
 
         #endregion

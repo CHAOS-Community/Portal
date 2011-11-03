@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Geckon.Portal.Core.Standard.Index;
+using Geckon.Index.Solr;
 
 namespace Geckon.Portal.Core.Standard.ModelBinders
 {

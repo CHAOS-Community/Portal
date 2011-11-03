@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Geckon.Portal.Data;
 using System;
-using Geckon.Portal.Core.Index;
+using Geckon.Index;
 using Geckon.Portal.Core.Cache;
 
 namespace Geckon.Portal.Core.Extension

@@ -4,8 +4,8 @@ using Geckon.Portal.Core;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data.Result;
-using Geckon.Portal.Core.Index;
 using Geckon.Portal.Core.Cache;
+using Geckon.Index;
 
 namespace Geckon.Portal.Extensions.Standard.Test
 {
@@ -87,9 +87,14 @@ namespace Geckon.Portal.Extensions.Standard.Test
     public class MockSolrManager : IIndexManager
     {
 
-        public IIndex GetIndex<T>() where T : IModule
+        public void AddIndex(string fullName, IIndexConnection connection)
         {
-            return new MockSolr();
+            throw new NotImplementedException();
+        }
+
+        public void AddIndex<T>(IIndexConnection connection)
+        {
+            throw new NotImplementedException();
         }
 
         public IIndex GetIndex(string fullName)
@@ -97,33 +102,27 @@ namespace Geckon.Portal.Extensions.Standard.Test
             return new MockSolr();
         }
 
-        public void AddIndex<T>(IIndexConnection connection) where T : IModule
+        public IIndex GetIndex<T>()
         {
-            throw new NotImplementedException();
-        }
-
-        public void AddIndex(string fullName, IIndexConnection connection)
-        {
-            throw new NotImplementedException();
+            return new MockSolr();
         }
     }
 
     public class MockSolr : IIndex
     {
-        public void Set(IEnumerable<IIndexable> items)
-        {
-            
-        }
 
-        public IEnumerable<IResult> Get(IQuery query)
+        public IPagedResult<IIndexResult> Get(IQuery query)
         {
-            yield break;
+            return null;
         }
-
 
         public void Set(IIndexable item)
         {
-            
+
+        }
+
+        public void Set(IEnumerable<IIndexable> items)
+        {
         }
     }
 

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Geckon.Portal.Core.Index;
-using Geckon.Portal.Core.Standard.Index;
 using Geckon.Portal.Data.Result;
 using Geckon.Portal.Data;
+using Geckon.Index;
+using Geckon.Index.Solr;
 
 namespace Geckon.Portal.Core.Standard.Test
 {
@@ -30,11 +30,11 @@ namespace Geckon.Portal.Core.Standard.Test
             SolrQuery query = new SolrQuery();
             query.Init( "*:*", null );
 
-            IEnumerable<IResult> results = Solr.Get( query );
+            IPagedResult<IIndexResult> results = Solr.Get( query );
 
-            Assert.AreEqual( 4, results.Count() );
+            Assert.AreEqual( 4, results.Results.Count() );
             
-            foreach( GuidResult guid in results )
+            foreach( GuidResult guid in results.Results )
             {
                 Assert.AreNotEqual( Guid.Empty, guid.Guid );
             }
@@ -46,7 +46,7 @@ namespace Geckon.Portal.Core.Standard.Test
             Guid     guid = Guid.Parse( "02f0174c-a7e0-4e80-aeef-ceb18e28e2b7" );
             DateTime date = DateTime.Parse( "26-10-2011 17:59:49" );
 
-            string document = Solr.ConvertToSolrDocument( new DemoIndexItem( guid, date ) ).ToString( System.Xml.Linq.SaveOptions.DisableFormatting );
+            string document = Geckon.Index.Solr.Solr<GuidResult>.ConvertToSolrDocument( new DemoIndexItem( guid, date ) ).ToString( System.Xml.Linq.SaveOptions.DisableFormatting );
 
             Assert.AreEqual( "<doc><field name=\"guid\">02f0174c-a7e0-4e80-aeef-ceb18e28e2b7</field><field name=\"datecreated\">2011-10-26T17:59:49Z</field></doc>", document );
         }

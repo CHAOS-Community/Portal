@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Geckon.Index;
 
 namespace Geckon.Portal.Data
 {
-    public class GuidResult : Result.Standard.Result
+    public class GuidResult : Result.Standard.Result, IIndexResult
     {
         #region Properties
 
@@ -25,5 +26,12 @@ namespace Geckon.Portal.Data
         }
 
         #endregion
+
+        public IIndexResult Init( System.Xml.Linq.XElement element )
+        {
+            Guid = Guid.Parse( element.Elements("str").Where( node => node.Attribute("name").Value == "guid" ).First().Value );
+
+            return this;
+        }
     }
 }

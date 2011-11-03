@@ -63,12 +63,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Result\IModuleResult.cs" />
-    <Compile Include="Result\IPagedResult.cs" />
     <Compile Include="Result\IPortalResult.cs" />
     <Compile Include="Result\IResult.cs" />
     <Compile Include="Result\IResultExtensionMethods.cs" />
     <Compile Include="Result\Standard\ModuleResult.cs" />
-    <Compile Include="Result\Standard\PagedResult.cs" />
     <Compile Include="Result\Standard\PortalResult.cs" />
     <Compile Include="Result\Standard\ResultExtensionMethods.cs" />
     <Compile Include="Result\Standard\Result.cs" />

@@ -9,6 +9,7 @@ using Geckon.Portal.Core.Module;
 using Geckon.Portal.Core.Standard;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
+using Geckon.Index.Solr;
 
 namespace Geckon.Portal
 {

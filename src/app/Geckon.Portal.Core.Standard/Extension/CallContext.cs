@@ -4,8 +4,8 @@ using System.Linq;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Data;
 using System.Configuration;
-using Geckon.Portal.Core.Index;
 using Geckon.Portal.Core.Cache;
+using Geckon.Index;
 
 namespace Geckon.Portal.Core.Standard.Extension
 {
