@@ -57,7 +57,7 @@ namespace Geckon.Portal.Core.Standard
         }
 
         public T GetModule<T>( ) where T : IModule
-        {
+        { 
             return (T) LoadedModules[ typeof(T).FullName ];
         }
 

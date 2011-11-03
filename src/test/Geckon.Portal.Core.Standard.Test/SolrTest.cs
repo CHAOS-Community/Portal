@@ -67,6 +67,7 @@ namespace Geckon.Portal.Core.Standard.Test
         {
             yield return new KeyValuePair<string, string>( "guid", Guid.ToString() );
             yield return new KeyValuePair<string, string>( "datecreated", Date.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ));
+            yield return new KeyValuePair<string, string>( "1_en_all", "test string" );
         }
     }
 }
