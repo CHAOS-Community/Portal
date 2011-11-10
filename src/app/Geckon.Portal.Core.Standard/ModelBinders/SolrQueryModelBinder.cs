@@ -13,7 +13,7 @@ namespace Geckon.Portal.Core.Standard.ModelBinders
             var qs = controllerContext.HttpContext.Request.QueryString;
 
             if( !string.IsNullOrEmpty( qs["query"] ) )
-                return new SolrQuery( qs["query"], qs["sort"] );
+                return new SolrQuery( qs["query"], qs["sort"], int.Parse( qs["PageIndex"] ), int.Parse( qs["PageSize"] ) );
 
             return null;
         }

@@ -29,7 +29,7 @@ namespace Geckon.Portal.Data
 
         public IIndexResult Init( System.Xml.Linq.XElement element )
         {
-            Guid = Guid.Parse( element.Elements("str").Where( node => node.Attribute("name").Value == "guid" ).First().Value );
+            Guid = Guid.Parse( element.Elements("str").Where( node => node.Attribute("name").Value == "GUID" ).First().Value );
 
             return this;
         }

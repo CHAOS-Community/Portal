@@ -28,7 +28,7 @@ namespace Geckon.Portal.Core.Standard.Test
             Solr.Commit();
 
             SolrQuery query = new SolrQuery();
-            query.Init( "*:*", null );
+            query.Init( "*:*", null, 0, 4 );
 
             IPagedResult<IIndexResult> results = Solr.Get( query );
 
