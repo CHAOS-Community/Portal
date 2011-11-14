@@ -37,6 +37,9 @@
     <Reference Include="geckon">
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Membase">
       <HintPath>..\..\..\lib\Membase.dll</HintPath>
     </Reference>

@@ -7,6 +7,7 @@ using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Data;
 using Geckon.Portal.Data.Result;
+using Geckon.Portal.Data.Result.Standard;
 
 namespace Geckon.Portal.Core.Standard.Module
 {
@@ -75,36 +76,38 @@ namespace Geckon.Portal.Core.Standard.Module
         #endregion
         #region Method call
 
-        public IEnumerable<IResult> InvokeMethod(IMethodQuery methodQuery)
+        public IModuleResult InvokeMethod(IMethodQuery methodQuery)
         {
-            IMethodSignature method = RegisteredMethods[ methodQuery.EventType.EventName + ":" + methodQuery.EventType.Type ];
+            IModuleResult    modelResult = new ModuleResult( GetType().FullName );
+            IMethodSignature method      = RegisteredMethods[ methodQuery.EventType.EventName + ":" + methodQuery.EventType.Type ];
 
             try
             {
                 object result = method.Method.Invoke( this, GetRelevantParameters( method.Parameters, methodQuery ) );
             
                 if( result is IResult )
-                    return ToList( (IResult) result );
+                    modelResult.AddResult( (IResult) result );
 
                 if( result is IEnumerable<IResult> )
-                    return (IEnumerable<IResult>) result;
+                    modelResult.AddResult( (IEnumerable<IResult>) result );
+
+                if( result is Geckon.Index.IPagedResult<IResult> )
+                {
+                    Geckon.Index.IPagedResult<IResult> pagedResult = (Geckon.Index.IPagedResult<IResult>) result;
+
+                    modelResult.AddResult( pagedResult.Results );
+                    modelResult.TotalCount = pagedResult.FoundCount;
+                }
+                else
+                    throw new UnsupportedModuleReturnType( "Only a return type of IResult or IEnumerable<IResult> is supported" );
+
             }
             catch( System.Exception ex )
             {
-                
-                return ToList( new Error( ex.InnerException ?? ex ) );
+                modelResult.AddResult( new Error( ex.InnerException ?? ex ) );
             }
 
-            throw new UnsupportedModuleReturnType( "Only a return type of IResult or IEnumerable<IResult> is supported" );
-        }
-
-        private IList<IResult> ToList( IResult result )
-        {
-            IList<IResult> list = new List<IResult>();
-
-            list.Add( result );
-
-            return list;
+            return modelResult;
         }
 
         public bool ContainsServiceHook( string extension, string action )

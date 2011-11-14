@@ -43,6 +43,8 @@ namespace Geckon.Portal
         // REVIEW: Refactoring needed, portal initialization logic should recide in the base class
         protected void Application_Start()
         {
+            log4net.LogManager.GetLogger("Portal").Info("Portal Application Started");
+
             InitializePortalApplication();
 
             PortalContext = new PortalContext();
@@ -92,6 +94,8 @@ namespace Geckon.Portal
             ControllerBuilder.Current.SetControllerFactory( new ExtensionFactory( this ) );
             RegisterGlobalFilters( GlobalFilters.Filters );
             RegisterRoutes( RouteTable.Routes );
+
+            log4net.LogManager.GetLogger("Portal").Info("Portal Application Initialized");
         }
     }
 }

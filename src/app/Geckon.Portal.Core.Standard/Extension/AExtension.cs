@@ -91,6 +91,8 @@ namespace Geckon.Portal.Core.Standard.Extension
         /// <param name="filterContext"></param>
         protected override void OnActionExecuting( ActionExecutingContext filterContext )
         {
+            log4net.LogManager.GetLogger("Portal").Debug( filterContext.HttpContext.Request.Url.OriginalString );
+
             Controller = filterContext.RouteData.Values["Controller"].ToString();
             Action     = filterContext.RouteData.Values["Action"].ToString();
 
@@ -131,6 +133,8 @@ namespace Geckon.Portal.Core.Standard.Extension
             if( filterContext.Exception is TargetInvocationException )
                 filterContext.Exception = filterContext.Exception.InnerException; 
             
+            log4net.LogManager.GetLogger("Portal").Fatal( "Unhandled exception", filterContext.Exception );
+
             filterContext.ExceptionHandled                = true;
             filterContext.Result                          = GetContentResult( ReturnFormat, new ExtensionError( filterContext.Exception, TimeStamp ) );
             filterContext.HttpContext.Response.StatusCode = GetErrorStatusCode(  );
@@ -202,14 +206,15 @@ namespace Geckon.Portal.Core.Standard.Extension
         {
             foreach( IChecked<IModule> associatedModule in AssociatedModules.Values.Where( module => !module.IsChecked ) )
             {
-                IModuleResult result = PortalResult.GetModule( associatedModule.Value.GetType().FullName );
-                
                 if( parameters.Where( parameter => parameter.ParameterName == "callContext" ).FirstOrDefault() == null )
                     parameters.Add( new Parameter( "callContext", CallContext ) );
 
-                result.AddResult( associatedModule.Value.InvokeMethod( new MethodQuery( Controller,
-                                                                                        Action,
-                                                                                        parameters ) ) );
+                IModuleResult result = associatedModule.Value.InvokeMethod( new MethodQuery( Controller,
+                                                                                             Action,
+                                                                                             parameters ) );
+
+                PortalResult.Modules.Add( result );
+                
                 associatedModule.IsChecked = true;
             }
         }

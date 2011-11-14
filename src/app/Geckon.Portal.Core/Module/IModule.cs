@@ -9,7 +9,7 @@ namespace Geckon.Portal.Core.Module
         string Name { get; }
         void Init( IPortalContext portalContext, XDocument config );
         void Init( IPortalContext portalContext, XElement config );
-        IEnumerable<IResult> InvokeMethod(IMethodQuery methodQuery);
+        IModuleResult InvokeMethod(IMethodQuery methodQuery);
         bool ContainsServiceHook(string extension, string action);
     }
 }

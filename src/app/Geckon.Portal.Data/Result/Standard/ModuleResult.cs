@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Geckon.Serialization;
 using Geckon.Serialization.XML;
+using System.Linq;
 
 namespace Geckon.Portal.Data.Result.Standard
 {
@@ -25,21 +26,53 @@ namespace Geckon.Portal.Data.Result.Standard
             get { return Results.Count; }
         }
 
+        [Serialize("TotalCount")]
+        [SerializeXML(true)]
+        public int? TotalCount
+        {
+            get;
+            set;
+        }
+
+        [Serialize("PageIndex")]
+        [SerializeXML(true)]
+        public int? PageIndex
+        {
+            get;
+            set;
+        }
+
+        [Serialize("TotalPages")]
+        [SerializeXML(true)]
+        public int? TotalPages
+        {
+            get;
+            set;
+        }
+
         [Serialize("Results")]
         public IList<IResult> Results { get; set; }
 
         private Stopwatch Timestamp { get; set; }
 
+
         #endregion
         #region Construction
 
-        public ModuleResult( string fullname )
+        public ModuleResult( string fullname ) : this( fullname, new List<IResult>(), null, null, null )
+        {
+        }
+
+        public ModuleResult( string fullname, IEnumerable<IResult> results, int? pageIndex, int? totalPages, int? totalCount )
         {
             Timestamp = new Stopwatch();
             Timestamp.Start();
 
-            Fullname = fullname;
-            Results  = new List<IResult>();
+            Fullname   = fullname;
+            Results    = results.ToList();
+            TotalPages = totalPages;
+            PageIndex  = pageIndex;
+            TotalCount = totalCount;
         }
 
         #endregion
