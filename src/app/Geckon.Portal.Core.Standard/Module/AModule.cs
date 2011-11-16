@@ -87,10 +87,10 @@ namespace Geckon.Portal.Core.Standard.Module
             
                 if( result is IResult )
                     modelResult.AddResult( (IResult) result );
-
+                else
                 if( result is IEnumerable<IResult> )
                     modelResult.AddResult( (IEnumerable<IResult>) result );
-
+                else
                 if( result is Geckon.Index.IPagedResult<IResult> )
                 {
                     Geckon.Index.IPagedResult<IResult> pagedResult = (Geckon.Index.IPagedResult<IResult>) result;

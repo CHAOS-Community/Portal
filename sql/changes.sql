@@ -32,13 +32,13 @@ CREATE PROCEDURE [dbo].[IndexSettings_Create]
 AS
 BEGIN
 	
-	INSERT INTO [IndexSettings] ([ModuleID],[Identifier],[Settings],[DateCreated])
+	INSERT INTO [IndexSettings] ([ModuleID],[Settings],[DateCreated])
          VALUES (@ModuleID,@Settings,GETDATE())
 
 	RETURN @@IDENTITY
  
 END
-GO
+
 
 -- =============================================
 -- Author:		Jesper Fyhr Knudsen
@@ -65,4 +65,14 @@ CREATE TABLE [dbo].[Log] (
     [Logger] [varchar] (255) NOT NULL,
     [Message] [varchar] (4000) NOT NULL,
     [Exception] [varchar] (2000) NULL
-)
+ CONSTRAINT [PK_Log] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
