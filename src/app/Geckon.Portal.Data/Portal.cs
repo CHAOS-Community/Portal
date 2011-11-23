@@ -368,7 +368,6 @@ namespace Geckon.Portal.Data
         [Serialize("SessionID")]
         public string SessionID { get; set; }
 
-        [Serialize("ID")]
         public int pID
         {
             get { return ID; }
@@ -417,18 +416,18 @@ namespace Geckon.Portal.Data
     {
         #region Properties
 
-        [Serialize("ClientSettingID")]
-        public int pClientSettingID
+        [Serialize("ClientSettingGUID")]
+        public Guid pClientSettingGUID
         {
-            get { return ClientSettingID; }
-            set { ClientSettingID = value; }
+            get { return ClientSettingGUID; }
+            set { ClientSettingGUID = value; }
         }
 
-        [Serialize("UserID")]
-        public int pUserID
+        [Serialize("UserGUID")]
+        public Guid pUserID
         {
-            get { return UserID; }
-            set { UserID = value; }
+            get { return UserGUID; }
+            set { UserGUID = value; }
         }
 
         [SerializeXML(false, true)]
@@ -468,7 +467,7 @@ namespace Geckon.Portal.Data
         }
 
         [SerializeXML(false, true)]
-        [Serialize("XML")]
+        [Serialize("Settings")]
         public string pXml
         {
             get { return Xml == null ? null : Xml.ToString(); }

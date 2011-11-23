@@ -60,18 +60,18 @@ namespace Geckon.Portal.Data
     partial void InsertGroup(Group instance);
     partial void UpdateGroup(Group instance);
     partial void DeleteGroup(Group instance);
-    partial void InsertUserSetting(UserSetting instance);
-    partial void UpdateUserSetting(UserSetting instance);
-    partial void DeleteUserSetting(UserSetting instance);
-    partial void InsertClientSetting(ClientSetting instance);
-    partial void UpdateClientSetting(ClientSetting instance);
-    partial void DeleteClientSetting(ClientSetting instance);
     partial void InsertSession(Session instance);
     partial void UpdateSession(Session instance);
     partial void DeleteSession(Session instance);
     partial void InsertIndexSetting(IndexSetting instance);
     partial void UpdateIndexSetting(IndexSetting instance);
     partial void DeleteIndexSetting(IndexSetting instance);
+    partial void InsertClientSetting(ClientSetting instance);
+    partial void UpdateClientSetting(ClientSetting instance);
+    partial void DeleteClientSetting(ClientSetting instance);
+    partial void InsertUserSetting(UserSetting instance);
+    partial void UpdateUserSetting(UserSetting instance);
+    partial void DeleteUserSetting(UserSetting instance);
     #endregion
 		
 		public PortalDataContext() : 
@@ -200,22 +200,6 @@ namespace Geckon.Portal.Data
 			}
 		}
 		
-		public System.Data.Linq.Table<UserSetting> UserSettings
-		{
-			get
-			{
-				return this.GetTable<UserSetting>();
-			}
-		}
-		
-		public System.Data.Linq.Table<ClientSetting> ClientSettings
-		{
-			get
-			{
-				return this.GetTable<ClientSetting>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Session> Sessions
 		{
 			get
@@ -237,6 +221,22 @@ namespace Geckon.Portal.Data
 			get
 			{
 				return this.GetTable<IndexSetting>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ClientSetting> ClientSettings
+		{
+			get
+			{
+				return this.GetTable<ClientSetting>();
+			}
+		}
+		
+		public System.Data.Linq.Table<UserSetting> UserSettings
+		{
+			get
+			{
+				return this.GetTable<UserSetting>();
 			}
 		}
 		
@@ -388,41 +388,6 @@ namespace Geckon.Portal.Data
 			return ((int)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ClientSettings_Get")]
-		public ISingleResult<ClientSetting> ClientSettings_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientSettingsID);
-			return ((ISingleResult<ClientSetting>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserSettings_Get")]
-		public ISingleResult<UserSetting> UserSettings_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, userGUID, clientSettingsGUID);
-			return ((ISingleResult<UserSetting>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserSettings_Delete")]
-		public int UserSettings_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, userGUID, clientSettingsGUID);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserSettings_Create")]
-		public int UserSettings_Create([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Setting", DbType="Xml")] System.Xml.Linq.XElement setting)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, userGUID, clientSettingsGUID, setting);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserSettings_Update")]
-		public int UserSettings_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewSetting", DbType="Xml")] System.Xml.Linq.XElement newSetting)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, userGUID, clientSettingsGUID, newSetting);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserInfo_Get")]
 		public ISingleResult<UserInfo> UserInfo_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SessionID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> sessionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Email", DbType="VarChar(255)")] string email)
 		{
@@ -463,6 +428,48 @@ namespace Geckon.Portal.Data
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), moduleID);
 			return ((ISingleResult<IndexSetting>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserSettings_Update")]
+		public int UserSettings_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewSetting", DbType="Xml")] System.Xml.Linq.XElement newSetting)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userGUID, clientSettingsGUID, newSetting);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserSettings_Create")]
+		public int UserSettings_Create([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Setting", DbType="Xml")] System.Xml.Linq.XElement setting)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userGUID, clientSettingsGUID, setting);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserSettings_Delete")]
+		public int UserSettings_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userGUID, clientSettingsGUID);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserSettings_Get")]
+		public ISingleResult<UserSetting> UserSettings_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userGUID, clientSettingsGUID);
+			return ((ISingleResult<UserSetting>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ClientSettings_Get")]
+		public ISingleResult<ClientSetting> ClientSettings_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), clientSettingsGUID);
+			return ((ISingleResult<ClientSetting>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ClientSetting_Insert")]
+		public int ClientSetting_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Title", DbType="VarChar(255)")] string title, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Xml", DbType="Xml")] System.Xml.Linq.XElement xml)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, title, xml);
+			return ((int)(result.ReturnValue));
 		}
 	}
 	
@@ -1718,9 +1725,9 @@ namespace Geckon.Portal.Data
 		
 		private EntitySet<Subscription_User_Join> _Subscription_User_Joins;
 		
-		private EntitySet<UserSetting> _UserSettings;
-		
 		private EntitySet<Session> _Sessions;
+		
+		private EntitySet<UserSetting> _UserSettings;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1744,8 +1751,8 @@ namespace Geckon.Portal.Data
 		{
 			this._Group_User_Joins = new EntitySet<Group_User_Join>(new Action<Group_User_Join>(this.attach_Group_User_Joins), new Action<Group_User_Join>(this.detach_Group_User_Joins));
 			this._Subscription_User_Joins = new EntitySet<Subscription_User_Join>(new Action<Subscription_User_Join>(this.attach_Subscription_User_Joins), new Action<Subscription_User_Join>(this.detach_Subscription_User_Joins));
-			this._UserSettings = new EntitySet<UserSetting>(new Action<UserSetting>(this.attach_UserSettings), new Action<UserSetting>(this.detach_UserSettings));
 			this._Sessions = new EntitySet<Session>(new Action<Session>(this.attach_Sessions), new Action<Session>(this.detach_Sessions));
+			this._UserSettings = new EntitySet<UserSetting>(new Action<UserSetting>(this.attach_UserSettings), new Action<UserSetting>(this.detach_UserSettings));
 			OnCreated();
 		}
 		
@@ -1895,19 +1902,6 @@ namespace Geckon.Portal.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserSetting", Storage="_UserSettings", ThisKey="ID", OtherKey="UserID")]
-		public EntitySet<UserSetting> UserSettings
-		{
-			get
-			{
-				return this._UserSettings;
-			}
-			set
-			{
-				this._UserSettings.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Session", Storage="_Sessions", ThisKey="ID", OtherKey="UserID")]
 		public EntitySet<Session> Sessions
 		{
@@ -1918,6 +1912,19 @@ namespace Geckon.Portal.Data
 			set
 			{
 				this._Sessions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserSetting", Storage="_UserSettings", ThisKey="GUID", OtherKey="UserGUID")]
+		public EntitySet<UserSetting> UserSettings
+		{
+			get
+			{
+				return this._UserSettings;
+			}
+			set
+			{
+				this._UserSettings.Assign(value);
 			}
 		}
 		
@@ -1965,18 +1972,6 @@ namespace Geckon.Portal.Data
 			entity.User = null;
 		}
 		
-		private void attach_UserSettings(UserSetting entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_UserSettings(UserSetting entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-		
 		private void attach_Sessions(Session entity)
 		{
 			this.SendPropertyChanging();
@@ -1984,6 +1979,18 @@ namespace Geckon.Portal.Data
 		}
 		
 		private void detach_Sessions(Session entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_UserSettings(UserSetting entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_UserSettings(UserSetting entity)
 		{
 			this.SendPropertyChanging();
 			entity.User = null;
@@ -2658,408 +2665,6 @@ namespace Geckon.Portal.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UserSettings")]
-	public partial class UserSetting : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ClientSettingID;
-		
-		private int _UserID;
-		
-		private System.Xml.Linq.XElement _Setting;
-		
-		private System.DateTime _DateCreated;
-		
-		private EntityRef<User> _User;
-		
-		private EntityRef<ClientSetting> _ClientSetting;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnClientSettingIDChanging(int value);
-    partial void OnClientSettingIDChanged();
-    partial void OnUserIDChanging(int value);
-    partial void OnUserIDChanged();
-    partial void OnSettingChanging(System.Xml.Linq.XElement value);
-    partial void OnSettingChanged();
-    partial void OnDateCreatedChanging(System.DateTime value);
-    partial void OnDateCreatedChanged();
-    #endregion
-		
-		public UserSetting()
-		{
-			this._User = default(EntityRef<User>);
-			this._ClientSetting = default(EntityRef<ClientSetting>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientSettingID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int ClientSettingID
-		{
-			get
-			{
-				return this._ClientSettingID;
-			}
-			set
-			{
-				if ((this._ClientSettingID != value))
-				{
-					if (this._ClientSetting.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnClientSettingIDChanging(value);
-					this.SendPropertyChanging();
-					this._ClientSettingID = value;
-					this.SendPropertyChanged("ClientSettingID");
-					this.OnClientSettingIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					if (this._User.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._UserID = value;
-					this.SendPropertyChanged("UserID");
-					this.OnUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Setting", DbType="Xml", UpdateCheck=UpdateCheck.Never)]
-		public System.Xml.Linq.XElement Setting
-		{
-			get
-			{
-				return this._Setting;
-			}
-			set
-			{
-				if ((this._Setting != value))
-				{
-					this.OnSettingChanging(value);
-					this.SendPropertyChanging();
-					this._Setting = value;
-					this.SendPropertyChanged("Setting");
-					this.OnSettingChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreated
-		{
-			get
-			{
-				return this._DateCreated;
-			}
-			set
-			{
-				if ((this._DateCreated != value))
-				{
-					this.OnDateCreatedChanging(value);
-					this.SendPropertyChanging();
-					this._DateCreated = value;
-					this.SendPropertyChanged("DateCreated");
-					this.OnDateCreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserSetting", Storage="_User", ThisKey="UserID", OtherKey="ID", IsForeignKey=true)]
-		public User User
-		{
-			get
-			{
-				return this._User.Entity;
-			}
-			set
-			{
-				User previousValue = this._User.Entity;
-				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._User.Entity = null;
-						previousValue.UserSettings.Remove(this);
-					}
-					this._User.Entity = value;
-					if ((value != null))
-					{
-						value.UserSettings.Add(this);
-						this._UserID = value.ID;
-					}
-					else
-					{
-						this._UserID = default(int);
-					}
-					this.SendPropertyChanged("User");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ClientSetting_UserSetting", Storage="_ClientSetting", ThisKey="ClientSettingID", OtherKey="ID", IsForeignKey=true)]
-		public ClientSetting ClientSetting
-		{
-			get
-			{
-				return this._ClientSetting.Entity;
-			}
-			set
-			{
-				ClientSetting previousValue = this._ClientSetting.Entity;
-				if (((previousValue != value) 
-							|| (this._ClientSetting.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._ClientSetting.Entity = null;
-						previousValue.UserSettings.Remove(this);
-					}
-					this._ClientSetting.Entity = value;
-					if ((value != null))
-					{
-						value.UserSettings.Add(this);
-						this._ClientSettingID = value.ID;
-					}
-					else
-					{
-						this._ClientSettingID = default(int);
-					}
-					this.SendPropertyChanged("ClientSetting");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ClientSetting")]
-	public partial class ClientSetting : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private System.Guid _GUID;
-		
-		private string _Title;
-		
-		private System.Xml.Linq.XElement _Xml;
-		
-		private System.DateTime _DateCreated;
-		
-		private EntitySet<UserSetting> _UserSettings;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnGUIDChanging(System.Guid value);
-    partial void OnGUIDChanged();
-    partial void OnTitleChanging(string value);
-    partial void OnTitleChanged();
-    partial void OnXmlChanging(System.Xml.Linq.XElement value);
-    partial void OnXmlChanged();
-    partial void OnDateCreatedChanging(System.DateTime value);
-    partial void OnDateCreatedChanged();
-    #endregion
-		
-		public ClientSetting()
-		{
-			this._UserSettings = new EntitySet<UserSetting>(new Action<UserSetting>(this.attach_UserSettings), new Action<UserSetting>(this.detach_UserSettings));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid GUID
-		{
-			get
-			{
-				return this._GUID;
-			}
-			set
-			{
-				if ((this._GUID != value))
-				{
-					this.OnGUIDChanging(value);
-					this.SendPropertyChanging();
-					this._GUID = value;
-					this.SendPropertyChanged("GUID");
-					this.OnGUIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string Title
-		{
-			get
-			{
-				return this._Title;
-			}
-			set
-			{
-				if ((this._Title != value))
-				{
-					this.OnTitleChanging(value);
-					this.SendPropertyChanging();
-					this._Title = value;
-					this.SendPropertyChanged("Title");
-					this.OnTitleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Xml", DbType="Xml", UpdateCheck=UpdateCheck.Never)]
-		public System.Xml.Linq.XElement Xml
-		{
-			get
-			{
-				return this._Xml;
-			}
-			set
-			{
-				if ((this._Xml != value))
-				{
-					this.OnXmlChanging(value);
-					this.SendPropertyChanging();
-					this._Xml = value;
-					this.SendPropertyChanged("Xml");
-					this.OnXmlChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreated
-		{
-			get
-			{
-				return this._DateCreated;
-			}
-			set
-			{
-				if ((this._DateCreated != value))
-				{
-					this.OnDateCreatedChanging(value);
-					this.SendPropertyChanging();
-					this._DateCreated = value;
-					this.SendPropertyChanged("DateCreated");
-					this.OnDateCreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ClientSetting_UserSetting", Storage="_UserSettings", ThisKey="ID", OtherKey="ClientSettingID")]
-		public EntitySet<UserSetting> UserSettings
-		{
-			get
-			{
-				return this._UserSettings;
-			}
-			set
-			{
-				this._UserSettings.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_UserSettings(UserSetting entity)
-		{
-			this.SendPropertyChanging();
-			entity.ClientSetting = this;
-		}
-		
-		private void detach_UserSettings(UserSetting entity)
-		{
-			this.SendPropertyChanging();
-			entity.ClientSetting = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Session")]
 	public partial class Session : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3520,6 +3125,384 @@ namespace Geckon.Portal.Data
 						this._ModuleID = default(int);
 					}
 					this.SendPropertyChanged("Module");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ClientSetting")]
+	public partial class ClientSetting : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _GUID;
+		
+		private string _Title;
+		
+		private System.Xml.Linq.XElement _Xml;
+		
+		private System.DateTime _DateCreated;
+		
+		private EntitySet<UserSetting> _UserSettings;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnGUIDChanging(System.Guid value);
+    partial void OnGUIDChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnXmlChanging(System.Xml.Linq.XElement value);
+    partial void OnXmlChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    #endregion
+		
+		public ClientSetting()
+		{
+			this._UserSettings = new EntitySet<UserSetting>(new Action<UserSetting>(this.attach_UserSettings), new Action<UserSetting>(this.detach_UserSettings));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid GUID
+		{
+			get
+			{
+				return this._GUID;
+			}
+			set
+			{
+				if ((this._GUID != value))
+				{
+					this.OnGUIDChanging(value);
+					this.SendPropertyChanging();
+					this._GUID = value;
+					this.SendPropertyChanged("GUID");
+					this.OnGUIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Xml", DbType="Xml", UpdateCheck=UpdateCheck.Never)]
+		public System.Xml.Linq.XElement Xml
+		{
+			get
+			{
+				return this._Xml;
+			}
+			set
+			{
+				if ((this._Xml != value))
+				{
+					this.OnXmlChanging(value);
+					this.SendPropertyChanging();
+					this._Xml = value;
+					this.SendPropertyChanged("Xml");
+					this.OnXmlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ClientSetting_UserSetting", Storage="_UserSettings", ThisKey="GUID", OtherKey="ClientSettingGUID")]
+		public EntitySet<UserSetting> UserSettings
+		{
+			get
+			{
+				return this._UserSettings;
+			}
+			set
+			{
+				this._UserSettings.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_UserSettings(UserSetting entity)
+		{
+			this.SendPropertyChanging();
+			entity.ClientSetting = this;
+		}
+		
+		private void detach_UserSettings(UserSetting entity)
+		{
+			this.SendPropertyChanging();
+			entity.ClientSetting = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UserSettings")]
+	public partial class UserSetting : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _ClientSettingGUID;
+		
+		private System.Guid _UserGUID;
+		
+		private System.Xml.Linq.XElement _Setting;
+		
+		private System.DateTime _DateCreated;
+		
+		private EntityRef<ClientSetting> _ClientSetting;
+		
+		private EntityRef<User> _User;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnClientSettingGUIDChanging(System.Guid value);
+    partial void OnClientSettingGUIDChanged();
+    partial void OnUserGUIDChanging(System.Guid value);
+    partial void OnUserGUIDChanged();
+    partial void OnSettingChanging(System.Xml.Linq.XElement value);
+    partial void OnSettingChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    #endregion
+		
+		public UserSetting()
+		{
+			this._ClientSetting = default(EntityRef<ClientSetting>);
+			this._User = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientSettingGUID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid ClientSettingGUID
+		{
+			get
+			{
+				return this._ClientSettingGUID;
+			}
+			set
+			{
+				if ((this._ClientSettingGUID != value))
+				{
+					if (this._ClientSetting.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnClientSettingGUIDChanging(value);
+					this.SendPropertyChanging();
+					this._ClientSettingGUID = value;
+					this.SendPropertyChanged("ClientSettingGUID");
+					this.OnClientSettingGUIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserGUID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid UserGUID
+		{
+			get
+			{
+				return this._UserGUID;
+			}
+			set
+			{
+				if ((this._UserGUID != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUserGUIDChanging(value);
+					this.SendPropertyChanging();
+					this._UserGUID = value;
+					this.SendPropertyChanged("UserGUID");
+					this.OnUserGUIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Setting", DbType="Xml", UpdateCheck=UpdateCheck.Never)]
+		public System.Xml.Linq.XElement Setting
+		{
+			get
+			{
+				return this._Setting;
+			}
+			set
+			{
+				if ((this._Setting != value))
+				{
+					this.OnSettingChanging(value);
+					this.SendPropertyChanging();
+					this._Setting = value;
+					this.SendPropertyChanged("Setting");
+					this.OnSettingChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ClientSetting_UserSetting", Storage="_ClientSetting", ThisKey="ClientSettingGUID", OtherKey="GUID", IsForeignKey=true)]
+		public ClientSetting ClientSetting
+		{
+			get
+			{
+				return this._ClientSetting.Entity;
+			}
+			set
+			{
+				ClientSetting previousValue = this._ClientSetting.Entity;
+				if (((previousValue != value) 
+							|| (this._ClientSetting.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ClientSetting.Entity = null;
+						previousValue.UserSettings.Remove(this);
+					}
+					this._ClientSetting.Entity = value;
+					if ((value != null))
+					{
+						value.UserSettings.Add(this);
+						this._ClientSettingGUID = value.GUID;
+					}
+					else
+					{
+						this._ClientSettingGUID = default(System.Guid);
+					}
+					this.SendPropertyChanged("ClientSetting");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_UserSetting", Storage="_User", ThisKey="UserGUID", OtherKey="GUID", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.UserSettings.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.UserSettings.Add(this);
+						this._UserGUID = value.GUID;
+					}
+					else
+					{
+						this._UserGUID = default(System.Guid);
+					}
+					this.SendPropertyChanged("User");
 				}
 			}
 		}

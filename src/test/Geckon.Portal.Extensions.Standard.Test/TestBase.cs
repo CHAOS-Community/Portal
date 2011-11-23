@@ -39,7 +39,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
                 AdminGroup       = db.Group_Get( null, Guid.Parse( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ), null, AdminUser.ID ).First();
                 SubscriptionInfo = db.SubscriptionInfo_Get(null, Guid.Parse("9C4E8A99-A69B-41FD-B1C7-E28C54D1D304"), null, AdminUser.ID).First();
                 ClientSettings   = (from clientSetting in db.ClientSettings where clientSetting.GUID.Equals( Guid.Parse("D157698A-86AC-4FDF-A304-F5EA9FB6E0F5") ) select clientSetting).First();  
-                UserSetting      = db.UserSettings_Get( AdminUser.ID, null, ClientSettings.GUID ).First();
+                UserSetting      = db.UserSettings_Get( AdminUser.GUID, ClientSettings.GUID ).First();
             }
 
             AdminCallContext = new CallContext( new MockCache(), new MockSolrManager(), AdminSession.SessionID.ToString() );

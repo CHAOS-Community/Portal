@@ -15,7 +15,15 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                PortalResult.GetModule("Geckon.Portal").AddResult(db.UserSettings_Get( callContext.User.ID, null, Guid.Parse(clientGUID)).First());
+                UserSetting userSetting = db.UserSettings_Get( callContext.User.GUID, Guid.Parse(clientGUID)).FirstOrDefault();
+
+                if( userSetting == null )
+                {
+                    PortalResult.GetModule("Geckon.Portal");
+                    return;
+                }
+
+                PortalResult.GetModule("Geckon.Portal").AddResult( userSetting );
             }
         }
 
@@ -26,12 +34,12 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                int result = db.UserSettings_Create( callContext.User.ID, null, Guid.Parse( clientGUID ), XElement.Parse( settings ) );
+                int result = db.UserSettings_Create( callContext.User.GUID, Guid.Parse( clientGUID ), XElement.Parse( settings ) );
 
                 if( result == -10 )
                     throw new InvalidProtocolException(  );
 
-                PortalResult.GetModule("Geckon.Portal").AddResult(db.UserSettings_Get( callContext.User.ID, null, Guid.Parse(clientGUID)).First());
+                PortalResult.GetModule("Geckon.Portal").AddResult(db.UserSettings_Get( callContext.User.GUID, Guid.Parse(clientGUID)).First());
             }
         }
 
@@ -42,7 +50,7 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                int result = db.UserSettings_Update( callContext.User.ID, null, Guid.Parse( clientGUID ), XElement.Parse( newSettings ) );
+                int result = db.UserSettings_Update( callContext.User.GUID, Guid.Parse( clientGUID ), XElement.Parse( newSettings ) );
 
                 if( result == -10 )
                     throw new InvalidProtocolException(  );
@@ -58,7 +66,7 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalDataContext db = PortalDataContext.Default() )
             {
-                int result = db.UserSettings_Delete( callContext.User.ID, null, Guid.Parse( clientGUID ) );
+                int result = db.UserSettings_Delete( callContext.User.GUID, Guid.Parse( clientGUID ) );
 
                 if( result == -10 )
                     throw new InvalidProtocolException();
