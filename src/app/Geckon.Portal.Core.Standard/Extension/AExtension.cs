@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using Geckon.Portal.Core.Extension;
@@ -113,6 +114,17 @@ namespace Geckon.Portal.Core.Standard.Extension
             base.OnActionExecuting(filterContext);
         }
 
+        protected override void Execute(System.Web.Routing.RequestContext requestContext)
+        {
+            try
+            {
+                base.Execute( requestContext );
+            }
+            catch (System.Exception e)
+            {
+                OnException( e, requestContext.HttpContext.Response );
+            }
+        }
         /// <summary>
         /// This Method Call all modules subscriping to this Extension call, that haven't yet been checked
         /// </summary>
@@ -120,7 +132,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         protected override void OnActionExecuted( ActionExecutedContext filterContext )
         {
             filterContext.Result = GetContentResult();
-
+            
             base.OnActionExecuted( filterContext );
         }
 
@@ -130,14 +142,26 @@ namespace Geckon.Portal.Core.Standard.Extension
         {
             base.OnException( filterContext );
 
-            if( filterContext.Exception is TargetInvocationException )
-                filterContext.Exception = filterContext.Exception.InnerException; 
-            
-            log4net.LogManager.GetLogger("Portal").Fatal( "Unhandled exception", filterContext.Exception );
+            OnException( filterContext.Exception, filterContext.HttpContext.Response );
 
             filterContext.ExceptionHandled                = true;
-            filterContext.Result                          = GetContentResult( ReturnFormat, new ExtensionError( filterContext.Exception, TimeStamp ) );
-            filterContext.HttpContext.Response.StatusCode = GetErrorStatusCode(  );
+
+        }
+
+        protected void OnException( System.Exception exception, HttpResponseBase response )
+        {
+            if( exception is TargetInvocationException )
+                exception = exception.InnerException; 
+            
+            log4net.LogManager.GetLogger("Portal").Fatal( "Unhandled exception", exception );
+
+            ContentResult result = GetContentResult(ReturnFormat, new ExtensionError( exception, TimeStamp ) );
+
+            response.StatusCode      = GetErrorStatusCode();
+            response.ContentType     = result.ContentType;
+            response.ContentEncoding = result.ContentEncoding;
+
+            response.Write(result.Content);
         }
 
         /// <summary>

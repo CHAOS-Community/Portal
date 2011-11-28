@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Mvc;
 using System.Xml.Linq;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
-
+          
 namespace Geckon.Portal.Extensions.Standard
 {
     public class UserSettingsExtension : AExtension
     {
-        #region GET
-
         public void Get( CallContext callContext, string clientGUID )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
@@ -27,9 +26,7 @@ namespace Geckon.Portal.Extensions.Standard
             }
         }
 
-        #endregion
-        #region CREATE
-
+        [HttpPost]
         public void Create( CallContext callContext, string clientGUID, string settings )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
@@ -43,9 +40,7 @@ namespace Geckon.Portal.Extensions.Standard
             }
         }
 
-        #endregion
-        #region UPDATE
-
+        [HttpPost]
         public void Update( CallContext callContext, string clientGUID, string newSettings )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
@@ -59,9 +54,6 @@ namespace Geckon.Portal.Extensions.Standard
             }
         }
 
-        #endregion
-        #region DELETE
-
         public void Delete( CallContext callContext, string clientGUID )
         {
             using( PortalDataContext db = PortalDataContext.Default() )
@@ -74,7 +66,5 @@ namespace Geckon.Portal.Extensions.Standard
                 PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
             }
         }
-
-        #endregion
     }
 }
