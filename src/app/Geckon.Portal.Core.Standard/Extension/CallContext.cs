@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Extension;
 using Geckon.Portal.Data;
 using System.Configuration;
@@ -27,7 +28,10 @@ namespace Geckon.Portal.Core.Standard.Extension
                 {
                     using( PortalDataContext db = PortalDataContext.Default() )
                     {
-                        userInfo = db.UserInfo_Get( null, SessionID, null ).First();
+                        userInfo = db.UserInfo_Get( null, SessionID, null ).FirstOrDefault();
+
+                        if( userInfo == null )
+                            throw new SessionDoesNotExist( "Session has expired" );
 
                         Cache.Put( string.Format("[UserInfo:sid={0}]", SessionID),
                                    userInfo,
