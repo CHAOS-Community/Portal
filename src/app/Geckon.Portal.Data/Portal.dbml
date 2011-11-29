@@ -343,18 +343,6 @@
     <Parameter Name="ModuleID" Parameter="moduleID" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID10" />
   </Function>
-  <Function Name="dbo.UserSettings_Update" Method="UserSettings_Update">
-    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="ClientSettingsGUID" Parameter="clientSettingsGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="NewSetting" Parameter="newSetting" Type="System.Xml.Linq.XElement" DbType="Xml" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.UserSettings_Create" Method="UserSettings_Create">
-    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="ClientSettingsGUID" Parameter="clientSettingsGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="Setting" Parameter="setting" Type="System.Xml.Linq.XElement" DbType="Xml" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.UserSettings_Delete" Method="UserSettings_Delete">
     <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="ClientSettingsGUID" Parameter="clientSettingsGUID" Type="System.Guid" DbType="UniqueIdentifier" />
@@ -373,6 +361,12 @@
     <Parameter Name="GUID" Parameter="gUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="Title" Parameter="title" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="Xml" Parameter="xml" Type="System.Xml.Linq.XElement" DbType="Xml" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.UserSettings_Set" Method="UserSettings_Set">
+    <Parameter Name="UserGUID" Parameter="userGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ClientSettingsGUID" Parameter="clientSettingsGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="Setting" Parameter="setting" Type="System.Xml.Linq.XElement" DbType="Xml" />
     <Return Type="System.Int32" />
   </Function>
 </Database>

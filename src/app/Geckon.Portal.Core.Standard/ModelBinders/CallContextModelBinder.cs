@@ -10,9 +10,27 @@ namespace Geckon.Portal.Core.Standard.ModelBinders
     {
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            return new CallContext( APortalApplication.Cache,
-                                    APortalApplication.IndexManager,
-                                    controllerContext.HttpContext.Request.QueryString["sessionID"] );
+            switch( controllerContext.HttpContext.Request.HttpMethod )
+            {
+                case "GET":
+                    return new CallContext( APortalApplication.Cache,
+                                            APortalApplication.IndexManager,
+                                            controllerContext.HttpContext.Request.QueryString["sessionID"] );
+                case "POST":
+                    return new CallContext( APortalApplication.Cache,
+                                            APortalApplication.IndexManager,
+                                            controllerContext.HttpContext.Request.Form["sessionID"] );
+                case "PUT":
+                    return new CallContext( APortalApplication.Cache,
+                                            APortalApplication.IndexManager,
+                                            controllerContext.HttpContext.Request.Form["sessionID"]);
+                case "DELETE":
+                    return new CallContext( APortalApplication.Cache,
+                                            APortalApplication.IndexManager,
+                                            controllerContext.HttpContext.Request.Form["sessionID"]);
+            }
+
+            throw new NotImplementedException( "Unknown HttpMethod" );
         }
     }
 }

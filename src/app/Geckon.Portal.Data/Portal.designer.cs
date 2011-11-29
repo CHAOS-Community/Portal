@@ -430,20 +430,6 @@ namespace Geckon.Portal.Data
 			return ((ISingleResult<IndexSetting>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserSettings_Update")]
-		public int UserSettings_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="NewSetting", DbType="Xml")] System.Xml.Linq.XElement newSetting)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userGUID, clientSettingsGUID, newSetting);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserSettings_Create")]
-		public int UserSettings_Create([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Setting", DbType="Xml")] System.Xml.Linq.XElement setting)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userGUID, clientSettingsGUID, setting);
-			return ((int)(result.ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserSettings_Delete")]
 		public int UserSettings_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID)
 		{
@@ -469,6 +455,13 @@ namespace Geckon.Portal.Data
 		public int ClientSetting_Insert([global::System.Data.Linq.Mapping.ParameterAttribute(Name="GUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> gUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Title", DbType="VarChar(255)")] string title, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Xml", DbType="Xml")] System.Xml.Linq.XElement xml)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), gUID, title, xml);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UserSettings_Set")]
+		public int UserSettings_Set([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> userGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ClientSettingsGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> clientSettingsGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Setting", DbType="Xml")] System.Xml.Linq.XElement setting)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userGUID, clientSettingsGUID, setting);
 			return ((int)(result.ReturnValue));
 		}
 	}
