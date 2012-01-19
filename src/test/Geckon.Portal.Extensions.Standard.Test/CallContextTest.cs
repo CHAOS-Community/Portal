@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Geckon.Portal.Core.Standard.Extension;
+using Geckon.Portal.Test;
 using NUnit.Framework;
 
 namespace Geckon.Portal.Extensions.Standard.Test

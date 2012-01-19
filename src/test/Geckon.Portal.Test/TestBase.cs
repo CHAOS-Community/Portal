@@ -3,9 +3,8 @@ using System.Linq;
 using Geckon.Portal.Data;
 using NUnit.Framework;
 using Geckon.Portal.Core.Standard.Extension;
-using Geckon.Portal.Core;
 
-namespace Geckon.Portal.Extensions.Standard.Test
+namespace Geckon.Portal.Test
 {
     [TestFixture]
     public class TestBase

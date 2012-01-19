@@ -23,12 +23,12 @@ namespace Geckon.Portal.Core.Standard
 
         public bool Put( string key, IResult value, TimeSpan timeSpan )
         {
-            return base.Store( StoreMode.Set, key, value.Serialize().ToString( SaveOptions.DisableFormatting ), timeSpan );
+            return base.Store( StoreMode.Set, key, value.ToXML().ToString( SaveOptions.DisableFormatting ), timeSpan );
         }
 
         public bool Put(string key, IResult value, DateTime dateTime)
         {
-            return base.Store( StoreMode.Set, key, value.Serialize().ToString( SaveOptions.DisableFormatting ), dateTime );
+            return base.Store( StoreMode.Set, key, value.ToXML().ToString( SaveOptions.DisableFormatting ), dateTime );
         }
 
         public T Get<T>(string key) where T : IResult, new()

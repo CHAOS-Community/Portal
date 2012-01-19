@@ -51,6 +51,9 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
+    <Reference Include="Portal">
+      <HintPath>..\..\..\build\Portal.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -124,6 +127,7 @@
     <Content Include="Extensions\Geckon.Portal.Extensions.Standard.dll" />
     <Content Include="Extensions\Geckon.Portal.Extensions.WorkflowJob.dll" />
     <Content Include="Extensions\SecureCookieExtension.dll" />
+    <Content Include="Extensions\UploadExtension.dll" />
     <Content Include="Global.asax" />
     <Content Include="Grapthics\Global.css" />
     <Content Include="Grapthics\Header\435.gif" />
@@ -167,20 +171,6 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Geckon.Portal.Core.Standard\Geckon.Portal.Core.Standard.csproj">
-      <Project>{1202731E-A723-4C46-9C49-4CFAA83F3F0C}</Project>
-      <Name>Geckon.Portal.Core.Standard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Geckon.Portal.Core\Geckon.Portal.Core.csproj">
-      <Project>{D9388656-291A-40A3-B062-C9BF25465B4B}</Project>
-      <Name>Geckon.Portal.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Geckon.Portal.Data\Geckon.Portal.Data.csproj">
-      <Project>{97DCBF2B-F655-46C1-8130-201F12B3AE82}</Project>
-      <Name>Geckon.Portal.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\Site.Master" />
   </ItemGroup>
   <ItemGroup>
@@ -219,4 +209,8 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>CD $(SolutionDir)
+CALL Build.bat</PreBuildEvent>
+  </PropertyGroup>
 </Project>

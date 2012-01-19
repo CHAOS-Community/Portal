@@ -37,6 +37,9 @@
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Portal">
+      <HintPath>..\..\..\build\Portal.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -52,43 +55,30 @@
     <Compile Include="CallContextTest.cs" />
     <Compile Include="ClientSettingsTest.cs" />
     <Compile Include="GroupTest.cs" />
-    <Compile Include="PortalContextMock.cs" />
     <Compile Include="SessionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubscriptionTest.cs" />
-    <Compile Include="TestBase.cs" />
     <Compile Include="TicketTest.cs" />
     <Compile Include="UserSettingsTest.cs" />
     <Compile Include="UserTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\Geckon.Portal.Core.Exception\Geckon.Portal.Core.Exception.csproj">
-      <Project>{36F18B91-50D1-45C0-8F3E-ED53A8BD13BA}</Project>
-      <Name>Geckon.Portal.Core.Exception</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\Geckon.Portal.Core.Standard\Geckon.Portal.Core.Standard.csproj">
-      <Project>{1202731E-A723-4C46-9C49-4CFAA83F3F0C}</Project>
-      <Name>Geckon.Portal.Core.Standard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\Geckon.Portal.Core\Geckon.Portal.Core.csproj">
-      <Project>{D9388656-291A-40A3-B062-C9BF25465B4B}</Project>
-      <Name>Geckon.Portal.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\Geckon.Portal.Data\Geckon.Portal.Data.csproj">
-      <Project>{97DCBF2B-F655-46C1-8130-201F12B3AE82}</Project>
-      <Name>Geckon.Portal.Data</Name>
-    </ProjectReference>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\app\Geckon.Portal.Extensions.Standard\Geckon.Portal.Extensions.Standard.csproj">
       <Project>{E073142C-457F-456D-B19C-4FA5D9689C11}</Project>
       <Name>Geckon.Portal.Extensions.Standard</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
+    <ProjectReference Include="..\Geckon.Portal.Test\Geckon.Portal.Test.csproj">
+      <Project>{1BFE8592-B9B0-45B6-8EF4-BA286A5D88B5}</Project>
+      <Name>Geckon.Portal.Test</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\PortalSDK\$(TargetFileName)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

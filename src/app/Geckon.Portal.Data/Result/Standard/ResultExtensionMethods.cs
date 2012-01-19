@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
+using Geckon.Serialization.JSON;
 
 namespace Geckon.Portal.Data.Result.Standard
 {
     public static class ResultExtensionMethods
     {
-        public static XDocument Serialize( this Result result )
+        public static XDocument ToXML( this Result result )
         {
-            return IResultExtensionMethods.Serialize( (IResult) result );
+            return IResultExtensionMethods.ToXML( (IResult) result );
+        }
+
+        public static JSON ToJSON(this Result result)
+        {
+            return IResultExtensionMethods.ToJSON((IResult)result);
         }
     }
 }

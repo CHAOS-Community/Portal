@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Geckon.Portal.Test;
+using NUnit.Framework;
 
 namespace Geckon.Portal.Extensions.Standard.Test
 {

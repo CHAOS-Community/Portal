@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D9388656-291A-40A3-B062-C9BF25465B4B}</ProjectGuid>
+    <ProjectGuid>{1BFE8592-B9B0-45B6-8EF4-BA286A5D88B5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Geckon.Portal.Core</RootNamespace>
-    <AssemblyName>Geckon.Portal.Core</AssemblyName>
+    <RootNamespace>Geckon.Portal.Test</RootNamespace>
+    <AssemblyName>Geckon.Portal.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,11 +34,15 @@
     <Reference Include="geckon">
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Portal">
+      <HintPath>..\..\..\build\Portal.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,34 +51,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extension\ICallContext.cs" />
-    <Compile Include="Extension\ReturnFormat.cs" />
-    <Compile Include="IChecked.cs" />
-    <Compile Include="Cache\ICache.cs" />
-    <Compile Include="Extension\IExtension.cs" />
-    <Compile Include="IDatatype.cs" />
-    <Compile Include="IEventType.cs" />
-    <Compile Include="IExtensionLoader.cs" />
-    <Compile Include="IMethodQuery.cs" />
-    <Compile Include="IMethodSignature.cs" />
-    <Compile Include="IParameter.cs" />
-    <Compile Include="Module\IModule.cs" />
-    <Compile Include="IPortalContext.cs" />
+    <Compile Include="PortalContextMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Geckon.Portal.Core.Exception\Geckon.Portal.Core.Exception.csproj">
-      <Project>{36F18B91-50D1-45C0-8F3E-ED53A8BD13BA}</Project>
-      <Name>Geckon.Portal.Core.Exception</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Geckon.Portal.Data\Geckon.Portal.Data.csproj">
-      <Project>{97DCBF2B-F655-46C1-8130-201F12B3AE82}</Project>
-      <Name>Geckon.Portal.Data</Name>
-    </ProjectReference>
+    <Compile Include="TestBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\Portal\$(TargetFileName)</PostBuildEvent>
+    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\PortalTest\$(TargetFileName)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

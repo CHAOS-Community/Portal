@@ -34,6 +34,9 @@
     <Reference Include="geckon">
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
     </Reference>
+    <Reference Include="Portal">
+      <HintPath>..\..\..\build\Portal.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -55,24 +58,6 @@
     <Compile Include="TicketExtension.cs" />
     <Compile Include="UserExtension.cs" />
     <Compile Include="UserSettingsExtension.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Geckon.Portal.Core.Exception\Geckon.Portal.Core.Exception.csproj">
-      <Project>{36F18B91-50D1-45C0-8F3E-ED53A8BD13BA}</Project>
-      <Name>Geckon.Portal.Core.Exception</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Geckon.Portal.Core.Standard\Geckon.Portal.Core.Standard.csproj">
-      <Project>{1202731E-A723-4C46-9C49-4CFAA83F3F0C}</Project>
-      <Name>Geckon.Portal.Core.Standard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Geckon.Portal.Core\Geckon.Portal.Core.csproj">
-      <Project>{D9388656-291A-40A3-B062-C9BF25465B4B}</Project>
-      <Name>Geckon.Portal.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Geckon.Portal.Data\Geckon.Portal.Data.csproj">
-      <Project>{97DCBF2B-F655-46C1-8130-201F12B3AE82}</Project>
-      <Name>Geckon.Portal.Data</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -7,7 +7,7 @@ using Geckon.Portal.Data.Result;
 using Geckon.Portal.Core.Cache;
 using Geckon.Index;
 
-namespace Geckon.Portal.Extensions.Standard.Test
+namespace Geckon.Portal.Test
 {
     public class PortalContextMock : IPortalContext
     {
