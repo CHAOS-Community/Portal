@@ -1,0 +1,977 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PortalModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="PortalModelStoreContainer">
+          <EntitySet Name="ClientSettings" EntityType="PortalModel.Store.ClientSettings" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="Extension" EntityType="PortalModel.Store.Extension" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="Group" EntityType="PortalModel.Store.Group" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="Group_User_Join" EntityType="PortalModel.Store.Group_User_Join" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="IndexSettings" EntityType="PortalModel.Store.IndexSettings" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="Module" EntityType="PortalModel.Store.Module" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="Permission" EntityType="PortalModel.Store.Permission" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="Session" EntityType="PortalModel.Store.Session" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="Subscription" EntityType="PortalModel.Store.Subscription" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="Subscription_User_Join" EntityType="PortalModel.Store.Subscription_User_Join" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="Ticket" EntityType="PortalModel.Store.Ticket" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="TicketType" EntityType="PortalModel.Store.TicketType" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="User" EntityType="PortalModel.Store.User" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="UserSettings" EntityType="PortalModel.Store.UserSettings" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="SessionInfo" EntityType="PortalModel.Store.SessionInfo" store:Type="Views" store:Schema="Portal" store:Name="SessionInfo">
+            <DefiningQuery>SELECT
+      `SessionInfo`.`SessionGUID`, 
+      `SessionInfo`.`UserGUID`, 
+      `SessionInfo`.`DateCreated`, 
+      `SessionInfo`.`DateModified`, 
+      `SessionInfo`.`MinutesSinceRenewal`
+      FROM `SessionInfo` AS `SessionInfo`</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Group_User_Join_GroupGUID_Group_GUID" Association="PortalModel.Store.FK_Group_User_Join_GroupGUID_Group_GUID">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="Group_User_Join" EntitySet="Group_User_Join" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Group_User_Join_UserGUID_User_GUID" Association="PortalModel.Store.FK_Group_User_Join_UserGUID_User_GUID">
+            <End Role="User" EntitySet="User" />
+            <End Role="Group_User_Join" EntitySet="Group_User_Join" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IndexSettings_ModuleID_Module_ID" Association="PortalModel.Store.FK_IndexSettings_ModuleID_Module_ID">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="IndexSettings" EntitySet="IndexSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_UserGUID_User_GUID" Association="PortalModel.Store.FK_Session_UserGUID_User_GUID">
+            <End Role="User" EntitySet="User" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID" Association="PortalModel.Store.FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID">
+            <End Role="Subscription" EntitySet="Subscription" />
+            <End Role="Subscription_User_Join" EntitySet="Subscription_User_Join" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subscription_User_Join_UserGUID_User_GUID" Association="PortalModel.Store.FK_Subscription_User_Join_UserGUID_User_GUID">
+            <End Role="User" EntitySet="User" />
+            <End Role="Subscription_User_Join" EntitySet="Subscription_User_Join" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_TicketTypeID_TicketType_ID" Association="PortalModel.Store.FK_Ticket_TicketTypeID_TicketType_ID">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID" Association="PortalModel.Store.FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID">
+            <End Role="ClientSettings" EntitySet="ClientSettings" />
+            <End Role="UserSettings" EntitySet="UserSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSettings_UserGUID_User_GUID" Association="PortalModel.Store.FK_UserSettings_UserGUID_User_GUID">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserSettings" EntitySet="UserSettings" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ClientSettings">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="guid" Nullable="false" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="Settings" Type="text" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Extension">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Map" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="FullName" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="Path" Type="varchar" Nullable="false" MaxLength="1024" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="guid" Nullable="false" />
+          <Property Name="SystemPermission" Type="binary" Nullable="false" MaxLength="32" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Group_User_Join">
+          <Key>
+            <PropertyRef Name="GroupGUID" />
+            <PropertyRef Name="UserGUID" />
+          </Key>
+          <Property Name="GroupGUID" Type="guid" Nullable="false" />
+          <Property Name="UserGUID" Type="guid" Nullable="false" />
+          <Property Name="Permission" Type="binary" Nullable="false" MaxLength="32" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IndexSettings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ModuleID" Type="uint" Nullable="false" />
+          <Property Name="Settings" Type="text" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="Configuration" Type="text" />
+          <Property Name="Path" Type="varchar" Nullable="false" MaxLength="1024" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="TableIdentifier" />
+            <PropertyRef Name="Permission" />
+          </Key>
+          <Property Name="TableIdentifier" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="Permission" Type="binary" Nullable="false" MaxLength="32" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="Description" Type="varchar" MaxLength="1024" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="guid" Nullable="false" />
+          <Property Name="UserGUID" Type="guid" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Subscription">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="guid" Nullable="false" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subscription_User_Join">
+          <Key>
+            <PropertyRef Name="SubscriptionGUID" />
+            <PropertyRef Name="UserGUID" />
+          </Key>
+          <Property Name="SubscriptionGUID" Type="guid" Nullable="false" />
+          <Property Name="UserGUID" Type="guid" Nullable="false" />
+          <Property Name="Permission" Type="binary" Nullable="false" MaxLength="32" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="guid" Nullable="false" />
+          <Property Name="TicketTypeID" Type="uint" Nullable="false" />
+          <Property Name="XML" Type="text" />
+          <Property Name="Callback" Type="varchar" MaxLength="2048" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUsed" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TicketType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="guid" Nullable="false" />
+          <Property Name="Email" Type="varchar" Nullable="false" MaxLength="1024" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserSettings">
+          <Key>
+            <PropertyRef Name="ClientSettingsGUID" />
+            <PropertyRef Name="UserGUID" />
+          </Key>
+          <Property Name="ClientSettingsGUID" Type="guid" Nullable="false" />
+          <Property Name="UserGUID" Type="guid" Nullable="false" />
+          <Property Name="Settings" Type="text" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'def.Portal.SessionInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SessionInfo">
+          <Key>
+            <PropertyRef Name="SessionGUID" />
+            <PropertyRef Name="UserGUID" />
+            <PropertyRef Name="DateCreated" />
+          </Key>
+          <Property Name="SessionGUID" Type="guid" Nullable="false" />
+          <Property Name="UserGUID" Type="guid" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="MinutesSinceRenewal" Type="bigint" />
+        </EntityType>
+        <Association Name="FK_Group_User_Join_GroupGUID_Group_GUID">
+          <End Role="Group" Type="PortalModel.Store.Group" Multiplicity="1" />
+          <End Role="Group_User_Join" Type="PortalModel.Store.Group_User_Join" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="Group_User_Join">
+              <PropertyRef Name="GroupGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Group_User_Join_UserGUID_User_GUID">
+          <End Role="User" Type="PortalModel.Store.User" Multiplicity="1" />
+          <End Role="Group_User_Join" Type="PortalModel.Store.Group_User_Join" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="Group_User_Join">
+              <PropertyRef Name="UserGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IndexSettings_ModuleID_Module_ID">
+          <End Role="Module" Type="PortalModel.Store.Module" Multiplicity="1" />
+          <End Role="IndexSettings" Type="PortalModel.Store.IndexSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="IndexSettings">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_UserGUID_User_GUID">
+          <End Role="User" Type="PortalModel.Store.User" Multiplicity="1" />
+          <End Role="Session" Type="PortalModel.Store.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="UserGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID">
+          <End Role="Subscription" Type="PortalModel.Store.Subscription" Multiplicity="1" />
+          <End Role="Subscription_User_Join" Type="PortalModel.Store.Subscription_User_Join" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscription">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="Subscription_User_Join">
+              <PropertyRef Name="SubscriptionGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subscription_User_Join_UserGUID_User_GUID">
+          <End Role="User" Type="PortalModel.Store.User" Multiplicity="1" />
+          <End Role="Subscription_User_Join" Type="PortalModel.Store.Subscription_User_Join" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="Subscription_User_Join">
+              <PropertyRef Name="UserGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_TicketTypeID_TicketType_ID">
+          <End Role="TicketType" Type="PortalModel.Store.TicketType" Multiplicity="1" />
+          <End Role="Ticket" Type="PortalModel.Store.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="TicketTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID">
+          <End Role="ClientSettings" Type="PortalModel.Store.ClientSettings" Multiplicity="1" />
+          <End Role="UserSettings" Type="PortalModel.Store.UserSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientSettings">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="UserSettings">
+              <PropertyRef Name="ClientSettingsGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSettings_UserGUID_User_GUID">
+          <End Role="User" Type="PortalModel.Store.User" Multiplicity="1" />
+          <End Role="UserSettings" Type="PortalModel.Store.UserSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="UserSettings">
+              <PropertyRef Name="UserGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ClientSettings_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="ClientSetting_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Settings" Type="text" Mode="In" />
+        </Function>
+        <Function Name="DoesUserHavePermissionToGroup" ReturnType="tinyint" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+          <Parameter Name="GroupGUID" Type="binary" Mode="In" />
+          <Parameter Name="PermissionName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DoesUserHavePermissionToSubscription" ReturnType="tinyint" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+          <Parameter Name="SubscriptionGUID" Type="binary" Mode="In" />
+          <Parameter Name="PermissionName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DoesUserHavePermissionToSystem" ReturnType="tinyint" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+          <Parameter Name="PermissionName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Extension_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="Map" Type="varchar" Mode="In" />
+          <Parameter Name="Fullname" Type="varchar" Mode="In" />
+          <Parameter Name="Path" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Extension_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Map" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetPermissionForAction" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="TableIdentifier" Type="varchar" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetUsersHighestSystemPermission" ReturnType="binary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="Group_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="RequestUserGUID" Type="binary" Mode="In" />
+          <Parameter Name="SystemPermission" Type="binary" Mode="In" />
+          <Parameter Name="ErrorCode" Type="int" Mode="Out" />
+        </Function>
+        <Function Name="Group_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+          <Parameter Name="ErrorCode" Type="int" Mode="Out" />
+        </Function>
+        <Function Name="Group_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="RequestUserGUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="Group_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="NewName" Type="varchar" Mode="In" />
+          <Parameter Name="NewSystemPermission" Type="binary" Mode="In" />
+          <Parameter Name="WhereGroupGUID" Type="binary" Mode="In" />
+          <Parameter Name="RequestUserGUID" Type="binary" Mode="In" />
+          <Parameter Name="ErrorCode" Type="int" Mode="Out" />
+        </Function>
+        <Function Name="IndexSettings_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="ModuleID" Type="int" Mode="In" />
+          <Parameter Name="Configuration" Type="text" Mode="In" />
+        </Function>
+        <Function Name="IndexSettings_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="ModuleID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Module_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Configuration" Type="text" Mode="In" />
+          <Parameter Name="Path" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Module_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Session_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="SessionGUID" Type="binary" Mode="In" />
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="Session_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="SessionGUID" Type="binary" Mode="In" />
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="Session_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="SessionGUID" Type="binary" Mode="In" />
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="Session_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+          <Parameter Name="WhereSessionGUID" Type="binary" Mode="In" />
+          <Parameter Name="WhereUserGUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="Subscription_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="RequestUserGUID" Type="binary" Mode="In" />
+          <Parameter Name="ErrorCode" Type="int" Mode="Out" />
+        </Function>
+        <Function Name="Subscription_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="SubscriptionGUID" Type="binary" Mode="In" />
+          <Parameter Name="RequestUserGUID" Type="binary" Mode="In" />
+          <Parameter Name="ErrorCode" Type="int" Mode="Out" />
+        </Function>
+        <Function Name="Subscription_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="RequestUserGUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="Subscription_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+          <Parameter Name="NewName" Type="varchar" Mode="In" />
+          <Parameter Name="RequestUserGUID" Type="binary" Mode="In" />
+          <Parameter Name="ErrorCode" Type="int" Mode="Out" />
+        </Function>
+        <Function Name="Ticket_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+          <Parameter Name="TicketTypeID" Type="int" Mode="In" />
+          <Parameter Name="XML" Type="text" Mode="In" />
+          <Parameter Name="Callback" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Ticket_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="Ticket_Use" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="WhereGUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="UserSettings_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="ClientSettingsGUID" Type="binary" Mode="In" />
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="UserSettings_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="ClientSettingsGUID" Type="binary" Mode="In" />
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="UserSettings_Set" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="ClientSettingsGUID" Type="binary" Mode="In" />
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+          <Parameter Name="Settings" Type="text" Mode="In" />
+        </Function>
+        <Function Name="User_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="User_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+        </Function>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PortalModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="PortalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ClientSettings" EntityType="PortalModel.ClientSettings" />
+          <EntitySet Name="Extension" EntityType="PortalModel.Extension" />
+          <EntitySet Name="Group" EntityType="PortalModel.Group" />
+          <EntitySet Name="Group_User_Join" EntityType="PortalModel.Group_User_Join" />
+          <EntitySet Name="IndexSettings" EntityType="PortalModel.IndexSettings" />
+          <EntitySet Name="Module" EntityType="PortalModel.Module" />
+          <EntitySet Name="Permission" EntityType="PortalModel.Permission" />
+          <EntitySet Name="Session" EntityType="PortalModel.Session" />
+          <EntitySet Name="Subscription" EntityType="PortalModel.Subscription" />
+          <EntitySet Name="Subscription_User_Join" EntityType="PortalModel.Subscription_User_Join" />
+          <EntitySet Name="Ticket" EntityType="PortalModel.Ticket" />
+          <EntitySet Name="TicketType" EntityType="PortalModel.TicketType" />
+          <EntitySet Name="User" EntityType="PortalModel.User" />
+          <EntitySet Name="UserSettings" EntityType="PortalModel.UserSettings" />
+          <EntitySet Name="SessionInfo" EntityType="PortalModel.SessionInfo" />
+          <AssociationSet Name="FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID" Association="PortalModel.FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID">
+            <End Role="ClientSettings" EntitySet="ClientSettings" />
+            <End Role="UserSettings" EntitySet="UserSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Group_User_Join_GroupGUID_Group_GUID" Association="PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="Group_User_Join" EntitySet="Group_User_Join" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Group_User_Join_UserGUID_User_GUID" Association="PortalModel.FK_Group_User_Join_UserGUID_User_GUID">
+            <End Role="User" EntitySet="User" />
+            <End Role="Group_User_Join" EntitySet="Group_User_Join" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IndexSettings_ModuleID_Module_ID" Association="PortalModel.FK_IndexSettings_ModuleID_Module_ID">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="IndexSettings" EntitySet="IndexSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Session_UserGUID_User_GUID" Association="PortalModel.FK_Session_UserGUID_User_GUID">
+            <End Role="User" EntitySet="User" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID" Association="PortalModel.FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID">
+            <End Role="Subscription" EntitySet="Subscription" />
+            <End Role="Subscription_User_Join" EntitySet="Subscription_User_Join" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subscription_User_Join_UserGUID_User_GUID" Association="PortalModel.FK_Subscription_User_Join_UserGUID_User_GUID">
+            <End Role="User" EntitySet="User" />
+            <End Role="Subscription_User_Join" EntitySet="Subscription_User_Join" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_TicketTypeID_TicketType_ID" Association="PortalModel.FK_Ticket_TicketTypeID_TicketType_ID">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSettings_UserGUID_User_GUID" Association="PortalModel.FK_UserSettings_UserGUID_User_GUID">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserSettings" EntitySet="UserSettings" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ClientSettings">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Settings" Type="String" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="UserSettings" Relationship="PortalModel.FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID" FromRole="ClientSettings" ToRole="UserSettings" />
+        </EntityType>
+        <EntityType Name="Extension">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Map" Type="String" Nullable="false" />
+          <Property Name="FullName" Type="String" Nullable="false" />
+          <Property Name="Path" Type="String" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="SystemPermission" Type="Binary" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Group_User_Join" Relationship="PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID" FromRole="Group" ToRole="Group_User_Join" />
+        </EntityType>
+        <EntityType Name="Group_User_Join">
+          <Key>
+            <PropertyRef Name="GroupGUID" />
+            <PropertyRef Name="UserGUID" />
+          </Key>
+          <Property Name="GroupGUID" Type="Guid" Nullable="false" />
+          <Property Name="UserGUID" Type="Guid" Nullable="false" />
+          <Property Name="Permission" Type="Binary" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID" FromRole="Group_User_Join" ToRole="Group" />
+          <NavigationProperty Name="User" Relationship="PortalModel.FK_Group_User_Join_UserGUID_User_GUID" FromRole="Group_User_Join" ToRole="User" />
+        </EntityType>
+        <EntityType Name="IndexSettings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModuleID" Type="Int64" Nullable="false" />
+          <Property Name="Settings" Type="String" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Module" Relationship="PortalModel.FK_IndexSettings_ModuleID_Module_ID" FromRole="IndexSettings" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Configuration" Type="String" />
+          <Property Name="Path" Type="String" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="IndexSettings" Relationship="PortalModel.FK_IndexSettings_ModuleID_Module_ID" FromRole="Module" ToRole="IndexSettings" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="TableIdentifier" />
+            <PropertyRef Name="Permission1" />
+          </Key>
+          <Property Name="TableIdentifier" Type="String" Nullable="false" />
+          <Property Name="Permission1" Type="Binary" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="UserGUID" Type="Guid" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateModified" Type="DateTime" />
+          <NavigationProperty Name="User" Relationship="PortalModel.FK_Session_UserGUID_User_GUID" FromRole="Session" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Subscription">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Subscription_User_Join" Relationship="PortalModel.FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID" FromRole="Subscription" ToRole="Subscription_User_Join" />
+        </EntityType>
+        <EntityType Name="Subscription_User_Join">
+          <Key>
+            <PropertyRef Name="SubscriptionGUID" />
+            <PropertyRef Name="UserGUID" />
+          </Key>
+          <Property Name="SubscriptionGUID" Type="Guid" Nullable="false" />
+          <Property Name="UserGUID" Type="Guid" Nullable="false" />
+          <Property Name="Permission" Type="Binary" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Subscription" Relationship="PortalModel.FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID" FromRole="Subscription_User_Join" ToRole="Subscription" />
+          <NavigationProperty Name="User" Relationship="PortalModel.FK_Subscription_User_Join_UserGUID_User_GUID" FromRole="Subscription_User_Join" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="TicketTypeID" Type="Int64" Nullable="false" />
+          <Property Name="XML" Type="String" />
+          <Property Name="Callback" Type="String" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateUsed" Type="DateTime" />
+          <NavigationProperty Name="TicketType" Relationship="PortalModel.FK_Ticket_TicketTypeID_TicketType_ID" FromRole="Ticket" ToRole="TicketType" />
+        </EntityType>
+        <EntityType Name="TicketType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Ticket" Relationship="PortalModel.FK_Ticket_TicketTypeID_TicketType_ID" FromRole="TicketType" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="GUID" />
+          </Key>
+          <Property Name="GUID" Type="Guid" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Group_User_Join" Relationship="PortalModel.FK_Group_User_Join_UserGUID_User_GUID" FromRole="User" ToRole="Group_User_Join" />
+          <NavigationProperty Name="Session" Relationship="PortalModel.FK_Session_UserGUID_User_GUID" FromRole="User" ToRole="Session" />
+          <NavigationProperty Name="Subscription_User_Join" Relationship="PortalModel.FK_Subscription_User_Join_UserGUID_User_GUID" FromRole="User" ToRole="Subscription_User_Join" />
+          <NavigationProperty Name="UserSettings" Relationship="PortalModel.FK_UserSettings_UserGUID_User_GUID" FromRole="User" ToRole="UserSettings" />
+        </EntityType>
+        <EntityType Name="UserSettings">
+          <Key>
+            <PropertyRef Name="ClientSettingsGUID" />
+            <PropertyRef Name="UserGUID" />
+          </Key>
+          <Property Name="ClientSettingsGUID" Type="Guid" Nullable="false" />
+          <Property Name="UserGUID" Type="Guid" Nullable="false" />
+          <Property Name="Settings" Type="String" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="ClientSettings" Relationship="PortalModel.FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID" FromRole="UserSettings" ToRole="ClientSettings" />
+          <NavigationProperty Name="User" Relationship="PortalModel.FK_UserSettings_UserGUID_User_GUID" FromRole="UserSettings" ToRole="User" />
+        </EntityType>
+        <EntityType Name="SessionInfo">
+          <Key>
+            <PropertyRef Name="SessionGUID" />
+            <PropertyRef Name="UserGUID" />
+            <PropertyRef Name="DateCreated" />
+          </Key>
+          <Property Name="SessionGUID" Type="Guid" Nullable="false" />
+          <Property Name="UserGUID" Type="Guid" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateModified" Type="DateTime" />
+          <Property Name="MinutesSinceRenewal" Type="Int64" />
+        </EntityType>
+        <Association Name="FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID">
+          <End Role="ClientSettings" Type="PortalModel.ClientSettings" Multiplicity="1" />
+          <End Role="UserSettings" Type="PortalModel.UserSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientSettings">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="UserSettings">
+              <PropertyRef Name="ClientSettingsGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Group_User_Join_GroupGUID_Group_GUID">
+          <End Role="Group" Type="PortalModel.Group" Multiplicity="1" />
+          <End Role="Group_User_Join" Type="PortalModel.Group_User_Join" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="Group_User_Join">
+              <PropertyRef Name="GroupGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Group_User_Join_UserGUID_User_GUID">
+          <End Role="User" Type="PortalModel.User" Multiplicity="1" />
+          <End Role="Group_User_Join" Type="PortalModel.Group_User_Join" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="Group_User_Join">
+              <PropertyRef Name="UserGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IndexSettings_ModuleID_Module_ID">
+          <End Role="Module" Type="PortalModel.Module" Multiplicity="1" />
+          <End Role="IndexSettings" Type="PortalModel.IndexSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="IndexSettings">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Session_UserGUID_User_GUID">
+          <End Role="User" Type="PortalModel.User" Multiplicity="1" />
+          <End Role="Session" Type="PortalModel.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="UserGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID">
+          <End Role="Subscription" Type="PortalModel.Subscription" Multiplicity="1" />
+          <End Role="Subscription_User_Join" Type="PortalModel.Subscription_User_Join" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscription">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="Subscription_User_Join">
+              <PropertyRef Name="SubscriptionGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subscription_User_Join_UserGUID_User_GUID">
+          <End Role="User" Type="PortalModel.User" Multiplicity="1" />
+          <End Role="Subscription_User_Join" Type="PortalModel.Subscription_User_Join" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="Subscription_User_Join">
+              <PropertyRef Name="UserGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_TicketTypeID_TicketType_ID">
+          <End Role="TicketType" Type="PortalModel.TicketType" Multiplicity="1" />
+          <End Role="Ticket" Type="PortalModel.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="TicketTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSettings_UserGUID_User_GUID">
+          <End Role="User" Type="PortalModel.User" Multiplicity="1" />
+          <End Role="UserSettings" Type="PortalModel.UserSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="UserSettings">
+              <PropertyRef Name="UserGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PortalModelStoreContainer" CdmEntityContainer="PortalEntities">
+          <EntitySetMapping Name="ClientSettings"><EntityTypeMapping TypeName="PortalModel.ClientSettings"><MappingFragment StoreEntitySet="ClientSettings">
+            <ScalarProperty Name="GUID" ColumnName="GUID" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Settings" ColumnName="Settings" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Extension"><EntityTypeMapping TypeName="PortalModel.Extension"><MappingFragment StoreEntitySet="Extension">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="Map" ColumnName="Map" />
+            <ScalarProperty Name="FullName" ColumnName="FullName" />
+            <ScalarProperty Name="Path" ColumnName="Path" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Group"><EntityTypeMapping TypeName="PortalModel.Group"><MappingFragment StoreEntitySet="Group">
+            <ScalarProperty Name="GUID" ColumnName="GUID" />
+            <ScalarProperty Name="SystemPermission" ColumnName="SystemPermission" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Group_User_Join"><EntityTypeMapping TypeName="PortalModel.Group_User_Join"><MappingFragment StoreEntitySet="Group_User_Join">
+            <ScalarProperty Name="GroupGUID" ColumnName="GroupGUID" />
+            <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+            <ScalarProperty Name="Permission" ColumnName="Permission" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="IndexSettings"><EntityTypeMapping TypeName="PortalModel.IndexSettings"><MappingFragment StoreEntitySet="IndexSettings">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+            <ScalarProperty Name="Settings" ColumnName="Settings" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Module"><EntityTypeMapping TypeName="PortalModel.Module"><MappingFragment StoreEntitySet="Module">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Configuration" ColumnName="Configuration" />
+            <ScalarProperty Name="Path" ColumnName="Path" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Permission"><EntityTypeMapping TypeName="PortalModel.Permission"><MappingFragment StoreEntitySet="Permission">
+            <ScalarProperty Name="TableIdentifier" ColumnName="TableIdentifier" />
+            <ScalarProperty Name="Permission1" ColumnName="Permission" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Session"><EntityTypeMapping TypeName="PortalModel.Session"><MappingFragment StoreEntitySet="Session">
+            <ScalarProperty Name="GUID" ColumnName="GUID" />
+            <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+            <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Subscription"><EntityTypeMapping TypeName="PortalModel.Subscription"><MappingFragment StoreEntitySet="Subscription">
+            <ScalarProperty Name="GUID" ColumnName="GUID" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Subscription_User_Join"><EntityTypeMapping TypeName="PortalModel.Subscription_User_Join"><MappingFragment StoreEntitySet="Subscription_User_Join">
+            <ScalarProperty Name="SubscriptionGUID" ColumnName="SubscriptionGUID" />
+            <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+            <ScalarProperty Name="Permission" ColumnName="Permission" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Ticket"><EntityTypeMapping TypeName="PortalModel.Ticket"><MappingFragment StoreEntitySet="Ticket">
+            <ScalarProperty Name="GUID" ColumnName="GUID" />
+            <ScalarProperty Name="TicketTypeID" ColumnName="TicketTypeID" />
+            <ScalarProperty Name="XML" ColumnName="XML" />
+            <ScalarProperty Name="Callback" ColumnName="Callback" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+            <ScalarProperty Name="DateUsed" ColumnName="DateUsed" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="TicketType"><EntityTypeMapping TypeName="PortalModel.TicketType"><MappingFragment StoreEntitySet="TicketType">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="User"><EntityTypeMapping TypeName="PortalModel.User"><MappingFragment StoreEntitySet="User">
+            <ScalarProperty Name="GUID" ColumnName="GUID" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UserSettings"><EntityTypeMapping TypeName="PortalModel.UserSettings"><MappingFragment StoreEntitySet="UserSettings">
+            <ScalarProperty Name="ClientSettingsGUID" ColumnName="ClientSettingsGUID" />
+            <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+            <ScalarProperty Name="Settings" ColumnName="Settings" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SessionInfo"><EntityTypeMapping TypeName="PortalModel.SessionInfo"><MappingFragment StoreEntitySet="SessionInfo">
+            <ScalarProperty Name="SessionGUID" ColumnName="SessionGUID" />
+            <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+            <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+            <ScalarProperty Name="MinutesSinceRenewal" ColumnName="MinutesSinceRenewal" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Portal">
+        <EntityTypeShape EntityType="PortalModel.ClientSettings" Width="1.5" PointX="5.125" PointY="6.75" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.Extension" Width="1.5" PointX="5.75" PointY="9.75" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.Group" Width="1.5" PointX="5.375" PointY="3.625" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.Group_User_Join" Width="1.5" PointX="3" PointY="6.625" Height="2.1725878906250005" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.IndexSettings" Width="1.5" PointX="9.25" PointY="6.75" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.Module" Width="1.5" PointX="7" PointY="6.625" Height="2.1725878906250005" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.Permission" Width="1.5" PointX="7.75" PointY="9.75" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.Session" Width="1.5" PointX="0.75" PointY="9.5" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.Subscription" Width="1.5" PointX="0.75" PointY="3.875" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.Subscription_User_Join" Width="1.5" PointX="3" PointY="3.625" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.Ticket" Width="1.5" PointX="3" PointY="1" Height="2.3648893229166745" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.TicketType" Width="1.5" PointX="5.375" PointY="1.25" Height="1.5956835937500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.User" Width="1.5" PointX="0.75" PointY="6.5" Height="2.3648893229166665" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.UserSettings" Width="1.5" PointX="3" PointY="9.5" Height="2.1725878906249951" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.SessionInfo" Width="1.5" PointX="9.75" PointY="9.75" Height="1.9802864583333388" IsExpanded="true" />
+        <AssociationConnector Association="PortalModel.FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.40625" PointY="8.7302864583333335" />
+          <ConnectorPoint PointX="5.40625" PointY="9.59375" />
+          <ConnectorPoint PointX="4.5" PointY="9.59375" />
+        </AssociationConnector>
+        <AssociationConnector Association="PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID" ManuallyRouted="true">
+          <ConnectorPoint PointX="6.78125" PointY="5.6052864583333317" />
+          <ConnectorPoint PointX="6.78125" PointY="5.9521044270833325" />
+          <ConnectorPoint PointX="5.3437500000000009" PointY="5.9521044270833325" />
+          <ConnectorPoint PointX="5.3437500000000009" PointY="6.65625" />
+          <ConnectorPoint PointX="4.5" PointY="6.65625" />
+        </AssociationConnector>
+        <AssociationConnector Association="PortalModel.FK_Group_User_Join_UserGUID_User_GUID" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="7.10564697265625" />
+          <ConnectorPoint PointX="3" PointY="7.10564697265625" />
+        </AssociationConnector>
+        <AssociationConnector Association="PortalModel.FK_IndexSettings_ModuleID_Module_ID" ManuallyRouted="false">
+          <ConnectorPoint PointX="8.5" PointY="7.7401432291666667" />
+          <ConnectorPoint PointX="9.25" PointY="7.7401432291666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="PortalModel.FK_Session_UserGUID_User_GUID" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="8.8648893229166674" />
+          <ConnectorPoint PointX="1.5" PointY="9.5" />
+        </AssociationConnector>
+        <AssociationConnector Association="PortalModel.FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="4.7689925130208337" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="4.7689925130208328" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="4.7689925130208337" />
+          <ConnectorPoint PointX="3" PointY="4.7689925130208337" />
+        </AssociationConnector>
+        <AssociationConnector Association="PortalModel.FK_Subscription_User_Join_UserGUID_User_GUID" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="6.5" />
+          <ConnectorPoint PointX="2.625" PointY="6.125" />
+          <ConnectorPoint PointX="2.625" PointY="4.1657442565104166" />
+          <ConnectorPoint PointX="3" PointY="4.1657442565104166" />
+        </AssociationConnector>
+        <AssociationConnector Association="PortalModel.FK_Ticket_TicketTypeID_TicketType_ID" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.375" PointY="2.0478417968750016" />
+          <ConnectorPoint PointX="4.5" PointY="2.0478417968750016" />
+        </AssociationConnector>
+        <AssociationConnector Association="PortalModel.FK_UserSettings_UserGUID_User_GUID" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.2499999999999987" PointY="8.8648893229166674" />
+          <ConnectorPoint PointX="2.625" PointY="9.2398893229166674" />
+          <ConnectorPoint PointX="2.625" PointY="9.1238471538461532" />
+          <ConnectorPoint PointX="3.0011528461538459" PointY="9.5" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
