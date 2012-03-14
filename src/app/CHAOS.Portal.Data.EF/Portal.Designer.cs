@@ -19,14 +19,14 @@ using System.Runtime.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID", "ClientSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.ClientSettings), "UserSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.UserSettings), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_Group_User_Join_GroupGUID_Group_GUID", "Group", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.Group), "Group_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Group_User_Join), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_Group_User_Join_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "Group_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Group_User_Join), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_IndexSettings_ModuleID_Module_ID", "Module", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.Module), "IndexSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.IndexSettings), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_Session_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "Session", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Session), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID", "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.Subscription), "Subscription_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Subscription_User_Join), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_Subscription_User_Join_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "Subscription_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Subscription_User_Join), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_Ticket_TicketTypeID_TicketType_ID", "TicketType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.TicketType), "Ticket", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Ticket), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_UserSettings_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "UserSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.UserSettings), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_Group_User_Join_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "Group_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Group_User_Join), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID", "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.Subscription), "Subscription_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Subscription_User_Join), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_Subscription_User_Join_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "Subscription_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Subscription_User_Join), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_Group_User_Join_GroupGUID_Group_GUID", "Group", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.Group), "Group_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Group_User_Join), true)]
 
 #endregion
 
@@ -113,38 +113,6 @@ namespace CHAOS.Portal.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Group> Group
-        {
-            get
-            {
-                if ((_Group == null))
-                {
-                    _Group = base.CreateObjectSet<Group>("Group");
-                }
-                return _Group;
-            }
-        }
-        private ObjectSet<Group> _Group;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<Group_User_Join> Group_User_Join
-        {
-            get
-            {
-                if ((_Group_User_Join == null))
-                {
-                    _Group_User_Join = base.CreateObjectSet<Group_User_Join>("Group_User_Join");
-                }
-                return _Group_User_Join;
-            }
-        }
-        private ObjectSet<Group_User_Join> _Group_User_Join;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<IndexSettings> IndexSettings
         {
             get
@@ -177,22 +145,6 @@ namespace CHAOS.Portal.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Permission> Permission
-        {
-            get
-            {
-                if ((_Permission == null))
-                {
-                    _Permission = base.CreateObjectSet<Permission>("Permission");
-                }
-                return _Permission;
-            }
-        }
-        private ObjectSet<Permission> _Permission;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Session> Session
         {
             get
@@ -221,22 +173,6 @@ namespace CHAOS.Portal.Data.EF
             }
         }
         private ObjectSet<Subscription> _Subscription;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<Subscription_User_Join> Subscription_User_Join
-        {
-            get
-            {
-                if ((_Subscription_User_Join == null))
-                {
-                    _Subscription_User_Join = base.CreateObjectSet<Subscription_User_Join>("Subscription_User_Join");
-                }
-                return _Subscription_User_Join;
-            }
-        }
-        private ObjectSet<Subscription_User_Join> _Subscription_User_Join;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -317,6 +253,102 @@ namespace CHAOS.Portal.Data.EF
             }
         }
         private ObjectSet<SessionInfo> _SessionInfo;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Group_User_Join> Group_User_Join
+        {
+            get
+            {
+                if ((_Group_User_Join == null))
+                {
+                    _Group_User_Join = base.CreateObjectSet<Group_User_Join>("Group_User_Join");
+                }
+                return _Group_User_Join;
+            }
+        }
+        private ObjectSet<Group_User_Join> _Group_User_Join;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Permission> Permission
+        {
+            get
+            {
+                if ((_Permission == null))
+                {
+                    _Permission = base.CreateObjectSet<Permission>("Permission");
+                }
+                return _Permission;
+            }
+        }
+        private ObjectSet<Permission> _Permission;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Subscription_User_Join> Subscription_User_Join
+        {
+            get
+            {
+                if ((_Subscription_User_Join == null))
+                {
+                    _Subscription_User_Join = base.CreateObjectSet<Subscription_User_Join>("Subscription_User_Join");
+                }
+                return _Subscription_User_Join;
+            }
+        }
+        private ObjectSet<Subscription_User_Join> _Subscription_User_Join;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<SubscriptionInfo> SubscriptionInfo
+        {
+            get
+            {
+                if ((_SubscriptionInfo == null))
+                {
+                    _SubscriptionInfo = base.CreateObjectSet<SubscriptionInfo>("SubscriptionInfo");
+                }
+                return _SubscriptionInfo;
+            }
+        }
+        private ObjectSet<SubscriptionInfo> _SubscriptionInfo;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Group> Group
+        {
+            get
+            {
+                if ((_Group == null))
+                {
+                    _Group = base.CreateObjectSet<Group>("Group");
+                }
+                return _Group;
+            }
+        }
+        private ObjectSet<Group> _Group;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<UserInfo> UserInfo
+        {
+            get
+            {
+                if ((_UserInfo == null))
+                {
+                    _UserInfo = base.CreateObjectSet<UserInfo>("UserInfo");
+                }
+                return _UserInfo;
+            }
+        }
+        private ObjectSet<UserInfo> _UserInfo;
 
         #endregion
         #region AddTo Methods
@@ -338,22 +370,6 @@ namespace CHAOS.Portal.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Group EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToGroup(Group group)
-        {
-            base.AddObject("Group", group);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Group_User_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToGroup_User_Join(Group_User_Join group_User_Join)
-        {
-            base.AddObject("Group_User_Join", group_User_Join);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the IndexSettings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToIndexSettings(IndexSettings indexSettings)
@@ -370,14 +386,6 @@ namespace CHAOS.Portal.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Permission EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPermission(Permission permission)
-        {
-            base.AddObject("Permission", permission);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the Session EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToSession(Session session)
@@ -391,14 +399,6 @@ namespace CHAOS.Portal.Data.EF
         public void AddToSubscription(Subscription subscription)
         {
             base.AddObject("Subscription", subscription);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Subscription_User_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToSubscription_User_Join(Subscription_User_Join subscription_User_Join)
-        {
-            base.AddObject("Subscription_User_Join", subscription_User_Join);
         }
     
         /// <summary>
@@ -439,6 +439,1142 @@ namespace CHAOS.Portal.Data.EF
         public void AddToSessionInfo(SessionInfo sessionInfo)
         {
             base.AddObject("SessionInfo", sessionInfo);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Group_User_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToGroup_User_Join(Group_User_Join group_User_Join)
+        {
+            base.AddObject("Group_User_Join", group_User_Join);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Permission EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPermission(Permission permission)
+        {
+            base.AddObject("Permission", permission);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Subscription_User_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSubscription_User_Join(Subscription_User_Join subscription_User_Join)
+        {
+            base.AddObject("Subscription_User_Join", subscription_User_Join);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the SubscriptionInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSubscriptionInfo(SubscriptionInfo subscriptionInfo)
+        {
+            base.AddObject("SubscriptionInfo", subscriptionInfo);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Group EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToGroup(Group group)
+        {
+            base.AddObject("Group", group);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UserInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUserInfo(UserInfo userInfo)
+        {
+            base.AddObject("UserInfo", userInfo);
+        }
+
+        #endregion
+        #region Function Imports
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public int PreTest()
+        {
+            return base.ExecuteFunction("PreTest");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="email">No Metadata Documentation available.</param>
+        public int User_Create(global::System.Byte[] gUID, global::System.String email)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter emailParameter;
+            if (email != null)
+            {
+                emailParameter = new ObjectParameter("Email", email);
+            }
+            else
+            {
+                emailParameter = new ObjectParameter("Email", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("User_Create", gUIDParameter, emailParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        public ObjectResult<User> User_Get(global::System.Byte[] gUID)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<User>("User_Get", gUIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        public ObjectResult<User> User_Get(global::System.Byte[] gUID, MergeOption mergeOption)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<User>("User_Get", mergeOption, gUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="sessionGUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        public int Session_Create(global::System.Byte[] sessionGUID, global::System.Byte[] userGUID)
+        {
+            ObjectParameter sessionGUIDParameter;
+            if (sessionGUID != null)
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+            }
+            else
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction("Session_Create", sessionGUIDParameter, userGUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="sessionGUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        public ObjectResult<Session> Session_Get(global::System.Byte[] sessionGUID, global::System.Byte[] userGUID)
+        {
+            ObjectParameter sessionGUIDParameter;
+            if (sessionGUID != null)
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+            }
+            else
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<Session>("Session_Get", sessionGUIDParameter, userGUIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="sessionGUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        public ObjectResult<Session> Session_Get(global::System.Byte[] sessionGUID, global::System.Byte[] userGUID, MergeOption mergeOption)
+        {
+            ObjectParameter sessionGUIDParameter;
+            if (sessionGUID != null)
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+            }
+            else
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<Session>("Session_Get", mergeOption, sessionGUIDParameter, userGUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="sessionGUID">No Metadata Documentation available.</param>
+        public ObjectResult<UserInfo> UserInfo_Get(global::System.Byte[] gUID, global::System.Byte[] sessionGUID)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter sessionGUIDParameter;
+            if (sessionGUID != null)
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+            }
+            else
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<UserInfo>("UserInfo_Get", gUIDParameter, sessionGUIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="sessionGUID">No Metadata Documentation available.</param>
+        public ObjectResult<UserInfo> UserInfo_Get(global::System.Byte[] gUID, global::System.Byte[] sessionGUID, MergeOption mergeOption)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter sessionGUIDParameter;
+            if (sessionGUID != null)
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+            }
+            else
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<UserInfo>("UserInfo_Get", mergeOption, gUIDParameter, sessionGUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="requestUserGUID">No Metadata Documentation available.</param>
+        public ObjectResult<Group> Group_Get(global::System.Byte[] gUID, global::System.String name, global::System.Byte[] requestUserGUID)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter requestUserGUIDParameter;
+            if (requestUserGUID != null)
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", requestUserGUID);
+            }
+            else
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<Group>("Group_Get", gUIDParameter, nameParameter, requestUserGUIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="requestUserGUID">No Metadata Documentation available.</param>
+        public ObjectResult<Group> Group_Get(global::System.Byte[] gUID, global::System.String name, global::System.Byte[] requestUserGUID, MergeOption mergeOption)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter requestUserGUIDParameter;
+            if (requestUserGUID != null)
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", requestUserGUID);
+            }
+            else
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<Group>("Group_Get", mergeOption, gUIDParameter, nameParameter, requestUserGUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="whereSessionGUID">No Metadata Documentation available.</param>
+        /// <param name="whereUserGUID">No Metadata Documentation available.</param>
+        public int Session_Update(global::System.Byte[] userGUID, global::System.Byte[] whereSessionGUID, global::System.Byte[] whereUserGUID)
+        {
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter whereSessionGUIDParameter;
+            if (whereSessionGUID != null)
+            {
+                whereSessionGUIDParameter = new ObjectParameter("WhereSessionGUID", whereSessionGUID);
+            }
+            else
+            {
+                whereSessionGUIDParameter = new ObjectParameter("WhereSessionGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter whereUserGUIDParameter;
+            if (whereUserGUID != null)
+            {
+                whereUserGUIDParameter = new ObjectParameter("WhereUserGUID", whereUserGUID);
+            }
+            else
+            {
+                whereUserGUIDParameter = new ObjectParameter("WhereUserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction("Session_Update", userGUIDParameter, whereSessionGUIDParameter, whereUserGUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="sessionGUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        public int Session_Delete(global::System.Byte[] sessionGUID, global::System.Byte[] userGUID)
+        {
+            ObjectParameter sessionGUIDParameter;
+            if (sessionGUID != null)
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+            }
+            else
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction("Session_Delete", sessionGUIDParameter, userGUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="clientSettingsGUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="settings">No Metadata Documentation available.</param>
+        public int UserSettings_Set(global::System.Byte[] clientSettingsGUID, global::System.Byte[] userGUID, global::System.String settings)
+        {
+            ObjectParameter clientSettingsGUIDParameter;
+            if (clientSettingsGUID != null)
+            {
+                clientSettingsGUIDParameter = new ObjectParameter("ClientSettingsGUID", clientSettingsGUID);
+            }
+            else
+            {
+                clientSettingsGUIDParameter = new ObjectParameter("ClientSettingsGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter settingsParameter;
+            if (settings != null)
+            {
+                settingsParameter = new ObjectParameter("Settings", settings);
+            }
+            else
+            {
+                settingsParameter = new ObjectParameter("Settings", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("UserSettings_Set", clientSettingsGUIDParameter, userGUIDParameter, settingsParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="clientSettingsGUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        public ObjectResult<UserSettings> UserSettings_Get(global::System.Byte[] clientSettingsGUID, global::System.Byte[] userGUID)
+        {
+            ObjectParameter clientSettingsGUIDParameter;
+            if (clientSettingsGUID != null)
+            {
+                clientSettingsGUIDParameter = new ObjectParameter("ClientSettingsGUID", clientSettingsGUID);
+            }
+            else
+            {
+                clientSettingsGUIDParameter = new ObjectParameter("ClientSettingsGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<UserSettings>("UserSettings_Get", clientSettingsGUIDParameter, userGUIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="clientSettingsGUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        public ObjectResult<UserSettings> UserSettings_Get(global::System.Byte[] clientSettingsGUID, global::System.Byte[] userGUID, MergeOption mergeOption)
+        {
+            ObjectParameter clientSettingsGUIDParameter;
+            if (clientSettingsGUID != null)
+            {
+                clientSettingsGUIDParameter = new ObjectParameter("ClientSettingsGUID", clientSettingsGUID);
+            }
+            else
+            {
+                clientSettingsGUIDParameter = new ObjectParameter("ClientSettingsGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<UserSettings>("UserSettings_Get", mergeOption, clientSettingsGUIDParameter, userGUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="clientSettingsGUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        public int UserSettings_Delete(global::System.Byte[] clientSettingsGUID, global::System.Byte[] userGUID)
+        {
+            ObjectParameter clientSettingsGUIDParameter;
+            if (clientSettingsGUID != null)
+            {
+                clientSettingsGUIDParameter = new ObjectParameter("ClientSettingsGUID", clientSettingsGUID);
+            }
+            else
+            {
+                clientSettingsGUIDParameter = new ObjectParameter("ClientSettingsGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction("UserSettings_Delete", clientSettingsGUIDParameter, userGUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="map">No Metadata Documentation available.</param>
+        public ObjectResult<Extension> Extension_Get(Nullable<global::System.Int32> iD, global::System.String map)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter mapParameter;
+            if (map != null)
+            {
+                mapParameter = new ObjectParameter("Map", map);
+            }
+            else
+            {
+                mapParameter = new ObjectParameter("Map", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Extension>("Extension_Get", iDParameter, mapParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="map">No Metadata Documentation available.</param>
+        public ObjectResult<Extension> Extension_Get(Nullable<global::System.Int32> iD, global::System.String map, MergeOption mergeOption)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter mapParameter;
+            if (map != null)
+            {
+                mapParameter = new ObjectParameter("Map", map);
+            }
+            else
+            {
+                mapParameter = new ObjectParameter("Map", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Extension>("Extension_Get", mergeOption, iDParameter, mapParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Module> Module_Get(Nullable<global::System.Int32> iD, global::System.String name)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Module>("Module_Get", iDParameter, nameParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Module> Module_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Module>("Module_Get", mergeOption, iDParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="moduleID">No Metadata Documentation available.</param>
+        public ObjectResult<IndexSettings> IndexSettings_Get(Nullable<global::System.Int32> moduleID)
+        {
+            ObjectParameter moduleIDParameter;
+            if (moduleID.HasValue)
+            {
+                moduleIDParameter = new ObjectParameter("ModuleID", moduleID);
+            }
+            else
+            {
+                moduleIDParameter = new ObjectParameter("ModuleID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<IndexSettings>("IndexSettings_Get", moduleIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="moduleID">No Metadata Documentation available.</param>
+        public ObjectResult<IndexSettings> IndexSettings_Get(Nullable<global::System.Int32> moduleID, MergeOption mergeOption)
+        {
+            ObjectParameter moduleIDParameter;
+            if (moduleID.HasValue)
+            {
+                moduleIDParameter = new ObjectParameter("ModuleID", moduleID);
+            }
+            else
+            {
+                moduleIDParameter = new ObjectParameter("ModuleID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<IndexSettings>("IndexSettings_Get", mergeOption, moduleIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="requestUserGUID">No Metadata Documentation available.</param>
+        /// <param name="errorCode">No Metadata Documentation available.</param>
+        public int Subscription_Create(global::System.Byte[] gUID, global::System.String name, global::System.Byte[] requestUserGUID, ObjectParameter errorCode)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter requestUserGUIDParameter;
+            if (requestUserGUID != null)
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", requestUserGUID);
+            }
+            else
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction("Subscription_Create", gUIDParameter, nameParameter, requestUserGUIDParameter, errorCode);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="subscriptionGUID">No Metadata Documentation available.</param>
+        /// <param name="requestUserGUID">No Metadata Documentation available.</param>
+        /// <param name="errorCode">No Metadata Documentation available.</param>
+        public int Subscription_Delete(global::System.Byte[] subscriptionGUID, global::System.Byte[] requestUserGUID, ObjectParameter errorCode)
+        {
+            ObjectParameter subscriptionGUIDParameter;
+            if (subscriptionGUID != null)
+            {
+                subscriptionGUIDParameter = new ObjectParameter("SubscriptionGUID", subscriptionGUID);
+            }
+            else
+            {
+                subscriptionGUIDParameter = new ObjectParameter("SubscriptionGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter requestUserGUIDParameter;
+            if (requestUserGUID != null)
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", requestUserGUID);
+            }
+            else
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction("Subscription_Delete", subscriptionGUIDParameter, requestUserGUIDParameter, errorCode);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="newName">No Metadata Documentation available.</param>
+        /// <param name="requestUserGUID">No Metadata Documentation available.</param>
+        /// <param name="errorCode">No Metadata Documentation available.</param>
+        public int Subscription_Update(global::System.Byte[] gUID, global::System.String newName, global::System.Byte[] requestUserGUID, ObjectParameter errorCode)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter newNameParameter;
+            if (newName != null)
+            {
+                newNameParameter = new ObjectParameter("NewName", newName);
+            }
+            else
+            {
+                newNameParameter = new ObjectParameter("NewName", typeof(global::System.String));
+            }
+    
+            ObjectParameter requestUserGUIDParameter;
+            if (requestUserGUID != null)
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", requestUserGUID);
+            }
+            else
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction("Subscription_Update", gUIDParameter, newNameParameter, requestUserGUIDParameter, errorCode);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="requestUserGUID">No Metadata Documentation available.</param>
+        public ObjectResult<SubscriptionInfo> SubscriptionInfo_Get(global::System.Byte[] gUID, global::System.Byte[] requestUserGUID)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter requestUserGUIDParameter;
+            if (requestUserGUID != null)
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", requestUserGUID);
+            }
+            else
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<SubscriptionInfo>("SubscriptionInfo_Get", gUIDParameter, requestUserGUIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="requestUserGUID">No Metadata Documentation available.</param>
+        public ObjectResult<SubscriptionInfo> SubscriptionInfo_Get(global::System.Byte[] gUID, global::System.Byte[] requestUserGUID, MergeOption mergeOption)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter requestUserGUIDParameter;
+            if (requestUserGUID != null)
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", requestUserGUID);
+            }
+            else
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<SubscriptionInfo>("SubscriptionInfo_Get", mergeOption, gUIDParameter, requestUserGUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="newName">No Metadata Documentation available.</param>
+        /// <param name="newSystemPermission">No Metadata Documentation available.</param>
+        /// <param name="whereGroupGUID">No Metadata Documentation available.</param>
+        /// <param name="requestUserGUID">No Metadata Documentation available.</param>
+        /// <param name="errorCode">No Metadata Documentation available.</param>
+        public int Group_Update(global::System.String newName, global::System.Byte[] newSystemPermission, global::System.Byte[] whereGroupGUID, global::System.Byte[] requestUserGUID, ObjectParameter errorCode)
+        {
+            ObjectParameter newNameParameter;
+            if (newName != null)
+            {
+                newNameParameter = new ObjectParameter("NewName", newName);
+            }
+            else
+            {
+                newNameParameter = new ObjectParameter("NewName", typeof(global::System.String));
+            }
+    
+            ObjectParameter newSystemPermissionParameter;
+            if (newSystemPermission != null)
+            {
+                newSystemPermissionParameter = new ObjectParameter("NewSystemPermission", newSystemPermission);
+            }
+            else
+            {
+                newSystemPermissionParameter = new ObjectParameter("NewSystemPermission", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter whereGroupGUIDParameter;
+            if (whereGroupGUID != null)
+            {
+                whereGroupGUIDParameter = new ObjectParameter("WhereGroupGUID", whereGroupGUID);
+            }
+            else
+            {
+                whereGroupGUIDParameter = new ObjectParameter("WhereGroupGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter requestUserGUIDParameter;
+            if (requestUserGUID != null)
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", requestUserGUID);
+            }
+            else
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction("Group_Update", newNameParameter, newSystemPermissionParameter, whereGroupGUIDParameter, requestUserGUIDParameter, errorCode);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="tableIdentifier">No Metadata Documentation available.</param>
+        /// <param name="permission">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="description">No Metadata Documentation available.</param>
+        public int Permission_Create(global::System.String tableIdentifier, Nullable<global::System.Int32> permission, global::System.String name, global::System.String description)
+        {
+            ObjectParameter tableIdentifierParameter;
+            if (tableIdentifier != null)
+            {
+                tableIdentifierParameter = new ObjectParameter("TableIdentifier", tableIdentifier);
+            }
+            else
+            {
+                tableIdentifierParameter = new ObjectParameter("TableIdentifier", typeof(global::System.String));
+            }
+    
+            ObjectParameter permissionParameter;
+            if (permission.HasValue)
+            {
+                permissionParameter = new ObjectParameter("Permission", permission);
+            }
+            else
+            {
+                permissionParameter = new ObjectParameter("Permission", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter descriptionParameter;
+            if (description != null)
+            {
+                descriptionParameter = new ObjectParameter("Description", description);
+            }
+            else
+            {
+                descriptionParameter = new ObjectParameter("Description", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("Permission_Create", tableIdentifierParameter, permissionParameter, nameParameter, descriptionParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="groupGUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="permission">No Metadata Documentation available.</param>
+        /// <param name="requestUserGUID">No Metadata Documentation available.</param>
+        /// <param name="errorCode">No Metadata Documentation available.</param>
+        public int Group_AssociateWithUser(global::System.Byte[] groupGUID, global::System.Byte[] userGUID, Nullable<global::System.Int32> permission, global::System.Byte[] requestUserGUID, ObjectParameter errorCode)
+        {
+            ObjectParameter groupGUIDParameter;
+            if (groupGUID != null)
+            {
+                groupGUIDParameter = new ObjectParameter("GroupGUID", groupGUID);
+            }
+            else
+            {
+                groupGUIDParameter = new ObjectParameter("GroupGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter permissionParameter;
+            if (permission.HasValue)
+            {
+                permissionParameter = new ObjectParameter("Permission", permission);
+            }
+            else
+            {
+                permissionParameter = new ObjectParameter("Permission", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter requestUserGUIDParameter;
+            if (requestUserGUID != null)
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", requestUserGUID);
+            }
+            else
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction("Group_AssociateWithUser", groupGUIDParameter, userGUIDParameter, permissionParameter, requestUserGUIDParameter, errorCode);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="errorCode">No Metadata Documentation available.</param>
+        public int Group_Delete(global::System.Byte[] gUID, global::System.Byte[] userGUID, ObjectParameter errorCode)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction("Group_Delete", gUIDParameter, userGUIDParameter, errorCode);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="requestUserGUID">No Metadata Documentation available.</param>
+        /// <param name="systemPermission">No Metadata Documentation available.</param>
+        /// <param name="errorCode">No Metadata Documentation available.</param>
+        public int Group_Create(global::System.Byte[] gUID, global::System.String name, global::System.Byte[] requestUserGUID, Nullable<global::System.Int32> systemPermission, ObjectParameter errorCode)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter requestUserGUIDParameter;
+            if (requestUserGUID != null)
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", requestUserGUID);
+            }
+            else
+            {
+                requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter systemPermissionParameter;
+            if (systemPermission.HasValue)
+            {
+                systemPermissionParameter = new ObjectParameter("SystemPermission", systemPermission);
+            }
+            else
+            {
+                systemPermissionParameter = new ObjectParameter("SystemPermission", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction("Group_Create", gUIDParameter, nameParameter, requestUserGUIDParameter, systemPermissionParameter, errorCode);
         }
 
         #endregion
@@ -781,7 +1917,7 @@ namespace CHAOS.Portal.Data.EF
         /// <param name="systemPermission">Initial value of the SystemPermission property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
-        public static Group CreateGroup(global::System.Guid gUID, global::System.Byte[] systemPermission, global::System.String name, global::System.DateTime dateCreated)
+        public static Group CreateGroup(global::System.Guid gUID, global::System.Int64 systemPermission, global::System.String name, global::System.DateTime dateCreated)
         {
             Group group = new Group();
             group.GUID = gUID;
@@ -826,23 +1962,23 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Byte[] SystemPermission
+        public global::System.Int64 SystemPermission
         {
             get
             {
-                return StructuralObject.GetValidValue(_SystemPermission);
+                return _SystemPermission;
             }
             set
             {
                 OnSystemPermissionChanging(value);
                 ReportPropertyChanging("SystemPermission");
-                _SystemPermission = StructuralObject.SetValidValue(value, false);
+                _SystemPermission = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("SystemPermission");
                 OnSystemPermissionChanged();
             }
         }
-        private global::System.Byte[] _SystemPermission;
-        partial void OnSystemPermissionChanging(global::System.Byte[] value);
+        private global::System.Int64 _SystemPermission;
+        partial void OnSystemPermissionChanging(global::System.Int64 value);
         partial void OnSystemPermissionChanged();
     
         /// <summary>
@@ -939,7 +2075,7 @@ namespace CHAOS.Portal.Data.EF
         /// <param name="userGUID">Initial value of the UserGUID property.</param>
         /// <param name="permission">Initial value of the Permission property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
-        public static Group_User_Join CreateGroup_User_Join(global::System.Guid groupGUID, global::System.Guid userGUID, global::System.Byte[] permission, global::System.DateTime dateCreated)
+        public static Group_User_Join CreateGroup_User_Join(global::System.Guid groupGUID, global::System.Guid userGUID, global::System.Int64 permission, global::System.DateTime dateCreated)
         {
             Group_User_Join group_User_Join = new Group_User_Join();
             group_User_Join.GroupGUID = groupGUID;
@@ -1011,23 +2147,23 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Byte[] Permission
+        public global::System.Int64 Permission
         {
             get
             {
-                return StructuralObject.GetValidValue(_Permission);
+                return _Permission;
             }
             set
             {
                 OnPermissionChanging(value);
                 ReportPropertyChanging("Permission");
-                _Permission = StructuralObject.SetValidValue(value, false);
+                _Permission = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("Permission");
                 OnPermissionChanged();
             }
         }
-        private global::System.Byte[] _Permission;
-        partial void OnPermissionChanging(global::System.Byte[] value);
+        private global::System.Int64 _Permission;
+        partial void OnPermissionChanging(global::System.Int64 value);
         partial void OnPermissionChanged();
     
         /// <summary>
@@ -1064,44 +2200,6 @@ namespace CHAOS.Portal.Data.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PortalModel", "FK_Group_User_Join_GroupGUID_Group_GUID", "Group")]
-        public Group Group
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Group>("PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID", "Group").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Group>("PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID", "Group").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Group> GroupReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Group>("PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID", "Group");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Group>("PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID", "Group", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PortalModel", "FK_Group_User_Join_UserGUID_User_GUID", "User")]
         public User User
         {
@@ -1130,6 +2228,44 @@ namespace CHAOS.Portal.Data.EF
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("PortalModel.FK_Group_User_Join_UserGUID_User_GUID", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PortalModel", "FK_Group_User_Join_GroupGUID_Group_GUID", "Group")]
+        public Group Group
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Group>("PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID", "Group").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Group>("PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID", "Group").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Group> GroupReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Group>("PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID", "Group");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Group>("PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID", "Group", value);
                 }
             }
         }
@@ -1507,7 +2643,7 @@ namespace CHAOS.Portal.Data.EF
         /// <param name="tableIdentifier">Initial value of the TableIdentifier property.</param>
         /// <param name="permission1">Initial value of the Permission1 property.</param>
         /// <param name="name">Initial value of the Name property.</param>
-        public static Permission CreatePermission(global::System.String tableIdentifier, global::System.Byte[] permission1, global::System.String name)
+        public static Permission CreatePermission(global::System.String tableIdentifier, global::System.Int64 permission1, global::System.String name)
         {
             Permission permission = new Permission();
             permission.TableIdentifier = tableIdentifier;
@@ -1551,26 +2687,26 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Byte[] Permission1
+        public global::System.Int64 Permission1
         {
             get
             {
-                return StructuralObject.GetValidValue(_Permission1);
+                return _Permission1;
             }
             set
             {
-                if (!StructuralObject.BinaryEquals(_Permission1, value))
+                if (_Permission1 != value)
                 {
                     OnPermission1Changing(value);
                     ReportPropertyChanging("Permission1");
-                    _Permission1 = StructuralObject.SetValidValue(value, false);
+                    _Permission1 = StructuralObject.SetValidValue(value);
                     ReportPropertyChanged("Permission1");
                     OnPermission1Changed();
                 }
             }
         }
-        private global::System.Byte[] _Permission1;
-        partial void OnPermission1Changing(global::System.Byte[] value);
+        private global::System.Int64 _Permission1;
+        partial void OnPermission1Changing(global::System.Int64 value);
         partial void OnPermission1Changed();
     
         /// <summary>
@@ -2107,7 +3243,7 @@ namespace CHAOS.Portal.Data.EF
         /// <param name="userGUID">Initial value of the UserGUID property.</param>
         /// <param name="permission">Initial value of the Permission property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
-        public static Subscription_User_Join CreateSubscription_User_Join(global::System.Guid subscriptionGUID, global::System.Guid userGUID, global::System.Byte[] permission, global::System.DateTime dateCreated)
+        public static Subscription_User_Join CreateSubscription_User_Join(global::System.Guid subscriptionGUID, global::System.Guid userGUID, global::System.Int64 permission, global::System.DateTime dateCreated)
         {
             Subscription_User_Join subscription_User_Join = new Subscription_User_Join();
             subscription_User_Join.SubscriptionGUID = subscriptionGUID;
@@ -2179,23 +3315,23 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Byte[] Permission
+        public global::System.Int64 Permission
         {
             get
             {
-                return StructuralObject.GetValidValue(_Permission);
+                return _Permission;
             }
             set
             {
                 OnPermissionChanging(value);
                 ReportPropertyChanging("Permission");
-                _Permission = StructuralObject.SetValidValue(value, false);
+                _Permission = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("Permission");
                 OnPermissionChanged();
             }
         }
-        private global::System.Byte[] _Permission;
-        partial void OnPermissionChanging(global::System.Byte[] value);
+        private global::System.Int64 _Permission;
+        partial void OnPermissionChanging(global::System.Int64 value);
         partial void OnPermissionChanged();
     
         /// <summary>
@@ -2303,6 +3439,167 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PortalModel", Name="SubscriptionInfo")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class SubscriptionInfo : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new SubscriptionInfo object.
+        /// </summary>
+        /// <param name="gUID">Initial value of the GUID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="dateCreated">Initial value of the DateCreated property.</param>
+        public static SubscriptionInfo CreateSubscriptionInfo(global::System.Guid gUID, global::System.String name, global::System.DateTime dateCreated)
+        {
+            SubscriptionInfo subscriptionInfo = new SubscriptionInfo();
+            subscriptionInfo.GUID = gUID;
+            subscriptionInfo.Name = name;
+            subscriptionInfo.DateCreated = dateCreated;
+            return subscriptionInfo;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid GUID
+        {
+            get
+            {
+                return _GUID;
+            }
+            set
+            {
+                if (_GUID != value)
+                {
+                    OnGUIDChanging(value);
+                    ReportPropertyChanging("GUID");
+                    _GUID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("GUID");
+                    OnGUIDChanged();
+                }
+            }
+        }
+        private global::System.Guid _GUID;
+        partial void OnGUIDChanging(global::System.Guid value);
+        partial void OnGUIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                if (_Name != value)
+                {
+                    OnNameChanging(value);
+                    ReportPropertyChanging("Name");
+                    _Name = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("Name");
+                    OnNameChanged();
+                }
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> UserGUID
+        {
+            get
+            {
+                return _UserGUID;
+            }
+            set
+            {
+                OnUserGUIDChanging(value);
+                ReportPropertyChanging("UserGUID");
+                _UserGUID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UserGUID");
+                OnUserGUIDChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _UserGUID;
+        partial void OnUserGUIDChanging(Nullable<global::System.Guid> value);
+        partial void OnUserGUIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> Permission
+        {
+            get
+            {
+                return _Permission;
+            }
+            set
+            {
+                OnPermissionChanging(value);
+                ReportPropertyChanging("Permission");
+                _Permission = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Permission");
+                OnPermissionChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _Permission;
+        partial void OnPermissionChanging(Nullable<global::System.Int64> value);
+        partial void OnPermissionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime DateCreated
+        {
+            get
+            {
+                return _DateCreated;
+            }
+            set
+            {
+                if (_DateCreated != value)
+                {
+                    OnDateCreatedChanging(value);
+                    ReportPropertyChanging("DateCreated");
+                    _DateCreated = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DateCreated");
+                    OnDateCreatedChanged();
+                }
+            }
+        }
+        private global::System.DateTime _DateCreated;
+        partial void OnDateCreatedChanging(global::System.DateTime value);
+        partial void OnDateCreatedChanged();
+
+        #endregion
+    
     }
     
     /// <summary>
@@ -2744,28 +4041,6 @@ namespace CHAOS.Portal.Data.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PortalModel", "FK_Group_User_Join_UserGUID_User_GUID", "Group_User_Join")]
-        public EntityCollection<Group_User_Join> Group_User_Join
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Group_User_Join>("PortalModel.FK_Group_User_Join_UserGUID_User_GUID", "Group_User_Join");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Group_User_Join>("PortalModel.FK_Group_User_Join_UserGUID_User_GUID", "Group_User_Join", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PortalModel", "FK_Session_UserGUID_User_GUID", "Session")]
         public EntityCollection<Session> Session
         {
@@ -2778,28 +4053,6 @@ namespace CHAOS.Portal.Data.EF
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Session>("PortalModel.FK_Session_UserGUID_User_GUID", "Session", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PortalModel", "FK_Subscription_User_Join_UserGUID_User_GUID", "Subscription_User_Join")]
-        public EntityCollection<Subscription_User_Join> Subscription_User_Join
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Subscription_User_Join>("PortalModel.FK_Subscription_User_Join_UserGUID_User_GUID", "Subscription_User_Join");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Subscription_User_Join>("PortalModel.FK_Subscription_User_Join_UserGUID_User_GUID", "Subscription_User_Join", value);
                 }
             }
         }
@@ -2825,8 +4078,232 @@ namespace CHAOS.Portal.Data.EF
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PortalModel", "FK_Group_User_Join_UserGUID_User_GUID", "Group_User_Join")]
+        public EntityCollection<Group_User_Join> Group_User_Join
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Group_User_Join>("PortalModel.FK_Group_User_Join_UserGUID_User_GUID", "Group_User_Join");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Group_User_Join>("PortalModel.FK_Group_User_Join_UserGUID_User_GUID", "Group_User_Join", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PortalModel", "FK_Subscription_User_Join_UserGUID_User_GUID", "Subscription_User_Join")]
+        public EntityCollection<Subscription_User_Join> Subscription_User_Join
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Subscription_User_Join>("PortalModel.FK_Subscription_User_Join_UserGUID_User_GUID", "Subscription_User_Join");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Subscription_User_Join>("PortalModel.FK_Subscription_User_Join_UserGUID_User_GUID", "Subscription_User_Join", value);
+                }
+            }
+        }
 
         #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PortalModel", Name="UserInfo")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class UserInfo : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new UserInfo object.
+        /// </summary>
+        /// <param name="gUID">Initial value of the GUID property.</param>
+        /// <param name="email">Initial value of the Email property.</param>
+        public static UserInfo CreateUserInfo(global::System.Guid gUID, global::System.String email)
+        {
+            UserInfo userInfo = new UserInfo();
+            userInfo.GUID = gUID;
+            userInfo.Email = email;
+            return userInfo;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid GUID
+        {
+            get
+            {
+                return _GUID;
+            }
+            set
+            {
+                if (_GUID != value)
+                {
+                    OnGUIDChanging(value);
+                    ReportPropertyChanging("GUID");
+                    _GUID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("GUID");
+                    OnGUIDChanged();
+                }
+            }
+        }
+        private global::System.Guid _GUID;
+        partial void OnGUIDChanging(global::System.Guid value);
+        partial void OnGUIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> SessionGUID
+        {
+            get
+            {
+                return _SessionGUID;
+            }
+            set
+            {
+                OnSessionGUIDChanging(value);
+                ReportPropertyChanging("SessionGUID");
+                _SessionGUID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SessionGUID");
+                OnSessionGUIDChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _SessionGUID;
+        partial void OnSessionGUIDChanging(Nullable<global::System.Guid> value);
+        partial void OnSessionGUIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> SystemPermission
+        {
+            get
+            {
+                return _SystemPermission;
+            }
+            set
+            {
+                OnSystemPermissionChanging(value);
+                ReportPropertyChanging("SystemPermission");
+                _SystemPermission = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SystemPermission");
+                OnSystemPermissionChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _SystemPermission;
+        partial void OnSystemPermissionChanging(Nullable<global::System.Int64> value);
+        partial void OnSystemPermissionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Email
+        {
+            get
+            {
+                return _Email;
+            }
+            set
+            {
+                if (_Email != value)
+                {
+                    OnEmailChanging(value);
+                    ReportPropertyChanging("Email");
+                    _Email = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("Email");
+                    OnEmailChanged();
+                }
+            }
+        }
+        private global::System.String _Email;
+        partial void OnEmailChanging(global::System.String value);
+        partial void OnEmailChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DateModified
+        {
+            get
+            {
+                return _DateModified;
+            }
+            set
+            {
+                OnDateModifiedChanging(value);
+                ReportPropertyChanging("DateModified");
+                _DateModified = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateModified");
+                OnDateModifiedChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DateModified;
+        partial void OnDateModifiedChanging(Nullable<global::System.DateTime> value);
+        partial void OnDateModifiedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> SessionDateCreated
+        {
+            get
+            {
+                return _SessionDateCreated;
+            }
+            set
+            {
+                OnSessionDateCreatedChanging(value);
+                ReportPropertyChanging("SessionDateCreated");
+                _SessionDateCreated = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SessionDateCreated");
+                OnSessionDateCreatedChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _SessionDateCreated;
+        partial void OnSessionDateCreatedChanging(Nullable<global::System.DateTime> value);
+        partial void OnSessionDateCreatedChanged();
+
+        #endregion
+    
     }
     
     /// <summary>

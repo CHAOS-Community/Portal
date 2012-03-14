@@ -1,8 +1,11 @@
-﻿using System;
+﻿using System.Data.Objects;
 using System.Linq;
+using CHAOS.Portal.Data.DTO;
+using CHAOS.Portal.Data.EF;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
-using Geckon.Portal.Data;
+using SubscriptionInfo = CHAOS.Portal.Data.DTO.SubscriptionInfo;
+using UserInfo = CHAOS.Portal.Data.DTO.UserInfo;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -15,15 +18,15 @@ namespace Geckon.Portal.Extensions.Standard
             UserInfo         user   = callContext.User;
             SubscriptionInfo result = null;
 
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
-                result = db.SubscriptionInfo_Get( null, Guid.Parse( guid ), null, user.ID ).FirstOrDefault();
+                result = db.SubscriptionInfo_Get( new UUID( guid ).ToByteArray(), user.GUID.ToByteArray()).ToDTO().FirstOrDefault();
             }
 
             if( result == null )
                 throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
 
-            PortalResult.GetModule("Geckon.Portal").AddResult(result);
+            PortalResult.GetModule("Geckon.Portal").AddResult( result );
         }
 
         #endregion
@@ -33,16 +36,19 @@ namespace Geckon.Portal.Extensions.Standard
         {
             UserInfo user = callContext.User;
 
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
-                int result = db.Subscription_Insert( Guid.NewGuid(), name, user.ID );
+				UUID            guid      = new UUID();
+            	ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
 
-                if( result == -100 )
+            	db.Subscription_Create( guid.ToByteArray(), name, user.GUID.ToByteArray(), errorCode );
+
+                if( ((int) errorCode.Value) == -100 )
                     throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
 
-                SubscriptionInfo subscriptionInfo = db.SubscriptionInfo_Get( result, null, null, user.ID ).First();
+                SubscriptionInfo subscriptionInfo = db.SubscriptionInfo_Get( guid.ToByteArray(), user.GUID.ToByteArray() ).ToDTO().First();
 
-                PortalResult.GetModule("Geckon.Portal").AddResult(subscriptionInfo);
+                PortalResult.GetModule("Geckon.Portal").AddResult( subscriptionInfo );
             }
         }
 
@@ -51,18 +57,18 @@ namespace Geckon.Portal.Extensions.Standard
 
         public void Delete( CallContext callContext, string guid )
         {
-            UserInfo user   = callContext.User;
-            int      result = 0;
+            UserInfo        user      = callContext.User;
+			ObjectParameter errorCode = new ObjectParameter("ErrorCode", 0);
 
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
-                result = db.Subscription_Delete( null, Guid.Parse( guid ), user.ID );
+            	db.Subscription_Delete( new UUID( guid ).ToByteArray(), user.GUID.ToByteArray(), errorCode );
             }
 
-            if( result == -100 )
+        	if( ( (int) errorCode.Value ) == -100 )
                 throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to delete the subscription" );
 
-            PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
+			PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( 1 ) );
         }
 
         #endregion
@@ -70,18 +76,18 @@ namespace Geckon.Portal.Extensions.Standard
 
         public void Update( CallContext callContext, string guid, string newName )
         {
-            UserInfo user      = callContext.User;
-            int      result    = 0;
+            UserInfo        user      = callContext.User;
+			ObjectParameter errorCode = new ObjectParameter("ErrorCode", 0);
 
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
-                result = db.Subscription_Update( null, Guid.Parse( guid ), newName, user.ID );
+            	db.Subscription_Update( new UUID( guid ).ToByteArray(), newName, user.GUID.ToByteArray(), errorCode );
             }
 
-            if( result == -100 )
+        	if( ( (int) errorCode.Value ) == -100 )
                 throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
 
-            PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
+            PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( 1 ) );
         }
 
         #endregion

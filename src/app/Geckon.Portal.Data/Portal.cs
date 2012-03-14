@@ -32,48 +32,6 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    public partial class Extension : Result.Standard.Result
-    {
-        #region Properties
-
-        [Serialize("ID")]
-        public int pID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
-
-        [Serialize("Map")]
-        public string pMap
-        {
-            get { return Map; }
-            set { Map = value; }
-        }
-
-        [Serialize("Fullname")]
-        public string pFullName
-        {
-            get { return Fullname; }
-            set { Fullname = value; }
-        }
-
-        [Serialize("Path")]
-        public string pPath
-        {
-            get { return Path; }
-            set { Path = value; }
-        }
-
-        [Serialize("DateCreated")]
-        public DateTime pDateCreated
-        {
-            get { return DateCreated; }
-            set { DateCreated = value; }
-        }
-
-        #endregion
-    }
-
     public partial class Session : Result.Standard.Result
     {
         #region Properties
@@ -267,28 +225,6 @@ namespace Geckon.Portal.Data
         #endregion
     }
 
-    public class ScalarResult : Result.Standard.Result
-    {
-        #region Properties
-
-        [Serialize("Value")]
-        public int Value { get; set; }
-
-        #endregion
-        #region Constructors
-
-        public ScalarResult (int value )
-        {
-            Value = value;
-        }
-
-        public ScalarResult()
-        {
-        }
-
-        #endregion
-    }
-
     public partial class SubscriptionInfo : Result.Standard.Result
     {
         #region Properties
@@ -313,50 +249,6 @@ namespace Geckon.Portal.Data
             get { return DateCreated; }
             set { DateCreated = value; }
         }
-
-        #endregion
-    }
-
-    public partial class Module : Result.Standard.Result
-    {
-        #region Properties
-
-        [Serialize("ID")]
-        public int pID
-        {
-            get { return ID; }
-            set { ID = value; }
-        }
-
-        [Serialize("Name")]
-        public string pName
-        {
-            get { return Name; }
-            set { Name = value; }
-        }
-
-        [Serialize("Path")]
-        public string pPath
-        {
-            get { return Path; }
-            set { Path = value; }
-        }
-
-        [SerializeXML(false,true)]
-        [Serialize("Configuration")]
-        public string pConfiguration
-        {
-            get { return Configuration.Value; }
-            set { Configuration = XDocument.Parse(value).Root; }
-        }
-
-        [Serialize("DateCreated")]
-        public DateTime pDateCreated
-        {
-            get { return DateCreated; }
-            set { DateCreated = value; }
-        }
-
 
         #endregion
     }
@@ -407,42 +299,6 @@ namespace Geckon.Portal.Data
         {
             get { return Email; }
             set { Email = value; }
-        }
-
-        #endregion
-    }
-
-    public partial class UserSetting : Result.Standard.Result
-    {
-        #region Properties
-
-        [Serialize("ClientSettingGUID")]
-        public Guid pClientSettingGUID
-        {
-            get { return ClientSettingGUID; }
-            set { ClientSettingGUID = value; }
-        }
-
-        [Serialize("UserGUID")]
-        public Guid pUserID
-        {
-            get { return UserGUID; }
-            set { UserGUID = value; }
-        }
-
-        [SerializeXML(false, true)]
-        [Serialize("Settings")]
-        public string pSetting
-        {
-            get { return Setting.ToString(); }
-            set { Setting = XElement.Parse( value ); }
-        }
-
-        [Serialize("DateCreated")]
-        public DateTime pDateCreated
-        {
-            get { return DateCreated; }
-            set { DateCreated = value; }
         }
 
         #endregion

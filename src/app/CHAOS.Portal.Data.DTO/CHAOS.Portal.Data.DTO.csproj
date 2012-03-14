@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>5c42751e-fdca-4029-b701-195ff031aeac</ProjectGuid>
+    <ProjectGuid>{0DE2E550-6E9E-4B2A-9A53-882C3C9DB519}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CHAOS.Portal.Data.DTO</RootNamespace>
@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="geckon">
+      <HintPath>..\..\..\lib\geckon.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,10 +43,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Extension.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="IndexSettings.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="ScalarResult.cs" />
+    <Compile Include="Subscription.cs" />
+    <Compile Include="SubscriptionInfo.cs" />
+    <Compile Include="UserInfo.cs" />
+    <Compile Include="Session.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserSettings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Geckon.Portal.Data\Geckon.Portal.Data.csproj">
+      <Project>{97DCBF2B-F655-46C1-8130-201F12B3AE82}</Project>
+      <Name>Geckon.Portal.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\Portal\$(TargetFileName)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

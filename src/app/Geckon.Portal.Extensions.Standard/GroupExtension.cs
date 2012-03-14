@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Data.Objects;
 using System.Linq;
+using CHAOS.Portal.Data.DTO;
+using CHAOS.Portal.Data.EF;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
-using Geckon.Portal.Data;
+using Group = CHAOS.Portal.Data.DTO.Group;
+using UserInfo = CHAOS.Portal.Data.DTO.UserInfo;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -10,13 +14,12 @@ namespace Geckon.Portal.Extensions.Standard
     {
         #region Get
 
-        public void Get( CallContext callContext, string guid )
+        public void Get( CallContext callContext, Guid? guid )
         {
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
-                Guid?    groupGuid = string.IsNullOrEmpty( guid ) ? (Guid?) null : Guid.Parse( guid );
                 UserInfo user      = callContext.User;
-                Group    group     = db.Group_Get( null, groupGuid, null, user.ID ).First();
+                Group    group     = db.Group_Get( guid.HasValue ? guid.Value.ToByteArray() : null, null, user.GUID.ToByteArray() ).ToDTO().First();
 
                 PortalResult.GetModule("Geckon.Portal").AddResult(group);
             }
@@ -32,11 +35,17 @@ namespace Geckon.Portal.Extensions.Standard
             if( user.GUID == callContext.AnonymousUserGUID )
                 throw new InsufficientPermissionsExcention( "Anonymous users cannot create groups" );
 
-            using (PortalDataContext db = PortalDataContext.Default())
+            using( PortalEntities db = new PortalEntities() )
             {
-                int result = db.Group_Insert( null, name, systemPermission, user.ID );
+				UUID            guid      = new UUID();
+				ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
 
-                PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( result ) );
+            	db.Group_Create( guid.ToByteArray(), name, user.GUID.ToByteArray(), systemPermission, errorCode );
+
+				if( ( (int) errorCode.Value ) == -100 )
+                    throw new InsufficientPermissionsExcention("User has insufficient permissions to delete groups");
+
+                PortalResult.GetModule("Geckon.Portal").AddResult( db.Group_Get( guid.ToByteArray(), null, user.GUID.ToByteArray() ).ToDTO().First() );
             }
         }
 
@@ -50,14 +59,16 @@ namespace Geckon.Portal.Extensions.Standard
             if( user.GUID == callContext.AnonymousUserGUID )
                 throw new InsufficientPermissionsExcention( "Anonymous users cannot delete groups" );
 
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
-                int result = db.Group_Delete( null, Guid.Parse( guid ), user.ID, null );
+				ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
 
-                if( result == -100 )
+                db.Group_Delete( new UUID( guid ).ToByteArray(), user.GUID.ToByteArray(), errorCode );
+
+                if( ( (int) errorCode.Value ) == -100 )
                     throw new InsufficientPermissionsExcention("User has insufficient permissions to delete groups");
 
-                PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
+                PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( 1 ) );
             }
         }
 
@@ -68,14 +79,16 @@ namespace Geckon.Portal.Extensions.Standard
         {
             UserInfo user = callContext.User;
 
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
-                int result = db.Group_Update( newName, newSystemPermission, null, Guid.Parse( guid ), user.ID, null );
+				ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
+                
+				db.Group_Update( newName, BitConverter.GetBytes( newSystemPermission ), new UUID( guid ).ToByteArray(), user.GUID.ToByteArray(), errorCode );
 
-                if( result == -100 )
+                if( ( (int) errorCode.Value ) == -100 )
                     throw new InsufficientPermissionsExcention( "User does not have permission to update group" );
 
-                PortalResult.GetModule("Geckon.Portal").AddResult(new ScalarResult(result));
+                PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( 1 ) );
             }
         }
 

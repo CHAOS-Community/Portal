@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Portal.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -59,7 +60,20 @@
   <ItemGroup>
     <None Include="App.Config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CHAOS.Portal.Data.DTO\CHAOS.Portal.Data.DTO.csproj">
+      <Project>{0DE2E550-6E9E-4B2A-9A53-882C3C9DB519}</Project>
+      <Name>CHAOS.Portal.Data.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Geckon.Portal.Data\Geckon.Portal.Data.csproj">
+      <Project>{97DCBF2B-F655-46C1-8130-201F12B3AE82}</Project>
+      <Name>Geckon.Portal.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\Portal\$(TargetFileName)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

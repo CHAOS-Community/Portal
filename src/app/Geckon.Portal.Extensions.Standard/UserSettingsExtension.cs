@@ -2,9 +2,10 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using CHAOS.Portal.Data.DTO;
+using CHAOS.Portal.Data.EF;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
-using Geckon.Portal.Data;
           
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -12,11 +13,11 @@ namespace Geckon.Portal.Extensions.Standard
     {
         public void Get( CallContext callContext, string clientGUID )
         {
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
                 var moduleResult = PortalResult.GetModule("Geckon.Portal");
 
-                UserSetting userSetting = db.UserSettings_Get( callContext.User.GUID, Guid.Parse(clientGUID)).FirstOrDefault();
+                CHAOS.Portal.Data.DTO.UserSettings userSetting = db.UserSettings_Get( new UUID( clientGUID ).ToByteArray(), callContext.User.GUID.ToByteArray() ).ToDTO().FirstOrDefault();
 
                 if( userSetting == null )
                 {
@@ -32,11 +33,11 @@ namespace Geckon.Portal.Extensions.Standard
         [HttpPost]
         public void Set( CallContext callContext, string clientGUID, string settings )
         {
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
                 var moduleResult = PortalResult.GetModule("Geckon.Portal");
 
-                int result = db.UserSettings_Set( callContext.User.GUID, Guid.Parse( clientGUID ), XElement.Parse( settings ) );
+                int result = db.UserSettings_Set( callContext.User.GUID.ToByteArray(), new UUID( clientGUID ).ToByteArray(), settings );
 
                 if( result == -10 )
                     throw new InvalidProtocolException(  );
@@ -47,11 +48,11 @@ namespace Geckon.Portal.Extensions.Standard
 
         public void Delete( CallContext callContext, string clientGUID )
         {
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
                 var moduleResult = PortalResult.GetModule("Geckon.Portal");
 
-                int result = db.UserSettings_Delete( callContext.User.GUID, Guid.Parse( clientGUID ) );
+                int result = db.UserSettings_Delete( callContext.User.GUID.ToByteArray(), new UUID( clientGUID ).ToByteArray() );
 
                 if( result == -10 )
                     throw new InvalidProtocolException();

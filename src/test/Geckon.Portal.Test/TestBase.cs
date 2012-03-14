@@ -1,6 +1,6 @@
-﻿using System;
+﻿using System.Data.Objects;
 using System.Linq;
-using Geckon.Portal.Data;
+using CHAOS.Portal.Data.EF;
 using NUnit.Framework;
 using Geckon.Portal.Core.Standard.Extension;
 
@@ -11,16 +11,17 @@ namespace Geckon.Portal.Test
     {
         #region Properties
 
-        public Session          Session { get; set; }
+		public Session          AnonymousSession { get; set; }
         public Session          AdminSession { get; set; }
-        public UserInfo         User { get; set; }
-        public UserInfo         AdminUser { get; set; }
-        public Group            AdminGroup { get; set; }
+		public Group            AdminGroup { get; set; }
         public SubscriptionInfo SubscriptionInfo { get; set; }
-        public UserSetting      UserSetting { get; set; }
-        public ClientSetting    ClientSettings { get; set; }
+		public UserSettings     UserSetting { get; set; }
+		public ClientSettings   ClientSettings { get; set; }
         public CallContext      AdminCallContext { get; set; }
         public CallContext      AnonCallContext { get; set; }
+
+		public UserInfo UserAnonymous { get; set; }
+		public UserInfo UserAdministrator { get; set; }
 
         #endregion
         #region Constructions
@@ -28,21 +29,66 @@ namespace Geckon.Portal.Test
         [SetUp]
         public void SetUp()
         {
-            using( PortalDataContext db = PortalDataContext.Default() )
-            {
-                db.PopulateWithDefaultData();
-                Session          = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ) ).First();
-                AdminSession     = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ) ).First();
-                User             = db.UserInfo_Get( Guid.Parse( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ), null, null ).First();
-                AdminUser        = db.UserInfo_Get( Guid.Parse( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ), null, null ).First();
-                AdminGroup       = db.Group_Get( null, Guid.Parse( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ), null, AdminUser.ID ).First();
-                SubscriptionInfo = db.SubscriptionInfo_Get(null, Guid.Parse("9C4E8A99-A69B-41FD-B1C7-E28C54D1D304"), null, AdminUser.ID).First();
-                ClientSettings   = (from clientSetting in db.ClientSettings where clientSetting.GUID.Equals( Guid.Parse("D157698A-86AC-4FDF-A304-F5EA9FB6E0F5") ) select clientSetting).First();  
-                UserSetting      = db.UserSettings_Get( AdminUser.GUID, ClientSettings.GUID ).First();
-            }
+		  //  using( PortalDataContext db = PortalDataContext.Default() )
+		  //  {
+		  //      db.PopulateWithDefaultData();
+		  //  //    AnonymousSession          = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ) ).First();
+		  //  //    AdminSession     = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ) ).First();
+		  //  //    User             = db.UserInfo_Get( Guid.Parse( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ), null, null ).First();
+		  //  //    AdminUser        = db.UserInfo_Get( Guid.Parse( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ), null, null ).First();
+		  //      //AdminGroup       = db.Group_Get( null, Guid.Parse( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ), null, AdminUser.ID ).First();
+		  //  //    SubscriptionInfo = db.SubscriptionInfo_Get(null, Guid.Parse("9C4E8A99-A69B-41FD-B1C7-E28C54D1D304"), null, AdminUser.ID).First();
+		  // //     ClientSettings   = (from clientSetting in db.ClientSettings where clientSetting.GUID.Equals( Guid.Parse("D157698A-86AC-4FDF-A304-F5EA9FB6E0F5") ) select clientSetting).First();  
+		  ////      UserSetting      = db.UserSettings_Get( AdminUser.GUID, ClientSettings.GUID ).First();
+		  //  }
 
-            AdminCallContext = new CallContext( new MockCache(), new MockSolrManager(), AdminSession.SessionID.ToString() );
-            AnonCallContext  = new CallContext( new MockCache(), new MockSolrManager(), Session.SessionID.ToString() );
+        	using( PortalEntities db = new PortalEntities() )
+        	{
+				ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
+
+        		db.PreTest();
+
+				db.Permission_Create("Group", 0x01, "DELETE",    "Permission to Delete Group");
+				db.Permission_Create("Group", 0x02, "UPDATE", "Permission to Update Group");
+				db.Permission_Create("Group", 0x04, "GET", "Permission to Get Group");
+				db.Permission_Create("Group", 0x08, "ADD_USER",  "Permission to Add a User to the group");
+				db.Permission_Create("Group", 0x10, "LIST_USER", "Permission to list users in the group");
+
+				db.Permission_Create("Subscription", 0x01, "CREATE_USER", "Permission to Create new users");
+				db.Permission_Create("Subscription", 0x02, "GET",         "Permission to Get Subscription");
+				db.Permission_Create("Subscription", 0x04, "DELETE",      "Permission to Delete Subscription");
+				db.Permission_Create("Subscription", 0x08, "UPDATE",      "Permission to Update Subscription");
+				db.Permission_Create("Subscription", 0x10, "MANAGE",      "Permission to Manage Subscription");
+
+				db.Permission_Create("System", 0x01, "CREATE_GROUP",        "Permission to Create a Group");
+				db.Permission_Create("System", 0x02, "CREATE_SUBSCRIPTION", "Permission to Create a Subscription");
+				db.Permission_Create("System", 0x04, "MANAGE",              "Permissoin to Manage the system");
+
+				db.User_Create( new UUID( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), "anon@ymo.us" );
+				db.User_Create( new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), "admin@domain.xx" );
+				db.Session_Create( new UUID( "12345678-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), new UUID( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray() );
+				db.Session_Create( new UUID( "23456789-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray() );
+        		db.Group_Create( new UUID( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ).ToByteArray(), "Administrators", null, int.MaxValue, errorCode );
+				db.Group_AssociateWithUser( new UUID( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), int.MaxValue, null, errorCode );
+				db.Subscription_Create(new UUID("9C4E8A99-A69B-41FD-B1C7-E28C54D1D304").ToByteArray(), "some subscription", new UUID("A0B231E9-7D98-4F52-885E-AF4837FAA352").ToByteArray(), errorCode);
+
+				System.Console.WriteLine("ErrorCode: " + errorCode.Value);
+				UserAnonymous     = db.UserInfo_Get( new UUID( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), null ).First();
+				UserAdministrator = db.UserInfo_Get( new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), null ).First();
+
+				AnonymousSession = db.Session_Get( new UUID( "12345678-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), new UUID( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray() ).First();
+				AdminSession     = db.Session_Get( new UUID( "23456789-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray() ).First();
+
+				AdminGroup = db.Group_Get( new UUID( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ).ToByteArray(), null, null ).First();
+
+				SubscriptionInfo = db.SubscriptionInfo_Get( new UUID("9C4E8A99-A69B-41FD-B1C7-E28C54D1D304").ToByteArray(), UserAdministrator.GUID.ToByteArray() ).First();
+
+
+
+        	}
+
+            AdminCallContext = new CallContext( new MockCache(), new MockSolrManager(), AdminSession.GUID.ToString() );
+            AnonCallContext  = new CallContext( new MockCache(), new MockSolrManager(), AnonymousSession.GUID.ToString() );
         }
 
         [TearDown]

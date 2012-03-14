@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
+using CHAOS.Portal.Data.DTO;
+using CHAOS.Portal.Data.EF;
 using Geckon.Portal.Core.Standard.Extension;
-using Geckon.Portal.Data;
 using Geckon.Portal.Data.Result;
 
 namespace Geckon.Portal.Extensions.Standard
@@ -10,28 +11,27 @@ namespace Geckon.Portal.Extensions.Standard
     {
         #region Get
 
-        public void Get(CallContext callContext)
+        public void Get( CallContext callContext )
         {
             IModuleResult module = PortalResult.GetModule("Geckon.Portal");
 
-            Session session = callContext.Cache.Get<Session>( string.Format( "[Session:sid={0}]", callContext.SessionID ) );
-            int? totalCount = 1;
+			CHAOS.Portal.Data.DTO.Session session = callContext.Cache.Get<CHAOS.Portal.Data.DTO.Session>( string.Format( "[Session:sid={0}]", callContext.SessionGUID ) );
 
-            if (session == null)
+            if( session == null )
             {
-                using (PortalDataContext db = PortalDataContext.Default())
+                using( PortalEntities db = new PortalEntities() )
                 {
 
-                    session = db.Session_Get( callContext.SessionID, null, 0, null, ref totalCount).First();
+                    session = db.Session_Get( callContext.SessionGUID.Value.ToByteArray(), null ).ToDTO().First();
 
-                    callContext.Cache.Put( string.Format( "[Session:sid={0}]", callContext.SessionID ),
+                    callContext.Cache.Put( string.Format( "[Session:sid={0}]", callContext.SessionGUID ),
                                            session,
-                                           new TimeSpan(0, 1, 0));
+                                           new TimeSpan( 0, 1, 0 ) );
                 }
             }
 
             
-            module.AddResult(session);
+            module.AddResult( session );
         } 
 
         #endregion
@@ -42,10 +42,13 @@ namespace Geckon.Portal.Extensions.Standard
             // TODO: Check protocol version
             // TODO: Add Module filtering
 
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( db.Session_Insert( null, 
-                                                                                        callContext.AnonymousUserGUID ).First() );
+            	UUID sessionGUID = new UUID();
+
+				db.Session_Create( sessionGUID.ToByteArray(), callContext.AnonymousUserGUID.ToByteArray() );
+
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( db.Session_Get( sessionGUID.ToByteArray(), null ).ToDTO().First() );
             }
         }
 
@@ -54,12 +57,12 @@ namespace Geckon.Portal.Extensions.Standard
 
         public void Update( CallContext callContext )
         {
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( db.Session_Update( null, 
-                                                                                        null, 
-                                                                                        callContext.SessionID, 
-                                                                                        null ).First() );
+				db.Session_Update( null, callContext.SessionGUID.Value.ToByteArray(), callContext.User.GUID.ToByteArray() );
+                
+				PortalResult.GetModule( "Geckon.Portal" ).AddResult( db.Session_Get( callContext.SessionGUID.Value.ToByteArray(),
+					                                                 callContext.User.GUID.ToByteArray() ).ToDTO().First() );
             }
         }
 
@@ -68,10 +71,11 @@ namespace Geckon.Portal.Extensions.Standard
 
         public void Delete( CallContext callContext )
         {
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
-                PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( db.Session_Delete( callContext.SessionID, 
-                                                                                                          null ) ) );
+				int result = db.Session_Delete( callContext.SessionGUID.Value.ToByteArray(), null );
+
+                PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
             }
         }
 

@@ -122,10 +122,7 @@
     <Content Include="Extensions\EmailPasswordExtension.dll" />
     <Content Include="Extensions\Geckon.GeoLocator.PortalExtension.dll" />
     <Content Include="Extensions\Geckon.MCM.Extension.dll" />
-    <Content Include="Extensions\Geckon.Portal.Extensions.Object.Standard.dll" />
-    <Content Include="Extensions\Geckon.Portal.Extensions.Session.Standard.dll" />
     <Content Include="Extensions\Geckon.Portal.Extensions.Standard.dll" />
-    <Content Include="Extensions\Geckon.Portal.Extensions.WorkflowJob.dll" />
     <Content Include="Extensions\SecureCookieExtension.dll" />
     <Content Include="Extensions\UploadExtension.dll" />
     <Content Include="Global.asax" />

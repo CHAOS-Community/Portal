@@ -5,10 +5,11 @@ using System.IO;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Xml.Linq;
+using CHAOS.Portal.Data.EF;
 using Geckon.Portal.Core.Module;
 using Geckon.Portal.Core.Standard;
 using Geckon.Portal.Core.Standard.Extension;
-using Geckon.Portal.Data;
 using Geckon.Index.Solr;
 
 namespace Geckon.Portal
@@ -50,18 +51,18 @@ namespace Geckon.Portal
             PortalContext = new PortalContext();
 
             // TODO: Assemblies should not just be loaded at application start
-            using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
+            using( PortalEntities db = new PortalEntities( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
                 foreach( Extension extension in db.Extension_Get( null, null ) )
                 {
-                    PortalContext.RegisterExtension( new ExtensionLoader( extension, this ) );
+                    PortalContext.RegisterExtension( new ExtensionLoader( extension.ToDTO(), this ) );
                 }
             }
 
             // TODO: Implement way of loading modules on the fly
-            using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
+            using( PortalEntities db = new PortalEntities( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
             {
-                foreach( Data.Module module in db.Module_Get( null, null ) )
+                foreach( CHAOS.Portal.Data.DTO.Module module in db.Module_Get( null, null ).ToDTO() )
                 {
                     Assembly assembly = Assembly.LoadFile( Path.Combine( ServiceDirectoryPath, "Modules", module.Path ) );
 
@@ -71,16 +72,18 @@ namespace Geckon.Portal
                         {
                             IModule portalModule = (IModule) assembly.CreateInstance( classType.FullName );
 
-                            portalModule.Init( PortalContext, module.Configuration );
+                            portalModule.Init( PortalContext, XElement.Parse( module.Configuration ) );
 
                             PortalContext.RegisterModule( portalModule );
 
                             // Initializes index per module
-                            IndexSetting indexSettings = db.IndexSettings_Get( module.ID ).FirstOrDefault();
+                            var indexSettings = db.IndexSettings_Get( (int) module.ID ).FirstOrDefault();
                     
                             if( indexSettings != null )
                             {
-                                foreach( string url in indexSettings.Settings.Elements("Core").Select( core => core.Attribute( "url" ).Value ) )
+								XElement xml = XElement.Parse( indexSettings.Settings );
+
+                                foreach( string url in xml.Elements("Core").Select( core => core.Attribute( "url" ).Value ) )
 	                            {
                                     IndexManager.AddIndex( portalModule.Name, new SolrCoreConnection( url ) );
 	                            }    

@@ -47,7 +47,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             UserExtension extension = new UserExtension();
 
             extension.Init( new PortalContextMock() );
-            extension.Delete( AnonCallContext, User.GUID.ToString() );
+            extension.Delete( AnonCallContext, UserAnonymous.GUID.ToString() );
 
             Assert.AreEqual("1", XDocument.Parse(extension.Result).Descendants("Value").First().Value);
         }

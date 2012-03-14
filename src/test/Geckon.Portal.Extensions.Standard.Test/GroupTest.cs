@@ -2,10 +2,10 @@
 using System.Configuration;
 using System.Linq;
 using System.Xml.Linq;
+using CHAOS.Portal.Data.EF;
 using Geckon.Portal.Core;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
-using Geckon.Portal.Data;
 using Geckon.Portal.Test;
 using NUnit.Framework;
 
@@ -71,10 +71,10 @@ namespace Geckon.Portal.Extensions.Standard.Test
             GroupExtension extension = new GroupExtension();
             extension.Init( new PortalContextMock() );
 
-            using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
+            using( PortalEntities db = new PortalEntities( ) )
             {
-                Guid guid = Guid.NewGuid();
-                int result = db.Group_Insert( guid, "no permission", 0, AdminUser.ID );
+                UUID guid = new UUID();
+                db.Group_Create( guid.ToByteArray(), "no permission",UserAdministrator.GUID.ToByteArray(), 0x00, null );
 
                 extension.Delete( AnonCallContext, guid.ToString() );
             }            
@@ -89,9 +89,9 @@ namespace Geckon.Portal.Extensions.Standard.Test
             
             extension.Update( AdminCallContext, AdminGroup.GUID.ToString(), "success", 0 );
 
-            using( PortalDataContext db = new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
+            using( PortalEntities db = new PortalEntities( ) )
             {
-                Group group = db.Group_Get( int.Parse( XDocument.Parse( extension.Result ).Descendants("Value").First().Value), null, null, AdminUser.ID).First();
+                Group group = db.Group_Get( AdminGroup.GUID.ToByteArray(), null, UserAdministrator.GUID.ToByteArray() ).First();
 
                 Assert.AreEqual("success", group.Name );
             }
@@ -103,7 +103,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             GroupExtension extension = new GroupExtension();
 
             extension.Init( new PortalContextMock() );
-            extension.Update( AnonCallContext, AdminGroup.GUID.ToString(), "hj", BitConverter.ToInt32( AdminGroup.SystemPermission.ToArray(), 0 ) );
+            extension.Update( AnonCallContext, AdminGroup.GUID.ToString(), "hj", (int) AdminGroup.SystemPermission );
         }
     }
 }

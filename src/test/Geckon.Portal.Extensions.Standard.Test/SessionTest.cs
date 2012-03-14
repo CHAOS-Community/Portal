@@ -17,7 +17,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             sessionExtension.Init( new PortalContextMock() );
             sessionExtension.Create( AnonCallContext, 3 );
 
-            Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionID").FirstOrDefault() );
+            Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionGUID").FirstOrDefault() );
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             sessionExtension.Init( new PortalContextMock() );
             sessionExtension.Get( AnonCallContext );
 
-            Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionID").FirstOrDefault() );
+            Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionGUID").FirstOrDefault() );
         }
 
         [Test]
@@ -37,10 +37,10 @@ namespace Geckon.Portal.Extensions.Standard.Test
             SessionExtension sessionExtension = new SessionExtension();
 
             sessionExtension.Init( new PortalContextMock() );
-            sessionExtension.Update( AnonCallContext );
+            sessionExtension.Update( AdminCallContext );
 
-            Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionID").FirstOrDefault() );
-            Assert.AreNotEqual( Session.DateModified.ToString(), XDocument.Parse( sessionExtension.Result ).Descendants("DateModified").FirstOrDefault().Value );
+            Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionGUID").FirstOrDefault() );
+            Assert.AreNotEqual( AdminSession.DateModified.Value.ToString(), XDocument.Parse( sessionExtension.Result ).Descendants("DateModified").FirstOrDefault().Value );
         }
 
         [Test]
