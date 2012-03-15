@@ -4,6 +4,7 @@ using CHAOS.Portal.Data.DTO;
 using CHAOS.Portal.Data.EF;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data.Result;
+using Session = CHAOS.Portal.Data.DTO.Session;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -22,7 +23,7 @@ namespace Geckon.Portal.Extensions.Standard
                 using( PortalEntities db = new PortalEntities() )
                 {
 
-                    session = db.Session_Get( callContext.SessionGUID.Value.ToByteArray(), null ).ToDTO().First();
+                    session = db.Session_Get( callContext.SessionGUID.ToByteArray(), null ).ToDTO().First();
 
                     callContext.Cache.Put( string.Format( "[Session:sid={0}]", callContext.SessionGUID ),
                                            session,
@@ -59,10 +60,11 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalEntities db = new PortalEntities() )
             {
-				db.Session_Update( null, callContext.SessionGUID.Value.ToByteArray(), callContext.User.GUID.ToByteArray() );
-                
-				PortalResult.GetModule( "Geckon.Portal" ).AddResult( db.Session_Get( callContext.SessionGUID.Value.ToByteArray(),
-					                                                 callContext.User.GUID.ToByteArray() ).ToDTO().First() );
+				db.Session_Update( null, callContext.SessionGUID.ToByteArray(), callContext.User.GUID.ToByteArray() );
+
+				Session session = db.Session_Get( callContext.SessionGUID.ToByteArray(), callContext.User.GUID.ToByteArray() ).ToDTO().First();
+
+				PortalResult.GetModule( "Geckon.Portal" ).AddResult( session );
             }
         }
 
@@ -73,7 +75,7 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalEntities db = new PortalEntities() )
             {
-				int result = db.Session_Delete( callContext.SessionGUID.Value.ToByteArray(), null );
+				int result = db.Session_Delete( callContext.SessionGUID.ToByteArray(), null );
 
                 PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
             }

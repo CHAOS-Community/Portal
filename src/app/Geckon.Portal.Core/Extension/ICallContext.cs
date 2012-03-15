@@ -7,7 +7,7 @@ namespace Geckon.Portal.Core.Extension
 {
     public interface ICallContext
     {
-        Guid? SessionGUID { get; set; }
+        UUID SessionGUID { get; set; }
 		UserInfo User { get; }
         UUID AnonymousUserGUID { get; }
         ICache Cache { get; }

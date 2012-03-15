@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UnhandledException.cs" />
     <Compile Include="SessionDoesNotExist.cs" />
     <Compile Include="ExtensionMissingException.cs" />
     <Compile Include="InsufficientPermissionsExcention.cs" />

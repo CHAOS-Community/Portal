@@ -11,17 +11,17 @@ namespace Geckon.Portal.Test
     {
         #region Properties
 
-		public Session          AnonymousSession { get; set; }
-        public Session          AdminSession { get; set; }
-		public Group            AdminGroup { get; set; }
-        public SubscriptionInfo SubscriptionInfo { get; set; }
-		public UserSettings     UserSetting { get; set; }
+		public CHAOS.Portal.Data.DTO.Session          AnonymousSession { get; set; }
+        public CHAOS.Portal.Data.DTO.Session          AdminSession { get; set; }
+		public CHAOS.Portal.Data.DTO.Group            AdminGroup { get; set; }
+        public CHAOS.Portal.Data.DTO.SubscriptionInfo SubscriptionInfo { get; set; }
+		public CHAOS.Portal.Data.DTO.UserSettings     UserSetting { get; set; }
 		public ClientSettings   ClientSettings { get; set; }
         public CallContext      AdminCallContext { get; set; }
         public CallContext      AnonCallContext { get; set; }
 
-		public UserInfo UserAnonymous { get; set; }
-		public UserInfo UserAdministrator { get; set; }
+		public CHAOS.Portal.Data.DTO.UserInfo UserAnonymous { get; set; }
+		public CHAOS.Portal.Data.DTO.UserInfo UserAdministrator { get; set; }
 
         #endregion
         #region Constructions
@@ -72,16 +72,15 @@ namespace Geckon.Portal.Test
 				db.Group_AssociateWithUser( new UUID( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), int.MaxValue, null, errorCode );
 				db.Subscription_Create(new UUID("9C4E8A99-A69B-41FD-B1C7-E28C54D1D304").ToByteArray(), "some subscription", new UUID("A0B231E9-7D98-4F52-885E-AF4837FAA352").ToByteArray(), errorCode);
 
-				System.Console.WriteLine("ErrorCode: " + errorCode.Value);
-				UserAnonymous     = db.UserInfo_Get( new UUID( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), null ).First();
-				UserAdministrator = db.UserInfo_Get( new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), null ).First();
+				UserAnonymous     = db.UserInfo_Get( new UUID( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), null ).ToDTO().First();
+				UserAdministrator = db.UserInfo_Get( new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), null ).ToDTO().First();
 
-				AnonymousSession = db.Session_Get( new UUID( "12345678-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), new UUID( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray() ).First();
-				AdminSession     = db.Session_Get( new UUID( "23456789-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray() ).First();
+				AnonymousSession = db.Session_Get( new UUID( "12345678-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), new UUID( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray() ).ToDTO().First();
+				AdminSession     = db.Session_Get( new UUID( "23456789-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray() ).ToDTO().First();
 
-				AdminGroup = db.Group_Get( new UUID( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ).ToByteArray(), null, null ).First();
+				AdminGroup = db.Group_Get( new UUID( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ).ToByteArray(), null, null ).ToDTO().First();
 
-				SubscriptionInfo = db.SubscriptionInfo_Get( new UUID("9C4E8A99-A69B-41FD-B1C7-E28C54D1D304").ToByteArray(), UserAdministrator.GUID.ToByteArray() ).First();
+				SubscriptionInfo = db.SubscriptionInfo_Get( new UUID("9C4E8A99-A69B-41FD-B1C7-E28C54D1D304").ToByteArray(), UserAdministrator.GUID.ToByteArray() ).ToDTO().First();
 
 
 

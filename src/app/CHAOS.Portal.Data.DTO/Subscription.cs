@@ -1,6 +1,7 @@
 ﻿using System;
 using Geckon;
 using Geckon.Portal.Data.Result.Standard;
+using Geckon.Serialization;
 
 namespace CHAOS.Portal.Data.DTO
 {
@@ -8,8 +9,13 @@ namespace CHAOS.Portal.Data.DTO
 	{
 		#region Properties
 
+		[Serialize]
 		public UUID     GUID { get; set; }
+
+		[Serialize]
 		public string   Name { get; set; }
+
+		[Serialize]
 		public DateTime DateCreated { get; set; }
 
 		#endregion

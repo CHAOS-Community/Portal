@@ -16,7 +16,7 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         public ICache Cache { get; private set; }
         public IIndexManager IndexManager { get; private set; }
-        public Guid? SessionGUID { get; set; }
+        public UUID SessionGUID { get; set; }
 
 		public CHAOS.Portal.Data.DTO.UserInfo User
         {
@@ -28,7 +28,7 @@ namespace Geckon.Portal.Core.Standard.Extension
                 {
 					using( PortalEntities db = new PortalEntities() )
                     {
-                        userInfo = db.UserInfo_Get( null, SessionGUID.Value.ToByteArray() ).ToDTO().FirstOrDefault();
+                        userInfo = db.UserInfo_Get( null, SessionGUID.ToByteArray() ).ToDTO().FirstOrDefault();
 
                         if( userInfo == null )
                             throw new SessionDoesNotExist( "Session has expired" );
@@ -85,7 +85,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         {
             Cache        = cache;
             IndexManager = indexManager;
-            SessionGUID    = String.IsNullOrEmpty( sessionID ) ? (Guid?) null : Guid.Parse( sessionID );
+            SessionGUID    = String.IsNullOrEmpty( sessionID ) ? (UUID) null : new UUID( sessionID );
         }
 
         #endregion

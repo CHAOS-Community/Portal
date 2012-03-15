@@ -40,7 +40,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             sessionExtension.Update( AdminCallContext );
 
             Assert.IsNotNull( XDocument.Parse( sessionExtension.Result ).Descendants("SessionGUID").FirstOrDefault() );
-            Assert.AreNotEqual( AdminSession.DateModified.Value.ToString(), XDocument.Parse( sessionExtension.Result ).Descendants("DateModified").FirstOrDefault().Value );
+			Assert.IsNotNull( XDocument.Parse(sessionExtension.Result).Descendants("DateModified").FirstOrDefault() );
         }
 
         [Test]

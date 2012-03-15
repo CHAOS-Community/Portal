@@ -41,9 +41,12 @@ namespace Geckon.Portal.Extensions.Standard
 				ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
 
             	db.Group_Create( guid.ToByteArray(), name, user.GUID.ToByteArray(), systemPermission, errorCode );
-
+	
 				if( ( (int) errorCode.Value ) == -100 )
                     throw new InsufficientPermissionsExcention("User has insufficient permissions to delete groups");
+
+				if( ( (int) errorCode.Value ) == -200 )
+                    throw new UnhandledException("Group_Create was rolled back");
 
                 PortalResult.GetModule("Geckon.Portal").AddResult( db.Group_Get( guid.ToByteArray(), null, user.GUID.ToByteArray() ).ToDTO().First() );
             }

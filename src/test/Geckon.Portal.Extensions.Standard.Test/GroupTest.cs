@@ -1,11 +1,7 @@
-﻿using System;
-using System.Configuration;
-using System.Linq;
+﻿using System.Linq;
 using System.Xml.Linq;
 using CHAOS.Portal.Data.EF;
-using Geckon.Portal.Core;
 using Geckon.Portal.Core.Exception;
-using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Test;
 using NUnit.Framework;
 
