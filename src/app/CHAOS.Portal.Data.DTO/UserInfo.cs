@@ -1,6 +1,7 @@
 ﻿using System;
 using Geckon;
 using Geckon.Portal.Data.Result.Standard;
+using Geckon.Serialization;
 
 namespace CHAOS.Portal.Data.DTO
 {
@@ -8,11 +9,22 @@ namespace CHAOS.Portal.Data.DTO
 	{
 		#region Properties
 
+		[Serialize]
 		public UUID GUID { get; set; }
+
+		[Serialize]
 		public UUID SessionGUID { get; set; }
+
+		[Serialize]
 		public long? SystemPermissions { get; set; }
+
+		[Serialize]
 		public string Email { get; set; }
+
+		[Serialize]
 		public DateTime? SessionDateCreated { get; set; }
+
+		[Serialize]
 		public DateTime? SessionDateModified { get; set; }
 
 		#endregion

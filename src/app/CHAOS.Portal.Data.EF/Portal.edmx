@@ -687,6 +687,14 @@
             <Parameter Name="ErrorCode" Mode="Out" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="UserInfo" EntityType="PortalModel.UserInfo" />
+          <FunctionImport Name="ClientSetting_Create">
+            <Parameter Name="GUID" Mode="In" Type="Binary" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Settings" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ClientSettings_Get" EntitySet="ClientSettings" ReturnType="Collection(PortalModel.ClientSettings)">
+            <Parameter Name="GUID" Mode="In" Type="Binary" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="ClientSettings">
           <Key>
@@ -1140,6 +1148,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ClientSetting_Create" FunctionName="PortalModel.Store.ClientSetting_Create" />
+          <FunctionImportMapping FunctionImportName="ClientSettings_Get" FunctionName="PortalModel.Store.ClientSettings_Get" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

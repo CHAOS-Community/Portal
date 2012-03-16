@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using CHAOS.Portal.Data.EF;
 using Geckon.Portal.Core.Standard.Extension;
-using Geckon.Portal.Data;
+using ClientSettings = CHAOS.Portal.Data.DTO.ClientSettings;
 
 namespace Geckon.Portal.Extensions.Standard
 {
@@ -11,9 +11,9 @@ namespace Geckon.Portal.Extensions.Standard
 
         public void Get( CallContext callContext, string guid )
         {
-            using( PortalDataContext db = PortalDataContext.Default() )
+            using( PortalEntities db = new PortalEntities() )
             {
-                ClientSetting client = db.ClientSettings_Get( Guid.Parse( guid ) ).First();
+                ClientSettings client = db.ClientSettings_Get( new UUID( guid ).ToByteArray() ).ToDTO().First();
 
                 PortalResult.GetModule("Geckon.Portal").AddResult(client);
             }

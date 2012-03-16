@@ -38,7 +38,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             extension.Init( new PortalContextMock() );
             extension.Get( AnonCallContext );
 
-            Assert.AreEqual("Anonymous", XDocument.Parse(extension.Result).Descendants("Firstname").First().Value);
+            Assert.AreEqual("anon@ymo.us", XDocument.Parse(extension.Result).Descendants("Email").First().Value);
         }
 
         [Test]

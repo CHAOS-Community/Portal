@@ -16,7 +16,7 @@ namespace Geckon.Portal.Test
 		public CHAOS.Portal.Data.DTO.Group            AdminGroup { get; set; }
         public CHAOS.Portal.Data.DTO.SubscriptionInfo SubscriptionInfo { get; set; }
 		public CHAOS.Portal.Data.DTO.UserSettings     UserSetting { get; set; }
-		public ClientSettings   ClientSettings { get; set; }
+		public CHAOS.Portal.Data.DTO.ClientSettings   ClientSettings { get; set; }
         public CallContext      AdminCallContext { get; set; }
         public CallContext      AnonCallContext { get; set; }
 
@@ -29,19 +29,6 @@ namespace Geckon.Portal.Test
         [SetUp]
         public void SetUp()
         {
-		  //  using( PortalDataContext db = PortalDataContext.Default() )
-		  //  {
-		  //      db.PopulateWithDefaultData();
-		  //  //    AnonymousSession          = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ) ).First();
-		  //  //    AdminSession     = db.Session_Insert( Guid.NewGuid(), Guid.Parse( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ) ).First();
-		  //  //    User             = db.UserInfo_Get( Guid.Parse( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ), null, null ).First();
-		  //  //    AdminUser        = db.UserInfo_Get( Guid.Parse( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ), null, null ).First();
-		  //      //AdminGroup       = db.Group_Get( null, Guid.Parse( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ), null, AdminUser.ID ).First();
-		  //  //    SubscriptionInfo = db.SubscriptionInfo_Get(null, Guid.Parse("9C4E8A99-A69B-41FD-B1C7-E28C54D1D304"), null, AdminUser.ID).First();
-		  // //     ClientSettings   = (from clientSetting in db.ClientSettings where clientSetting.GUID.Equals( Guid.Parse("D157698A-86AC-4FDF-A304-F5EA9FB6E0F5") ) select clientSetting).First();  
-		  ////      UserSetting      = db.UserSettings_Get( AdminUser.GUID, ClientSettings.GUID ).First();
-		  //  }
-
         	using( PortalEntities db = new PortalEntities() )
         	{
 				ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
@@ -71,6 +58,9 @@ namespace Geckon.Portal.Test
         		db.Group_Create( new UUID( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ).ToByteArray(), "Administrators", null, int.MaxValue, errorCode );
 				db.Group_AssociateWithUser( new UUID( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), int.MaxValue, null, errorCode );
 				db.Subscription_Create(new UUID("9C4E8A99-A69B-41FD-B1C7-E28C54D1D304").ToByteArray(), "some subscription", new UUID("A0B231E9-7D98-4F52-885E-AF4837FAA352").ToByteArray(), errorCode);
+				db.ClientSetting_Create( new UUID( "9EEE8A99-A69B-41FD-B1C7-E28C54D1D305" ).ToByteArray(), "NUnit", "<xml>settings</xml>" );
+				db.UserSettings_Set( new UUID( "9EEE8A99-A69B-41FD-B1C7-E28C54D1D305" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), "<xml>settings</xml>" );
+				db.UserSettings_Set( new UUID( "9EEE8A99-A69B-41FD-B1C7-E28C54D1D305" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), "<xml>settings</xml>" );
 
 				UserAnonymous     = db.UserInfo_Get( new UUID( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), null ).ToDTO().First();
 				UserAdministrator = db.UserInfo_Get( new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), null ).ToDTO().First();
@@ -81,9 +71,8 @@ namespace Geckon.Portal.Test
 				AdminGroup = db.Group_Get( new UUID( "A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA" ).ToByteArray(), null, null ).ToDTO().First();
 
 				SubscriptionInfo = db.SubscriptionInfo_Get( new UUID("9C4E8A99-A69B-41FD-B1C7-E28C54D1D304").ToByteArray(), UserAdministrator.GUID.ToByteArray() ).ToDTO().First();
-
-
-
+				ClientSettings = db.ClientSettings_Get( new UUID( "9EEE8A99-A69B-41FD-B1C7-E28C54D1D305" ).ToByteArray() ).ToDTO().First();
+				UserSetting = db.UserSettings_Get( new UUID( "9EEE8A99-A69B-41FD-B1C7-E28C54D1D305" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray() ).ToDTO().First();
         	}
 
             AdminCallContext = new CallContext( new MockCache(), new MockSolrManager(), AdminSession.GUID.ToString() );

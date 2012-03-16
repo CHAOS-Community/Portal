@@ -71,6 +71,9 @@ namespace Geckon.Portal.Extensions.Standard
                 if( ( (int) errorCode.Value ) == -100 )
                     throw new InsufficientPermissionsExcention("User has insufficient permissions to delete groups");
 
+				if( ( (int) errorCode.Value ) == -200 )
+					throw new UnhandledException("Group_Delete was rolled back");
+
                 PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( 1 ) );
             }
         }

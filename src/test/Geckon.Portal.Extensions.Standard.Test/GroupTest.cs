@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Objects;
+using System.Linq;
 using System.Xml.Linq;
 using CHAOS.Portal.Data.EF;
 using Geckon.Portal.Core.Exception;
@@ -29,7 +30,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             extension.Init( new PortalContextMock() );
             extension.Create( AdminCallContext, "my group", 0 );
             
-            Assert.Greater( int.Parse( XDocument.Parse( extension.Result ).Descendants("Value").First().Value ), 0 );
+            Assert.AreEqual( "my group", XDocument.Parse( extension.Result ).Descendants("Name").First().Value );
         }
 
         [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
@@ -69,8 +70,10 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             using( PortalEntities db = new PortalEntities( ) )
             {
-                UUID guid = new UUID();
-                db.Group_Create( guid.ToByteArray(), "no permission",UserAdministrator.GUID.ToByteArray(), 0x00, null );
+                UUID            guid = new UUID();
+				ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
+
+                db.Group_Create( guid.ToByteArray(), "no permission",UserAdministrator.GUID.ToByteArray(), 0x00, errorCode );
 
                 extension.Delete( AnonCallContext, guid.ToString() );
             }            

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientSettings.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="IndexSettings.cs" />

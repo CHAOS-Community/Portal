@@ -37,7 +37,7 @@ namespace Geckon.Portal.Extensions.Standard
             {
                 var moduleResult = PortalResult.GetModule("Geckon.Portal");
 
-                int result = db.UserSettings_Set( callContext.User.GUID.ToByteArray(), new UUID( clientGUID ).ToByteArray(), settings );
+                int result = db.UserSettings_Set( new UUID( clientGUID ).ToByteArray(), callContext.User.GUID.ToByteArray(), settings );
 
                 if( result == -10 )
                     throw new InvalidProtocolException(  );

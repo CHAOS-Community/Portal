@@ -1576,6 +1576,85 @@ namespace CHAOS.Portal.Data.EF
     
             return base.ExecuteFunction("Group_Create", gUIDParameter, nameParameter, requestUserGUIDParameter, systemPermissionParameter, errorCode);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="settings">No Metadata Documentation available.</param>
+        public int ClientSetting_Create(global::System.Byte[] gUID, global::System.String name, global::System.String settings)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter settingsParameter;
+            if (settings != null)
+            {
+                settingsParameter = new ObjectParameter("Settings", settings);
+            }
+            else
+            {
+                settingsParameter = new ObjectParameter("Settings", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("ClientSetting_Create", gUIDParameter, nameParameter, settingsParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        public ObjectResult<ClientSettings> ClientSettings_Get(global::System.Byte[] gUID)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<ClientSettings>("ClientSettings_Get", gUIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        public ObjectResult<ClientSettings> ClientSettings_Get(global::System.Byte[] gUID, MergeOption mergeOption)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<ClientSettings>("ClientSettings_Get", mergeOption, gUIDParameter);
+        }
 
         #endregion
     }

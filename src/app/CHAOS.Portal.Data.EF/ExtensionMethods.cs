@@ -60,6 +60,15 @@ namespace CHAOS.Portal.Data.EF
 		}
 
 		#endregion
+		#region ClientSettings
+
+		public static IEnumerable<DTO.ClientSettings> ToDTO(this IEnumerable<ClientSettings> list)
+		{
+			foreach( ClientSettings clientSettings in list )
+				yield return new DTO.ClientSettings( clientSettings.GUID.ToByteArray(), clientSettings.Name, clientSettings.Settings, clientSettings.DateCreated );
+		}
+
+		#endregion
 		public static IEnumerable<DTO.UserSettings> ToDTO(this IEnumerable<UserSettings> list)
 		{
 			foreach( UserSettings userSettings in list )
