@@ -32,7 +32,7 @@ namespace Geckon.Portal.Extensions.Standard
         {
             UserInfo user = callContext.User;
 
-            if( user.GUID == callContext.AnonymousUserGUID )
+            if( user.GUID.ToString() == callContext.AnonymousUserGUID.ToUUID().ToString() )
                 throw new InsufficientPermissionsExcention( "Anonymous users cannot create groups" );
 
             using( PortalEntities db = new PortalEntities() )
@@ -59,7 +59,7 @@ namespace Geckon.Portal.Extensions.Standard
         {
             UserInfo user = callContext.User;
 
-            if( user.GUID == callContext.AnonymousUserGUID )
+            if( user.GUID.ToString() == callContext.AnonymousUserGUID.ToUUID().ToString() )
                 throw new InsufficientPermissionsExcention( "Anonymous users cannot delete groups" );
 
             using( PortalEntities db = new PortalEntities() )

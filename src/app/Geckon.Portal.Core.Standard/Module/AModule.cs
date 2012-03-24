@@ -68,11 +68,6 @@ namespace Geckon.Portal.Core.Standard.Module
 
         #region Data
 
-        protected PortalDataContext GetNewPortalDataContext()
-        {
-            return new PortalDataContext( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString );
-        }
-
         #endregion
         #region Method call
 

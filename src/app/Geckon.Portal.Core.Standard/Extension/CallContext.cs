@@ -16,20 +16,23 @@ namespace Geckon.Portal.Core.Standard.Extension
 
         public ICache Cache { get; private set; }
         public IIndexManager IndexManager { get; private set; }
-        public UUID SessionGUID { get; set; }
+        public Guid? SessionGUID { get; set; }
 
 		public CHAOS.Portal.Data.DTO.UserInfo User
         {
             get
             {
+				if( !SessionGUID.HasValue )
+					throw new NullReferenceException( "SessionGUID cann't be null" );
+
 				CHAOS.Portal.Data.DTO.UserInfo userInfo = Cache.Get<CHAOS.Portal.Data.DTO.UserInfo>(string.Format("[UserInfo:sid={0}]", SessionGUID));
 
                 if( userInfo == null )
                 {
 					using( PortalEntities db = new PortalEntities() )
                     {
-                        userInfo = db.UserInfo_Get( null, SessionGUID.ToByteArray() ).ToDTO().FirstOrDefault();
-
+                        userInfo = db.UserInfo_Get( null, SessionGUID.Value.ToByteArray() ).ToDTO().FirstOrDefault();
+						System.Console.WriteLine(SessionGUID.Value);
                         if( userInfo == null )
                             throw new SessionDoesNotExist( "Session has expired" );
 
@@ -43,7 +46,7 @@ namespace Geckon.Portal.Core.Standard.Extension
             }
         }
 
-        public UUID AnonymousUserGUID
+        public Guid AnonymousUserGUID
         {
             get
             {
@@ -52,7 +55,7 @@ namespace Geckon.Portal.Core.Standard.Extension
                 if( string.IsNullOrEmpty( guid ) )
                     guid = ConfigurationManager.AppSettings["AnonymousUserGUID"];
 
-                return new UUID( guid );
+                return new Guid( guid );
             }
         }
 
@@ -85,7 +88,7 @@ namespace Geckon.Portal.Core.Standard.Extension
         {
             Cache        = cache;
             IndexManager = indexManager;
-            SessionGUID    = String.IsNullOrEmpty( sessionID ) ? (UUID) null : new UUID( sessionID );
+            SessionGUID    = String.IsNullOrEmpty( sessionID ) ? (Guid?) null : new Guid( new UUID( sessionID ).ToByteArray() );
         }
 
         #endregion

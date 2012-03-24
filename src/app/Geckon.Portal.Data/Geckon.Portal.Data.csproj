@@ -48,14 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GuidResult.cs" />
-    <Compile Include="Portal.cs">
-      <DependentUpon>Portal.dbml</DependentUpon>
-    </Compile>
-    <Compile Include="Portal.designer.cs">
-      <DependentUpon>Portal.dbml</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -73,18 +65,7 @@
     <Compile Include="TicketType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Portal.dbml.layout">
-      <DependentUpon>Portal.dbml</DependentUpon>
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
-    <None Include="Portal.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>Portal.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

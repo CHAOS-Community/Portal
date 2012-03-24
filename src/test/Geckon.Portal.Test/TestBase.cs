@@ -34,7 +34,7 @@ namespace Geckon.Portal.Test
 				ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
 
         		db.PreTest();
-
+				
 				db.Permission_Create("Group", 0x01, "DELETE",    "Permission to Delete Group");
 				db.Permission_Create("Group", 0x02, "UPDATE", "Permission to Update Group");
 				db.Permission_Create("Group", 0x04, "GET", "Permission to Get Group");
