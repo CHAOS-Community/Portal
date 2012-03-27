@@ -237,7 +237,7 @@ namespace Geckon.Portal.Core.Standard.Extension
                 IModuleResult result = associatedModule.Value.InvokeMethod( new MethodQuery( Controller,
                                                                                              Action,
                                                                                              parameters ) );
-
+				log4net.LogManager.GetLogger("Portal").Debug("1, " + result.Results.Count);
                 PortalResult.Modules.Add( result );
                 
                 associatedModule.IsChecked = true;

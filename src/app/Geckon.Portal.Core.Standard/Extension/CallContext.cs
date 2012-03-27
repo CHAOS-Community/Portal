@@ -23,7 +23,7 @@ namespace Geckon.Portal.Core.Standard.Extension
             get
             {
 				if( !SessionGUID.HasValue )
-					throw new NullReferenceException( "SessionGUID cann't be null" );
+					throw new NullReferenceException( "SessionGUID can't be null" );
 
 				CHAOS.Portal.Data.DTO.UserInfo userInfo = Cache.Get<CHAOS.Portal.Data.DTO.UserInfo>(string.Format("[UserInfo:sid={0}]", SessionGUID));
 
@@ -31,7 +31,7 @@ namespace Geckon.Portal.Core.Standard.Extension
                 {
 					using( PortalEntities db = new PortalEntities() )
                     {
-                        userInfo = db.UserInfo_Get( null, SessionGUID.Value.ToByteArray() ).ToDTO().FirstOrDefault();
+                        userInfo = db.UserInfo_Get( null, SessionGUID.Value.ToByteArray(), null ).ToDTO().FirstOrDefault();
 						System.Console.WriteLine(SessionGUID.Value);
                         if( userInfo == null )
                             throw new SessionDoesNotExist( "Session has expired" );

@@ -122,8 +122,10 @@
     <Content Include="Extensions\EmailPasswordExtension.dll" />
     <Content Include="Extensions\Geckon.GeoLocator.PortalExtension.dll" />
     <Content Include="Extensions\Geckon.MCM.Extension.dll" />
+    <Content Include="Extensions\Geckon.MCM.Extension.pdb" />
     <Content Include="Extensions\Geckon.Portal.Extensions.Standard.dll" />
     <Content Include="Extensions\SecureCookieExtension.dll" />
+    <Content Include="Extensions\SecureCookieExtension.pdb" />
     <Content Include="Extensions\UploadExtension.dll" />
     <Content Include="Global.asax" />
     <Content Include="Grapthics\Global.css" />
@@ -148,7 +150,9 @@
     <Content Include="Modules\EmailPasswordModule.dll" />
     <Content Include="Modules\Geckon.GeoLocator.dll" />
     <Content Include="Modules\Geckon.MCM.Module.dll" />
+    <Content Include="Modules\Geckon.MCM.Module.pdb" />
     <Content Include="Modules\SecureCookieModule.dll" />
+    <Content Include="Modules\SecureCookieModule.pdb" />
     <Content Include="Scripts\i18n\grid.locale-en.js" />
     <Content Include="Scripts\jquery.jqGrid.min.js" />
     <Content Include="Views\Home\Index.aspx" />

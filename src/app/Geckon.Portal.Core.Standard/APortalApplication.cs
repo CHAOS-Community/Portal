@@ -56,7 +56,7 @@ namespace Geckon.Portal.Core.Standard
                 System.Web.Mvc.ModelBinders.Binders.Add( typeof( IQuery ), new ModelBinders.SolrQueryModelBinder() );
 
             Cache        = new Membase();
-            IndexManager = new SolrCoreManager<GuidResult>();
+            IndexManager = new SolrCoreManager<UUIDResult>();
         }
 
         #endregion

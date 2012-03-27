@@ -44,25 +44,25 @@ namespace Geckon.Portal
         // REVIEW: Refactoring needed, portal initialization logic should recide in the base class
         protected void Application_Start()
         {
-            log4net.LogManager.GetLogger("Portal").Info("Portal Application Started");
+           log4net.LogManager.GetLogger("Portal").Info("Portal Application Started");
 
             InitializePortalApplication();
 
             PortalContext = new PortalContext();
 
             // TODO: Assemblies should not just be loaded at application start
-            using( PortalEntities db = new PortalEntities( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
+            using( PortalEntities db = new PortalEntities() )
             {
                 foreach( Extension extension in db.Extension_Get( null, null ) )
                 {
-                    PortalContext.RegisterExtension( new ExtensionLoader( extension.ToDTO(), this ) );
+                    PortalContext.RegisterExtension( new ExtensionLoader( extension, this ) );
                 }
             }
 
             // TODO: Implement way of loading modules on the fly
-            using( PortalEntities db = new PortalEntities( ConfigurationManager.ConnectionStrings["Portal"].ConnectionString ) )
+            using( PortalEntities db = new PortalEntities() )
             {
-                foreach( CHAOS.Portal.Data.DTO.Module module in db.Module_Get( null, null ).ToDTO() )
+                foreach( CHAOS.Portal.Data.DTO.Module module in db.Module_Get( null, null ).ToList().ToDTO() )
                 {
                     Assembly assembly = Assembly.LoadFile( Path.Combine( ServiceDirectoryPath, "Modules", module.Path ) );
 

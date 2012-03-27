@@ -89,7 +89,7 @@ namespace Geckon.Portal.Core.Standard.Module
                 if( result is Geckon.Index.IPagedResult<IResult> )
                 {
                     Geckon.Index.IPagedResult<IResult> pagedResult = (Geckon.Index.IPagedResult<IResult>) result;
-
+					log4net.LogManager.GetLogger("Portal").Debug("2: " +pagedResult.Results.Count());
                     modelResult.AddResult( pagedResult.Results );
                     modelResult.TotalCount = pagedResult.FoundCount;
                 }

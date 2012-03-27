@@ -663,7 +663,8 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         /// <param name="gUID">No Metadata Documentation available.</param>
         /// <param name="sessionGUID">No Metadata Documentation available.</param>
-        public ObjectResult<UserInfo> UserInfo_Get(global::System.Byte[] gUID, global::System.Byte[] sessionGUID)
+        /// <param name="email">No Metadata Documentation available.</param>
+        public ObjectResult<UserInfo> UserInfo_Get(global::System.Byte[] gUID, global::System.Byte[] sessionGUID, global::System.String email)
         {
             ObjectParameter gUIDParameter;
             if (gUID != null)
@@ -685,7 +686,17 @@ namespace CHAOS.Portal.Data.EF
                 sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction<UserInfo>("UserInfo_Get", gUIDParameter, sessionGUIDParameter);
+            ObjectParameter emailParameter;
+            if (email != null)
+            {
+                emailParameter = new ObjectParameter("Email", email);
+            }
+            else
+            {
+                emailParameter = new ObjectParameter("Email", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<UserInfo>("UserInfo_Get", gUIDParameter, sessionGUIDParameter, emailParameter);
         }
         /// <summary>
         /// No Metadata Documentation available.
@@ -693,7 +704,8 @@ namespace CHAOS.Portal.Data.EF
         /// <param name="mergeOption"></param>
         /// <param name="gUID">No Metadata Documentation available.</param>
         /// <param name="sessionGUID">No Metadata Documentation available.</param>
-        public ObjectResult<UserInfo> UserInfo_Get(global::System.Byte[] gUID, global::System.Byte[] sessionGUID, MergeOption mergeOption)
+        /// <param name="email">No Metadata Documentation available.</param>
+        public ObjectResult<UserInfo> UserInfo_Get(global::System.Byte[] gUID, global::System.Byte[] sessionGUID, global::System.String email, MergeOption mergeOption)
         {
             ObjectParameter gUIDParameter;
             if (gUID != null)
@@ -715,7 +727,17 @@ namespace CHAOS.Portal.Data.EF
                 sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction<UserInfo>("UserInfo_Get", mergeOption, gUIDParameter, sessionGUIDParameter);
+            ObjectParameter emailParameter;
+            if (email != null)
+            {
+                emailParameter = new ObjectParameter("Email", email);
+            }
+            else
+            {
+                emailParameter = new ObjectParameter("Email", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<UserInfo>("UserInfo_Get", mergeOption, gUIDParameter, sessionGUIDParameter, emailParameter);
         }
     
         /// <summary>
@@ -1654,6 +1676,115 @@ namespace CHAOS.Portal.Data.EF
             }
     
             return base.ExecuteFunction<ClientSettings>("ClientSettings_Get", mergeOption, gUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="ticketTypeID">No Metadata Documentation available.</param>
+        /// <param name="xML">No Metadata Documentation available.</param>
+        /// <param name="callback">No Metadata Documentation available.</param>
+        public int Ticket_Create(global::System.Byte[] gUID, Nullable<global::System.Int32> ticketTypeID, global::System.String xML, global::System.String callback)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter ticketTypeIDParameter;
+            if (ticketTypeID.HasValue)
+            {
+                ticketTypeIDParameter = new ObjectParameter("TicketTypeID", ticketTypeID);
+            }
+            else
+            {
+                ticketTypeIDParameter = new ObjectParameter("TicketTypeID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter xMLParameter;
+            if (xML != null)
+            {
+                xMLParameter = new ObjectParameter("XML", xML);
+            }
+            else
+            {
+                xMLParameter = new ObjectParameter("XML", typeof(global::System.String));
+            }
+    
+            ObjectParameter callbackParameter;
+            if (callback != null)
+            {
+                callbackParameter = new ObjectParameter("Callback", callback);
+            }
+            else
+            {
+                callbackParameter = new ObjectParameter("Callback", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("Ticket_Create", gUIDParameter, ticketTypeIDParameter, xMLParameter, callbackParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="whereGUID">No Metadata Documentation available.</param>
+        public int Ticket_Use(global::System.Byte[] whereGUID)
+        {
+            ObjectParameter whereGUIDParameter;
+            if (whereGUID != null)
+            {
+                whereGUIDParameter = new ObjectParameter("WhereGUID", whereGUID);
+            }
+            else
+            {
+                whereGUIDParameter = new ObjectParameter("WhereGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction("Ticket_Use", whereGUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        public ObjectResult<Ticket> Ticket_Get(global::System.Byte[] gUID)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<Ticket>("Ticket_Get", gUIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        public ObjectResult<Ticket> Ticket_Get(global::System.Byte[] gUID, MergeOption mergeOption)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<Ticket>("Ticket_Get", mergeOption, gUIDParameter);
         }
 
         #endregion

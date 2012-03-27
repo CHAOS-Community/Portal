@@ -1,5 +1,8 @@
-﻿public enum TicketType
+﻿namespace Geckon.Portal.Data
 {
-    ChangePassword = 1,
-    CreateUser = 2
+	public enum TicketType
+	{
+		ChangePassword = 1,
+		CreateUser = 2
+	}
 }

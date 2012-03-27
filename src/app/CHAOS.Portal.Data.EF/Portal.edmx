@@ -497,6 +497,7 @@
         <Function Name="UserInfo_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
           <Parameter Name="GUID" Type="binary" Mode="In" />
           <Parameter Name="SessionGUID" Type="binary" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
         <Function Name="UserSettings_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
           <Parameter Name="ClientSettingsGUID" Type="binary" Mode="In" />
@@ -573,6 +574,7 @@
           <FunctionImport Name="UserInfo_Get" EntitySet="UserInfo" ReturnType="Collection(PortalModel.UserInfo)">
             <Parameter Name="GUID" Mode="In" Type="Binary" />
             <Parameter Name="SessionGUID" Mode="In" Type="Binary" />
+            <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Group_Get" EntitySet="Group" ReturnType="Collection(PortalModel.Group)">
             <Parameter Name="GUID" Mode="In" Type="Binary" />
@@ -693,6 +695,18 @@
             <Parameter Name="Settings" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ClientSettings_Get" EntitySet="ClientSettings" ReturnType="Collection(PortalModel.ClientSettings)">
+          <Parameter Name="GUID" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="Ticket_Create">
+            <Parameter Name="GUID" Mode="In" Type="Binary" />
+            <Parameter Name="TicketTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="XML" Mode="In" Type="String" />
+            <Parameter Name="Callback" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Ticket_Use">
+            <Parameter Name="WhereGUID" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="Ticket_Get" EntitySet="Ticket" ReturnType="Collection(PortalModel.Ticket)">
             <Parameter Name="GUID" Mode="In" Type="Binary" />
           </FunctionImport>
         </EntityContainer>
@@ -1150,6 +1164,9 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="ClientSetting_Create" FunctionName="PortalModel.Store.ClientSetting_Create" />
           <FunctionImportMapping FunctionImportName="ClientSettings_Get" FunctionName="PortalModel.Store.ClientSettings_Get" />
+          <FunctionImportMapping FunctionImportName="Ticket_Create" FunctionName="PortalModel.Store.Ticket_Create" />
+          <FunctionImportMapping FunctionImportName="Ticket_Use" FunctionName="PortalModel.Store.Ticket_Use" />
+          <FunctionImportMapping FunctionImportName="Ticket_Get" FunctionName="PortalModel.Store.Ticket_Get" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

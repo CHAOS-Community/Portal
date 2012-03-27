@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -66,6 +67,10 @@
     <ProjectReference Include="..\CHAOS.Portal.Data.DTO\CHAOS.Portal.Data.DTO.csproj">
       <Project>{0DE2E550-6E9E-4B2A-9A53-882C3C9DB519}</Project>
       <Name>CHAOS.Portal.Data.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CHAOS.Portal.Data.EF\CHAOS.Portal.Data.EF.csproj">
+      <Project>{558D5795-F129-4C76-A7C3-3D6BFC8A2FB2}</Project>
+      <Name>CHAOS.Portal.Data.EF</Name>
     </ProjectReference>
     <ProjectReference Include="..\Geckon.Portal.Core.Exception\Geckon.Portal.Core.Exception.csproj">
       <Project>{36F18B91-50D1-45C0-8F3E-ED53A8BD13BA}</Project>

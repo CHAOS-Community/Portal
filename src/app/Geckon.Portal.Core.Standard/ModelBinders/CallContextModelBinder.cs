@@ -15,19 +15,19 @@ namespace Geckon.Portal.Core.Standard.ModelBinders
                 case "GET":
                     return new CallContext( APortalApplication.Cache,
                                             APortalApplication.IndexManager,
-                                            controllerContext.HttpContext.Request.QueryString["sessionID"] );
+                                            controllerContext.HttpContext.Request.QueryString["sessionGUID"] );
                 case "POST":
                     return new CallContext( APortalApplication.Cache,
                                             APortalApplication.IndexManager,
-                                            controllerContext.HttpContext.Request.Form["sessionID"] );
+                                            controllerContext.HttpContext.Request.Form["sessionGUID"] );
                 case "PUT":
                     return new CallContext( APortalApplication.Cache,
                                             APortalApplication.IndexManager,
-                                            controllerContext.HttpContext.Request.Form["sessionID"]);
+                                            controllerContext.HttpContext.Request.Form["sessionGUID"]);
                 case "DELETE":
                     return new CallContext( APortalApplication.Cache,
                                             APortalApplication.IndexManager,
-                                            controllerContext.HttpContext.Request.Form["sessionID"]);
+                                            controllerContext.HttpContext.Request.Form["sessionGUID"]);
             }
 
             throw new NotImplementedException( "Unknown HttpMethod" );
