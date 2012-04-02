@@ -10,10 +10,10 @@ namespace CHAOS.Portal.Data.DTO
 		#region Properties
 
 		[Serialize("SessionGUID")]
-		public UUID GUID { get; set; }
+		public string GUID { get; set; }
 
 		[Serialize("UserGUID")]
-		public UUID UserGUID { get; set; }
+        public string UserGUID { get; set; }
 
 		[Serialize("DateCreated")]
 		public DateTime DateCreated { get; set; }
@@ -26,13 +26,16 @@ namespace CHAOS.Portal.Data.DTO
 
 		public Session()
 		{
-			
 		}
 
-		public Session( byte[] guid, byte[] userGUID, DateTime dateCreated, DateTime? dateModified )
+		public Session( byte[] guid, byte[] userGUID, DateTime dateCreated, DateTime? dateModified ) : this( new UUID( guid ), userGUID == null ? UUID.Empty : new UUID( userGUID ), dateCreated, dateModified )
 		{
-			GUID         = new UUID( guid );
-			UserGUID     = userGUID == null ? UUID.Empty : new UUID( userGUID );
+		}
+
+        public Session( UUID guid, UUID userGUID, DateTime dateCreated, DateTime? dateModified )
+		{
+			GUID         = guid.ToString();
+			UserGUID     = userGUID.ToString();
 			DateCreated  = dateCreated;
 			DateModified = dateModified;
 		}

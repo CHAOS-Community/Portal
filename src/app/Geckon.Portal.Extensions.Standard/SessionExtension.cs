@@ -16,7 +16,7 @@ namespace Geckon.Portal.Extensions.Standard
         {
             IModuleResult module = PortalResult.GetModule("Geckon.Portal");
 
-			CHAOS.Portal.Data.DTO.Session session = callContext.Cache.Get<CHAOS.Portal.Data.DTO.Session>( string.Format( "[Session:sid={0}]", callContext.SessionGUID ) );
+			Session session = callContext.Cache.Get<Session>( string.Format( "[Session:sid={0}]", callContext.SessionGUID ) );
 
             if( session == null )
             {

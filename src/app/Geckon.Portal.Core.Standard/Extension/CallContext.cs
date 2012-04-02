@@ -18,27 +18,29 @@ namespace Geckon.Portal.Core.Standard.Extension
         public IIndexManager IndexManager { get; private set; }
         public Guid? SessionGUID { get; set; }
 
-		public CHAOS.Portal.Data.DTO.UserInfo User
+        public CHAOS.Portal.Data.DTO.UserInfo User
         {
             get
             {
-				if( !SessionGUID.HasValue )
-					throw new NullReferenceException( "SessionGUID can't be null" );
+                if (!SessionGUID.HasValue)
+                    throw new NullReferenceException("SessionGUID can't be null");
 
-				CHAOS.Portal.Data.DTO.UserInfo userInfo = Cache.Get<CHAOS.Portal.Data.DTO.UserInfo>(string.Format("[UserInfo:sid={0}]", SessionGUID));
+                CHAOS.Portal.Data.DTO.UserInfo userInfo =
+                    Cache.Get<CHAOS.Portal.Data.DTO.UserInfo>(string.Format("[UserInfo:sid={0}]",
+                                                                            SessionGUID.Value.ToUUID()));
 
-                if( userInfo == null )
+                if (userInfo == null)
                 {
-					using( PortalEntities db = new PortalEntities() )
+                    using (PortalEntities db = new PortalEntities())
                     {
-                        userInfo = db.UserInfo_Get( null, SessionGUID.Value.ToByteArray(), null ).ToDTO().FirstOrDefault();
-						System.Console.WriteLine(SessionGUID.Value);
-                        if( userInfo == null )
-                            throw new SessionDoesNotExist( "Session has expired" );
+                        userInfo = db.UserInfo_Get(null, SessionGUID.Value.ToByteArray(), null).ToDTO().FirstOrDefault();
+                        ;
+                        if (userInfo == null)
+                            throw new SessionDoesNotExist("Session has expired");
 
-						Cache.Put( string.Format( "[UserInfo:sid={0}]", SessionGUID ),
-								   userInfo,
-								   new TimeSpan( 0, 1, 0 ) );
+                        Cache.Put(string.Format("[UserInfo:sid={0}]", SessionGUID.Value.ToUUID()),
+                                  userInfo,
+                                  new TimeSpan(0, 1, 0));
                     }
                 }
 
@@ -46,41 +48,49 @@ namespace Geckon.Portal.Core.Standard.Extension
             }
         }
 
-        public Guid AnonymousUserGUID
+        public UUID AnonymousUserGUID
         {
             get
             {
-                string guid = ( string ) Cache.Get( "AnonymousUserGUID" );
+                string guid = (string) Cache.Get("AnonymousUserGUID");
 
-                if( string.IsNullOrEmpty( guid ) )
+                if (string.IsNullOrEmpty(guid))
                     guid = ConfigurationManager.AppSettings["AnonymousUserGUID"];
 
-                return new Guid( guid );
+                return new UUID(guid);
             }
         }
 
-		public IEnumerable<CHAOS.Portal.Data.DTO.Group> Groups
-		{
-			get
-			{
-				using( PortalEntities db = new PortalEntities() )
-				{
-					return db.Group_Get( null, null, User.GUID.ToByteArray() ).ToDTO().ToList();
-				}
-			}
-		}
+        public IEnumerable<CHAOS.Portal.Data.DTO.Group> Groups
+        {
+            get
+            {
+                using (PortalEntities db = new PortalEntities())
+                {
+                    return db.Group_Get(null, null, User.GUID.ToByteArray()).ToDTO().ToList();
+                }
+            }
+        }
 
-		public IEnumerable<CHAOS.Portal.Data.DTO.SubscriptionInfo> Subscriptions
-		{
-			get
-			{
-				using( PortalEntities db = new PortalEntities() )
-				{
-					return db.SubscriptionInfo_Get( null, User.GUID.ToByteArray() ).ToDTO().ToList();
-				}
-			}
-		}
+        public IEnumerable<CHAOS.Portal.Data.DTO.SubscriptionInfo> Subscriptions
+        {
+            get
+            {
+                using (PortalEntities db = new PortalEntities())
+                {
+                    return db.SubscriptionInfo_Get(null, User.GUID.ToByteArray()).ToDTO().ToList();
+                }
+            }
+        }
 
+        public bool IsAnonymousUser
+        {
+            get
+            {
+                return AnonymousUserGUID.ToByteArray().Equals(User.GUID.ToByteArray());
+            }
+        }
+ 
         #endregion
         #region Construction
 

@@ -9,7 +9,8 @@ namespace Geckon.Portal.Core.Extension
     {
         Guid? SessionGUID { get; set; }
 		UserInfo User { get; }
-        Guid AnonymousUserGUID { get; }
+        UUID AnonymousUserGUID { get; }
+        bool IsAnonymousUser { get; }
         ICache Cache { get; }
         IIndexManager IndexManager { get; }
     }
