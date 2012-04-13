@@ -581,7 +581,7 @@
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="RequestUserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="Session_Update">
+          <FunctionImport Name="Session_Update" ReturnType="Collection(Int32)">
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
             <Parameter Name="WhereSessionGUID" Mode="In" Type="Binary" />
             <Parameter Name="WhereUserGUID" Mode="In" Type="Binary" />

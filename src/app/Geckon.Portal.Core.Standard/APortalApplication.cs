@@ -55,6 +55,9 @@ namespace Geckon.Portal.Core.Standard
             if( !System.Web.Mvc.ModelBinders.Binders.ContainsKey( typeof( IQuery ) ) )
                 System.Web.Mvc.ModelBinders.Binders.Add( typeof( IQuery ), new ModelBinders.SolrQueryModelBinder() );
 
+            if( !System.Web.Mvc.ModelBinders.Binders.ContainsKey( typeof( UUID ) ) )
+                System.Web.Mvc.ModelBinders.Binders.Add( typeof( UUID ), new ModelBinders.UUIDModelBinder() );
+
             Cache        = new Membase();
             IndexManager = new SolrCoreManager<UUIDResult>();
         }

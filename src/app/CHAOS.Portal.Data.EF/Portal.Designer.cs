@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -351,6 +352,7 @@ namespace CHAOS.Portal.Data.EF
         private ObjectSet<UserInfo> _UserInfo;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -490,6 +492,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Function Imports
     
         /// <summary>
@@ -828,7 +831,7 @@ namespace CHAOS.Portal.Data.EF
         /// <param name="userGUID">No Metadata Documentation available.</param>
         /// <param name="whereSessionGUID">No Metadata Documentation available.</param>
         /// <param name="whereUserGUID">No Metadata Documentation available.</param>
-        public int Session_Update(global::System.Byte[] userGUID, global::System.Byte[] whereSessionGUID, global::System.Byte[] whereUserGUID)
+        public ObjectResult<Nullable<global::System.Int32>> Session_Update(global::System.Byte[] userGUID, global::System.Byte[] whereSessionGUID, global::System.Byte[] whereUserGUID)
         {
             ObjectParameter userGUIDParameter;
             if (userGUID != null)
@@ -860,7 +863,7 @@ namespace CHAOS.Portal.Data.EF
                 whereUserGUIDParameter = new ObjectParameter("WhereUserGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction("Session_Update", userGUIDParameter, whereSessionGUIDParameter, whereUserGUIDParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Session_Update", userGUIDParameter, whereSessionGUIDParameter, whereUserGUIDParameter);
         }
     
         /// <summary>
@@ -1788,11 +1791,11 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -1821,6 +1824,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1923,6 +1927,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1949,6 +1954,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1981,6 +1987,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2107,6 +2114,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
     }
     
@@ -2138,6 +2146,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2240,6 +2249,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2266,6 +2276,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2296,6 +2307,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2401,6 +2413,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2481,6 +2494,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2509,6 +2523,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2611,6 +2626,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2653,6 +2669,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2683,6 +2700,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2809,6 +2827,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2835,6 +2854,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2863,6 +2883,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2968,6 +2989,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDescriptionChanged();
 
         #endregion
+
     
     }
     
@@ -2997,6 +3019,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3099,6 +3122,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateModifiedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3141,6 +3165,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3169,6 +3194,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3301,6 +3327,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnMinutesSinceRenewalChanged();
 
         #endregion
+
     
     }
     
@@ -3330,6 +3357,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3408,6 +3436,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3434,6 +3463,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3464,6 +3494,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3569,6 +3600,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3649,6 +3681,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3677,6 +3710,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3809,6 +3843,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
     }
     
@@ -3838,6 +3873,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3988,6 +4024,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateUsedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -4030,6 +4067,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -4056,6 +4094,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4110,6 +4149,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -4136,6 +4176,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -4164,6 +4205,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4242,6 +4284,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -4334,6 +4377,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -4360,6 +4404,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4513,6 +4558,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnSessionDateCreatedChanged();
 
         #endregion
+
     
     }
     
@@ -4542,6 +4588,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4647,6 +4694,7 @@ namespace CHAOS.Portal.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -4727,8 +4775,10 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
 
     #endregion
+
     
 }

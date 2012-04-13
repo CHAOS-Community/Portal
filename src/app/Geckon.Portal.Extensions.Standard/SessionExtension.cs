@@ -60,7 +60,7 @@ namespace Geckon.Portal.Extensions.Standard
         {
             using( PortalEntities db = new PortalEntities() )
             {
-				db.Session_Update( null, callContext.SessionGUID.Value.ToByteArray(), callContext.User.GUID.ToByteArray() );
+				db.Session_Update( null, callContext.SessionGUID.Value.ToByteArray(), callContext.User.GUID.ToByteArray() ).First();
 
 				Session session = db.Session_Get( callContext.SessionGUID.Value.ToByteArray(), callContext.User.GUID.ToByteArray() ).ToDTO().First();
 

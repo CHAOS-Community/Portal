@@ -9,10 +9,20 @@ namespace CHAOS.Portal.Data.DTO
 	{
 		#region Properties
 
-		[Serialize]
+	    [Serialize("GUID")]
+	    public string sGUID
+	    {
+	        get
+	        {
+                return GUID.ToString();
+	        }
+            set
+            {
+                GUID = new UUID( value );
+            }
+	    }
 		public UUID GUID { get; set; }
 
-		[Serialize]
 		public UUID SessionGUID { get; set; }
 
 		[Serialize]

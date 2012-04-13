@@ -61,7 +61,7 @@ namespace Geckon.Portal.Test
 				db.ClientSetting_Create( new UUID( "9EEE8A99-A69B-41FD-B1C7-E28C54D1D305" ).ToByteArray(), "NUnit", "<xml>settings</xml>" );
 				db.UserSettings_Set( new UUID( "9EEE8A99-A69B-41FD-B1C7-E28C54D1D305" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), "<xml>settings</xml>" );
 				db.UserSettings_Set( new UUID( "9EEE8A99-A69B-41FD-B1C7-E28C54D1D305" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), "<xml>settings</xml>" );
-
+                
 				UserAnonymous     = db.UserInfo_Get( new UUID( "C0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), null, null ).ToDTO().First();
 				UserAdministrator = db.UserInfo_Get( new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray(), null, null ).ToDTO().First();
 
