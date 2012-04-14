@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E20973EF-2EC3-4837-87B7-69968E001ACB}</ProjectGuid>
+    <ProjectGuid>{09857A64-2018-4431-9DE1-996B67F6B083}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Geckon.Portal.Core.Standard.Test</RootNamespace>
-    <AssemblyName>Geckon.Portal.Core.Standard.Test</AssemblyName>
+    <RootNamespace>CHAOS.Portal.Core</RootNamespace>
+    <AssemblyName>CHAOS.Portal.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,31 +31,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="geckon">
-      <HintPath>..\..\..\lib\geckon.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Compile Include="PortalApplication.cs" />
+    <Compile Include="Extension\IExtension.cs" />
+    <Compile Include="Request\Bindings\StringRequestBinding.cs" />
+    <Compile Include="Request\IRequestBinding.cs" />
+    <Compile Include="Request\IPortalRequest.cs" />
+    <Compile Include="Request\Parameter.cs" />
+    <Compile Include="Request\ParameterFactory.cs" />
+    <Compile Include="HttpModule\PortalHttpModule.cs" />
+    <Compile Include="Request\PortalRequest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\ParameterBindings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ResultTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SolrBaseTest.cs" />
-    <Compile Include="SolrCoreManagerTest.cs" />
-    <Compile Include="SolrTest.cs" />
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extension\Standard\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\Portal\$(TargetFileName)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1E981F2A-B70F-4F29-9EAE-52EA0A4E5368}</ProjectGuid>
+    <ProjectGuid>7294d3a8-2731-430f-bdfe-5e8bcf1c5096</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Geckon.Portal.Extensions.Standard.Test</RootNamespace>
-    <AssemblyName>Geckon.Portal.Extensions.Standard.Test</AssemblyName>
+    <RootNamespace>CHAOS.Portal.Core.Test</RootNamespace>
+    <AssemblyName>CHAOS.Portal.Core.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,24 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="geckon">
-      <HintPath>..\..\..\lib\geckon.dll</HintPath>
-    </Reference>
-    <Reference Include="Membase">
-      <HintPath>..\..\..\lib\Membase.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Portal">
-      <HintPath>..\..\..\build\Portal.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,30 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CallContextTest.cs" />
-    <Compile Include="ClientSettingsTest.cs" />
-    <Compile Include="GroupTest.cs" />
-    <Compile Include="SessionTest.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SubscriptionTest.cs" />
-    <Compile Include="TicketTest.cs" />
-    <Compile Include="UserSettingsTest.cs" />
-    <Compile Include="UserTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Geckon.Portal.Test\Geckon.Portal.Test.csproj">
-      <Project>{1BFE8592-B9B0-45B6-8EF4-BA286A5D88B5}</Project>
-      <Name>Geckon.Portal.Test</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

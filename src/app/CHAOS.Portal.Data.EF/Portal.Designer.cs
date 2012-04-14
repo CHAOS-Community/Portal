@@ -1803,7 +1803,7 @@ namespace CHAOS.Portal.Data.EF
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="PortalModel", Name="ClientSettings")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContract(IsReference=true)]
     public partial class ClientSettings : EntityObject
     {
         #region Factory Method
@@ -2633,7 +2633,7 @@ namespace CHAOS.Portal.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [XmlIgnoreAttribute()]
+        [XmlIgnore()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PortalModel", "FK_IndexSettings_ModuleID_Module_ID", "Module")]
