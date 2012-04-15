@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web;
+using CHAOS.Portal.Core.Extension;
 using CHAOS.Portal.Core.Request;
+using CHAOS.Portal.Core.Standard;
+using CHAOS.Portal.DTO.Standard;
+using Geckon.Serialization;
 
 namespace CHAOS.Portal.Core.HttpModule
 {
@@ -16,6 +21,8 @@ namespace CHAOS.Portal.Core.HttpModule
         public void Init( HttpApplication context )
         {
             context.BeginRequest += ContextBeginRequest;
+
+            LoadedExtensions.Add( "Portal", new PortalExtensionLoader() );
         }
 
         #endregion
@@ -25,25 +32,90 @@ namespace CHAOS.Portal.Core.HttpModule
         {
             HttpApplication application = (HttpApplication) sender;
 
-            ProcessRequest( CreatePortalRequest( application.Request ) );
+            if( IsOnIgnoreList( application.Request.Url.AbsolutePath ) )
+                return; // TODO: 404
+
+            ICallContext callContext = CreateCallContext( application.Request );
+            
+            ProcessRequest( callContext );
+
+            application.Response.ContentEncoding = System.Text.Encoding.Unicode;
+            application.Response.ContentType     = GetContentType( callContext );
+
+            using( System.IO.Stream inputStream  = callContext.GetResponseStream() )
+            using( System.IO.Stream outputStream = application.Response.OutputStream )
+            {
+                inputStream.CopyTo( outputStream );
+            }
 
             application.Response.End();
         }
 
-        protected IPortalRequest CreatePortalRequest( HttpRequest request )
+        private string GetContentType( ICallContext callContext )
         {
-            Parameter[] parameters = new Parameter[ request.QueryString.Count ];
+            switch( callContext.ReturnFormat )
+            {
+                case ReturnFormat.GXML:
+                    return "text/xml";
+                case ReturnFormat.JSON:
+                    return "application/json";
+                case ReturnFormat.JSONP:
+                    return "application/javascript";
+                default:
+                    throw new NotImplementedException( "Unknown return format" ); // TODO: Should validate when request is received, not after it's done processing
+            }
+        }
 
+        private bool IsOnIgnoreList( string absolutePath )
+        {
+            if( absolutePath.EndsWith( "favicon.ico" ) )
+                return true;
+
+            // TODO: other resources that should be ignored
+
+            return false;
+        }
+
+        protected ICallContext CreateCallContext( HttpRequest request )
+        {
+            IDictionary<string, string> parameters = new Dictionary<string, string>();
             string[] split = request.Url.AbsolutePath.Substring( request.ApplicationPath.Length ).Split( '/' );
 
             for( int i = 0; i < request.QueryString.Keys.Count; i++ )
             {
-                parameters[i] = new Parameter( request.QueryString.Keys[i], request.QueryString[i] );
+                parameters.Add( request.QueryString.Keys[i], request.QueryString[i] );
             }
 
-            return new PortalRequest( split[0], split[1], parameters );
+            return new CallContext( this, new PortalRequest( split[split.Length-2], split[split.Length-1], parameters ), new PortalResponse(  ) );
         }
 
         #endregion
+    }
+
+    public class PortalExtensionLoader : IExtensionLoader
+    {
+        public IExtension CreateInstance()
+        {
+            return new PortalExtension();
+        }
+    }
+
+    public class PortalExtension : IExtension
+    {
+        public void Test( ICallContext callContext )
+        {
+            callContext.PortalResponse.PortalResult.GetModule("Portal.Core").AddResult( new SimpleResult(callContext.PortalRequest.Extension + ":" + callContext.PortalRequest.Action ) );
+        }
+    }
+
+    public class SimpleResult : Result
+    {
+        [Serialize]
+        public string Result { get; set; }
+
+        public SimpleResult( string result )
+        {
+            Result = result;
+        }
     }
 }

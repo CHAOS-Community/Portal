@@ -1,6 +1,7 @@
 ﻿namespace CHAOS.Portal.Core.Extension
 {
-    interface IExtension
+    public interface IExtension
     {
+        
     }
 }
