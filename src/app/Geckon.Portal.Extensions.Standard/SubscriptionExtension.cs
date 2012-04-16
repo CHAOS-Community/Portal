@@ -24,7 +24,7 @@ namespace Geckon.Portal.Extensions.Standard
             }
 
             if( result == null )
-                throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
+                throw new InsufficientPermissionsException( "User does not have sufficient permissions to access the subscription" );
 
             PortalResult.GetModule("Geckon.Portal").AddResult( result );
         }
@@ -44,7 +44,7 @@ namespace Geckon.Portal.Extensions.Standard
             	db.Subscription_Create( guid.ToByteArray(), name, user.GUID.ToByteArray(), errorCode );
 
                 if( ((int) errorCode.Value) == -100 )
-                    throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
+                    throw new InsufficientPermissionsException("User does not have sufficient permissions to access the subscription");
 
                 SubscriptionInfo subscriptionInfo = db.SubscriptionInfo_Get( guid.ToByteArray(), user.GUID.ToByteArray() ).ToDTO().First();
 
@@ -66,7 +66,7 @@ namespace Geckon.Portal.Extensions.Standard
             }
 
         	if( ( (int) errorCode.Value ) == -100 )
-                throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to delete the subscription" );
+                throw new InsufficientPermissionsException( "User does not have sufficient permissions to delete the subscription" );
 
 			PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( 1 ) );
         }
@@ -85,7 +85,7 @@ namespace Geckon.Portal.Extensions.Standard
             }
 
         	if( ( (int) errorCode.Value ) == -100 )
-                throw new InsufficientPermissionsExcention( "User does not have sufficient permissions to access the subscription" );
+                throw new InsufficientPermissionsException( "User does not have sufficient permissions to access the subscription" );
 
             PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( 1 ) );
         }

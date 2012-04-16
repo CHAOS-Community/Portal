@@ -33,7 +33,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             Assert.AreEqual( "my group", XDocument.Parse( extension.Result ).Descendants("Name").First().Value );
         }
 
-        [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
+        [Test, ExpectedException( typeof( InsufficientPermissionsException )) ]
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Create_Group()
         {
             GroupExtension extension = new GroupExtension( );
@@ -53,7 +53,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             Assert.AreEqual("1", XDocument.Parse( extension.Result ).Descendants("Value").First().Value);
         }
 
-        [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
+        [Test, ExpectedException( typeof( InsufficientPermissionsException )) ]
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Delete_Group()
         {
             GroupExtension extension = new GroupExtension();
@@ -62,7 +62,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             extension.Delete( AnonCallContext, AdminGroup.GUID.ToString() );
         }
 
-        [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
+        [Test, ExpectedException( typeof( InsufficientPermissionsException )) ]
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Delete_Group2()
         {
             GroupExtension extension = new GroupExtension();
@@ -96,7 +96,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
             }
         }
 
-        [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
+        [Test, ExpectedException( typeof( InsufficientPermissionsException )) ]
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Update_Group()
         {
             GroupExtension extension = new GroupExtension();

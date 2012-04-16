@@ -33,7 +33,7 @@ namespace Geckon.Portal.Extensions.Standard
             UserInfo user = callContext.User;
             
             if( user.GUID.ToString() == callContext.AnonymousUserGUID.ToString() )
-                throw new InsufficientPermissionsExcention( "Anonymous users cannot create groups" );
+                throw new InsufficientPermissionsException( "Anonymous users cannot create groups" );
 
             using( PortalEntities db = new PortalEntities() )
             {
@@ -43,7 +43,7 @@ namespace Geckon.Portal.Extensions.Standard
             	db.Group_Create( guid.ToByteArray(), name, user.GUID.ToByteArray(), systemPermission, errorCode );
 	
 				if( ( (int) errorCode.Value ) == -100 )
-                    throw new InsufficientPermissionsExcention("User has insufficient permissions to delete groups");
+                    throw new InsufficientPermissionsException("User has insufficient permissions to delete groups");
 
 				if( ( (int) errorCode.Value ) == -200 )
                     throw new UnhandledException("Group_Create was rolled back");
@@ -60,7 +60,7 @@ namespace Geckon.Portal.Extensions.Standard
             UserInfo user = callContext.User;
 
             if( user.GUID.ToString() == callContext.AnonymousUserGUID.ToString() )
-                throw new InsufficientPermissionsExcention( "Anonymous users cannot delete groups" );
+                throw new InsufficientPermissionsException( "Anonymous users cannot delete groups" );
 
             using( PortalEntities db = new PortalEntities() )
             {
@@ -69,7 +69,7 @@ namespace Geckon.Portal.Extensions.Standard
                 db.Group_Delete( new UUID( guid ).ToByteArray(), user.GUID.ToByteArray(), errorCode );
 
                 if( ( (int) errorCode.Value ) == -100 )
-                    throw new InsufficientPermissionsExcention("User has insufficient permissions to delete groups");
+                    throw new InsufficientPermissionsException("User has insufficient permissions to delete groups");
 
 				if( ( (int) errorCode.Value ) == -200 )
 					throw new UnhandledException("Group_Delete was rolled back");
@@ -92,7 +92,7 @@ namespace Geckon.Portal.Extensions.Standard
 				db.Group_Update( newName, BitConverter.GetBytes( newSystemPermission ), new UUID( guid ).ToByteArray(), user.GUID.ToByteArray(), errorCode );
 
                 if( ( (int) errorCode.Value ) == -100 )
-                    throw new InsufficientPermissionsExcention( "User does not have permission to update group" );
+                    throw new InsufficientPermissionsException( "User does not have permission to update group" );
 
                 PortalResult.GetModule("Geckon.Portal").AddResult( new ScalarResult( 1 ) );
             }
