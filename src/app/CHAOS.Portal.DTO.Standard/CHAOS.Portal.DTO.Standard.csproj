@@ -47,6 +47,7 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="UUIDResult.cs" />
     <Compile Include="ClientSettings.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Group.cs" />
@@ -67,6 +68,8 @@
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CHAOS.Portal.DTO\CHAOS.Portal.DTO.csproj">
@@ -76,7 +79,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY * $(SolutionDir)bin\Portal\*</PostBuildEvent>
+    <PostBuildEvent>COPY CHAOS.Portal.DTO.Standard.dll $(SolutionDir)bin\Portal\CHAOS.Portal.DTO.Standard.dll
+COPY CHAOS.Portal.DTO.Standard.pdb $(SolutionDir)bin\Portal\CHAOS.Portal.DTO.Standard.pdb</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

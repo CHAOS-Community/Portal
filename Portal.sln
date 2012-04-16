@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geckon.Portal.Test", "src\t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHAOS.Portal.Data.EF", "src\app\CHAOS.Portal.Data.EF\CHAOS.Portal.Data.EF.csproj", "{558D5795-F129-4C76-A7C3-3D6BFC8A2FB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geckon.Portal.Extensions.Standard", "src\app\Geckon.Portal.Extensions.Standard\Geckon.Portal.Extensions.Standard.csproj", "{E073142C-457F-456D-B19C-4FA5D9689C11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHAOS.Portal.Extensions", "src\app\CHAOS.Portal.Extensions\CHAOS.Portal.Extensions.csproj", "{E073142C-457F-456D-B19C-4FA5D9689C11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHAOS.Portal.DTO", "src\app\CHAOS.Portal.DTO\CHAOS.Portal.DTO.csproj", "{C1936050-60FC-49F3-9047-9621AFFBDC8F}"
 EndProject

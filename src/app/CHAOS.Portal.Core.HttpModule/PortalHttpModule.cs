@@ -21,8 +21,9 @@ namespace CHAOS.Portal.Core.HttpModule
         public void Init( HttpApplication context )
         {
             context.BeginRequest += ContextBeginRequest;
-
+            
             LoadedExtensions.Add( "Portal", new PortalExtensionLoader() );
+            LoadedExtensions.Add( "Session", new DefaultExtentionLoader( "C:\\Users\\JesperFyhr\\Desktop\\Portal\\src\\app\\CHAOS.Portal.Web\\Extensions\\CHAOS.Portal.Extensions.dll", "CHAOS.Portal.Extensions.Session.SessionExtension" ) );
         }
 
         #endregion
@@ -81,6 +82,7 @@ namespace CHAOS.Portal.Core.HttpModule
             IDictionary<string, string> parameters = new Dictionary<string, string>();
             string[] split = request.Url.AbsolutePath.Substring( request.ApplicationPath.Length ).Split( '/' );
 
+            // TODO: Put routing logic into seperate classes
             for( int i = 0; i < request.QueryString.Keys.Count; i++ )
             {
                 parameters.Add( request.QueryString.Keys[i], request.QueryString[i] );

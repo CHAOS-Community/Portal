@@ -8,8 +8,8 @@
     <ProjectGuid>{E073142C-457F-456D-B19C-4FA5D9689C11}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Geckon.Portal.Extensions.Standard</RootNamespace>
-    <AssemblyName>Geckon.Portal.Extensions.Standard</AssemblyName>
+    <RootNamespace>CHAOS.Portal.Extensions</RootNamespace>
+    <AssemblyName>CHAOS.Portal.Extensions</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,31 +39,16 @@
       <HintPath>..\..\..\build\Portal.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientSettingsExtension.cs" />
-    <Compile Include="ExtensionExtension.cs" />
-    <Compile Include="GroupExtension.cs" />
-    <Compile Include="SessionExtension.cs" />
+    <Compile Include="Session\SessionExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SubscriptionExtension.cs" />
-    <Compile Include="TicketExtension.cs" />
-    <Compile Include="UserExtension.cs" />
-    <Compile Include="UserSettingsExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY $(TargetPath) ..\..\..\Geckon.Portal\Extensions\$(TargetFileName)</PostBuildEvent>
+    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)src\app\CHAOS.Portal.Web\Extensions\$(TargetFileName)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

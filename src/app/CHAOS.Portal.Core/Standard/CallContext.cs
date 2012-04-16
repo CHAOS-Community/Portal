@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
+using CHAOS.Portal.Core.Cache;
 using CHAOS.Portal.Core.Request;
+using Geckon;
+using Geckon.Index;
 using Geckon.Serialization.JSON;
 using Geckon.Serialization.Standard;
 
@@ -15,7 +19,20 @@ namespace CHAOS.Portal.Core.Standard
         public PortalApplication PortalApplication { get; set; }
         public IPortalRequest    PortalRequest { get; set; }
         public IPortalResponse   PortalResponse { get; set; }
-        
+        public Session           Session { get; set; }
+        public ICache            Cache { get; set; }
+        public IIndexManager     IndexManager { get; set; }
+
+        public bool IsAnonymousUser
+        {
+            get { return Session == null || AnonymousUserGUID.ToString() == Session.UserGUID; }
+        }
+
+        public UUID AnonymousUserGUID
+        {
+            get { return new UUID( ConfigurationManager.AppSettings["AnonymousUserGUID"] ); }
+        }
+
         public ReturnFormat ReturnFormat
         {
             get
@@ -32,6 +49,7 @@ namespace CHAOS.Portal.Core.Standard
             PortalApplication = portalApplication;
             PortalRequest     = portalRequest;
             PortalResponse    = portalResponse;
+
         }
 
         #endregion

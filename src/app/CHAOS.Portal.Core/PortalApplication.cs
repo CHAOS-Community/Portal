@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using CHAOS.Portal.Core.Cache;
 using CHAOS.Portal.Core.Extension;
 using CHAOS.Portal.Core.Request;
+using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
+using Geckon.Index;
+using Geckon.Index.Solr;
 
 namespace CHAOS.Portal.Core
 {
@@ -12,14 +16,18 @@ namespace CHAOS.Portal.Core
 
         public ParameterBindings                     Bindings { get; set; }
         public IDictionary<string, IExtensionLoader> LoadedExtensions { get; set; }
+        public ICache                                Cache { get; set; }
+        public IIndexManager                         IndexManager { get; set; }
 
         #endregion
         #region Constructors
 
         public PortalApplication()
         {
-            Bindings = new ParameterBindings();
+            Bindings         = new ParameterBindings();
             LoadedExtensions = new Dictionary<string, IExtensionLoader>();
+            Cache            = new Cache.Membase.Membase(); 
+            IndexManager     = new SolrCoreManager<UUIDResult>();
         }
 
         #endregion

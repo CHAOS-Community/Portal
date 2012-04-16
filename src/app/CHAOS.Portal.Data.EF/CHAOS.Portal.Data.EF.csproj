@@ -89,7 +89,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY * $(SolutionDir)bin\Portal\*</PostBuildEvent>
+    <PostBuildEvent>COPY CHAOS.Portal.Data.EF.dll $(SolutionDir)bin\Portal\CHAOS.Portal.Data.EF.dll
+COPY CHAOS.Portal.Data.EF.pdb $(SolutionDir)bin\Portal\CHAOS.Portal.Data.EF.pdb</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

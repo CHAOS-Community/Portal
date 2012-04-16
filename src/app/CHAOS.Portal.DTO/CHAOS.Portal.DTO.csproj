@@ -47,12 +47,22 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ResultExtensionMethods.cs" />
     <Compile Include="IResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="geckon">
+      <HintPath>..\..\test\CHAOS.Portal.Core.Test\bin\Debug\geckon.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY * $(SolutionDir)bin\Portal\*</PostBuildEvent>
+    <PostBuildEvent>COPY CHAOS.Portal.DTO.dll $(SolutionDir)bin\Portal\CHAOS.Portal.DTO.dll
+COPY CHAOS.Portal.DTO.pdb $(SolutionDir)bin\Portal\CHAOS.Portal.DTO.pdb</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
