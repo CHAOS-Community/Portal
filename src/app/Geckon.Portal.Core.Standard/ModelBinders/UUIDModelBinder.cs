@@ -9,6 +9,9 @@ namespace Geckon.Portal.Core.Standard.ModelBinders
     {
         public object BindModel( ControllerContext controllerContext, ModelBindingContext bindingContext )
         {
+            if( string.IsNullOrEmpty( controllerContext.RequestContext.HttpContext.Request.QueryString[ bindingContext.ModelName ] ) )
+                return null;
+
             return new UUID( controllerContext.RequestContext.HttpContext.Request.QueryString[ bindingContext.ModelName ] );
         }
     }
