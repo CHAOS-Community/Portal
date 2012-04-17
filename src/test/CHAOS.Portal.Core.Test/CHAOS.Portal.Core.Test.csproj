@@ -47,7 +47,12 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="MockPortalResponse.cs" />
+    <Compile Include="MockPortalRequest.cs" />
+    <Compile Include="MockSolrManager.cs" />
+    <Compile Include="MockCache.cs" />
     <Compile Include="MockExtension.cs" />
+    <Compile Include="MockSolr.cs" />
     <Compile Include="PortalApplicationTest.cs" />
     <Compile Include="MockExtensionLoader.cs" />
     <Compile Include="PortalRequestTest.cs" />
@@ -64,16 +69,24 @@
     <Reference Include="Portal, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\build\Portal.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data.Entity" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\PortalTest\$(TargetFileName)</PostBuildEvent>
+    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\PortalTest\$(TargetFileName)
+COPY CHAOS.Portal.Core.Test.pdb $(SolutionDir)bin\PortalTest\CHAOS.Portal.Core.Test.pdb
+cd $(SolutionDir)
+CALL Build_PortalTest.bat</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>cd $(SolutionDir)
-CALL Build.bat</PreBuildEvent>
+CALL Build_Portal.bat</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

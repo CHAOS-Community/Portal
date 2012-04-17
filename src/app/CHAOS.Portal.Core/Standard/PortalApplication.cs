@@ -8,7 +8,7 @@ using CHAOS.Portal.Exception;
 using Geckon.Index;
 using Geckon.Index.Solr;
 
-namespace CHAOS.Portal.Core
+namespace CHAOS.Portal.Core.Standard
 {
     public class PortalApplication
     {
@@ -22,12 +22,12 @@ namespace CHAOS.Portal.Core
         #endregion
         #region Constructors
 
-        public PortalApplication()
+        public PortalApplication( ICache cache, IIndexManager indexManager )
         {
             Bindings         = new ParameterBindings();
             LoadedExtensions = new Dictionary<string, IExtensionLoader>();
-            Cache            = new Cache.Membase.Membase(); 
-            IndexManager     = new SolrCoreManager<UUIDResult>();
+            Cache            = cache; 
+            IndexManager     = indexManager;
         }
 
         #endregion

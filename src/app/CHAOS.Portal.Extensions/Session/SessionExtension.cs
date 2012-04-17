@@ -2,6 +2,7 @@
 using System.Linq;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Extension;
+using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Data.EF;
 using CHAOS.Portal.Exception;
 using Geckon;
@@ -16,16 +17,15 @@ namespace CHAOS.Portal.Extensions.Session
         {
             IModuleResult module = callContext.PortalResponse.PortalResult.GetModule("Geckon.Portal");
 
-            DTO.Standard.Session session = callContext.Cache.Get<DTO.Standard.Session>(string.Format("[Session:sid={0}]", callContext.SessionGUID));
+            DTO.Standard.Session session = callContext.Cache.Get<DTO.Standard.Session>( string.Format( "[Session:sid={0}]", callContext.Session.GUID ) );
 
             if( session == null )
             {
                 using( PortalEntities db = new PortalEntities() )
                 {
+                    session = db.Session_Get( callContext.Session.GUID.ToByteArray(), null ).ToDTO().First();
 
-                    session = db.Session_Get( callContext.SessionGUID.Value.ToByteArray(), null ).ToDTO().First();
-
-                    callContext.Cache.Put( string.Format( "[Session:sid={0}]", callContext.SessionGUID ),
+                    callContext.Cache.Put( string.Format( "[Session:sid={0}]", callContext.Session.GUID ),
                                            session,
                                            new TimeSpan( 0, 1, 0 ) );
                 }
@@ -51,40 +51,40 @@ namespace CHAOS.Portal.Extensions.Session
 
 				db.Session_Create( sessionGUID.ToByteArray(), callContext.AnonymousUserGUID.ToByteArray() );
 
-                CHAOS.Portal.DTO.Standard.Session session = db.Session_Get( sessionGUID.ToByteArray(), null ).ToDTO().First();
+                DTO.Standard.Session session = db.Session_Get( sessionGUID.ToByteArray(), null ).ToDTO().First();
 
                 callContext.PortalResponse.PortalResult.GetModule( "Geckon.Portal" ).AddResult( session );
             }
         }
 
         #endregion
-        //#region Update
+        #region Update
 
-        //public void Update( ICallContext callContext )
-        //{
-        //    using( PortalEntities db = new PortalEntities() )
-        //    {
-        //        db.Session_Update( null, callContext.SessionGUID.Value.ToByteArray(), callContext.User.GUID.ToByteArray() ).First();
+        public void Update( ICallContext callContext )
+        {
+            using( PortalEntities db = new PortalEntities() )
+            {
+                db.Session_Update( null, callContext.Session.GUID.ToByteArray(), callContext.User.GUID.ToByteArray() ).First();
 
-        //        Session session = db.Session_Get( callContext.SessionGUID.Value.ToByteArray(), callContext.User.GUID.ToByteArray() ).ToDTO().First();
+                DTO.Standard.Session session = db.Session_Get( callContext.Session.GUID.ToByteArray(), callContext.User.GUID.ToByteArray() ).ToDTO().First();
 
-        //        PortalResult.GetModule( "Geckon.Portal" ).AddResult( session );
-        //    }
-        //}
+                callContext.PortalResponse.PortalResult.GetModule( "Geckon.Portal" ).AddResult( session );
+            }
+        }
 
-        //#endregion
-        //#region Delete
+        #endregion
+        #region Delete
 
-        //public void Delete( ICallContext callContext )
-        //{
-        //    using( PortalEntities db = new PortalEntities() )
-        //    {
-        //        int result = db.Session_Delete( callContext.SessionGUID.Value.ToByteArray(), null );
+        public void Delete( ICallContext callContext )
+        {
+            using( PortalEntities db = new PortalEntities() )
+            {
+                int result = db.Session_Delete( callContext.Session.GUID.ToByteArray(), null );
 
-        //        PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
-        //    }
-        //}
+                callContext.PortalResponse.PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
+            }
+        }
 
-        //#endregion
+        #endregion
     }
 }

@@ -5,12 +5,23 @@ using CHAOS.Portal.Core.Extension;
 using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Core.Standard;
 using CHAOS.Portal.DTO.Standard;
+using Geckon.Index;
+using Geckon.Index.Solr;
 using Geckon.Serialization;
 
 namespace CHAOS.Portal.Core.HttpModule
 {
     public class PortalHttpModule : PortalApplication, IHttpModule
     {
+        #region Construction
+
+        public PortalHttpModule() : base( new Cache.Membase.Membase(), (IIndexManager) new SolrCoreManager<UUIDResult>() )
+        {
+            
+        }
+
+
+        #endregion
         #region IHttpModule Members
 
         public void Dispose()
@@ -22,6 +33,7 @@ namespace CHAOS.Portal.Core.HttpModule
         {
             context.BeginRequest += ContextBeginRequest;
             
+            // TODO: Add extension and module loading logic
             LoadedExtensions.Add( "Portal", new PortalExtensionLoader() );
             LoadedExtensions.Add( "Session", new DefaultExtentionLoader( "C:\\Users\\JesperFyhr\\Desktop\\Portal\\src\\app\\CHAOS.Portal.Web\\Extensions\\CHAOS.Portal.Extensions.dll", "CHAOS.Portal.Extensions.Session.SessionExtension" ) );
         }

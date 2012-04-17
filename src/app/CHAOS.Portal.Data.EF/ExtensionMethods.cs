@@ -47,11 +47,11 @@ namespace CHAOS.Portal.Data.EF
         #region Session
 
         public static IEnumerable<DTO.Standard.Session> ToDTO( this IEnumerable<Session> list )
-		{ 
+		{
             return list.Select( ToDTO );
 		}
 
-        public static DTO.Standard.Session ToDTO( Session session )
+        public static DTO.Standard.Session ToDTO( this Session session )
 		{
 			return new DTO.Standard.Session( session.GUID, session.UserGUID, session.DateCreated, session.DateModified );
 		}

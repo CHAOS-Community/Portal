@@ -2,6 +2,7 @@
 using CHAOS.Portal.Core.Cache;
 using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Core.Standard;
+using CHAOS.Portal.DTO.Standard;
 using Geckon;
 using Geckon.Index;
 
@@ -14,6 +15,7 @@ namespace CHAOS.Portal.Core
         IPortalResponse   PortalResponse { get; }
         ReturnFormat      ReturnFormat{ get; }
         Session           Session { get; }
+        UserInfo          User { get; }
         UUID              AnonymousUserGUID { get; }
         bool              IsAnonymousUser { get; }
         ICache            Cache{ get; }

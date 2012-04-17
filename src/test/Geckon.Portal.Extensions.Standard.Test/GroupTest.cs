@@ -1,9 +1,13 @@
-﻿using System.Data.Objects;
+﻿using System.Collections.Generic;
+using System.Data.Objects;
 using System.Linq;
 using System.Xml.Linq;
+using CHAOS.Portal.Core.Request;
+using CHAOS.Portal.Core.Standard;
+using CHAOS.Portal.Core.Test;
 using CHAOS.Portal.Data.EF;
-using Geckon.Portal.Core.Exception;
-using Geckon.Portal.Test;
+using CHAOS.Portal.Exception;
+using CHAOS.Portal.Extensions.Group;
 using NUnit.Framework;
 
 namespace Geckon.Portal.Extensions.Standard.Test
@@ -11,82 +15,72 @@ namespace Geckon.Portal.Extensions.Standard.Test
     [TestFixture]
     public class GroupTest : TestBase
     {
+        private GroupExtension Extension { get; set; }
+
+        [SetUp]
+        public void SetUp()
+        {
+            base.SetUp();
+
+            PortalApplication.LoadedExtensions.Add( "Group", new DefaultExtentionLoader( typeof( GroupExtension ) ) );
+
+            Extension = new GroupExtension();
+        }
+
         [Test]
         public void Should_Get_Group()
         {
-            GroupExtension extension = new GroupExtension(  );
+            Extension.Get( AdminCallContext, null );
             
-            extension.Init( new PortalContextMock() );
-            extension.Get( AdminCallContext, null );
-            
-            Assert.AreEqual( AdminGroup.GUID.ToString(), XDocument.Parse( extension.Result ).Descendants("GUID").First().Value );
+           Assert.AreEqual( AdminGroup.GUID.ToByteArray(), (AdminCallContext.PortalResponse.PortalResult.GetModule("Geckon.Portal").Results[0] as CHAOS.Portal.DTO.Standard.Group).GUID.ToByteArray() );
         }
 
         [Test]
         public void Should_Create_Group()
         {
-            GroupExtension extension = new GroupExtension(  );
-
-            extension.Init( new PortalContextMock() );
-            extension.Create( AdminCallContext, "my group", 0 );
+            Extension.Create( AdminCallContext, "my group", 0 );
             
-            Assert.AreEqual( "my group", XDocument.Parse( extension.Result ).Descendants("Name").First().Value );
+            Assert.AreEqual( "my group", (AdminCallContext.PortalResponse.PortalResult.GetModule("Geckon.Portal").Results[0] as CHAOS.Portal.DTO.Standard.Group).Name );
         }
 
-        [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
+        [Test, ExpectedException( typeof( InsufficientPermissionsException )) ]
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Create_Group()
         {
-            GroupExtension extension = new GroupExtension( );
-
-            extension.Init( new PortalContextMock() );
-            extension.Create( AnonCallContext, "InsufficientPermissionsExcention", 0 );
+            Extension.Create(AnonCallContext, "InsufficientPermissionsException", 0);
         }
 
         [Test]
         public void Should_Delete_Group()
         {
-            GroupExtension extension = new GroupExtension();
+            Extension.Delete( AdminCallContext, AdminGroup.GUID );
 
-            extension.Init( new PortalContextMock() );
-            extension.Delete( AdminCallContext, AdminGroup.GUID.ToString() );
-
-            Assert.AreEqual("1", XDocument.Parse( extension.Result ).Descendants("Value").First().Value);
+            Assert.AreEqual( 1, (AdminCallContext.PortalResponse.PortalResult.GetModule("Geckon.Portal").Results[0] as CHAOS.Portal.DTO.Standard.ScalarResult).Value );
         }
 
-        [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
+        [Test, ExpectedException( typeof( InsufficientPermissionsException )) ]
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Delete_Group()
         {
-            GroupExtension extension = new GroupExtension();
-
-            extension.Init( new PortalContextMock() );
-            extension.Delete( AnonCallContext, AdminGroup.GUID.ToString() );
+            Extension.Delete( AnonCallContext, AdminGroup.GUID );
         }
 
-        [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
+        [Test, ExpectedException( typeof( InsufficientPermissionsException )) ]
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Delete_Group2()
         {
-            GroupExtension extension = new GroupExtension();
-            extension.Init( new PortalContextMock() );
-
             using( PortalEntities db = new PortalEntities( ) )
             {
                 UUID            guid = new UUID();
-				ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
+                ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
 
                 db.Group_Create( guid.ToByteArray(), "no permission",UserAdministrator.GUID.ToByteArray(), 0x00, errorCode );
 
-                extension.Delete( AnonCallContext, guid.ToString() );
+                Extension.Delete( AnonCallContext, guid );
             }            
         }
 
         [Test]
         public void Should_Update_Group()
         {
-            GroupExtension extension = new GroupExtension();
-
-            extension.Init( new PortalContextMock() );
-            
-            extension.Update( AdminCallContext, AdminGroup.GUID.ToString(), "success", 0 );
+            Extension.Update( AdminCallContext, AdminGroup.GUID, "success", 0 );
 
             using( PortalEntities db = new PortalEntities( ) )
             {
@@ -96,13 +90,10 @@ namespace Geckon.Portal.Extensions.Standard.Test
             }
         }
 
-        [Test, ExpectedException( typeof( InsufficientPermissionsExcention )) ]
+        [Test, ExpectedException( typeof( InsufficientPermissionsException )) ]
         public void Should_Throw_InsufficientPermissionsExcention_When_Trying_To_Update_Group()
         {
-            GroupExtension extension = new GroupExtension();
-
-            extension.Init( new PortalContextMock() );
-            extension.Update( AnonCallContext, AdminGroup.GUID.ToString(), "hj", (int) AdminGroup.SystemPermission );
+            Extension.Update( AnonCallContext, AdminGroup.GUID, "hj", (int) AdminGroup.SystemPermission );
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using CHAOS.Portal.Core.Extension;
 
 namespace CHAOS.Portal.Core.Standard
@@ -17,6 +18,12 @@ namespace CHAOS.Portal.Core.Standard
         {
             ExtensionAssembly = Assembly.LoadFrom( assemblyPath );
             FullName          = fullName;
+        }
+
+        public DefaultExtentionLoader( Type type )
+        {
+            ExtensionAssembly = type.Assembly;
+            FullName          = type.FullName;
         }
 
         #endregion

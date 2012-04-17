@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace CHAOS.Portal.Core.Request
 {
@@ -19,6 +18,11 @@ namespace CHAOS.Portal.Core.Request
             Extension  = extension;
             Action     = action;
             Parameters = parameters;
+        }
+
+        public PortalRequest() : this( null, null, new Dictionary<string, string>() )
+        {
+            
         }
 
         #endregion

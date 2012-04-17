@@ -46,6 +46,9 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Cache\Membase\Membase.cs" />
     <Compile Include="Cache\ICache.cs" />
@@ -54,9 +57,9 @@
     <Compile Include="IExtensionLoader.cs" />
     <Compile Include="IPortalResponse.cs" />
     <Compile Include="IPortalResult.cs" />
-    <Compile Include="PortalApplication.cs" />
+    <Compile Include="Standard\PortalApplication.cs" />
     <Compile Include="Extension\IExtension.cs" />
-    <Compile Include="PortalResponse.cs" />
+    <Compile Include="Standard\PortalResponse.cs" />
     <Compile Include="Request\Bindings\CallContextParameterBinding.cs" />
     <Compile Include="Request\Bindings\ConvertableParameterBinding.cs" />
     <Compile Include="Request\Bindings\UUIDParameterBinding.cs" />
@@ -72,7 +75,6 @@
     <Compile Include="Standard\ReturnFormat.cs" />
     <Compile Include="Standard\ModuleResult.cs" />
     <Compile Include="Standard\PortalResult.cs" />
-    <Compile Include="Standard\Session.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Enyim.Caching">
@@ -89,6 +91,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -96,6 +99,10 @@
     <Folder Include="Extension\Standard\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CHAOS.Portal.Data.EF\CHAOS.Portal.Data.EF.csproj">
+      <Project>{558D5795-F129-4C76-A7C3-3D6BFC8A2FB2}</Project>
+      <Name>CHAOS.Portal.Data.EF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CHAOS.Portal.DTO.Standard\CHAOS.Portal.DTO.Standard.csproj">
       <Project>{674E8DA7-B635-484B-A11A-270AFE31E7E6}</Project>
       <Name>CHAOS.Portal.DTO.Standard</Name>
@@ -111,8 +118,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY CHAOS.Portal.Core.dll $(SolbutionDir)bin\Portal\CHAOS.Portal.Core.dll
-COPY CHAOS.Portal.Core.pdb $(SolutionDir)bin\Portal\CHAOS.Portal.Core.pdb</PostBuildEvent>
+    <PostBuildEvent>COPY $(TargetDir)CHAOS.Portal.Core.pdb $(SolutionDir)bin\Portal\CHAOS.Portal.Core.pdb
+COPY $(TargetDir)CHAOS.Portal.Core.dll $(SolutionDir)bin\Portal\CHAOS.Portal.Core.dll</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

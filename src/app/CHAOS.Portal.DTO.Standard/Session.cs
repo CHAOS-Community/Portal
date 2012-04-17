@@ -9,10 +9,10 @@ namespace CHAOS.Portal.DTO.Standard
 		#region Properties
 
 		[Serialize("SessionGUID")]
-		public string GUID { get; set; }
+		public UUID GUID { get; set; }
 
 		[Serialize("UserGUID")]
-        public string UserGUID { get; set; }
+        public UUID UserGUID { get; set; }
 
 		[Serialize("DateCreated")]
 		public DateTime DateCreated { get; set; }
@@ -33,8 +33,8 @@ namespace CHAOS.Portal.DTO.Standard
 
         public Session( UUID guid, UUID userGUID, DateTime dateCreated, DateTime? dateModified )
 		{
-			GUID         = guid.ToString();
-			UserGUID     = userGUID.ToString();
+			GUID         = guid;
+			UserGUID     = userGUID;
 			DateCreated  = dateCreated;
 			DateModified = dateModified;
 		}

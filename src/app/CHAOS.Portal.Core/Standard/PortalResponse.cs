@@ -1,6 +1,4 @@
-﻿using CHAOS.Portal.Core.Standard;
-
-namespace CHAOS.Portal.Core
+﻿namespace CHAOS.Portal.Core.Standard
 {
     public class PortalResponse : IPortalResponse
     {

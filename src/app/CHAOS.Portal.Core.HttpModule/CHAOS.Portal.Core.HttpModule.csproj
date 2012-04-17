@@ -46,8 +46,18 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\..\..\lib\Enyim.Caching.dll</HintPath>
+    </Reference>
     <Reference Include="geckon, Version=1.0.4473.42470, Culture=neutral, processorArchitecture=MSIL">
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Membase">
+      <HintPath>..\..\..\lib\Membase.dll</HintPath>
+    </Reference>
+    <Reference Include="Portal, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\build\Portal.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,7 +74,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>cd $(SolutionDir)
-CALL Build.bat</PreBuildEvent>
+CALL Build_Portal.bat</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

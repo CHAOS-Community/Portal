@@ -1,5 +1,6 @@
 ﻿using System.Data.Objects;
 using System.Linq;
+using CHAOS.Portal.Core.Standard;
 using CHAOS.Portal.Data.EF;
 using NUnit.Framework;
 using Geckon.Portal.Core.Standard.Extension;
