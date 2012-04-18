@@ -92,11 +92,9 @@ namespace CHAOS.Portal.Extensions.Group
 
             using( PortalEntities db = new PortalEntities() )
             {
-				ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
-                
-				db.Group_Update( newName, BitConverter.GetBytes( newSystemPermission ), guid.ToByteArray(), user.GUID.ToByteArray(), errorCode );
+				int result = db.Group_Update( newName, newSystemPermission, guid.ToByteArray(), user.GUID.ToByteArray() ).First().Value;
 
-                if( ( (int) errorCode.Value ) == -100 )
+                if( result == -100 )
                     throw new InsufficientPermissionsException( "User does not have permission to update group" );
 
                 module.AddResult( new ScalarResult( 1 ) );

@@ -1367,8 +1367,7 @@ namespace CHAOS.Portal.Data.EF
         /// <param name="newSystemPermission">No Metadata Documentation available.</param>
         /// <param name="whereGroupGUID">No Metadata Documentation available.</param>
         /// <param name="requestUserGUID">No Metadata Documentation available.</param>
-        /// <param name="errorCode">No Metadata Documentation available.</param>
-        public int Group_Update(global::System.String newName, global::System.Byte[] newSystemPermission, global::System.Byte[] whereGroupGUID, global::System.Byte[] requestUserGUID, ObjectParameter errorCode)
+        public ObjectResult<Nullable<global::System.Int32>> Group_Update(global::System.String newName, Nullable<global::System.Int32> newSystemPermission, global::System.Byte[] whereGroupGUID, global::System.Byte[] requestUserGUID)
         {
             ObjectParameter newNameParameter;
             if (newName != null)
@@ -1381,13 +1380,13 @@ namespace CHAOS.Portal.Data.EF
             }
     
             ObjectParameter newSystemPermissionParameter;
-            if (newSystemPermission != null)
+            if (newSystemPermission.HasValue)
             {
                 newSystemPermissionParameter = new ObjectParameter("NewSystemPermission", newSystemPermission);
             }
             else
             {
-                newSystemPermissionParameter = new ObjectParameter("NewSystemPermission", typeof(global::System.Byte[]));
+                newSystemPermissionParameter = new ObjectParameter("NewSystemPermission", typeof(global::System.Int32));
             }
     
             ObjectParameter whereGroupGUIDParameter;
@@ -1410,7 +1409,7 @@ namespace CHAOS.Portal.Data.EF
                 requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction("Group_Update", newNameParameter, newSystemPermissionParameter, whereGroupGUIDParameter, requestUserGUIDParameter, errorCode);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Group_Update", newNameParameter, newSystemPermissionParameter, whereGroupGUIDParameter, requestUserGUIDParameter);
         }
     
         /// <summary>
@@ -1803,7 +1802,7 @@ namespace CHAOS.Portal.Data.EF
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="PortalModel", Name="ClientSettings")]
     [Serializable()]
-    [DataContract(IsReference=true)]
+    [DataContractAttribute(IsReference=true)]
     public partial class ClientSettings : EntityObject
     {
         #region Factory Method
@@ -2633,7 +2632,7 @@ namespace CHAOS.Portal.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [XmlIgnore()]
+        [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PortalModel", "FK_IndexSettings_ModuleID_Module_ID", "Module")]
@@ -3165,6 +3164,7 @@ namespace CHAOS.Portal.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Web;
 using CHAOS.Portal.Core.Extension;
 using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Core.Standard;
 using CHAOS.Portal.DTO.Standard;
+using CHAOS.Portal.Exception;
 using Geckon.Index;
 using Geckon.Index.Solr;
 using Geckon.Serialization;
@@ -64,8 +66,14 @@ namespace CHAOS.Portal.Core.HttpModule
             application.Response.End();
         }
 
+        /// <summary>
+        /// Get the http response content type based on the return format requested 
+        /// </summary>
+        /// <param name="callContext"></param>
+        /// <returns></returns>
         private string GetContentType( ICallContext callContext )
         {
+            // TODO: Should validate when request is received, not after it's done processing
             switch( callContext.ReturnFormat )
             {
                 case ReturnFormat.GXML:
@@ -75,10 +83,15 @@ namespace CHAOS.Portal.Core.HttpModule
                 case ReturnFormat.JSONP:
                     return "application/javascript";
                 default:
-                    throw new NotImplementedException( "Unknown return format" ); // TODO: Should validate when request is received, not after it's done processing
+                    throw new NotImplementedException( "Unknown return format" ); 
             }
         }
 
+        /// <summary>
+        /// Determine if the requested resource should be ignored
+        /// </summary>
+        /// <param name="absolutePath"></param>
+        /// <returns></returns>
         private bool IsOnIgnoreList( string absolutePath )
         {
             if( absolutePath.EndsWith( "favicon.ico" ) )
@@ -89,18 +102,47 @@ namespace CHAOS.Portal.Core.HttpModule
             return false;
         }
 
+        /// <summary>
+        /// Creates a CallContext based on the HttpRequest
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         protected ICallContext CreateCallContext( HttpRequest request )
         {
-            IDictionary<string, string> parameters = new Dictionary<string, string>();
-            string[] split = request.Url.AbsolutePath.Substring( request.ApplicationPath.Length ).Split( '/' );
+            string[] split = request.Url.AbsolutePath.Substring( request.ApplicationPath.Length ).Split('/');
 
-            // TODO: Put routing logic into seperate classes
-            for( int i = 0; i < request.QueryString.Keys.Count; i++ )
+            string extension = split[split.Length - 2];
+            string action    = split[split.Length - 1];
+
+            switch( request.HttpMethod )
             {
-                parameters.Add( request.QueryString.Keys[i], request.QueryString[i] );
+                case "DELETE":
+                case "PUT":
+                case "POST":
+                    return new CallContext( this, new PortalRequest( extension, action, ConvertToIDictionary( request.Form ) ), new PortalResponse() );
+                case "GET":
+                    return new CallContext( this, new PortalRequest( extension, action, ConvertToIDictionary( request.QueryString ) ), new PortalResponse() );
+                default:
+                    throw new UnhandledException( "Unknown Http Method" );
+            }
+        }
+
+        /// <summary>
+        /// Converts a NameValueCollection to a IDictionary
+        /// </summary>
+        /// <param name="nameValueCollection"></param>
+        /// <returns></returns>
+        private IDictionary<string, string> ConvertToIDictionary( NameValueCollection nameValueCollection )
+        {
+            IDictionary<string, string> parameters = new Dictionary<string, string>();
+           
+            // TODO: Put routing logic into seperate classes
+            for( int i = 0; i < nameValueCollection.Keys.Count; i++ )
+            {
+                parameters.Add( nameValueCollection.Keys[i], nameValueCollection[i]);
             }
 
-            return new CallContext( this, new PortalRequest( split[split.Length-2], split[split.Length-1], parameters ), new PortalResponse(  ) );
+            return parameters;
         }
 
         #endregion
@@ -119,6 +161,11 @@ namespace CHAOS.Portal.Core.HttpModule
         public void Test( ICallContext callContext )
         {
             callContext.PortalResponse.PortalResult.GetModule("Portal.Core").AddResult( new SimpleResult(callContext.PortalRequest.Extension + ":" + callContext.PortalRequest.Action ) );
+        }
+
+        public void Post( ICallContext callContext, int ID )
+        {
+            callContext.PortalResponse.PortalResult.GetModule("Portal.Core").AddResult( new SimpleResult( ID.ToString() ) );
         }
     }
 
