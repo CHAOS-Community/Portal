@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extension\Standard\" />
+    <Folder Include="Module\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CHAOS.Portal.Data.EF\CHAOS.Portal.Data.EF.csproj">
