@@ -30,10 +30,20 @@ namespace Geckon.Portal.Core.Standard
 				if( extension == null )
 					throw new ExtensionMissingException( string.Format( "The extension ({0}) could not be loaded", loader.Extension.FullName == null ? "unknown" : loader.Extension.FullName ) );
 
-                extension.Init( Application.PortalContext,
+                switch( requestContext.HttpContext.Request.HttpMethod )
+                {
+                    case "GET":
+                         extension.Init( Application.PortalContext,
                                 requestContext.HttpContext.Request.QueryString["format"] ?? "GXML",
                                 requestContext.HttpContext.Request.QueryString["useHttpStatusCodes"] ?? "true" );
-                
+                        break;
+                    default:
+                         extension.Init( Application.PortalContext,
+                                requestContext.HttpContext.Request.Form["format"] ?? "GXML",
+                                requestContext.HttpContext.Request.Form["useHttpStatusCodes"] ?? "true");
+                        break;
+                }
+  
                 return extension;
             }
 

@@ -9,10 +9,19 @@ namespace Geckon.Portal.Core.Standard.ModelBinders
     {
         public object BindModel( ControllerContext controllerContext, ModelBindingContext bindingContext )
         {
-            if( string.IsNullOrEmpty( controllerContext.RequestContext.HttpContext.Request.QueryString[ bindingContext.ModelName ] ) )
-                return null;
+            switch( controllerContext.HttpContext.Request.HttpMethod )
+            {
+                case "GET":
+                    if( string.IsNullOrEmpty( controllerContext.RequestContext.HttpContext.Request.QueryString[ bindingContext.ModelName ] ) )
+                        return null;
 
-            return new UUID( controllerContext.RequestContext.HttpContext.Request.QueryString[ bindingContext.ModelName ] );
+                    return new UUID( controllerContext.RequestContext.HttpContext.Request.QueryString[ bindingContext.ModelName ] );
+                default:
+                    if( string.IsNullOrEmpty( controllerContext.RequestContext.HttpContext.Request.Form[ bindingContext.ModelName ] ) )
+                        return null;
+
+                    return new UUID( controllerContext.RequestContext.HttpContext.Request.Form[ bindingContext.ModelName ] );
+            }
         }
     }
 }
