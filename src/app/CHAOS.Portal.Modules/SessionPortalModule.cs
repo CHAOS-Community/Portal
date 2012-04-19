@@ -6,6 +6,7 @@ using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Data.EF;
 using CHAOS.Portal.Exception;
 using Geckon;
+using Session = CHAOS.Portal.DTO.Standard.Session;
 
 namespace CHAOS.Portal.Modules
 {
@@ -37,11 +38,11 @@ namespace CHAOS.Portal.Modules
 
         #region Get
 
-        public void Get( ICallContext callContext )
+        public Session Get(ICallContext callContext)
         {
             IModuleResult module = callContext.PortalResponse.PortalResult.GetModule("Geckon.Portal");
 
-            DTO.Standard.Session session = callContext.Cache.Get<DTO.Standard.Session>( string.Format( "[Session:sid={0}]", callContext.Session.GUID ) );
+            Session session = callContext.Cache.Get<Session>( string.Format( "[Session:sid={0}]", callContext.Session.GUID ) );
 
             if( session == null )
             {
@@ -56,56 +57,52 @@ namespace CHAOS.Portal.Modules
             }
 
             
-            module.AddResult( session );
+            return session;
         } 
 
         #endregion
         #region Create
 
-        public void Create( ICallContext callContext, uint protocolVersion )
+        public Session Create( ICallContext callContext, uint protocolVersion )
         {
             if( protocolVersion != 4 )
                 throw new WrongProtocolVersionException( "Current version is 4" );
 
             // TODO: Add Module filtering
 
-            using( PortalEntities db = new PortalEntities() )
+            using( var db = new PortalEntities() )
             {
-            	UUID sessionGUID = new UUID();
+            	var sessionGUID = new UUID();
 
 				db.Session_Create( sessionGUID.ToByteArray(), callContext.AnonymousUserGUID.ToByteArray() );
 
-                DTO.Standard.Session session = db.Session_Get( sessionGUID.ToByteArray(), null ).ToDTO().First();
-
-                callContext.PortalResponse.PortalResult.GetModule( "Geckon.Portal" ).AddResult( session );
+                return db.Session_Get( sessionGUID.ToByteArray(), null ).ToDTO().First();
             }
         }
 
         #endregion
         #region Update
 
-        public void Update( ICallContext callContext )
+        public Session Update(ICallContext callContext)
         {
-            using( PortalEntities db = new PortalEntities() )
+            using( var db = new PortalEntities() )
             {
                 db.Session_Update( null, callContext.Session.GUID.ToByteArray(), callContext.User.GUID.ToByteArray() ).First();
 
-                DTO.Standard.Session session = db.Session_Get( callContext.Session.GUID.ToByteArray(), callContext.User.GUID.ToByteArray() ).ToDTO().First();
-
-                callContext.PortalResponse.PortalResult.GetModule( "Geckon.Portal" ).AddResult( session );
+                return db.Session_Get( callContext.Session.GUID.ToByteArray(), callContext.User.GUID.ToByteArray() ).ToDTO().First();
             }
         }
 
         #endregion
         #region Delete
 
-        public void Delete( ICallContext callContext )
+        public ScalarResult Delete(ICallContext callContext)
         {
             using( PortalEntities db = new PortalEntities() )
             {
                 int result = db.Session_Delete( callContext.Session.GUID.ToByteArray(), null );
 
-                callContext.PortalResponse.PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
+                return new ScalarResult( result );
             }
         }
 

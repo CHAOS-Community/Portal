@@ -46,7 +46,7 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Copy of ExtensionMissingException.cs" />
+    <Compile Include="UnsupportedModuleReturnTypeException.cs" />
     <Compile Include="ModuleConfigurationMissingException.cs" />
     <Compile Include="SessionDoesNotExistException.cs" />
     <Compile Include="UnhandledException.cs" />

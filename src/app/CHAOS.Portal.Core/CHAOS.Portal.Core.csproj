@@ -89,7 +89,7 @@
     </Reference>
     <Reference Include="geckon">
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Membase">
       <HintPath>..\..\..\lib\Membase.dll</HintPath>
