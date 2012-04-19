@@ -86,7 +86,7 @@ namespace CHAOS.Portal.Core.Standard
         {
             get
             {
-                return PortalRequest.Parameters.ContainsKey( "format" ) ? (ReturnFormat) Enum.Parse( typeof( ReturnFormat ), PortalRequest.Parameters["format"].ToUpper() ) : ReturnFormat.GXML;
+                return PortalRequest.Parameters.ContainsKey( "format" ) ? (ReturnFormat) Enum.Parse( typeof( ReturnFormat ), PortalRequest.Parameters["format"].ToUpper() ) : ReturnFormat.XML;
             }
         }
 
@@ -110,7 +110,7 @@ namespace CHAOS.Portal.Core.Standard
         {
             switch( ReturnFormat )
             {
-                case ReturnFormat.GXML:
+                case ReturnFormat.XML:
                     XDocument xdoc = SerializerFactory.Get<XDocument>().Serialize(PortalResponse.PortalResult, false);
                     xdoc.Declaration = new XDeclaration( "1.0", "UTF-16", "yes" );
 

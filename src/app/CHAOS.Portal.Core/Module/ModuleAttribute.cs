@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CHAOS.Portal.Core.Module.Standard
+namespace CHAOS.Portal.Core.Module
 {
     public class ModuleAttribute : Attribute
     {

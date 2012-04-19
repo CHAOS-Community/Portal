@@ -1,5 +1,6 @@
-using CHAOS.Portal.DTO.Standard;
+using CHAOS.Portal.Core.Standard;
 using Geckon.Serialization;
+using CHAOS.Portal.DTO.Standard;
 
 namespace CHAOS.Portal.Core.Test
 {

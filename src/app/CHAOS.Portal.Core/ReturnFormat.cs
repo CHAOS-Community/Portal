@@ -1,8 +1,8 @@
-﻿namespace CHAOS.Portal.Core.Standard
+﻿namespace CHAOS.Portal.Core
 {
     public enum ReturnFormat
     {
-        GXML,
+        XML,
         JSON,
         JSONP,
         UNKNOWN

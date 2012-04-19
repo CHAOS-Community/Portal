@@ -14,7 +14,7 @@ namespace CHAOS.Portal.Core.Test
             AnonCallContext.PortalRequest.Parameters.Add( "test", "string value" );
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestStringParameter").GetParameters()[1];
 
-            Assert.AreEqual( "string value", PortalApplication.Bindings.Bindings[typeof(string)].Bind( AnonCallContext, parameterInfo ) );
+            Assert.AreEqual( "string value", PortalApplication.Bindings[typeof(string)].Bind( AnonCallContext, parameterInfo ) );
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace CHAOS.Portal.Core.Test
             AnonCallContext.PortalRequest.Parameters.Add( "test", null );
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestStringParameter").GetParameters()[1];
 
-            Assert.AreEqual( null, PortalApplication.Bindings.Bindings[typeof(string)].Bind( AnonCallContext, parameterInfo) );
+            Assert.AreEqual( null, PortalApplication.Bindings[typeof(string)].Bind( AnonCallContext, parameterInfo) );
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace CHAOS.Portal.Core.Test
             AnonCallContext.PortalRequest.Parameters.Add( "test", "1000" );
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestInt32Parameter").GetParameters()[1];
 
-            Assert.AreEqual( 1000, PortalApplication.Bindings.Bindings[typeof(int)].Bind( AnonCallContext, parameterInfo) );
+            Assert.AreEqual( 1000, PortalApplication.Bindings[typeof(int)].Bind( AnonCallContext, parameterInfo) );
         }
 
         [Test, ExpectedException(typeof(ParameterBindingMissingException))]
@@ -41,7 +41,7 @@ namespace CHAOS.Portal.Core.Test
             AnonCallContext.PortalRequest.Parameters.Add( "test", null );
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestInt32Parameter").GetParameters()[1];
 
-            PortalApplication.Bindings.Bindings[typeof(int)].Bind( AnonCallContext, parameterInfo );
+            PortalApplication.Bindings[typeof(int)].Bind( AnonCallContext, parameterInfo );
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace CHAOS.Portal.Core.Test
             AnonCallContext.PortalRequest.Parameters.Add( "test", null );
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestNullableInt32Parameter").GetParameters()[1];
 
-            Assert.AreEqual( null, PortalApplication.Bindings.Bindings[typeof(int)].Bind( AnonCallContext, parameterInfo ) );
+            Assert.AreEqual( null, PortalApplication.Bindings[typeof(int)].Bind( AnonCallContext, parameterInfo ) );
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace CHAOS.Portal.Core.Test
             AnonCallContext.PortalRequest.Parameters.Add( "test", "1000" );
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestUInt32Parameter").GetParameters()[1];
 
-            Assert.AreEqual( 1000, PortalApplication.Bindings.Bindings[typeof(uint)].Bind( AnonCallContext, parameterInfo) );
+            Assert.AreEqual( 1000, PortalApplication.Bindings[typeof(uint)].Bind( AnonCallContext, parameterInfo) );
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace CHAOS.Portal.Core.Test
             AnonCallContext.PortalRequest.Parameters.Add( "test", null );
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestNullableUInt32Parameter").GetParameters()[1];
 
-            Assert.AreEqual( null, PortalApplication.Bindings.Bindings[typeof(uint)].Bind( AnonCallContext, parameterInfo ) );
+            Assert.AreEqual( null, PortalApplication.Bindings[typeof(uint)].Bind( AnonCallContext, parameterInfo ) );
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace CHAOS.Portal.Core.Test
             AnonCallContext.PortalRequest.Parameters.Add( "test", "21ec2020-3aea-1069-a2dd-08002b30309d" );
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestUUIDParameter").GetParameters()[1];
 
-            Assert.AreEqual( "21ec2020-3aea-1069-a2dd-08002b30309d", PortalApplication.Bindings.Bindings[typeof(UUID)].Bind( AnonCallContext, parameterInfo).ToString() );
+            Assert.AreEqual( "21ec2020-3aea-1069-a2dd-08002b30309d", PortalApplication.Bindings[typeof(UUID)].Bind( AnonCallContext, parameterInfo).ToString() );
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace CHAOS.Portal.Core.Test
             AnonCallContext.PortalRequest.Parameters.Add( "test", null );
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestNullableUUIDParameter").GetParameters()[1];
 
-            Assert.AreEqual( null, PortalApplication.Bindings.Bindings[typeof(UUID)].Bind( AnonCallContext, parameterInfo ) );
+            Assert.AreEqual( null, PortalApplication.Bindings[typeof(UUID)].Bind( AnonCallContext, parameterInfo ) );
         }
     }
 }

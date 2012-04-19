@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CHAOS.Portal.Core.Extension.Standard
+namespace CHAOS.Portal.Core.Extension
 {
     public class ExtensionAttribute : Attribute
     {

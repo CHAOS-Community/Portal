@@ -1,5 +1,6 @@
-﻿using System;
-using CHAOS.Portal.Core.Standard;
+﻿using CHAOS.Portal.Core;
+using CHAOS.Portal.DTO;
+using CHAOS.Portal.DTO.Standard;
 
 namespace CHAOS.Portal.Core.Test
 {

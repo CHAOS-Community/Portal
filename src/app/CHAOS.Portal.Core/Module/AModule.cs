@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using CHAOS.Portal.Core.Standard;
 using CHAOS.Portal.DTO;
 using CHAOS.Portal.Exception;
 
-namespace CHAOS.Portal.Core.Module.Standard
+namespace CHAOS.Portal.Core.Module
 {
     public abstract class AModule : IModule
     {
@@ -62,10 +61,10 @@ namespace CHAOS.Portal.Core.Module.Standard
 
             foreach( var parameterInfo in parameters )
             {
-                if( !callContext.PortalApplication.Bindings.Bindings.ContainsKey( parameterInfo.ParameterType ) )
+                if( !callContext.PortalApplication.Bindings.ContainsKey( parameterInfo.ParameterType ) )
                     throw new ParameterBindingMissingException( string.Format( "There is no binding for the type:{0}", parameterInfo.ParameterType.FullName ) );
                 
-                boundParameters[ parameterInfo.Position ] = callContext.PortalApplication.Bindings.Bindings[ parameterInfo.ParameterType ].Bind( callContext, parameterInfo );
+                boundParameters[ parameterInfo.Position ] = callContext.PortalApplication.Bindings[ parameterInfo.ParameterType ].Bind( callContext, parameterInfo );
             }
 
             return boundParameters;

@@ -7,23 +7,23 @@ namespace CHAOS.Portal.Modules.Test
     [TestFixture]
     public class SessionModuleTest : TestBase
     {
-        #region Properties
+        #region Constructors
 
-        private SessionPortalModule SessionPortalModule { get; set; }
-
-        #endregion
+        private SessionModule SessionModule { get; set; }
 
         [SetUp]
         public void SetUp()
         {
-            SessionPortalModule = new SessionPortalModule();
-            SessionPortalModule.Initialize( ConfigurationManager.ConnectionStrings["PortalEntities"].ConnectionString );
+            SessionModule = new SessionModule();
+            SessionModule.Initialize( ConfigurationManager.ConnectionStrings["PortalEntities"].ConnectionString );
         }
+
+        #endregion
 
         [Test]
         public void Should_Create_Session()
         {
-            var session = SessionPortalModule.Create( AnonCallContext, 4 );
+            var session = SessionModule.Create( AnonCallContext, 4 );
 
             Assert.AreEqual( AnonCallContext.User.GUID.ToByteArray(), session.UserGUID.ToByteArray() );
         }
@@ -31,7 +31,7 @@ namespace CHAOS.Portal.Modules.Test
         [Test]
         public void Should_Get_A_Session()
         {
-            var session = SessionPortalModule.Get( AnonCallContext );
+            var session = SessionModule.Get( AnonCallContext );
 
             Assert.AreEqual( AnonCallContext.User.GUID.ToByteArray(), session.UserGUID.ToByteArray() );
         }
@@ -39,7 +39,7 @@ namespace CHAOS.Portal.Modules.Test
         [Test]
         public void Should_Update_A_Session()
         {
-            var session = SessionPortalModule.Update( AdminCallContext );
+            var session = SessionModule.Update( AdminCallContext );
 
             Assert.IsNotNull( session.DateModified );
         }
@@ -47,7 +47,7 @@ namespace CHAOS.Portal.Modules.Test
         [Test]
         public void Should_Delete_A_Session()
         {
-            var result = SessionPortalModule.Delete( AdminCallContext );
+            var result = SessionModule.Delete( AdminCallContext );
 
             Assert.AreEqual( 1, result.Value );
         }

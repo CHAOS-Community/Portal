@@ -1,3 +1,5 @@
+using CHAOS.Portal.DTO;
+
 namespace CHAOS.Portal.Core
 {
     public interface IPortalResponse

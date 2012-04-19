@@ -1,5 +1,4 @@
-﻿using CHAOS.Portal.Core.Module.Standard;
-using CHAOS.Portal.Core.Standard;
+﻿using CHAOS.Portal.Core.Module;
 
 namespace CHAOS.Portal.Core.Test
 {

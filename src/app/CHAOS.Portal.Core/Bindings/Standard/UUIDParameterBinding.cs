@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Geckon;
 
-namespace CHAOS.Portal.Core.Request.Bindings
+namespace CHAOS.Portal.Core.Bindings.Standard
 {
     public class UUIDParameterBinding : IParameterBinding
     {

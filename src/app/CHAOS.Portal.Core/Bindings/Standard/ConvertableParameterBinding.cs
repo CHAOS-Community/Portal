@@ -3,7 +3,7 @@ using System.Reflection;
 using CHAOS.Portal.Exception;
 using Geckon.Common.Extensions;
 
-namespace CHAOS.Portal.Core.Request.Bindings
+namespace CHAOS.Portal.Core.Bindings.Standard
 {
     public class ConvertableParameterBinding<T> : IParameterBinding where T : IConvertible
     {

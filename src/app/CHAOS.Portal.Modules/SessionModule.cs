@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CHAOS.Portal.Core;
-using CHAOS.Portal.Core.Module.Standard;
+using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Data.EF;
 using CHAOS.Portal.Exception;
@@ -11,7 +11,7 @@ using Session = CHAOS.Portal.DTO.Standard.Session;
 namespace CHAOS.Portal.Modules
 {
     [Module("Portal")]
-    public class SessionPortalModule : AModule
+    public class SessionModule : AModule
     {
         #region Properties
 
@@ -38,11 +38,10 @@ namespace CHAOS.Portal.Modules
 
         #region Get
 
+        [Datatype("Session","Get")]
         public Session Get(ICallContext callContext)
         {
-            IModuleResult module = callContext.PortalResponse.PortalResult.GetModule("Geckon.Portal");
-
-            Session session = callContext.Cache.Get<Session>( string.Format( "[Session:sid={0}]", callContext.Session.GUID ) );
+            var session = callContext.Cache.Get<Session>( string.Format( "[Session:sid={0}]", callContext.Session.GUID ) );
 
             if( session == null )
             {
@@ -63,6 +62,7 @@ namespace CHAOS.Portal.Modules
         #endregion
         #region Create
 
+        [Datatype("Session", "Create")]
         public Session Create( ICallContext callContext, uint protocolVersion )
         {
             if( protocolVersion != 4 )
@@ -70,7 +70,7 @@ namespace CHAOS.Portal.Modules
 
             // TODO: Add Module filtering
 
-            using( var db = new PortalEntities() )
+            using( var db = NewPortalEntities )
             {
             	var sessionGUID = new UUID();
 
@@ -83,9 +83,10 @@ namespace CHAOS.Portal.Modules
         #endregion
         #region Update
 
-        public Session Update(ICallContext callContext)
+        [Datatype("Session", "Update")]
+        public Session Update( ICallContext callContext )
         {
-            using( var db = new PortalEntities() )
+            using( var db = NewPortalEntities )
             {
                 var result = db.Session_Update( null, callContext.Session.GUID.ToByteArray(), callContext.User.GUID.ToByteArray() ).First();
 
@@ -96,9 +97,10 @@ namespace CHAOS.Portal.Modules
         #endregion
         #region Delete
 
-        public ScalarResult Delete(ICallContext callContext)
+        [Datatype("Session", "Delete")]
+        public ScalarResult Delete( ICallContext callContext )
         {
-            using( PortalEntities db = new PortalEntities() )
+            using( var db = NewPortalEntities )
             {
                 var result = db.Session_Delete( callContext.Session.GUID.ToByteArray(), null ).First();
 

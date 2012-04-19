@@ -50,7 +50,6 @@
     <Compile Include="CallContextTest.cs" />
     <Compile Include="ClientSettingsTest.cs" />
     <Compile Include="GroupTest.cs" />
-    <Compile Include="SessionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubscriptionTest.cs" />
     <Compile Include="UserSettingsTest.cs" />
@@ -60,10 +59,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\CHAOS.Portal.Extensions\CHAOS.Portal.Extensions.csproj">
-      <Project>{E073142C-457F-456D-B19C-4FA5D9689C11}</Project>
-      <Name>CHAOS.Portal.Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CHAOS.Portal.Core.Test\CHAOS.Portal.Core.Test.csproj">
       <Project>{1BF05978-1FDC-46DA-9C47-4BAAFE5071C7}</Project>
       <Name>CHAOS.Portal.Core.Test</Name>

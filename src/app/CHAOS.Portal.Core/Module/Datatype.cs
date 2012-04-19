@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CHAOS.Portal.Core.Standard
+namespace CHAOS.Portal.Core.Module
 {
     public class Datatype : Attribute
     {

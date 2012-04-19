@@ -52,44 +52,38 @@
   <ItemGroup>
     <Compile Include="Cache\Membase\Membase.cs" />
     <Compile Include="Cache\ICache.cs" />
-    <Compile Include="Extension\Standard\AExtension.cs" />
-    <Compile Include="Extension\Standard\DefaultExtension.cs" />
-    <Compile Include="Extension\Standard\ExtensionAttribute.cs" />
-    <Compile Include="IModuleResult.cs" />
+    <Compile Include="Extension\AExtension.cs" />
+    <Compile Include="Extension\DefaultExtension.cs" />
+    <Compile Include="Extension\ExtensionAttribute.cs" />
     <Compile Include="ICallContext.cs" />
     <Compile Include="IPortalAction.cs" />
     <Compile Include="IPortalResponse.cs" />
-    <Compile Include="IPortalResult.cs" />
     <Compile Include="Module\IModule.cs" />
-    <Compile Include="Module\Standard\AModule.cs" />
-    <Compile Include="Module\Standard\ModuleAttribute.cs" />
-    <Compile Include="Standard\Datatype.cs" />
+    <Compile Include="Module\AModule.cs" />
+    <Compile Include="Module\ModuleAttribute.cs" />
+    <Compile Include="Module\Datatype.cs" />
+    <Compile Include="ReturnFormat.cs" />
     <Compile Include="Standard\PortalApplication.cs" />
     <Compile Include="Extension\IExtension.cs" />
     <Compile Include="Standard\PortalResponse.cs" />
-    <Compile Include="Request\Bindings\CallContextParameterBinding.cs" />
-    <Compile Include="Request\Bindings\ConvertableParameterBinding.cs" />
-    <Compile Include="Request\Bindings\UUIDParameterBinding.cs" />
-    <Compile Include="Request\Bindings\StringRequestBinding.cs" />
-    <Compile Include="Request\IParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\CallContextParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\ConvertableParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\UUIDParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\StringRequestBinding.cs" />
+    <Compile Include="Bindings\IParameterBinding.cs" />
     <Compile Include="Request\IPortalRequest.cs" />
-    <Compile Include="Request\ParameterFactory.cs" />
     <Compile Include="Request\PortalRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Request\ParameterBindings.cs" />
     <Compile Include="Standard\CallContext.cs" />
-    <Compile Include="Standard\ReturnFormat.cs" />
-    <Compile Include="Standard\ModuleResult.cs" />
-    <Compile Include="Standard\PortalResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Enyim.Caching">
       <HintPath>..\..\..\lib\Enyim.Caching.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="geckon">
+    <Reference Include="geckon, Version=1.0.4473.42470, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Membase">
       <HintPath>..\..\..\lib\Membase.dll</HintPath>

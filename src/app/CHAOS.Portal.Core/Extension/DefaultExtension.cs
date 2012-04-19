@@ -1,7 +1,7 @@
 ﻿using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.Exception;
 
-namespace CHAOS.Portal.Core.Extension.Standard
+namespace CHAOS.Portal.Core.Extension
 {
     /// <summary>
     /// The Default Extension serves as a fall-through extension, it will call any module that matches the requested Extension and Action

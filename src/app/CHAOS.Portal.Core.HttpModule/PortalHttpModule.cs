@@ -5,9 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Web;
-using CHAOS.Portal.Core.Extension.Standard;
 using CHAOS.Portal.Core.Module;
-using CHAOS.Portal.Core.Module.Standard;
 using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Core.Standard;
 using CHAOS.Portal.DTO.Standard;
@@ -84,7 +82,8 @@ namespace CHAOS.Portal.Core.HttpModule
                                 if( !LoadedModules.ContainsKey( datatypeAttribute.ExtensionName ) )
                                     LoadedModules.Add( datatypeAttribute.ExtensionName, new Collection<IModule>() );
 
-                                LoadedModules[ datatypeAttribute.ExtensionName ].Add( module );
+                                if( !LoadedModules[ datatypeAttribute.ExtensionName ].Contains( module ) )
+                                    LoadedModules[ datatypeAttribute.ExtensionName ].Add( module );
                             }
                         }
                     }
@@ -147,7 +146,7 @@ namespace CHAOS.Portal.Core.HttpModule
             // TODO: Should validate when request is received, not after it's done processing
             switch( callContext.ReturnFormat )
             {
-                case ReturnFormat.GXML:
+                case ReturnFormat.XML:
                     return "text/xml";
                 case ReturnFormat.JSON:
                     return "application/json";

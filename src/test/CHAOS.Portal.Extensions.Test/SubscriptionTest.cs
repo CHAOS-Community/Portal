@@ -1,7 +1,7 @@
 ﻿using CHAOS.Portal.Core.Test;
 using NUnit.Framework;
 
-namespace Geckon.Portal.Extensions.Standard.Test
+namespace CHAOS.Portal.Extensions.Test
 {
     [TestFixture]
     public class SubscriptionTest : TestBase

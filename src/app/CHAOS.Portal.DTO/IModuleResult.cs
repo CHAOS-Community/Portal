@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using CHAOS.Portal.DTO;
 
-namespace CHAOS.Portal.Core
+namespace CHAOS.Portal.DTO
 {
     public interface IModuleResult
     {

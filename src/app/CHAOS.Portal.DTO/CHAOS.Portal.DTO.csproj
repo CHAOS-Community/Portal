@@ -47,6 +47,8 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="IModuleResult.cs" />
+    <Compile Include="IPortalResult.cs" />
     <Compile Include="ResultExtensionMethods.cs" />
     <Compile Include="IResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,8 +63,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY CHAOS.Portal.DTO.dll $(SolutionDir)bin\Portal\CHAOS.Portal.DTO.dll
-COPY CHAOS.Portal.DTO.pdb $(SolutionDir)bin\Portal\CHAOS.Portal.DTO.pdb</PostBuildEvent>
+    <PostBuildEvent>COPY $(TargetName).dll $(SolutionDir)bin\Portal\$(TargetName).dll
+COPY $(TargetName).pdb $(SolutionDir)bin\Portal\$(TargetName).pdb</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

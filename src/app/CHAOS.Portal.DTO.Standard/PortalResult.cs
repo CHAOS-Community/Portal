@@ -4,7 +4,7 @@ using System.Linq;
 using Geckon.Serialization;
 using Geckon.Serialization.XML;
 
-namespace CHAOS.Portal.Core.Standard
+namespace CHAOS.Portal.DTO.Standard
 {
     [Serialize("PortalResult")]
     public class PortalResult : IPortalResult

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace CHAOS.Portal.Core.Request.Bindings
+namespace CHAOS.Portal.Core.Bindings.Standard
 {
     public class StringParameterBinding : IParameterBinding
     {

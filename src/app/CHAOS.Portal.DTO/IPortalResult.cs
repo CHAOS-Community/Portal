@@ -1,7 +1,7 @@
 ﻿using Geckon.Serialization;
 using Geckon.Serialization.XML;
 
-namespace CHAOS.Portal.Core
+namespace CHAOS.Portal.DTO
 {
     public interface IPortalResult
     {

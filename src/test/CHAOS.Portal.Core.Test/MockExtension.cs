@@ -1,4 +1,4 @@
-﻿using CHAOS.Portal.Core.Extension.Standard;
+﻿using CHAOS.Portal.Core.Extension;
 using Geckon;
 
 namespace CHAOS.Portal.Core.Test

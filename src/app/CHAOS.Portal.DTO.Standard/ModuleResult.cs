@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using CHAOS.Portal.DTO;
 using Geckon.Serialization;
 using Geckon.Serialization.XML;
 
-namespace CHAOS.Portal.Core.Standard
+namespace CHAOS.Portal.DTO.Standard
 {
     [Serialize("ModuleResult")]
     public class ModuleResult : IModuleResult
