@@ -587,7 +587,7 @@
             <Parameter Name="WhereSessionGUID" Mode="In" Type="Binary" />
             <Parameter Name="WhereUserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="Session_Delete">
+          <FunctionImport Name="Session_Delete" ReturnType="Collection(Int32)">
             <Parameter Name="SessionGUID" Mode="In" Type="Binary" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
           </FunctionImport>

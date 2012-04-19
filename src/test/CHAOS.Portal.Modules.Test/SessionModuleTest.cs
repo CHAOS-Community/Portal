@@ -35,5 +35,21 @@ namespace CHAOS.Portal.Modules.Test
 
             Assert.AreEqual( AnonCallContext.User.GUID.ToByteArray(), session.UserGUID.ToByteArray() );
         }
+
+        [Test]
+        public void Should_Update_A_Session()
+        {
+            var session = SessionPortalModule.Update( AdminCallContext );
+
+            Assert.IsNotNull( session.DateModified );
+        }
+
+        [Test]
+        public void Should_Delete_A_Session()
+        {
+            var result = SessionPortalModule.Delete( AdminCallContext );
+
+            Assert.AreEqual( 1, result.Value );
+        }
     }
 }

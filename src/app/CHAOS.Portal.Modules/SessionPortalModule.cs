@@ -87,7 +87,7 @@ namespace CHAOS.Portal.Modules
         {
             using( var db = new PortalEntities() )
             {
-                db.Session_Update( null, callContext.Session.GUID.ToByteArray(), callContext.User.GUID.ToByteArray() ).First();
+                var result = db.Session_Update( null, callContext.Session.GUID.ToByteArray(), callContext.User.GUID.ToByteArray() ).First();
 
                 return db.Session_Get( callContext.Session.GUID.ToByteArray(), callContext.User.GUID.ToByteArray() ).ToDTO().First();
             }
@@ -100,9 +100,9 @@ namespace CHAOS.Portal.Modules
         {
             using( PortalEntities db = new PortalEntities() )
             {
-                int result = db.Session_Delete( callContext.Session.GUID.ToByteArray(), null );
+                var result = db.Session_Delete( callContext.Session.GUID.ToByteArray(), null ).First();
 
-                return new ScalarResult( result );
+                return new ScalarResult( result.Value );
             }
         }
 

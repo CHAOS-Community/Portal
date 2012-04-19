@@ -871,7 +871,7 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         /// <param name="sessionGUID">No Metadata Documentation available.</param>
         /// <param name="userGUID">No Metadata Documentation available.</param>
-        public int Session_Delete(global::System.Byte[] sessionGUID, global::System.Byte[] userGUID)
+        public ObjectResult<Nullable<global::System.Int32>> Session_Delete(global::System.Byte[] sessionGUID, global::System.Byte[] userGUID)
         {
             ObjectParameter sessionGUIDParameter;
             if (sessionGUID != null)
@@ -893,7 +893,7 @@ namespace CHAOS.Portal.Data.EF
                 userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction("Session_Delete", sessionGUIDParameter, userGUIDParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Session_Delete", sessionGUIDParameter, userGUIDParameter);
         }
     
         /// <summary>
