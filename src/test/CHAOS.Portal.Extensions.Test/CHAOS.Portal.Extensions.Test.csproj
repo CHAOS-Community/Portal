@@ -8,8 +8,8 @@
     <ProjectGuid>{1E981F2A-B70F-4F29-9EAE-52EA0A4E5368}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Geckon.Portal.Extensions.Standard.Test</RootNamespace>
-    <AssemblyName>Geckon.Portal.Extensions.Standard.Test</AssemblyName>
+    <RootNamespace>CHAOS.Portal.Extensions.Test</RootNamespace>
+    <AssemblyName>CHAOS.Portal.Extensions.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

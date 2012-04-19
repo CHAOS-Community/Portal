@@ -43,7 +43,7 @@ namespace CHAOS.Portal.Core.Standard
                         userInfo = db.UserInfo_Get( null, Session.GUID.ToByteArray(), null ).ToDTO().FirstOrDefault();
                         
                         if( userInfo == null )
-                            throw new SessionDoesNotExist( "Session has expired" );
+                            throw new SessionDoesNotExistException( "Session has expired" );
 
                         Cache.Put( string.Format( "[UserInfo:sid={0}]", Session.GUID ), userInfo, new TimeSpan(0, 1, 0) );
                     }

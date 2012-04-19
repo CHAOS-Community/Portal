@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
+using System.Configuration;
 using CHAOS.Portal.Core.Cache;
 using CHAOS.Portal.Core.Extension;
+using CHAOS.Portal.Core.Extension.Standard;
+using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.Core.Request;
-using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
 using Geckon.Index;
-using Geckon.Index.Solr;
 
 namespace CHAOS.Portal.Core.Standard
 {
@@ -14,10 +14,12 @@ namespace CHAOS.Portal.Core.Standard
     {
         #region Properties
 
-        public ParameterBindings                     Bindings { get; set; }
-        public IDictionary<string, IExtensionLoader> LoadedExtensions { get; set; }
-        public ICache                                Cache { get; set; }
-        public IIndexManager                         IndexManager { get; set; }
+        public ParameterBindings                         Bindings { get; set; }
+        public IDictionary<string, IExtension>           LoadedExtensions { get; set; }
+        public IDictionary<string, ICollection<IModule>> LoadedModules { get; set; }
+        public ICache                                    Cache { get; set; }
+        public IIndexManager                             IndexManager { get; set; }
+        public string                                    ServiceDirectory { get; set; }
 
         #endregion
         #region Constructors
@@ -25,9 +27,11 @@ namespace CHAOS.Portal.Core.Standard
         public PortalApplication( ICache cache, IIndexManager indexManager )
         {
             Bindings         = new ParameterBindings();
-            LoadedExtensions = new Dictionary<string, IExtensionLoader>();
+            LoadedExtensions = new Dictionary<string, IExtension>();
+            LoadedModules    = new Dictionary<string, ICollection<IModule>>();
             Cache            = cache; 
             IndexManager     = indexManager;
+            ServiceDirectory = ConfigurationManager.AppSettings["ServiceDirectory"];
         }
 
         #endregion
@@ -35,44 +39,22 @@ namespace CHAOS.Portal.Core.Standard
 
         public void ProcessRequest( ICallContext callContext )
         {
-            if( !LoadedExtensions.ContainsKey( callContext.PortalRequest.Extension ) )
-                throw new ExtensionMissingException( "The requested Extension wasn't found in any loaded assembly" );
+            IExtension extension;
 
-            IExtension extension  = GetExtension( callContext );
-            MethodInfo action     = GetAction( callContext, extension );
-            object[]   parameters = BindParameters( callContext, action.GetParameters() );
-            
-            action.Invoke( extension, parameters );
+            if( LoadedExtensions.ContainsKey( callContext.PortalRequest.Extension ) )
+                extension = GetExtension( callContext.PortalRequest.Extension );
+            else
+                extension = new DefaultExtension();
+
+            extension.CallAction( callContext );
         }
 
-        private object[] BindParameters( ICallContext callContext, ParameterInfo[] parameters )
+        protected virtual IExtension GetExtension( string extension )
         {
-            object[] boundParameters = new object[ parameters.Length ];
-
-            foreach( ParameterInfo parameterInfo in parameters )
-            {
-                if( !Bindings.Bindings.ContainsKey( parameterInfo.ParameterType ) )
-                    throw new ParameterBindingMissingException( string.Format( "There is no binding for the type:{0}", parameterInfo.ParameterType.FullName ) );
-                
-                boundParameters[ parameterInfo.Position ] = Bindings.Bindings[ parameterInfo.ParameterType ].Bind( callContext, parameterInfo );
-            }
-
-            return boundParameters;
-        }
-
-        protected virtual IExtension GetExtension( ICallContext callContext )
-        {
-            if( !LoadedExtensions.ContainsKey( callContext.PortalRequest.Extension ) )
+            if( !LoadedExtensions.ContainsKey( extension ) )
                 throw new ExtensionMissingException( "Extension is not one of the available extensions" );
 
-            IExtensionLoader loader = LoadedExtensions[callContext.PortalRequest.Extension];
-
-            return loader.CreateInstance();
-        }
-
-        protected virtual MethodInfo GetAction( ICallContext callContext, IExtension extension )
-        {
-            return extension.GetType().GetMethod( callContext.PortalRequest.Action );
+            return LoadedExtensions[ extension ];
         }
 
         #endregion

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Data.Objects;
 using CHAOS.Portal.Core;
-using CHAOS.Portal.Core.Extension;
+using CHAOS.Portal.Core.Extension.Standard;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Data.EF;
 using CHAOS.Portal.Exception;
@@ -10,7 +9,8 @@ using Geckon;
 
 namespace CHAOS.Portal.Extensions.Group
 {
-    public class GroupExtension : IExtension
+    [Extension("Group")]
+    public class GroupExtension : AExtension
     {
         #region Get
 

@@ -1,9 +1,9 @@
-﻿using CHAOS.Portal.Core.Extension;
+﻿using CHAOS.Portal.Core.Extension.Standard;
 using Geckon;
 
 namespace CHAOS.Portal.Core.Test
 {
-    public class MockExtension : IExtension
+    public class MockExtension : AExtension
     {
         public void Test( ICallContext callContext )
         {

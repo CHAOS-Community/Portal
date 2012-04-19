@@ -47,6 +47,7 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="MockModule.cs" />
     <Compile Include="MockPortalResponse.cs" />
     <Compile Include="MockPortalRequest.cs" />
     <Compile Include="MockSolrManager.cs" />
@@ -54,7 +55,6 @@
     <Compile Include="MockExtension.cs" />
     <Compile Include="MockSolr.cs" />
     <Compile Include="PortalApplicationTest.cs" />
-    <Compile Include="MockExtensionLoader.cs" />
     <Compile Include="PortalRequestTest.cs" />
     <Compile Include="ParameterBindingsTest.cs" />
     <Compile Include="StringResult.cs" />

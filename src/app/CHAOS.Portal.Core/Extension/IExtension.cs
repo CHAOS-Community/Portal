@@ -2,6 +2,6 @@
 {
     public interface IExtension
     {
-        
+        void CallAction( ICallContext callContext );
     }
 }

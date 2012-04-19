@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Reflection;
 using System.Web;
-using CHAOS.Portal.Core.Extension;
+using CHAOS.Portal.Core.Extension.Standard;
+using CHAOS.Portal.Core.Module;
+using CHAOS.Portal.Core.Module.Standard;
 using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Core.Standard;
 using CHAOS.Portal.DTO.Standard;
+using CHAOS.Portal.Data.EF;
 using CHAOS.Portal.Exception;
+using CHAOS.Portal.Core.Extension;
 using Geckon.Index;
 using Geckon.Index.Solr;
-using Geckon.Serialization;
+using Geckon.Common.Extensions;
 
 namespace CHAOS.Portal.Core.HttpModule
 {
@@ -33,11 +40,75 @@ namespace CHAOS.Portal.Core.HttpModule
 
         public void Init( HttpApplication context )
         {
+            // REVIEW: Look into moving the loading process out of the http module
+            LoadExtensions();
+            LoadModules();
+
             context.BeginRequest += ContextBeginRequest;
-            
-            // TODO: Add extension and module loading logic
-            LoadedExtensions.Add( "Portal", new PortalExtensionLoader() );
-            LoadedExtensions.Add( "Session", new DefaultExtentionLoader( "C:\\Users\\JesperFyhr\\Desktop\\Portal\\src\\app\\CHAOS.Portal.Web\\Extensions\\CHAOS.Portal.Extensions.dll", "CHAOS.Portal.Extensions.Session.SessionExtension" ) );
+        }
+
+        private void LoadModules()
+        {
+            using( var db = new PortalEntities() )
+            {
+                // Load modules
+                foreach( string file in System.IO.Directory.GetFiles( string.Format( "{0}\\Modules", ServiceDirectory ), "*.dll" ) )
+                {
+                    Assembly assembly = Assembly.LoadFile( file );
+
+                    // Get the types and identify the IModules
+                    foreach( Type type in assembly.GetTypes() )
+                    {
+                        if( !type.Implements<IModule>() )
+                            continue;
+                    
+                        var attribute = type.GetCustomAttribute<ModuleAttribute>( true );
+                        var module    = (IModule) assembly.CreateInstance( type.FullName );
+
+                        // If an attribute is present on the class, load config from database
+                        if( !attribute.IsNull() )
+                        {
+                            var moduleConfig = db.Module_Get( null, attribute.ModuleConfigName ).FirstOrDefault();
+
+                            if( moduleConfig == null )
+                                throw new ModuleConfigurationMissingException( string.Format( "The module requires a configuration, but none was found with the name: {0}", attribute.ModuleConfigName ) );
+
+                            module.Initialize( moduleConfig.Configuration );
+                        }
+
+                        // Index modules by the Extensions they subscribe to
+                        foreach( MethodInfo method in module.GetType().GetMethods() )
+                        {
+                            foreach( Datatype datatypeAttribute in method.GetCustomAttributes( typeof( Datatype ), true ) )
+                            {
+                                if( !LoadedModules.ContainsKey( datatypeAttribute.ExtensionName ) )
+                                    LoadedModules.Add( datatypeAttribute.ExtensionName, new Collection<IModule>() );
+
+                                LoadedModules[ datatypeAttribute.ExtensionName ].Add( module );
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void LoadExtensions()
+        {
+            foreach( string file in System.IO.Directory.GetFiles( string.Format( "{0}\\Extensions", ServiceDirectory ), "*.dll" ) )
+            {
+                Assembly assembly = Assembly.LoadFile( file );
+
+                foreach( Type type in assembly.GetTypes() )
+                {
+                    if( !type.Implements<IExtension>() )
+                        continue;
+                    
+                    var attribute = type.GetCustomAttribute<ExtensionAttribute>( true );
+
+                    LoadedExtensions.Add( attribute.IsNull() ? type.Name : attribute.ExtensionName,
+                                          (IExtension) assembly.CreateInstance( type.FullName ) );
+                }
+            }
         }
 
         #endregion
@@ -146,37 +217,5 @@ namespace CHAOS.Portal.Core.HttpModule
         }
 
         #endregion
-    }
-
-    public class PortalExtensionLoader : IExtensionLoader
-    {
-        public IExtension CreateInstance()
-        {
-            return new PortalExtension();
-        }
-    }
-
-    public class PortalExtension : IExtension
-    {
-        public void Test( ICallContext callContext )
-        {
-            callContext.PortalResponse.PortalResult.GetModule("Portal.Core").AddResult( new SimpleResult(callContext.PortalRequest.Extension + ":" + callContext.PortalRequest.Action ) );
-        }
-
-        public void Post( ICallContext callContext, int ID )
-        {
-            callContext.PortalResponse.PortalResult.GetModule("Portal.Core").AddResult( new SimpleResult( ID.ToString() ) );
-        }
-    }
-
-    public class SimpleResult : Result
-    {
-        [Serialize]
-        public string Result { get; set; }
-
-        public SimpleResult( string result )
-        {
-            Result = result;
-        }
     }
 }

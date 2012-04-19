@@ -1,17 +1,40 @@
 ﻿using System;
 using System.Linq;
 using CHAOS.Portal.Core;
-using CHAOS.Portal.Core.Extension.Standard;
+using CHAOS.Portal.Core.Module.Standard;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Data.EF;
 using CHAOS.Portal.Exception;
 using Geckon;
 
-namespace CHAOS.Portal.Extensions.Session
+namespace CHAOS.Portal.Modules
 {
-    [Extension("Session")]
-    public class SessionExtension : AExtension
+    [Module("Portal")]
+    public class SessionPortalModule : AModule
     {
+        #region Properties
+
+        private string ConnectionString { get; set; }
+
+        private PortalEntities NewPortalEntities
+        {
+            get
+            {
+                return new PortalEntities( ConnectionString );
+            }
+        }
+
+        #endregion
+        #region Constructors
+
+        public override void Initialize( string configuration )
+        {
+            ConnectionString = configuration;
+        }
+
+        #endregion
+        #region Business Logic
+
         #region Get
 
         public void Get( ICallContext callContext )
@@ -22,7 +45,7 @@ namespace CHAOS.Portal.Extensions.Session
 
             if( session == null )
             {
-                using( PortalEntities db = new PortalEntities() )
+                using( var db = NewPortalEntities )
                 {
                     session = db.Session_Get( callContext.Session.GUID.ToByteArray(), null ).ToDTO().First();
 
@@ -85,6 +108,8 @@ namespace CHAOS.Portal.Extensions.Session
                 callContext.PortalResponse.PortalResult.GetModule( "Geckon.Portal" ).AddResult( new ScalarResult( result ) );
             }
         }
+
+        #endregion
 
         #endregion
     }

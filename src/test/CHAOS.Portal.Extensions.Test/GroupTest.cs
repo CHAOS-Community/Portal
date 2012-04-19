@@ -1,16 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Data.Objects;
+﻿using System.Data.Objects;
 using System.Linq;
-using System.Xml.Linq;
-using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Core.Standard;
 using CHAOS.Portal.Core.Test;
 using CHAOS.Portal.Data.EF;
 using CHAOS.Portal.Exception;
 using CHAOS.Portal.Extensions.Group;
+using Geckon;
 using NUnit.Framework;
 
-namespace Geckon.Portal.Extensions.Standard.Test
+namespace CHAOS.Portal.Extensions.Test
 {
     [TestFixture]
     public class GroupTest : TestBase
@@ -22,7 +20,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
         {
             base.SetUp();
 
-            PortalApplication.LoadedExtensions.Add( "Group", new DefaultExtentionLoader( typeof( GroupExtension ) ) );
+            PortalApplication.LoadedExtensions.Add( "Group", new GroupExtension() );
 
             Extension = new GroupExtension();
         }
@@ -84,7 +82,7 @@ namespace Geckon.Portal.Extensions.Standard.Test
 
             using( PortalEntities db = new PortalEntities( ) )
             {
-                Group group = db.Group_Get( AdminGroup.GUID.ToByteArray(), null, UserAdministrator.GUID.ToByteArray() ).First();
+                Data.EF.Group group = db.Group_Get( AdminGroup.GUID.ToByteArray(), null, UserAdministrator.GUID.ToByteArray() ).First();
 
                 Assert.AreEqual("success", group.Name );
             }

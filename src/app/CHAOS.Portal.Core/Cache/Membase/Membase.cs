@@ -22,17 +22,17 @@ namespace CHAOS.Portal.Core.Cache.Membase
 
         public bool Put( string key, IResult value, TimeSpan timeSpan )
         {
-            return base.Store( StoreMode.Set, key, value.ToXML().ToString( SaveOptions.DisableFormatting ), timeSpan );
+            return Store( StoreMode.Set, key, value.ToXML().ToString( SaveOptions.DisableFormatting ), timeSpan );
         }
 
         public bool Put(string key, IResult value, DateTime dateTime)
         {
-            return base.Store( StoreMode.Set, key, value.ToXML().ToString( SaveOptions.DisableFormatting ), dateTime );
+            return Store( StoreMode.Set, key, value.ToXML().ToString( SaveOptions.DisableFormatting ), dateTime );
         }
 
         public new T Get<T>(string key) where T : IResult, new()
         {
-            object obj = base.Get(key);
+            object obj = Get(key);
             
             if( obj == null )
                 return default(T);
@@ -49,7 +49,7 @@ namespace CHAOS.Portal.Core.Cache.Membase
         /// <returns></returns>
         public IEnumerable<T> Get<T>(IEnumerable<string> keys) where T : IResult, new()
         {
-            IDictionary<string, object> results = base.Get( keys );
+            IDictionary<string, object> results = Get( keys );
             ISerializer<XDocument> serializer = SerializerFactory.Get<XDocument>();
 
             return results.Select( obj => serializer.Deserialize<T>( XDocument.Parse( ( string ) obj.Value ), false) );
