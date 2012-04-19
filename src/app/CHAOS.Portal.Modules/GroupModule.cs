@@ -105,7 +105,7 @@ namespace CHAOS.Portal.Modules
         #endregion
         #region Update
 
-        public ScalarResult Update( ICallContext callContext, UUID guid, string newName, int newSystemPermission )
+        public ScalarResult Update( ICallContext callContext, UUID guid, string newName, int? newSystemPermission )
         {
             var user = callContext.User;
 

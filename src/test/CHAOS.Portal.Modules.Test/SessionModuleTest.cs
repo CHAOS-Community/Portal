@@ -14,6 +14,8 @@ namespace CHAOS.Portal.Modules.Test
         [SetUp]
         public void SetUp()
         {
+            base.SetUp();
+
             SessionModule = new SessionModule();
             SessionModule.Initialize( ConfigurationManager.ConnectionStrings["PortalEntities"].ConnectionString );
         }

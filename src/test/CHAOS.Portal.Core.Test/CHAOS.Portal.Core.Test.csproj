@@ -66,27 +66,42 @@
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Portal, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\build\Portal.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data.Entity" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\app\CHAOS.Portal.Core\CHAOS.Portal.Core.csproj">
+      <Project>{09857A64-2018-4431-9DE1-996B67F6B083}</Project>
+      <Name>CHAOS.Portal.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\CHAOS.Portal.Data.EF\CHAOS.Portal.Data.EF.csproj">
+      <Project>{558D5795-F129-4C76-A7C3-3D6BFC8A2FB2}</Project>
+      <Name>CHAOS.Portal.Data.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\CHAOS.Portal.DTO.Standard\CHAOS.Portal.DTO.Standard.csproj">
+      <Project>{674E8DA7-B635-484B-A11A-270AFE31E7E6}</Project>
+      <Name>CHAOS.Portal.DTO.Standard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\CHAOS.Portal.DTO\CHAOS.Portal.DTO.csproj">
+      <Project>{C1936050-60FC-49F3-9047-9621AFFBDC8F}</Project>
+      <Name>CHAOS.Portal.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\CHAOS.Portal.Exception\CHAOS.Portal.Exception.csproj">
+      <Project>{D1A3C410-8E76-4D73-B505-A0CB817BC15C}</Project>
+      <Name>CHAOS.Portal.Exception</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\PortalTest\$(TargetFileName)
-COPY CHAOS.Portal.Core.Test.pdb $(SolutionDir)bin\PortalTest\CHAOS.Portal.Core.Test.pdb
-cd $(SolutionDir)
-CALL Build_PortalTest.bat</PostBuildEvent>
+COPY CHAOS.Portal.Core.Test.pdb $(SolutionDir)bin\PortalTest\CHAOS.Portal.Core.Test.pdb</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>cd $(SolutionDir)
-CALL Build_Portal.bat</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

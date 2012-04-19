@@ -1002,7 +1002,7 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         /// <param name="clientSettingsGUID">No Metadata Documentation available.</param>
         /// <param name="userGUID">No Metadata Documentation available.</param>
-        public int UserSettings_Delete(global::System.Byte[] clientSettingsGUID, global::System.Byte[] userGUID)
+        public ObjectResult<Nullable<global::System.Int32>> UserSettings_Delete(global::System.Byte[] clientSettingsGUID, global::System.Byte[] userGUID)
         {
             ObjectParameter clientSettingsGUIDParameter;
             if (clientSettingsGUID != null)
@@ -1024,7 +1024,7 @@ namespace CHAOS.Portal.Data.EF
                 userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction("UserSettings_Delete", clientSettingsGUIDParameter, userGUIDParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("UserSettings_Delete", clientSettingsGUIDParameter, userGUIDParameter);
         }
     
         /// <summary>

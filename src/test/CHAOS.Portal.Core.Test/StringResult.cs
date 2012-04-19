@@ -1,4 +1,3 @@
-using CHAOS.Portal.Core.Standard;
 using Geckon.Serialization;
 using CHAOS.Portal.DTO.Standard;
 

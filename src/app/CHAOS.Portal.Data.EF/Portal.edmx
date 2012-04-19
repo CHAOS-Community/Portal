@@ -600,7 +600,7 @@
             <Parameter Name="ClientSettingsGUID" Mode="In" Type="Binary" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="UserSettings_Delete">
+          <FunctionImport Name="UserSettings_Delete" ReturnType="Collection(Int32)">
             <Parameter Name="ClientSettingsGUID" Mode="In" Type="Binary" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
           </FunctionImport>

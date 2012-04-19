@@ -1,7 +1,7 @@
 ﻿using CHAOS.Portal.Core.Test;
 using NUnit.Framework;
 
-namespace Geckon.Portal.Extensions.Standard.Test
+namespace CHAOS.Portal.Modules.Test
 {
     [TestFixture]
     public class CallContextTest : TestBase
