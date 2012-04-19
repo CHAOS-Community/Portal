@@ -27,5 +27,13 @@ namespace CHAOS.Portal.Modules.Test
 
             Assert.AreEqual( AnonCallContext.User.GUID.ToByteArray(), session.UserGUID.ToByteArray() );
         }
+
+        [Test]
+        public void Should_Get_A_Session()
+        {
+            var session = SessionPortalModule.Get( AnonCallContext );
+
+            Assert.AreEqual( AnonCallContext.User.GUID.ToByteArray(), session.UserGUID.ToByteArray() );
+        }
     }
 }
