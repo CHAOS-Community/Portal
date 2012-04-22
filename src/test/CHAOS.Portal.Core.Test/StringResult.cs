@@ -1,4 +1,4 @@
-using Geckon.Serialization;
+using CHAOS.Serialization;
 using CHAOS.Portal.DTO.Standard;
 
 namespace CHAOS.Portal.Core.Test

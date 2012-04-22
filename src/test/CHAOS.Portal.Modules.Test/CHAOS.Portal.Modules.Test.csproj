@@ -31,9 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="geckon, Version=1.0.4473.42470, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="CHAOS">
+      <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Portal">
+      <HintPath>..\..\..\build\Portal.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -51,39 +56,19 @@
     <Compile Include="UserSettingsTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\CHAOS.Portal.Core\CHAOS.Portal.Core.csproj">
-      <Project>{09857A64-2018-4431-9DE1-996B67F6B083}</Project>
-      <Name>CHAOS.Portal.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\CHAOS.Portal.Data.EF\CHAOS.Portal.Data.EF.csproj">
-      <Project>{558D5795-F129-4C76-A7C3-3D6BFC8A2FB2}</Project>
-      <Name>CHAOS.Portal.Data.EF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\CHAOS.Portal.DTO.Standard\CHAOS.Portal.DTO.Standard.csproj">
-      <Project>{674E8DA7-B635-484B-A11A-270AFE31E7E6}</Project>
-      <Name>CHAOS.Portal.DTO.Standard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\CHAOS.Portal.DTO\CHAOS.Portal.DTO.csproj">
-      <Project>{C1936050-60FC-49F3-9047-9621AFFBDC8F}</Project>
-      <Name>CHAOS.Portal.DTO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\CHAOS.Portal.Exception\CHAOS.Portal.Exception.csproj">
-      <Project>{D1A3C410-8E76-4D73-B505-A0CB817BC15C}</Project>
-      <Name>CHAOS.Portal.Exception</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\app\CHAOS.Portal.Modules\CHAOS.Portal.Modules.csproj">
       <Project>{39540DDE-FB8A-4A36-8340-03E5B73498F0}</Project>
       <Name>CHAOS.Portal.Modules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CHAOS.Portal.Core.Test\CHAOS.Portal.Core.Test.csproj">
-      <Project>{1BF05978-1FDC-46DA-9C47-4BAAFE5071C7}</Project>
-      <Name>CHAOS.Portal.Core.Test</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>CD $(SolutionDir)
+CALL Build_Portal.bat</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Data.Objects;
+using System.Xml.Linq;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Data.EF;
 using CHAOS.Portal.Exception;
-using Geckon;
 using Group = CHAOS.Portal.DTO.Standard.Group;
 
 namespace CHAOS.Portal.Modules
@@ -30,7 +30,7 @@ namespace CHAOS.Portal.Modules
 
         public override void Initialize( string configuration )
         {
-            ConnectionString = configuration;
+            ConnectionString = XDocument.Parse(configuration).Root.Attribute( "ConnectionString" ).Value;
         }
 
         #endregion

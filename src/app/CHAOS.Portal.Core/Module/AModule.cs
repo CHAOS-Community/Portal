@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using CHAOS.Index;
 using CHAOS.Portal.DTO;
 using CHAOS.Portal.Exception;
 
@@ -41,9 +42,9 @@ namespace CHAOS.Portal.Core.Module
                         if( result is IEnumerable<IResult> )
                             modelResult.AddResult( (IEnumerable<IResult>) result );
                         else
-                        if( result is Geckon.Index.IPagedResult<IResult> )
+                        if( result is IPagedResult<IResult> )
                         {
-                            var pagedResult = (Geckon.Index.IPagedResult<IResult>) result;
+                            var pagedResult = (IPagedResult<IResult>) result;
 
                             modelResult.AddResult( pagedResult.Results );
                             modelResult.TotalCount = pagedResult.FoundCount;

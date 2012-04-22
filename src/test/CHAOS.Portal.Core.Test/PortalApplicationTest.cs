@@ -4,6 +4,7 @@ using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Core.Standard;
 using CHAOS.Portal.Exception;
+using CHAOS.Portal.Test;
 using NUnit.Framework;
 
 namespace CHAOS.Portal.Core.Test

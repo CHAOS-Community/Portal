@@ -1,4 +1,4 @@
-﻿using CHAOS.Portal.Core.Test;
+﻿using CHAOS.Portal.Test;
 using NUnit.Framework;
 
 namespace CHAOS.Portal.Modules.Test

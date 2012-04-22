@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CHAOS.Portal.Core.Request;
+using CHAOS.Portal.Test;
 using NUnit.Framework;
 
 namespace CHAOS.Portal.Core.Test

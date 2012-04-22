@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
-using Geckon.Serialization.JSON;
-using Geckon.Serialization.Standard;
+using CHAOS.Serialization.JSON;
+using CHAOS.Serialization.Standard;
 
 namespace CHAOS.Portal.DTO
 {

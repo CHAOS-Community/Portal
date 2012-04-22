@@ -31,13 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="geckon">
-      <HintPath>..\CHAOS.Portal.Web\Bin\geckon.dll</HintPath>
+    <Reference Include="CHAOS">
+      <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Portal">
+      <HintPath>..\..\..\build\Portal.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientSettingsModule.cs" />
@@ -47,28 +52,6 @@
     <Compile Include="GroupModule.cs" />
     <Compile Include="SessionModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CHAOS.Portal.Core\CHAOS.Portal.Core.csproj">
-      <Project>{09857A64-2018-4431-9DE1-996B67F6B083}</Project>
-      <Name>CHAOS.Portal.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CHAOS.Portal.Data.EF\CHAOS.Portal.Data.EF.csproj">
-      <Project>{558D5795-F129-4C76-A7C3-3D6BFC8A2FB2}</Project>
-      <Name>CHAOS.Portal.Data.EF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CHAOS.Portal.DTO.Standard\CHAOS.Portal.DTO.Standard.csproj">
-      <Project>{674E8DA7-B635-484B-A11A-270AFE31E7E6}</Project>
-      <Name>CHAOS.Portal.DTO.Standard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CHAOS.Portal.DTO\CHAOS.Portal.DTO.csproj">
-      <Project>{C1936050-60FC-49F3-9047-9621AFFBDC8F}</Project>
-      <Name>CHAOS.Portal.DTO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CHAOS.Portal.Exception\CHAOS.Portal.Exception.csproj">
-      <Project>{D1A3C410-8E76-4D73-B505-A0CB817BC15C}</Project>
-      <Name>CHAOS.Portal.Exception</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

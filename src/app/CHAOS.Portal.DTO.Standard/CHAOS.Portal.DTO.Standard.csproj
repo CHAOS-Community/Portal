@@ -66,9 +66,8 @@
     <Compile Include="UserSettings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="geckon">
-      <HintPath>..\..\..\lib\geckon.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="CHAOS">
+      <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.XML" />

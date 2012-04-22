@@ -1,6 +1,5 @@
 ﻿using System;
-using Geckon;
-using Geckon.Serialization;
+using CHAOS.Serialization;
 
 namespace CHAOS.Portal.DTO.Standard
 {
@@ -8,19 +7,8 @@ namespace CHAOS.Portal.DTO.Standard
 	{
 		#region Properties
 
-	    [Serialize("GUID")]
-	    public string sGUID
-	    {
-	        get
-	        {
-                return GUID.ToString();
-	        }
-            set
-            {
-                GUID = new UUID( value );
-            }
-	    }
-		public UUID GUID { get; set; }
+        [Serialize("GUID")]
+		public CHAOS.UUID GUID { get; set; }
 
 		public UUID SessionGUID { get; set; }
 

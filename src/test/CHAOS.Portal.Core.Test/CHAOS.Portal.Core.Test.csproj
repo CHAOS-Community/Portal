@@ -47,27 +47,22 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MockModule.cs" />
-    <Compile Include="MockPortalResponse.cs" />
-    <Compile Include="MockPortalRequest.cs" />
-    <Compile Include="MockSolrManager.cs" />
-    <Compile Include="MockCache.cs" />
     <Compile Include="MockExtension.cs" />
-    <Compile Include="MockSolr.cs" />
+    <Compile Include="MockModule.cs" />
     <Compile Include="PortalApplicationTest.cs" />
     <Compile Include="PortalRequestTest.cs" />
     <Compile Include="ParameterBindingsTest.cs" />
     <Compile Include="StringResult.cs" />
-    <Compile Include="TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="geckon, Version=1.0.4473.42470, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="CHAOS">
+      <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data.Entity" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -76,10 +71,6 @@
     <ProjectReference Include="..\..\app\CHAOS.Portal.Core\CHAOS.Portal.Core.csproj">
       <Project>{09857A64-2018-4431-9DE1-996B67F6B083}</Project>
       <Name>CHAOS.Portal.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\CHAOS.Portal.Data.EF\CHAOS.Portal.Data.EF.csproj">
-      <Project>{558D5795-F129-4C76-A7C3-3D6BFC8A2FB2}</Project>
-      <Name>CHAOS.Portal.Data.EF</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\app\CHAOS.Portal.DTO.Standard\CHAOS.Portal.DTO.Standard.csproj">
       <Project>{674E8DA7-B635-484B-A11A-270AFE31E7E6}</Project>
@@ -93,11 +84,15 @@
       <Project>{D1A3C410-8E76-4D73-B505-A0CB817BC15C}</Project>
       <Name>CHAOS.Portal.Exception</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CHAOS.Portal.Test\CHAOS.Portal.Test.csproj">
+      <Project>{9939F471-B458-470B-B944-62F1F9F5D376}</Project>
+      <Name>CHAOS.Portal.Test</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\PortalTest\$(TargetFileName)
-COPY CHAOS.Portal.Core.Test.pdb $(SolutionDir)bin\PortalTest\CHAOS.Portal.Core.Test.pdb</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

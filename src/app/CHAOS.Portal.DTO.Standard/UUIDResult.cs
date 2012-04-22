@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Xml.Linq;
-using Geckon;
-using Geckon.Index;
-using Geckon.Serialization;
+using CHAOS.Index;
+using CHAOS.Serialization;
 
 namespace CHAOS.Portal.DTO.Standard
 {

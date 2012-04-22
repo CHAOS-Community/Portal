@@ -5,6 +5,9 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using CHAOS.Extensions;
+using CHAOS.Index;
+using CHAOS.Index.Solr;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Core.Standard;
@@ -12,9 +15,6 @@ using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Data.EF;
 using CHAOS.Portal.Exception;
 using CHAOS.Portal.Core.Extension;
-using Geckon.Index;
-using Geckon.Index.Solr;
-using Geckon.Common.Extensions;
 
 namespace CHAOS.Portal.Core.HttpModule
 {

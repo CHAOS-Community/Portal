@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Geckon.Index;
+using CHAOS.Index;
 
-namespace CHAOS.Portal.Core.Test
+namespace CHAOS.Portal.Test
 {
     public class MockSolr : IIndex
     {

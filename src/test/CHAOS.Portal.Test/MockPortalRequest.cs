@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CHAOS.Portal.Core.Request;
 
-namespace CHAOS.Portal.Core.Test
+namespace CHAOS.Portal.Test
 {
     public class MockPortalRequest : IPortalRequest
     {

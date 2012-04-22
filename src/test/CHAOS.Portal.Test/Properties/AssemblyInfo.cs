@@ -1,16 +1,15 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Geckon.Portal.Core.Standard.Test")]
+[assembly: AssemblyTitle("CHAOS.Portal.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Geckon.Portal.Core.Standard.Test")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
+[assembly: AssemblyCompany("CHAOS ApS")]
+[assembly: AssemblyProduct("CHAOS.Portal.Test")]
+[assembly: AssemblyCopyright("Copyright © CHAOS ApS 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e59a5367-dbf7-4351-9f84-0b5259bb2779")]
+[assembly: Guid("0c143c94-088a-4576-9d4d-b3d592199d71")]
 
 // Version information for an assembly consists of the following four values:
 //

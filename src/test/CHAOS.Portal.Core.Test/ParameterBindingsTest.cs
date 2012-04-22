@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using CHAOS.Portal.Exception;
-using Geckon;
+using CHAOS.Portal.Test;
 using NUnit.Framework;
 
 namespace CHAOS.Portal.Core.Test

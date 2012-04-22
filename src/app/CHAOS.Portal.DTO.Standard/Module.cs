@@ -1,6 +1,6 @@
 ﻿using System;
-using Geckon.Serialization;
-using Geckon.Serialization.XML;
+using CHAOS.Serialization;
+using CHAOS.Serialization.XML;
 
 namespace CHAOS.Portal.DTO.Standard
 {

@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using CHAOS.Index;
 using CHAOS.Portal.Core.Cache;
 using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Data.EF;
 using CHAOS.Portal.Exception;
-using Geckon;
-using Geckon.Index;
-using Geckon.Serialization.JSON;
-using Geckon.Serialization.Standard;
+using CHAOS.Serialization.JSON;
+using CHAOS.Serialization.Standard;
 
 namespace CHAOS.Portal.Core.Standard
 {
@@ -69,6 +69,19 @@ namespace CHAOS.Portal.Core.Standard
                 }
 
                 return _session;
+            }
+        }
+
+        public IEnumerable<DTO.Standard.Group> Groups
+        {
+            get
+            {
+                // TODO: Cache groups for better performance
+
+                using( var db = new PortalEntities() )
+                {
+                    return db.Group_Get( null, null, User.GUID.ToByteArray() ).ToDTO().ToList();
+                }
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using Geckon;
 
 namespace CHAOS.Portal.DTO.Standard
 {

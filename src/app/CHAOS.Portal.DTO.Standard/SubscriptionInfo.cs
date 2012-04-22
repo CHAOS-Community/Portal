@@ -1,5 +1,5 @@
 ﻿using System;
-using Geckon;
+using CHAOS.Extensions;
 
 namespace CHAOS.Portal.DTO.Standard
 {

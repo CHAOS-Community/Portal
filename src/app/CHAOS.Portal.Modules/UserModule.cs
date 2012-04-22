@@ -1,4 +1,5 @@
-﻿using CHAOS.Portal.Core;
+﻿using System.Xml.Linq;
+using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.Data.EF;
 
@@ -24,7 +25,7 @@ namespace CHAOS.Portal.Modules
 
         public override void Initialize( string configuration )
         {
-            ConnectionString = configuration;
+            ConnectionString = XDocument.Parse(configuration).Root.Attribute( "ConnectionString" ).Value;
         }
 
         #endregion

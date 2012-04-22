@@ -2,7 +2,7 @@
 using CHAOS.Portal.DTO;
 using CHAOS.Portal.DTO.Standard;
 
-namespace CHAOS.Portal.Core.Test
+namespace CHAOS.Portal.Test
 {
     public class MockPortalResponse : IPortalResponse
     {

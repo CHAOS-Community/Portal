@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CHAOS.Portal.Core.Cache;
 using CHAOS.Portal.DTO;
 
-namespace CHAOS.Portal.Core.Test
+namespace CHAOS.Portal.Test
 {
     public class MockCache : ICache
     {

@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
-using CHAOS.Portal.Core.Test;
 using CHAOS.Portal.Exception;
+using CHAOS.Portal.Test;
 using NUnit.Framework;
 
 namespace CHAOS.Portal.Modules.Test

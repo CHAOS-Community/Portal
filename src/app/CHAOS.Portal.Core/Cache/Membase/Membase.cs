@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using CHAOS.Portal.DTO;
+using CHAOS.Serialization;
+using CHAOS.Serialization.Standard;
 using Enyim.Caching.Memcached;
-using Geckon.Serialization;
-using Geckon.Serialization.Standard;
 using Membase;
 
 namespace CHAOS.Portal.Core.Cache.Membase

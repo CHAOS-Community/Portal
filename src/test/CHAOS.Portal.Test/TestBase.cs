@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Data.Objects;
+﻿using System.Data.Objects;
 using System.Linq;
+using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Core.Standard;
 using CHAOS.Portal.Data.EF;
-using Geckon;
 using NUnit.Framework;
 
-namespace CHAOS.Portal.Core.Test
+namespace CHAOS.Portal.Test
 {
     [TestFixture]
     public abstract class TestBase
@@ -22,8 +21,8 @@ namespace CHAOS.Portal.Core.Test
         public DTO.Standard.SubscriptionInfo SubscriptionInfo { get; set; }
         public DTO.Standard.UserSettings UserSetting { get; set; }
         public DTO.Standard.ClientSettings ClientSettings { get; set; }
-        public CallContext AdminCallContext { get; set; }
-        public CallContext AnonCallContext { get; set; }
+        public ICallContext AdminCallContext { get; set; }
+        public ICallContext AnonCallContext { get; set; }
 
         public DTO.Standard.UserInfo UserAnonymous { get; set; }
         public DTO.Standard.UserInfo UserAdministrator { get; set; }
@@ -33,9 +32,9 @@ namespace CHAOS.Portal.Core.Test
         [SetUp]
         public void SetUp()
         {
-            using( PortalEntities db = new PortalEntities() )
+            using( var db = new PortalEntities() )
         	{
-				ObjectParameter errorCode = new ObjectParameter( "ErrorCode", 0 );
+				var errorCode = new ObjectParameter( "ErrorCode", 0 );
 
         		db.PreTest();
 				
@@ -79,8 +78,8 @@ namespace CHAOS.Portal.Core.Test
 				UserSetting = db.UserSettings_Get( new UUID( "9EEE8A99-A69B-41FD-B1C7-E28C54D1D305" ).ToByteArray(), new UUID( "A0B231E9-7D98-4F52-885E-AF4837FAA352" ).ToByteArray() ).ToDTO().First();
         	}
 
-            PortalApplication = new PortalApplication(new MockCache(), (Geckon.Index.IIndexManager)new MockSolrManager() );
-           
+            PortalApplication = new PortalApplication( new MockCache(), new MockSolrManager() );
+
             AdminCallContext = new CallContext( PortalApplication, new PortalRequest(), new MockPortalResponse() );
             AnonCallContext  = new CallContext( PortalApplication, new PortalRequest(), new MockPortalResponse() );
 
