@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{558D5795-F129-4C76-A7C3-3D6BFC8A2FB2}</ProjectGuid>
+    <ProjectGuid>{2ED55736-8E46-445B-9A47-92F4306EB6FB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CHAOS.Portal.Data.EF</RootNamespace>
-    <AssemblyName>CHAOS.Portal.Data.EF</AssemblyName>
+    <RootNamespace>CHAOS.Portal.Core.HttpModule</RootNamespace>
+    <AssemblyName>CHAOS.Portal.Core.HttpModule</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -36,7 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Debug\CHAOS.Portal.Data.EF.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisLogFile>bin\Debug\CHAOS.Portal.Core.HttpModule.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
@@ -46,49 +46,35 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Portal.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Portal.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="Portal.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Portal.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CHAOS.Portal.DTO.Standard\CHAOS.Portal.DTO.Standard.csproj">
-      <Project>{674E8DA7-B635-484B-A11A-270AFE31E7E6}</Project>
-      <Name>CHAOS.Portal.DTO.Standard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CHAOS.Portal.DTO\CHAOS.Portal.DTO.csproj">
-      <Project>{C1936050-60FC-49F3-9047-9621AFFBDC8F}</Project>
-      <Name>CHAOS.Portal.DTO</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="CHAOS">
       <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
     </Reference>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\..\..\lib\Enyim.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Membase">
+      <HintPath>..\..\..\lib\Membase.dll</HintPath>
+    </Reference>
+    <Reference Include="Portal">
+      <HintPath>..\..\..\build\Portal.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PortalHttpModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY CHAOS.Portal.Data.EF.dll $(SolutionDir)bin\Portal\CHAOS.Portal.Data.EF.dll
-COPY CHAOS.Portal.Data.EF.pdb $(SolutionDir)bin\Portal\CHAOS.Portal.Data.EF.pdb</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>CD $(SolutionDir)
+CALL Build_Portal.bat</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

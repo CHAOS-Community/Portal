@@ -871,7 +871,7 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         /// <param name="sessionGUID">No Metadata Documentation available.</param>
         /// <param name="userGUID">No Metadata Documentation available.</param>
-        public int Session_Delete(global::System.Byte[] sessionGUID, global::System.Byte[] userGUID)
+        public ObjectResult<Nullable<global::System.Int32>> Session_Delete(global::System.Byte[] sessionGUID, global::System.Byte[] userGUID)
         {
             ObjectParameter sessionGUIDParameter;
             if (sessionGUID != null)
@@ -893,7 +893,7 @@ namespace CHAOS.Portal.Data.EF
                 userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction("Session_Delete", sessionGUIDParameter, userGUIDParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Session_Delete", sessionGUIDParameter, userGUIDParameter);
         }
     
         /// <summary>
@@ -1002,7 +1002,7 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         /// <param name="clientSettingsGUID">No Metadata Documentation available.</param>
         /// <param name="userGUID">No Metadata Documentation available.</param>
-        public int UserSettings_Delete(global::System.Byte[] clientSettingsGUID, global::System.Byte[] userGUID)
+        public ObjectResult<Nullable<global::System.Int32>> UserSettings_Delete(global::System.Byte[] clientSettingsGUID, global::System.Byte[] userGUID)
         {
             ObjectParameter clientSettingsGUIDParameter;
             if (clientSettingsGUID != null)
@@ -1024,7 +1024,7 @@ namespace CHAOS.Portal.Data.EF
                 userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction("UserSettings_Delete", clientSettingsGUIDParameter, userGUIDParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("UserSettings_Delete", clientSettingsGUIDParameter, userGUIDParameter);
         }
     
         /// <summary>
@@ -1367,8 +1367,7 @@ namespace CHAOS.Portal.Data.EF
         /// <param name="newSystemPermission">No Metadata Documentation available.</param>
         /// <param name="whereGroupGUID">No Metadata Documentation available.</param>
         /// <param name="requestUserGUID">No Metadata Documentation available.</param>
-        /// <param name="errorCode">No Metadata Documentation available.</param>
-        public int Group_Update(global::System.String newName, global::System.Byte[] newSystemPermission, global::System.Byte[] whereGroupGUID, global::System.Byte[] requestUserGUID, ObjectParameter errorCode)
+        public ObjectResult<Nullable<global::System.Int32>> Group_Update(global::System.String newName, Nullable<global::System.Int32> newSystemPermission, global::System.Byte[] whereGroupGUID, global::System.Byte[] requestUserGUID)
         {
             ObjectParameter newNameParameter;
             if (newName != null)
@@ -1381,13 +1380,13 @@ namespace CHAOS.Portal.Data.EF
             }
     
             ObjectParameter newSystemPermissionParameter;
-            if (newSystemPermission != null)
+            if (newSystemPermission.HasValue)
             {
                 newSystemPermissionParameter = new ObjectParameter("NewSystemPermission", newSystemPermission);
             }
             else
             {
-                newSystemPermissionParameter = new ObjectParameter("NewSystemPermission", typeof(global::System.Byte[]));
+                newSystemPermissionParameter = new ObjectParameter("NewSystemPermission", typeof(global::System.Int32));
             }
     
             ObjectParameter whereGroupGUIDParameter;
@@ -1410,7 +1409,7 @@ namespace CHAOS.Portal.Data.EF
                 requestUserGUIDParameter = new ObjectParameter("RequestUserGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction("Group_Update", newNameParameter, newSystemPermissionParameter, whereGroupGUIDParameter, requestUserGUIDParameter, errorCode);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Group_Update", newNameParameter, newSystemPermissionParameter, whereGroupGUIDParameter, requestUserGUIDParameter);
         }
     
         /// <summary>

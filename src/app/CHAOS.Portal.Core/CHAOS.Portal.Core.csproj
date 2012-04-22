@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{558D5795-F129-4C76-A7C3-3D6BFC8A2FB2}</ProjectGuid>
+    <ProjectGuid>{09857A64-2018-4431-9DE1-996B67F6B083}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CHAOS.Portal.Data.EF</RootNamespace>
-    <AssemblyName>CHAOS.Portal.Data.EF</AssemblyName>
+    <RootNamespace>CHAOS.Portal.Core</RootNamespace>
+    <AssemblyName>CHAOS.Portal.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -36,36 +36,70 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Debug\CHAOS.Portal.Data.EF.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisLogFile>bin\Debug\CHAOS.Portal.Core.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Portal.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Portal.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Cache\Membase\Membase.cs" />
+    <Compile Include="Cache\ICache.cs" />
+    <Compile Include="Extension\AExtension.cs" />
+    <Compile Include="Extension\DefaultExtension.cs" />
+    <Compile Include="Extension\ExtensionAttribute.cs" />
+    <Compile Include="ICallContext.cs" />
+    <Compile Include="IPortalAction.cs" />
+    <Compile Include="IPortalResponse.cs" />
+    <Compile Include="Module\IModule.cs" />
+    <Compile Include="Module\AModule.cs" />
+    <Compile Include="Module\ModuleAttribute.cs" />
+    <Compile Include="Module\Datatype.cs" />
+    <Compile Include="ReturnFormat.cs" />
+    <Compile Include="Standard\PortalApplication.cs" />
+    <Compile Include="Extension\IExtension.cs" />
+    <Compile Include="Standard\PortalResponse.cs" />
+    <Compile Include="Bindings\Standard\CallContextParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\ConvertableParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\UUIDParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\StringRequestBinding.cs" />
+    <Compile Include="Bindings\IParameterBinding.cs" />
+    <Compile Include="Request\IPortalRequest.cs" />
+    <Compile Include="Request\PortalRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Standard\CallContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Portal.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Portal.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <Reference Include="CHAOS">
+      <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\..\..\lib\Enyim.Caching.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Membase">
+      <HintPath>..\..\..\lib\Membase.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <None Include="App.Config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\CHAOS.Portal.Data.EF\CHAOS.Portal.Data.EF.csproj">
+      <Project>{558D5795-F129-4C76-A7C3-3D6BFC8A2FB2}</Project>
+      <Name>CHAOS.Portal.Data.EF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CHAOS.Portal.DTO.Standard\CHAOS.Portal.DTO.Standard.csproj">
       <Project>{674E8DA7-B635-484B-A11A-270AFE31E7E6}</Project>
       <Name>CHAOS.Portal.DTO.Standard</Name>
@@ -74,21 +108,15 @@
       <Project>{C1936050-60FC-49F3-9047-9621AFFBDC8F}</Project>
       <Name>CHAOS.Portal.DTO</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="CHAOS">
-      <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\CHAOS.Portal.Exception\CHAOS.Portal.Exception.csproj">
+      <Project>{D1A3C410-8E76-4D73-B505-A0CB817BC15C}</Project>
+      <Name>CHAOS.Portal.Exception</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY CHAOS.Portal.Data.EF.dll $(SolutionDir)bin\Portal\CHAOS.Portal.Data.EF.dll
-COPY CHAOS.Portal.Data.EF.pdb $(SolutionDir)bin\Portal\CHAOS.Portal.Data.EF.pdb</PostBuildEvent>
+    <PostBuildEvent>COPY $(TargetDir)CHAOS.Portal.Core.pdb $(SolutionDir)bin\Portal\CHAOS.Portal.Core.pdb
+COPY $(TargetDir)CHAOS.Portal.Core.dll $(SolutionDir)bin\Portal\CHAOS.Portal.Core.dll</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

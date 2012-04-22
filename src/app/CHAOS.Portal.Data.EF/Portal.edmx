@@ -94,7 +94,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="uint" Nullable="false" />
           <Property Name="Map" Type="varchar" Nullable="false" MaxLength="255" />
           <Property Name="FullName" Type="varchar" Nullable="false" MaxLength="255" />
           <Property Name="Path" Type="varchar" Nullable="false" MaxLength="1024" />
@@ -123,7 +123,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="uint" Nullable="false" />
           <Property Name="ModuleID" Type="uint" Nullable="false" />
           <Property Name="Settings" Type="text" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
@@ -132,7 +132,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="uint" Nullable="false" />
           <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
           <Property Name="Configuration" Type="text" />
           <Property Name="Path" Type="varchar" Nullable="false" MaxLength="1024" />
@@ -375,6 +375,7 @@
           <Parameter Name="PermissionName" Type="varchar" Mode="In" />
         </Function>
         <Function Name="Extension_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="Map" Type="varchar" Mode="In" />
           <Parameter Name="Fullname" Type="varchar" Mode="In" />
           <Parameter Name="Path" Type="varchar" Mode="In" />
@@ -416,10 +417,9 @@
         </Function>
         <Function Name="Group_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
           <Parameter Name="NewName" Type="varchar" Mode="In" />
-          <Parameter Name="NewSystemPermission" Type="binary" Mode="In" />
+          <Parameter Name="NewSystemPermission" Type="int" Mode="In" />
           <Parameter Name="WhereGroupGUID" Type="binary" Mode="In" />
           <Parameter Name="RequestUserGUID" Type="binary" Mode="In" />
-          <Parameter Name="ErrorCode" Type="int" Mode="Out" />
         </Function>
         <Function Name="IndexSettings_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
           <Parameter Name="ModuleID" Type="int" Mode="In" />
@@ -429,6 +429,7 @@
           <Parameter Name="ModuleID" Type="int" Mode="In" />
         </Function>
         <Function Name="Module_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="Configuration" Type="text" Mode="In" />
           <Parameter Name="Path" Type="varchar" Mode="In" />
@@ -586,7 +587,7 @@
             <Parameter Name="WhereSessionGUID" Mode="In" Type="Binary" />
             <Parameter Name="WhereUserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="Session_Delete">
+          <FunctionImport Name="Session_Delete" ReturnType="Collection(Int32)">
             <Parameter Name="SessionGUID" Mode="In" Type="Binary" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
@@ -599,7 +600,7 @@
             <Parameter Name="ClientSettingsGUID" Mode="In" Type="Binary" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="UserSettings_Delete">
+          <FunctionImport Name="UserSettings_Delete" ReturnType="Collection(Int32)">
             <Parameter Name="ClientSettingsGUID" Mode="In" Type="Binary" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
@@ -635,12 +636,11 @@
             <Parameter Name="GUID" Mode="In" Type="Binary" />
             <Parameter Name="RequestUserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="Group_Update">
+          <FunctionImport Name="Group_Update" ReturnType="Collection(Int32)">
             <Parameter Name="NewName" Mode="In" Type="String" />
-            <Parameter Name="NewSystemPermission" Mode="In" Type="Binary" />
+            <Parameter Name="NewSystemPermission" Mode="In" Type="Int32" />
             <Parameter Name="WhereGroupGUID" Mode="In" Type="Binary" />
             <Parameter Name="RequestUserGUID" Mode="In" Type="Binary" />
-            <Parameter Name="ErrorCode" Mode="Out" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Permission_Create">
             <Parameter Name="TableIdentifier" Mode="In" Type="String" />
@@ -704,10 +704,10 @@
             <Parameter Name="Callback" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Ticket_Use">
-            <Parameter Name="WhereGUID" Mode="In" Type="Binary" />
+          <Parameter Name="WhereGUID" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="Ticket_Get" EntitySet="Ticket" ReturnType="Collection(PortalModel.Ticket)">
-            <Parameter Name="GUID" Mode="In" Type="Binary" />
+          <Parameter Name="GUID" Mode="In" Type="Binary" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="ClientSettings">

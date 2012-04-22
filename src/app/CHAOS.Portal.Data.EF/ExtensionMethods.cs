@@ -1,78 +1,126 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace CHAOS.Portal.Data.EF
 {
 	public static class ExtensionMethods
-	{
-		public static IEnumerable<DTO.User> ToDTO( this IEnumerable<User> list )
+    {
+        #region User
+
+        public static IEnumerable<DTO.Standard.User> ToDTO( this IEnumerable<User> list )
+        {
+            return list.Select( ToDTO );
+        }
+
+	    public static DTO.Standard.User ToDTO( User user )
 		{
-			foreach( User user in list )
-				yield return new DTO.User( user.GUID.ToByteArray(), user.Email, user.DateCreated );
+			return new DTO.Standard.User( user.GUID.ToByteArray(), user.Email, user.DateCreated );
 		}
 
-		public static IEnumerable<DTO.UserInfo> ToDTO( this IEnumerable<UserInfo> list )
-		{ // TODO: Fix so it works with null SessionGUIDs
-			foreach( UserInfo user in list )
-				yield return new DTO.UserInfo( user.GUID.ToByteArray(), user.SessionGUID.Value.ToByteArray(), user.SystemPermission, user.Email, user.SessionDateCreated, user.DateModified );
+        #endregion
+        #region UserInfo
+
+        public static IEnumerable<DTO.Standard.UserInfo> ToDTO( this IEnumerable<UserInfo> list )
+		{ 
+            return list.Select( ToDTO );
 		}
 
-		public static IEnumerable<DTO.Group> ToDTO( this IEnumerable<Group> list )
-		{ // TODO: Fix so it works with null SessionGUIDs
-			foreach( Group group in list )
-				yield return new DTO.Group( group.GUID.ToByteArray(), group.SystemPermission, group.Name, group.DateCreated );
-		}
-
-		public static IEnumerable<DTO.Session> ToDTO(this IEnumerable<Session> list)
+        public static DTO.Standard.UserInfo ToDTO( UserInfo user )
 		{
-			foreach( Session session in list )
-				yield return new DTO.Session( session.GUID.ToByteArray(), session.UserGUID.ToByteArray(), session.DateCreated, session.DateModified );
+			return new DTO.Standard.UserInfo( user.GUID, user.SessionGUID, user.SystemPermission, user.Email, user.SessionDateCreated, user.DateModified );
 		}
 
+        #endregion
+        #region Group
+
+        public static IEnumerable<DTO.Standard.Group> ToDTO( this IEnumerable<Group> list )
+		{ 
+            return list.Select( ToDTO );
+		}
+
+        public static DTO.Standard.Group ToDTO( Group group )
+		{
+			return new DTO.Standard.Group( group.GUID, group.SystemPermission, group.Name, group.DateCreated );
+		}
+
+        #endregion
+        #region Session
+
+        public static IEnumerable<DTO.Standard.Session> ToDTO( this IEnumerable<Session> list )
+		{
+            return list.Select( ToDTO );
+		}
+
+        public static DTO.Standard.Session ToDTO( this Session session )
+		{
+			return new DTO.Standard.Session( session.GUID, session.UserGUID, session.DateCreated, session.DateModified );
+		}
+
+        #endregion
+        #region Module
+
+        public static IEnumerable<DTO.Standard.Module> ToDTO( this IEnumerable<Module> list )
+		{ 
+            return list.Select( ToDTO );
+		}
+
+        public static DTO.Standard.Module ToDTO( Module module )
+		{
+			return new DTO.Standard.Module( module.ID, module.Name, module.Path, module.Configuration, module.DateCreated );
+		}
+
+        #endregion
 		#region Extension
 
-		public static IEnumerable<DTO.Extension> ToDTO( this IEnumerable<Extension> list )
+		public static IEnumerable<DTO.Standard.Extension> ToDTO( this IEnumerable<Extension> list )
 		{
-			foreach( Extension extension in list )
-				yield return ToDTO( extension );
+		    return list.Select( ToDTO );
 		}
 
-		public static DTO.Extension ToDTO( this Extension dto )
+	    public static DTO.Standard.Extension ToDTO( this Extension dto )
 		{
-			return new DTO.Extension( dto.ID, dto.Map, dto.Path, dto.DateCreated );
-		}
-
-		#endregion
-		#region Module
-
-		public static IEnumerable<DTO.Module> ToDTO(this IEnumerable<Module> list)
-		{
-			foreach( Module module  in list )
-				yield return new DTO.Module( module.ID, module.Name, module.Path, module.Configuration, module.DateCreated );
+			return new DTO.Standard.Extension( dto.ID, dto.Map, dto.Path, dto.DateCreated );
 		}
 
 		#endregion
 		#region SubscriptionInfo
 
-		public static IEnumerable<DTO.SubscriptionInfo> ToDTO(this IEnumerable<SubscriptionInfo> list)
+        public static IEnumerable<DTO.Standard.SubscriptionInfo> ToDTO( this IEnumerable<SubscriptionInfo> list )
+		{ 
+            return list.Select( ToDTO );
+		}
+
+        public static DTO.Standard.SubscriptionInfo ToDTO( SubscriptionInfo subscriptionInfo )
 		{
-			foreach( SubscriptionInfo subscriptionInfo in list )
-				yield return new DTO.SubscriptionInfo( subscriptionInfo.GUID.ToByteArray(), subscriptionInfo.UserGUID.HasValue ? subscriptionInfo.UserGUID.Value.ToByteArray() : null, subscriptionInfo.Name, subscriptionInfo.Permission, subscriptionInfo.DateCreated );
+			return new DTO.Standard.SubscriptionInfo( subscriptionInfo.GUID, subscriptionInfo.UserGUID, subscriptionInfo.Name, subscriptionInfo.Permission, subscriptionInfo.DateCreated );
 		}
 
 		#endregion
 		#region ClientSettings
 
-		public static IEnumerable<DTO.ClientSettings> ToDTO(this IEnumerable<ClientSettings> list)
+        public static IEnumerable<DTO.Standard.ClientSettings> ToDTO( this IEnumerable<ClientSettings> list )
+		{ 
+            return list.Select( ToDTO );
+		}
+
+        public static DTO.Standard.ClientSettings ToDTO( ClientSettings clientSettings )
 		{
-			foreach( ClientSettings clientSettings in list )
-				yield return new DTO.ClientSettings( clientSettings.GUID.ToByteArray(), clientSettings.Name, clientSettings.Settings, clientSettings.DateCreated );
+			return new DTO.Standard.ClientSettings( clientSettings.GUID.ToByteArray(), clientSettings.Name, clientSettings.Settings, clientSettings.DateCreated );
 		}
 
 		#endregion
-		public static IEnumerable<DTO.UserSettings> ToDTO(this IEnumerable<UserSettings> list)
-		{
-			foreach( UserSettings userSettings in list )
-				yield return new DTO.UserSettings(userSettings.ClientSettingsGUID.ToByteArray(), userSettings.UserGUID.ToByteArray(), userSettings.Settings, userSettings.DateCreated );
+        #region UserSettings
+        
+        public static IEnumerable<DTO.Standard.UserSettings> ToDTO( this IEnumerable<UserSettings> list )
+		{ 
+            return list.Select( ToDTO );
 		}
+
+        public static DTO.Standard.UserSettings ToDTO( UserSettings userSettings )
+		{
+			return new DTO.Standard.UserSettings(userSettings.ClientSettingsGUID.ToByteArray(), userSettings.UserGUID.ToByteArray(), userSettings.Settings, userSettings.DateCreated );
+		}
+
+        #endregion
 	}
 }
