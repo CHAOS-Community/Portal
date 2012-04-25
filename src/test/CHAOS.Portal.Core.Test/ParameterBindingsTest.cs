@@ -50,7 +50,7 @@ namespace CHAOS.Portal.Core.Test
             AnonCallContext.PortalRequest.Parameters.Add( "test", null );
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestNullableInt32Parameter").GetParameters()[1];
 
-            Assert.AreEqual( null, PortalApplication.Bindings[typeof(int)].Bind( AnonCallContext, parameterInfo ) );
+            Assert.AreEqual( null, PortalApplication.Bindings[typeof(int?)].Bind( AnonCallContext, parameterInfo ) );
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace CHAOS.Portal.Core.Test
             AnonCallContext.PortalRequest.Parameters.Add( "test", null );
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestNullableUInt32Parameter").GetParameters()[1];
 
-            Assert.AreEqual( null, PortalApplication.Bindings[typeof(uint)].Bind( AnonCallContext, parameterInfo ) );
+            Assert.AreEqual( null, PortalApplication.Bindings[typeof(uint?)].Bind( AnonCallContext, parameterInfo ) );
         }
 
         [Test]

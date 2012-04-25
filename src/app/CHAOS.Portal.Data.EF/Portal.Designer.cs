@@ -20,7 +20,6 @@ using System.Xml.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID", "ClientSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.ClientSettings), "UserSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.UserSettings), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_IndexSettings_ModuleID_Module_ID", "Module", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.Module), "IndexSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.IndexSettings), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_Session_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "Session", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Session), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_Ticket_TicketTypeID_TicketType_ID", "TicketType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.TicketType), "Ticket", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Ticket), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_UserSettings_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "UserSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.UserSettings), true)]
@@ -28,6 +27,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID", "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.Subscription), "Subscription_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Subscription_User_Join), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_Subscription_User_Join_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "Subscription_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Subscription_User_Join), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_Group_User_Join_GroupGUID_Group_GUID", "Group", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.Group), "Group_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Group_User_Join), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_IndexSettings_ModuleID_Module_ID", "Module", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.Module), "IndexSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.IndexSettings), true)]
 
 #endregion
 
@@ -94,54 +94,6 @@ namespace CHAOS.Portal.Data.EF
             }
         }
         private ObjectSet<ClientSettings> _ClientSettings;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<Extension> Extension
-        {
-            get
-            {
-                if ((_Extension == null))
-                {
-                    _Extension = base.CreateObjectSet<Extension>("Extension");
-                }
-                return _Extension;
-            }
-        }
-        private ObjectSet<Extension> _Extension;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<IndexSettings> IndexSettings
-        {
-            get
-            {
-                if ((_IndexSettings == null))
-                {
-                    _IndexSettings = base.CreateObjectSet<IndexSettings>("IndexSettings");
-                }
-                return _IndexSettings;
-            }
-        }
-        private ObjectSet<IndexSettings> _IndexSettings;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<Module> Module
-        {
-            get
-            {
-                if ((_Module == null))
-                {
-                    _Module = base.CreateObjectSet<Module>("Module");
-                }
-                return _Module;
-            }
-        }
-        private ObjectSet<Module> _Module;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -350,6 +302,54 @@ namespace CHAOS.Portal.Data.EF
             }
         }
         private ObjectSet<UserInfo> _UserInfo;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Log> Log
+        {
+            get
+            {
+                if ((_Log == null))
+                {
+                    _Log = base.CreateObjectSet<Log>("Log");
+                }
+                return _Log;
+            }
+        }
+        private ObjectSet<Log> _Log;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<IndexSettings> IndexSettings
+        {
+            get
+            {
+                if ((_IndexSettings == null))
+                {
+                    _IndexSettings = base.CreateObjectSet<IndexSettings>("IndexSettings");
+                }
+                return _IndexSettings;
+            }
+        }
+        private ObjectSet<IndexSettings> _IndexSettings;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Module> Module
+        {
+            get
+            {
+                if ((_Module == null))
+                {
+                    _Module = base.CreateObjectSet<Module>("Module");
+                }
+                return _Module;
+            }
+        }
+        private ObjectSet<Module> _Module;
 
         #endregion
 
@@ -361,30 +361,6 @@ namespace CHAOS.Portal.Data.EF
         public void AddToClientSettings(ClientSettings clientSettings)
         {
             base.AddObject("ClientSettings", clientSettings);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Extension EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToExtension(Extension extension)
-        {
-            base.AddObject("Extension", extension);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the IndexSettings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToIndexSettings(IndexSettings indexSettings)
-        {
-            base.AddObject("IndexSettings", indexSettings);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Module EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToModule(Module module)
-        {
-            base.AddObject("Module", module);
         }
     
         /// <summary>
@@ -489,6 +465,30 @@ namespace CHAOS.Portal.Data.EF
         public void AddToUserInfo(UserInfo userInfo)
         {
             base.AddObject("UserInfo", userInfo);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Log EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToLog(Log log)
+        {
+            base.AddObject("Log", log);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the IndexSettings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToIndexSettings(IndexSettings indexSettings)
+        {
+            base.AddObject("IndexSettings", indexSettings);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Module EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToModule(Module module)
+        {
+            base.AddObject("Module", module);
         }
 
         #endregion
@@ -1032,7 +1032,7 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         /// <param name="iD">No Metadata Documentation available.</param>
         /// <param name="map">No Metadata Documentation available.</param>
-        public ObjectResult<Extension> Extension_Get(Nullable<global::System.Int32> iD, global::System.String map)
+        public int Extension_Get(Nullable<global::System.Int32> iD, global::System.String map)
         {
             ObjectParameter iDParameter;
             if (iD.HasValue)
@@ -1054,104 +1054,14 @@ namespace CHAOS.Portal.Data.EF
                 mapParameter = new ObjectParameter("Map", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<Extension>("Extension_Get", iDParameter, mapParameter);
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="mergeOption"></param>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="map">No Metadata Documentation available.</param>
-        public ObjectResult<Extension> Extension_Get(Nullable<global::System.Int32> iD, global::System.String map, MergeOption mergeOption)
-        {
-            ObjectParameter iDParameter;
-            if (iD.HasValue)
-            {
-                iDParameter = new ObjectParameter("ID", iD);
-            }
-            else
-            {
-                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter mapParameter;
-            if (map != null)
-            {
-                mapParameter = new ObjectParameter("Map", map);
-            }
-            else
-            {
-                mapParameter = new ObjectParameter("Map", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<Extension>("Extension_Get", mergeOption, iDParameter, mapParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
-        public ObjectResult<Module> Module_Get(Nullable<global::System.Int32> iD, global::System.String name)
-        {
-            ObjectParameter iDParameter;
-            if (iD.HasValue)
-            {
-                iDParameter = new ObjectParameter("ID", iD);
-            }
-            else
-            {
-                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter nameParameter;
-            if (name != null)
-            {
-                nameParameter = new ObjectParameter("Name", name);
-            }
-            else
-            {
-                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<Module>("Module_Get", iDParameter, nameParameter);
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="mergeOption"></param>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
-        public ObjectResult<Module> Module_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
-        {
-            ObjectParameter iDParameter;
-            if (iD.HasValue)
-            {
-                iDParameter = new ObjectParameter("ID", iD);
-            }
-            else
-            {
-                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter nameParameter;
-            if (name != null)
-            {
-                nameParameter = new ObjectParameter("Name", name);
-            }
-            else
-            {
-                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<Module>("Module_Get", mergeOption, iDParameter, nameParameter);
+            return base.ExecuteFunction("Extension_Get", iDParameter, mapParameter);
         }
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="moduleID">No Metadata Documentation available.</param>
-        public ObjectResult<IndexSettings> IndexSettings_Get(Nullable<global::System.Int32> moduleID)
+        public int IndexSettings_Get(Nullable<global::System.Int32> moduleID)
         {
             ObjectParameter moduleIDParameter;
             if (moduleID.HasValue)
@@ -1163,26 +1073,7 @@ namespace CHAOS.Portal.Data.EF
                 moduleIDParameter = new ObjectParameter("ModuleID", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction<IndexSettings>("IndexSettings_Get", moduleIDParameter);
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="mergeOption"></param>
-        /// <param name="moduleID">No Metadata Documentation available.</param>
-        public ObjectResult<IndexSettings> IndexSettings_Get(Nullable<global::System.Int32> moduleID, MergeOption mergeOption)
-        {
-            ObjectParameter moduleIDParameter;
-            if (moduleID.HasValue)
-            {
-                moduleIDParameter = new ObjectParameter("ModuleID", moduleID);
-            }
-            else
-            {
-                moduleIDParameter = new ObjectParameter("ModuleID", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<IndexSettings>("IndexSettings_Get", mergeOption, moduleIDParameter);
+            return base.ExecuteFunction("IndexSettings_Get", moduleIDParameter);
         }
     
         /// <summary>
@@ -1788,6 +1679,107 @@ namespace CHAOS.Portal.Data.EF
     
             return base.ExecuteFunction<Ticket>("Ticket_Get", mergeOption, gUIDParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Module> Module_Get(Nullable<global::System.Int32> iD, global::System.String name)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Module>("Module_Get", iDParameter, nameParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Module> Module_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Module>("Module_Get", mergeOption, iDParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="configuration">No Metadata Documentation available.</param>
+        public int Module_Create(Nullable<global::System.Int32> iD, global::System.String name, global::System.String configuration)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter configurationParameter;
+            if (configuration != null)
+            {
+                configurationParameter = new ObjectParameter("Configuration", configuration);
+            }
+            else
+            {
+                configurationParameter = new ObjectParameter("Configuration", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("Module_Create", iDParameter, nameParameter, configurationParameter);
+        }
 
         #endregion
 
@@ -1954,167 +1946,6 @@ namespace CHAOS.Portal.Data.EF
 
         #endregion
 
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="PortalModel", Name="Extension")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class Extension : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new Extension object.
-        /// </summary>
-        /// <param name="id">Initial value of the ID property.</param>
-        /// <param name="map">Initial value of the Map property.</param>
-        /// <param name="fullName">Initial value of the FullName property.</param>
-        /// <param name="path">Initial value of the Path property.</param>
-        /// <param name="dateCreated">Initial value of the DateCreated property.</param>
-        public static Extension CreateExtension(global::System.Int64 id, global::System.String map, global::System.String fullName, global::System.String path, global::System.DateTime dateCreated)
-        {
-            Extension extension = new Extension();
-            extension.ID = id;
-            extension.Map = map;
-            extension.FullName = fullName;
-            extension.Path = path;
-            extension.DateCreated = dateCreated;
-            return extension;
-        }
-
-        #endregion
-
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 ID
-        {
-            get
-            {
-                return _ID;
-            }
-            set
-            {
-                if (_ID != value)
-                {
-                    OnIDChanging(value);
-                    ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("ID");
-                    OnIDChanged();
-                }
-            }
-        }
-        private global::System.Int64 _ID;
-        partial void OnIDChanging(global::System.Int64 value);
-        partial void OnIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Map
-        {
-            get
-            {
-                return _Map;
-            }
-            set
-            {
-                OnMapChanging(value);
-                ReportPropertyChanging("Map");
-                _Map = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Map");
-                OnMapChanged();
-            }
-        }
-        private global::System.String _Map;
-        partial void OnMapChanging(global::System.String value);
-        partial void OnMapChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String FullName
-        {
-            get
-            {
-                return _FullName;
-            }
-            set
-            {
-                OnFullNameChanging(value);
-                ReportPropertyChanging("FullName");
-                _FullName = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("FullName");
-                OnFullNameChanged();
-            }
-        }
-        private global::System.String _FullName;
-        partial void OnFullNameChanging(global::System.String value);
-        partial void OnFullNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Path
-        {
-            get
-            {
-                return _Path;
-            }
-            set
-            {
-                OnPathChanging(value);
-                ReportPropertyChanging("Path");
-                _Path = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Path");
-                OnPathChanged();
-            }
-        }
-        private global::System.String _Path;
-        partial void OnPathChanging(global::System.String value);
-        partial void OnPathChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime DateCreated
-        {
-            get
-            {
-                return _DateCreated;
-            }
-            set
-            {
-                OnDateCreatedChanging(value);
-                ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DateCreated");
-                OnDateCreatedChanged();
-            }
-        }
-        private global::System.DateTime _DateCreated;
-        partial void OnDateCreatedChanging(global::System.DateTime value);
-        partial void OnDateCreatedChanged();
-
-        #endregion
-
-    
     }
     
     /// <summary>
@@ -2674,6 +2505,219 @@ namespace CHAOS.Portal.Data.EF
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PortalModel", Name="Log")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Log : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Log object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="date">Initial value of the Date property.</param>
+        /// <param name="thread">Initial value of the Thread property.</param>
+        /// <param name="level">Initial value of the Level property.</param>
+        /// <param name="logger">Initial value of the Logger property.</param>
+        /// <param name="message">Initial value of the Message property.</param>
+        /// <param name="exception">Initial value of the Exception property.</param>
+        public static Log CreateLog(global::System.Int64 id, global::System.DateTime date, global::System.String thread, global::System.String level, global::System.String logger, global::System.String message, global::System.String exception)
+        {
+            Log log = new Log();
+            log.Id = id;
+            log.Date = date;
+            log.Thread = thread;
+            log.Level = level;
+            log.Logger = logger;
+            log.Message = message;
+            log.Exception = exception;
+            return log;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime Date
+        {
+            get
+            {
+                return _Date;
+            }
+            set
+            {
+                OnDateChanging(value);
+                ReportPropertyChanging("Date");
+                _Date = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Date");
+                OnDateChanged();
+            }
+        }
+        private global::System.DateTime _Date;
+        partial void OnDateChanging(global::System.DateTime value);
+        partial void OnDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Thread
+        {
+            get
+            {
+                return _Thread;
+            }
+            set
+            {
+                OnThreadChanging(value);
+                ReportPropertyChanging("Thread");
+                _Thread = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Thread");
+                OnThreadChanged();
+            }
+        }
+        private global::System.String _Thread;
+        partial void OnThreadChanging(global::System.String value);
+        partial void OnThreadChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Level
+        {
+            get
+            {
+                return _Level;
+            }
+            set
+            {
+                OnLevelChanging(value);
+                ReportPropertyChanging("Level");
+                _Level = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Level");
+                OnLevelChanged();
+            }
+        }
+        private global::System.String _Level;
+        partial void OnLevelChanging(global::System.String value);
+        partial void OnLevelChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Logger
+        {
+            get
+            {
+                return _Logger;
+            }
+            set
+            {
+                OnLoggerChanging(value);
+                ReportPropertyChanging("Logger");
+                _Logger = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Logger");
+                OnLoggerChanged();
+            }
+        }
+        private global::System.String _Logger;
+        partial void OnLoggerChanging(global::System.String value);
+        partial void OnLoggerChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Message
+        {
+            get
+            {
+                return _Message;
+            }
+            set
+            {
+                OnMessageChanging(value);
+                ReportPropertyChanging("Message");
+                _Message = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Message");
+                OnMessageChanged();
+            }
+        }
+        private global::System.String _Message;
+        partial void OnMessageChanging(global::System.String value);
+        partial void OnMessageChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Exception
+        {
+            get
+            {
+                return _Exception;
+            }
+            set
+            {
+                OnExceptionChanging(value);
+                ReportPropertyChanging("Exception");
+                _Exception = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Exception");
+                OnExceptionChanged();
+            }
+        }
+        private global::System.String _Exception;
+        partial void OnExceptionChanging(global::System.String value);
+        partial void OnExceptionChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="PortalModel", Name="Module")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -2686,14 +2730,12 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
-        /// <param name="path">Initial value of the Path property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
-        public static Module CreateModule(global::System.Int64 id, global::System.String name, global::System.String path, global::System.DateTime dateCreated)
+        public static Module CreateModule(global::System.Int64 id, global::System.String name, global::System.DateTime dateCreated)
         {
             Module module = new Module();
             module.ID = id;
             module.Name = name;
-            module.Path = path;
             module.DateCreated = dateCreated;
             return module;
         }
@@ -2776,30 +2818,6 @@ namespace CHAOS.Portal.Data.EF
         private global::System.String _Configuration;
         partial void OnConfigurationChanging(global::System.String value);
         partial void OnConfigurationChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Path
-        {
-            get
-            {
-                return _Path;
-            }
-            set
-            {
-                OnPathChanging(value);
-                ReportPropertyChanging("Path");
-                _Path = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Path");
-                OnPathChanged();
-            }
-        }
-        private global::System.String _Path;
-        partial void OnPathChanging(global::System.String value);
-        partial void OnPathChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

@@ -59,7 +59,7 @@ namespace CHAOS.Portal.Modules
             if( user.GUID.ToString() == callContext.AnonymousUserGUID.ToString() )
                 throw new InsufficientPermissionsException( "Anonymous users cannot create groups" );
 
-            using( PortalEntities db = new PortalEntities() )
+            using( var db = new PortalEntities() )
             {
 				var guid      = new UUID();
 				var errorCode = new ObjectParameter( "ErrorCode", 0 );
@@ -86,7 +86,7 @@ namespace CHAOS.Portal.Modules
             if( user.GUID.ToString() == callContext.AnonymousUserGUID.ToString() )
                 throw new InsufficientPermissionsException( "Anonymous users cannot delete groups" );
 
-            using( PortalEntities db = new PortalEntities() )
+            using( var db = new PortalEntities() )
             {
 				var errorCode = new ObjectParameter( "ErrorCode", 0 );
 
@@ -109,7 +109,7 @@ namespace CHAOS.Portal.Modules
         {
             var user = callContext.User;
 
-            using( PortalEntities db = new PortalEntities() )
+            using( var db = new PortalEntities() )
             {
 				int result = db.Group_Update( newName, newSystemPermission, guid.ToByteArray(), user.GUID.ToByteArray() ).First().Value;
 

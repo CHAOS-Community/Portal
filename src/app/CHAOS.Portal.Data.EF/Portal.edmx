@@ -7,10 +7,10 @@
     <Schema Namespace="PortalModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="PortalModelStoreContainer">
           <EntitySet Name="ClientSettings" EntityType="PortalModel.Store.ClientSettings" store:Type="Tables" Schema="Portal" />
-          <EntitySet Name="Extension" EntityType="PortalModel.Store.Extension" store:Type="Tables" Schema="Portal" />
           <EntitySet Name="Group" EntityType="PortalModel.Store.Group" store:Type="Tables" Schema="Portal" />
           <EntitySet Name="Group_User_Join" EntityType="PortalModel.Store.Group_User_Join" store:Type="Tables" Schema="Portal" />
           <EntitySet Name="IndexSettings" EntityType="PortalModel.Store.IndexSettings" store:Type="Tables" Schema="Portal" />
+          <EntitySet Name="Log" EntityType="PortalModel.Store.Log" store:Type="Tables" Schema="Portal" />
           <EntitySet Name="Module" EntityType="PortalModel.Store.Module" store:Type="Tables" Schema="Portal" />
           <EntitySet Name="Permission" EntityType="PortalModel.Store.Permission" store:Type="Tables" Schema="Portal" />
           <EntitySet Name="Session" EntityType="PortalModel.Store.Session" store:Type="Tables" Schema="Portal" />
@@ -90,16 +90,6 @@
           <Property Name="Settings" Type="text" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="Extension">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="uint" Nullable="false" />
-          <Property Name="Map" Type="varchar" Nullable="false" MaxLength="255" />
-          <Property Name="FullName" Type="varchar" Nullable="false" MaxLength="255" />
-          <Property Name="Path" Type="varchar" Nullable="false" MaxLength="1024" />
-          <Property Name="DateCreated" Type="datetime" Nullable="false" />
-        </EntityType>
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="GUID" />
@@ -128,6 +118,18 @@
           <Property Name="Settings" Type="text" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Thread" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="Level" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Logger" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="Message" Type="varchar" Nullable="false" MaxLength="4000" />
+          <Property Name="Exception" Type="varchar" Nullable="false" MaxLength="2000" />
+        </EntityType>
         <EntityType Name="Module">
           <Key>
             <PropertyRef Name="ID" />
@@ -135,7 +137,6 @@
           <Property Name="ID" Type="uint" Nullable="false" />
           <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
           <Property Name="Configuration" Type="text" />
-          <Property Name="Path" Type="varchar" Nullable="false" MaxLength="1024" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Permission">
@@ -432,7 +433,6 @@
           <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="Configuration" Type="text" Mode="In" />
-          <Parameter Name="Path" Type="varchar" Mode="In" />
         </Function>
         <Function Name="Module_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
           <Parameter Name="ID" Type="int" Mode="In" />
@@ -526,9 +526,6 @@
       <Schema Namespace="PortalModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="PortalEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ClientSettings" EntityType="PortalModel.ClientSettings" />
-          <EntitySet Name="Extension" EntityType="PortalModel.Extension" />
-          <EntitySet Name="IndexSettings" EntityType="PortalModel.IndexSettings" />
-          <EntitySet Name="Module" EntityType="PortalModel.Module" />
           <EntitySet Name="Session" EntityType="PortalModel.Session" />
           <EntitySet Name="Subscription" EntityType="PortalModel.Subscription" />
           <EntitySet Name="Ticket" EntityType="PortalModel.Ticket" />
@@ -539,10 +536,6 @@
           <AssociationSet Name="FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID" Association="PortalModel.FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID">
             <End Role="ClientSettings" EntitySet="ClientSettings" />
             <End Role="UserSettings" EntitySet="UserSettings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IndexSettings_ModuleID_Module_ID" Association="PortalModel.FK_IndexSettings_ModuleID_Module_ID">
-            <End Role="Module" EntitySet="Module" />
-            <End Role="IndexSettings" EntitySet="IndexSettings" />
           </AssociationSet>
           <AssociationSet Name="FK_Session_UserGUID_User_GUID" Association="PortalModel.FK_Session_UserGUID_User_GUID">
             <End Role="User" EntitySet="User" />
@@ -604,15 +597,11 @@
             <Parameter Name="ClientSettingsGUID" Mode="In" Type="Binary" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="Extension_Get" EntitySet="Extension" ReturnType="Collection(PortalModel.Extension)">
+          <FunctionImport Name="Extension_Get">
             <Parameter Name="ID" Mode="In" Type="Int32" />
             <Parameter Name="Map" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="Module_Get" EntitySet="Module" ReturnType="Collection(PortalModel.Module)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
-            <Parameter Name="Name" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="IndexSettings_Get" EntitySet="IndexSettings" ReturnType="Collection(PortalModel.IndexSettings)">
+          <FunctionImport Name="IndexSettings_Get">
           <Parameter Name="ModuleID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Subscription_Create">
@@ -709,6 +698,22 @@
           <FunctionImport Name="Ticket_Get" EntitySet="Ticket" ReturnType="Collection(PortalModel.Ticket)">
           <Parameter Name="GUID" Mode="In" Type="Binary" />
           </FunctionImport>
+          <EntitySet Name="Log" EntityType="PortalModel.Log" />
+          <EntitySet Name="IndexSettings" EntityType="PortalModel.IndexSettings" />
+          <EntitySet Name="Module" EntityType="PortalModel.Module" />
+          <AssociationSet Name="FK_IndexSettings_ModuleID_Module_ID" Association="PortalModel.FK_IndexSettings_ModuleID_Module_ID">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="IndexSettings" EntitySet="IndexSettings" />
+          </AssociationSet>
+          <FunctionImport Name="Module_Get" EntitySet="Module" ReturnType="Collection(PortalModel.Module)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Module_Create">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Configuration" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="ClientSettings">
           <Key>
@@ -719,37 +724,6 @@
           <Property Name="Settings" Type="String" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="UserSettings" Relationship="PortalModel.FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID" FromRole="ClientSettings" ToRole="UserSettings" />
-        </EntityType>
-        <EntityType Name="Extension">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Map" Type="String" Nullable="false" />
-          <Property Name="FullName" Type="String" Nullable="false" />
-          <Property Name="Path" Type="String" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="IndexSettings">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ModuleID" Type="Int64" Nullable="false" />
-          <Property Name="Settings" Type="String" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="Module" Relationship="PortalModel.FK_IndexSettings_ModuleID_Module_ID" FromRole="IndexSettings" ToRole="Module" />
-        </EntityType>
-        <EntityType Name="Module">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="Configuration" Type="String" />
-          <Property Name="Path" Type="String" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="IndexSettings" Relationship="PortalModel.FK_IndexSettings_ModuleID_Module_ID" FromRole="Module" ToRole="IndexSettings" />
         </EntityType>
         <EntityType Name="Session">
           <Key>
@@ -835,18 +809,6 @@
             </Principal>
             <Dependent Role="UserSettings">
               <PropertyRef Name="ClientSettingsGUID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IndexSettings_ModuleID_Module_ID">
-          <End Role="Module" Type="PortalModel.Module" Multiplicity="1" />
-          <End Role="IndexSettings" Type="PortalModel.IndexSettings" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Module">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="IndexSettings">
-              <PropertyRef Name="ModuleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1002,6 +964,50 @@
           <Property Type="DateTime" Name="DateModified" />
           <Property Type="DateTime" Name="SessionDateCreated" />
         </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="String" Name="Thread" Nullable="false" />
+          <Property Type="String" Name="Level" Nullable="false" />
+          <Property Type="String" Name="Logger" Nullable="false" />
+          <Property Type="String" Name="Message" Nullable="false" />
+          <Property Type="String" Name="Exception" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IndexSettings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="Int64" Name="ModuleID" Nullable="false" />
+          <Property Type="String" Name="Settings" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <NavigationProperty Name="Module" Relationship="PortalModel.FK_IndexSettings_ModuleID_Module_ID" FromRole="IndexSettings" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Configuration" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <NavigationProperty Name="IndexSettings" Relationship="PortalModel.FK_IndexSettings_ModuleID_Module_ID" FromRole="Module" ToRole="IndexSettings" />
+        </EntityType>
+        <Association Name="FK_IndexSettings_ModuleID_Module_ID">
+          <End Type="PortalModel.Module" Role="Module" Multiplicity="1" />
+          <End Type="PortalModel.IndexSettings" Role="IndexSettings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="IndexSettings">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1012,26 +1018,6 @@
             <ScalarProperty Name="GUID" ColumnName="GUID" />
             <ScalarProperty Name="Name" ColumnName="Name" />
             <ScalarProperty Name="Settings" ColumnName="Settings" />
-            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="Extension"><EntityTypeMapping TypeName="PortalModel.Extension"><MappingFragment StoreEntitySet="Extension">
-            <ScalarProperty Name="ID" ColumnName="ID" />
-            <ScalarProperty Name="Map" ColumnName="Map" />
-            <ScalarProperty Name="FullName" ColumnName="FullName" />
-            <ScalarProperty Name="Path" ColumnName="Path" />
-            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="IndexSettings"><EntityTypeMapping TypeName="PortalModel.IndexSettings"><MappingFragment StoreEntitySet="IndexSettings">
-            <ScalarProperty Name="ID" ColumnName="ID" />
-            <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
-            <ScalarProperty Name="Settings" ColumnName="Settings" />
-            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="Module"><EntityTypeMapping TypeName="PortalModel.Module"><MappingFragment StoreEntitySet="Module">
-            <ScalarProperty Name="ID" ColumnName="ID" />
-            <ScalarProperty Name="Name" ColumnName="Name" />
-            <ScalarProperty Name="Configuration" ColumnName="Configuration" />
-            <ScalarProperty Name="Path" ColumnName="Path" />
             <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Session"><EntityTypeMapping TypeName="PortalModel.Session"><MappingFragment StoreEntitySet="Session">
@@ -1088,7 +1074,6 @@
           <FunctionImportMapping FunctionImportName="UserSettings_Get" FunctionName="PortalModel.Store.UserSettings_Get" />
           <FunctionImportMapping FunctionImportName="UserSettings_Delete" FunctionName="PortalModel.Store.UserSettings_Delete" />
           <FunctionImportMapping FunctionImportName="Extension_Get" FunctionName="PortalModel.Store.Extension_Get" />
-          <FunctionImportMapping FunctionImportName="Module_Get" FunctionName="PortalModel.Store.Module_Get" />
           <FunctionImportMapping FunctionImportName="IndexSettings_Get" FunctionName="PortalModel.Store.IndexSettings_Get" />
           <FunctionImportMapping FunctionImportName="Subscription_Create" FunctionName="PortalModel.Store.Subscription_Create" />
           <FunctionImportMapping FunctionImportName="Subscription_Delete" FunctionName="PortalModel.Store.Subscription_Delete" />
@@ -1167,6 +1152,41 @@
           <FunctionImportMapping FunctionImportName="Ticket_Create" FunctionName="PortalModel.Store.Ticket_Create" />
           <FunctionImportMapping FunctionImportName="Ticket_Use" FunctionName="PortalModel.Store.Ticket_Use" />
           <FunctionImportMapping FunctionImportName="Ticket_Get" FunctionName="PortalModel.Store.Ticket_Get" />
+          <EntitySetMapping Name="Log">
+            <EntityTypeMapping TypeName="PortalModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Logger" ColumnName="Logger" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Thread" ColumnName="Thread" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IndexSettings">
+            <EntityTypeMapping TypeName="PortalModel.IndexSettings">
+              <MappingFragment StoreEntitySet="IndexSettings">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Settings" ColumnName="Settings" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Module">
+            <EntityTypeMapping TypeName="PortalModel.Module">
+              <MappingFragment StoreEntitySet="Module">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Configuration" ColumnName="Configuration" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Module_Get" FunctionName="PortalModel.Store.Module_Get" />
+          <FunctionImportMapping FunctionImportName="Module_Create" FunctionName="PortalModel.Store.Module_Create" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1189,9 +1209,6 @@
     <Diagrams>
       <Diagram Name="Portal">
         <EntityTypeShape EntityType="PortalModel.ClientSettings" Width="1.5" PointX="5.125" PointY="6.75" Height="1.9802864583333335" IsExpanded="true" />
-        <EntityTypeShape EntityType="PortalModel.Extension" Width="1.5" PointX="5.75" PointY="9.75" Height="1.9802864583333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="PortalModel.IndexSettings" Width="1.5" PointX="9.25" PointY="6.75" Height="1.9802864583333335" IsExpanded="true" />
-        <EntityTypeShape EntityType="PortalModel.Module" Width="1.5" PointX="7" PointY="6.625" Height="2.1725878906250005" IsExpanded="true" />
         <EntityTypeShape EntityType="PortalModel.Session" Width="1.5" PointX="0.75" PointY="9.5" Height="1.9802864583333317" IsExpanded="true" />
         <EntityTypeShape EntityType="PortalModel.Subscription" Width="1.5" PointX="0.75" PointY="3.875" Height="1.7879850260416674" IsExpanded="true" />
         <EntityTypeShape EntityType="PortalModel.Ticket" Width="1.5" PointX="3" PointY="1" Height="2.3648893229166745" IsExpanded="true" />
@@ -1200,13 +1217,9 @@
         <EntityTypeShape EntityType="PortalModel.UserSettings" Width="1.5" PointX="3" PointY="9.5" Height="2.1725878906249951" IsExpanded="true" />
         <EntityTypeShape EntityType="PortalModel.SessionInfo" Width="1.5" PointX="9.75" PointY="9.75" Height="1.9802864583333388" IsExpanded="true" />
         <AssociationConnector Association="PortalModel.FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID" ManuallyRouted="false">
-          <ConnectorPoint PointX="5.40625" PointY="8.7302864583333335" />
-          <ConnectorPoint PointX="5.40625" PointY="9.59375" />
+          <ConnectorPoint PointX="5.21875" PointY="8.7302864583333335" />
+          <ConnectorPoint PointX="5.21875" PointY="9.59375" />
           <ConnectorPoint PointX="4.5" PointY="9.59375" />
-        </AssociationConnector>
-        <AssociationConnector Association="PortalModel.FK_IndexSettings_ModuleID_Module_ID" ManuallyRouted="false">
-          <ConnectorPoint PointX="8.5" PointY="7.7401432291666667" />
-          <ConnectorPoint PointX="9.25" PointY="7.7401432291666667" />
         </AssociationConnector>
         <AssociationConnector Association="PortalModel.FK_Session_UserGUID_User_GUID" ManuallyRouted="false">
           <ConnectorPoint PointX="1.5" PointY="8.8648893229166656" />
@@ -1253,6 +1266,14 @@
           <ConnectorPoint PointX="7.5" PointY="4.15625" />
         </AssociationConnector>
         <EntityTypeShape EntityType="PortalModel.UserInfo" Width="1.5" PointX="11.375" PointY="4.75" Height="2.1725878906250031" />
+        <EntityTypeShape EntityType="PortalModel.Log" Width="1.5" PointX="0.75" PointY="12.75" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="PortalModel.IndexSettings" Width="1.5" PointX="5.375" PointY="9.75" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="PortalModel.Module" Width="1.5" PointX="3.125" PointY="12.75" Height="1.9802864583333388" />
+        <AssociationConnector Association="PortalModel.FK_IndexSettings_ModuleID_Module_ID" >
+          <ConnectorPoint PointX="4.625" PointY="13.740143229166669" />
+          <ConnectorPoint PointX="6.125" PointY="13.740143229166669" />
+          <ConnectorPoint PointX="6.125" PointY="11.730286458333332" />
+        </AssociationConnector>
       </Diagram>
     </Diagrams>
   </Designer>

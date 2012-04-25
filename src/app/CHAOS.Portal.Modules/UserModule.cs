@@ -31,7 +31,7 @@ namespace CHAOS.Portal.Modules
         #endregion
         #region Get
 
-        [Datatype("ClientSettings","Get")]
+        [Datatype("User","Get")]
         public DTO.Standard.UserInfo Get( ICallContext callContext )
         {
             return callContext.User;

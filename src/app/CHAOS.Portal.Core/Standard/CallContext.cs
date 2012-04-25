@@ -19,7 +19,9 @@ namespace CHAOS.Portal.Core.Standard
     {
         #region Fields
 
-        private DTO.Standard.Session _session;
+        private DTO.Standard.Session               _session;
+        private DTO.Standard.UserInfo              _user;
+        private IEnumerable<DTO.Standard.Group>    _group;
 
         #endregion
         #region Properties
@@ -30,26 +32,27 @@ namespace CHAOS.Portal.Core.Standard
         public ICache            Cache { get; set; }
         public IIndexManager     IndexManager { get; set; }
 
+        /// <summary>
+        /// Returns the current user, the user is cached and will not be updated during the callContexts life.
+        /// </summary>
         public DTO.Standard.UserInfo User 
         { 
             get
             {
-                var userInfo = Cache.Get<DTO.Standard.UserInfo>( string.Format( "[UserInfo:sid={0}]", Session.GUID ) );
-
-                if( userInfo == null )
+                if( _user == null )
                 {
                     using( var db = new PortalEntities() )
                     {
-                        userInfo = db.UserInfo_Get( null, Session.GUID.ToByteArray(), null ).ToDTO().FirstOrDefault();
+                        _user = db.UserInfo_Get( null, Session.GUID.ToByteArray(), null ).ToDTO().FirstOrDefault();
                         
-                        if( userInfo == null )
+                        if( _user == null )
                             throw new SessionDoesNotExistException( "Session has expired" );
 
-                        Cache.Put( string.Format( "[UserInfo:sid={0}]", Session.GUID ), userInfo, new TimeSpan(0, 1, 0) );
+                        Cache.Put( string.Format( "[UserInfo:sid={0}]", Session.GUID ), _user, new TimeSpan(0, 1, 0) );
                     }
                 }
 
-                return userInfo;
+                return _user;
             }
         }
 
@@ -72,16 +75,22 @@ namespace CHAOS.Portal.Core.Standard
             }
         }
 
+        /// <summary>
+        /// returns the groups the current user is part of, the Groups are cached, changes in the database will not be pickup up during the callContext life.
+        /// </summary>
         public IEnumerable<DTO.Standard.Group> Groups
         {
             get
             {
-                // TODO: Cache groups for better performance
-
-                using( var db = new PortalEntities() )
+                if( _group == null )
                 {
-                    return db.Group_Get( null, null, User.GUID.ToByteArray() ).ToDTO().ToList();
+                    using( var db = new PortalEntities() )
+                    {
+                        _group = db.Group_Get( null, null, User.GUID.ToByteArray() ).ToDTO().ToList();
+                    }
                 }
+
+                return _group;
             }
         }
 

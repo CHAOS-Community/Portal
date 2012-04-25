@@ -95,9 +95,9 @@ namespace CHAOS.Portal.Core.HttpModule
         {
             foreach( string file in System.IO.Directory.GetFiles( string.Format( "{0}\\Extensions", ServiceDirectory ), "*.dll" ) )
             {
-                Assembly assembly = Assembly.LoadFile( file );
+                var assembly = Assembly.LoadFile( file );
 
-                foreach( Type type in assembly.GetTypes() )
+                foreach( var type in assembly.GetTypes() )
                 {
                     if( !type.Implements<IExtension>() )
                         continue;
@@ -115,20 +115,20 @@ namespace CHAOS.Portal.Core.HttpModule
 
         private void ContextBeginRequest( object sender, EventArgs e )
         {
-            HttpApplication application = (HttpApplication) sender;
+            var application = (HttpApplication) sender;
 
             if( IsOnIgnoreList( application.Request.Url.AbsolutePath ) )
                 return; // TODO: 404
 
-            ICallContext callContext = CreateCallContext( application.Request );
+            var callContext = CreateCallContext( application.Request );
             
             ProcessRequest( callContext );
 
             application.Response.ContentEncoding = System.Text.Encoding.Unicode;
             application.Response.ContentType     = GetContentType( callContext );
 
-            using( System.IO.Stream inputStream  = callContext.GetResponseStream() )
-            using( System.IO.Stream outputStream = application.Response.OutputStream )
+            using( var inputStream  = callContext.GetResponseStream() )
+            using( var outputStream = application.Response.OutputStream )
             {
                 inputStream.CopyTo( outputStream );
             }
@@ -179,10 +179,9 @@ namespace CHAOS.Portal.Core.HttpModule
         /// <returns></returns>
         protected ICallContext CreateCallContext( HttpRequest request )
         {
-            string[] split = request.Url.AbsolutePath.Substring( request.ApplicationPath.Length ).Split('/');
-
-            string extension = split[split.Length - 2];
-            string action    = split[split.Length - 1];
+            var split     = request.Url.AbsolutePath.Substring( request.ApplicationPath.Length ).Split('/');
+            var extension = split[ split.Length - 2 ];
+            var action    = split[ split.Length - 1 ];
 
             switch( request.HttpMethod )
             {
@@ -204,10 +203,10 @@ namespace CHAOS.Portal.Core.HttpModule
         /// <returns></returns>
         private IDictionary<string, string> ConvertToIDictionary( NameValueCollection nameValueCollection )
         {
-            IDictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
            
             // TODO: Put routing logic into seperate classes
-            for( int i = 0; i < nameValueCollection.Keys.Count; i++ )
+            for( var i = 0; i < nameValueCollection.Keys.Count; i++ )
             {
                 parameters.Add( nameValueCollection.Keys[i], nameValueCollection[i]);
             }

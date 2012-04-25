@@ -44,7 +44,7 @@ namespace CHAOS.Portal.DTO.Standard
 
         public IModuleResult GetModule( string modulename )
         {
-            IModuleResult result = Modules.FirstOrDefault( module => module.Fullname == modulename );
+            var result = Modules.FirstOrDefault( module => module.Fullname == modulename );
 
             if( result == null )
             {

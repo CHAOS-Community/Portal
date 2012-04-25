@@ -60,29 +60,16 @@ namespace CHAOS.Portal.Data.EF
         #region Module
 
         public static IEnumerable<DTO.Standard.Module> ToDTO( this IEnumerable<Module> list )
-		{ 
+        { 
             return list.Select( ToDTO );
-		}
+        }
 
         public static DTO.Standard.Module ToDTO( Module module )
-		{
-			return new DTO.Standard.Module( module.ID, module.Name, module.Path, module.Configuration, module.DateCreated );
-		}
+        {
+            return new DTO.Standard.Module( module.ID, module.Name, module.Configuration, module.DateCreated );
+        }
 
         #endregion
-		#region Extension
-
-		public static IEnumerable<DTO.Standard.Extension> ToDTO( this IEnumerable<Extension> list )
-		{
-		    return list.Select( ToDTO );
-		}
-
-	    public static DTO.Standard.Extension ToDTO( this Extension dto )
-		{
-			return new DTO.Standard.Extension( dto.ID, dto.Map, dto.Path, dto.DateCreated );
-		}
-
-		#endregion
 		#region SubscriptionInfo
 
         public static IEnumerable<DTO.Standard.SubscriptionInfo> ToDTO( this IEnumerable<SubscriptionInfo> list )

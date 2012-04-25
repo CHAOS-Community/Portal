@@ -38,7 +38,7 @@ namespace CHAOS.Portal.Modules
         [Datatype("Subscription","Get")]
         public DTO.Standard.SubscriptionInfo Get( ICallContext callContext, UUID guid )
         {
-            var user   = callContext.User;
+            var user = callContext.User;
 
             using( var db = NewPortalEntities )
             {
