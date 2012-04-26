@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Xml.Linq;
 using CHAOS.Extensions;
 using CHAOS.Index;
 using CHAOS.Index.Solr;
@@ -74,6 +75,16 @@ namespace CHAOS.Portal.Core.HttpModule
                                 throw new ModuleConfigurationMissingException( string.Format( "The module requires a configuration, but none was found with the name: {0}", attribute.ModuleConfigName ) );
 
                             module.Initialize( moduleConfig.Configuration );
+
+                            var indexSettings = db.IndexSettings_Get( (int?) moduleConfig.ID ).FirstOrDefault();
+                    
+                            if( indexSettings != null )
+                            {
+                                foreach( string url in XElement.Parse(indexSettings.Settings).Elements("Core").Select( core => core.Attribute( "url" ).Value ) )
+	                            {
+                                    IndexManager.AddIndex( module.GetType().FullName, new SolrCoreConnection( url ) );
+	                            }    
+                            }
                         }
 
                         // Index modules by the Extensions they subscribe to

@@ -67,7 +67,10 @@ namespace CHAOS.Portal.Core.Standard
 
                     using( var db = new PortalEntities() )
                     {
-                        _session = db.Session_Get( new UUID( PortalRequest.Parameters[ "sessionGUID" ] ).ToByteArray(), null ).ToDTO().First();
+                        _session = db.Session_Get( new UUID( PortalRequest.Parameters[ "sessionGUID" ] ).ToByteArray(), null ).ToDTO().FirstOrDefault();
+
+                        if( _session == null )
+                            throw new SessionDoesNotExistException( "Session has expired" );
                     }
                 }
 

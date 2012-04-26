@@ -601,7 +601,7 @@
             <Parameter Name="ID" Mode="In" Type="Int32" />
             <Parameter Name="Map" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="IndexSettings_Get">
+          <FunctionImport Name="IndexSettings_Get" EntitySet="IndexSettings" ReturnType="Collection(PortalModel.IndexSettings)">
           <Parameter Name="ModuleID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Subscription_Create">

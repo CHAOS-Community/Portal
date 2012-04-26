@@ -2,6 +2,7 @@
 using System.Reflection;
 using CHAOS.Index;
 using CHAOS.Portal.DTO;
+using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
 
 namespace CHAOS.Portal.Core.Module
@@ -26,32 +27,49 @@ namespace CHAOS.Portal.Core.Module
             // Call Method(s) matching the Requested Extension and Action
             foreach( MethodInfo method in GetType().GetMethods() )
             {
-                foreach( Datatype datatypeAttribute in method.GetCustomAttributes( typeof( Datatype ), true ) )
+                    var attributes  = GetType().GetCustomAttributes( typeof(ModuleAttribute), true );
+                    var moduleName  = attributes.Length == 0 ? GetType().FullName : ( (ModuleAttribute) attributes[0] ).ModuleConfigName;
+                    var modelResult = callContext.PortalResponse.PortalResult.GetModule( moduleName );
+
+                try
                 {
-                    if( datatypeAttribute.ExtensionName == callContext.PortalRequest.Extension && 
-                        datatypeAttribute.ActionName    == callContext.PortalRequest.Action )
+                    foreach( Datatype datatypeAttribute in method.GetCustomAttributes( typeof( Datatype ), true ) )
                     {
-                        var modelResult = callContext.PortalResponse.PortalResult.GetModule( GetType().FullName );
-                        var parameters  = BindParameters( callContext, method.GetParameters() );
-                        var result      = method.Invoke( this, parameters );
-
-                        // Save result
-                        if( result is IResult )
-                            modelResult.AddResult( (IResult) result );
-                        else
-                        if( result is IEnumerable<IResult> )
-                            modelResult.AddResult( (IEnumerable<IResult>) result );
-                        else
-                        if( result is IPagedResult<IResult> )
+                        if( datatypeAttribute.ExtensionName == callContext.PortalRequest.Extension && 
+                            datatypeAttribute.ActionName    == callContext.PortalRequest.Action )
                         {
-                            var pagedResult = (IPagedResult<IResult>) result;
 
-                            modelResult.AddResult( pagedResult.Results );
-                            modelResult.TotalCount = pagedResult.FoundCount;
+                            var parameters  = BindParameters( callContext, method.GetParameters() );
+                            var result      = method.Invoke( this, parameters );
+
+                            // Save result
+                            if( result is IResult )
+                                modelResult.AddResult( (IResult) result );
+                            else
+                            if( result is IEnumerable<IResult> )
+                                modelResult.AddResult( (IEnumerable<IResult>) result );
+                            else
+                            if( result is IPagedResult<IResult> )
+                            {
+                                var pagedResult = (IPagedResult<IResult>) result;
+
+                                modelResult.AddResult( pagedResult.Results );
+                                modelResult.TotalCount = pagedResult.FoundCount;
+                            }
+                            else
+                                throw new UnsupportedModuleReturnTypeException( "Only a return type of IResult, IEnumerable<IResult> or PagedResult<IResult> is supported" );
                         }
-                        else
-                            throw new UnsupportedModuleReturnTypeException( "Only a return type of IResult, IEnumerable<IResult> or PagedResult<IResult> is supported" );
                     }
+                }
+                catch( TargetInvocationException e )
+                {
+                    modelResult.Results.Clear();
+                    modelResult.AddResult( new Error( e.InnerException ) );
+                }
+                catch( System.Exception e )
+                {
+                    modelResult.Results.Clear();
+                    modelResult.AddResult( new Error( e ) );
                 }
             }
         }

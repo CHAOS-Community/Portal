@@ -1061,7 +1061,7 @@ namespace CHAOS.Portal.Data.EF
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="moduleID">No Metadata Documentation available.</param>
-        public int IndexSettings_Get(Nullable<global::System.Int32> moduleID)
+        public ObjectResult<IndexSettings> IndexSettings_Get(Nullable<global::System.Int32> moduleID)
         {
             ObjectParameter moduleIDParameter;
             if (moduleID.HasValue)
@@ -1073,7 +1073,26 @@ namespace CHAOS.Portal.Data.EF
                 moduleIDParameter = new ObjectParameter("ModuleID", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction("IndexSettings_Get", moduleIDParameter);
+            return base.ExecuteFunction<IndexSettings>("IndexSettings_Get", moduleIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="moduleID">No Metadata Documentation available.</param>
+        public ObjectResult<IndexSettings> IndexSettings_Get(Nullable<global::System.Int32> moduleID, MergeOption mergeOption)
+        {
+            ObjectParameter moduleIDParameter;
+            if (moduleID.HasValue)
+            {
+                moduleIDParameter = new ObjectParameter("ModuleID", moduleID);
+            }
+            else
+            {
+                moduleIDParameter = new ObjectParameter("ModuleID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<IndexSettings>("IndexSettings_Get", mergeOption, moduleIDParameter);
         }
     
         /// <summary>
