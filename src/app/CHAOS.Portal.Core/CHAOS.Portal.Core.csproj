@@ -50,6 +50,7 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bindings\Standard\QueryParameterBinding.cs" />
     <Compile Include="Cache\Membase\Membase.cs" />
     <Compile Include="Cache\ICache.cs" />
     <Compile Include="Extension\AExtension.cs" />

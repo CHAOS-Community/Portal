@@ -39,8 +39,10 @@ namespace CHAOS.Portal.Core.HttpModule
         public void Init( HttpApplication context )
         {
             // REVIEW: Look into moving the loading process out of the http module
-            LoadExtensions();
-            LoadModules();
+
+                LoadExtensions();
+                LoadModules();
+
 
             context.BeginRequest += ContextBeginRequest;
         }
@@ -126,6 +128,7 @@ namespace CHAOS.Portal.Core.HttpModule
 
             application.Response.ContentEncoding = System.Text.Encoding.Unicode;
             application.Response.ContentType     = GetContentType( callContext );
+            application.Response.Charset         = "utf-16";
 
             using( var inputStream  = callContext.GetResponseStream() )
             using( var outputStream = application.Response.OutputStream )
