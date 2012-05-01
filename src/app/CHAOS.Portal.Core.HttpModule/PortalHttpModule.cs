@@ -19,15 +19,11 @@ using CHAOS.Portal.Core.Extension;
 
 namespace CHAOS.Portal.Core.HttpModule
 {
-    public class PortalHttpModule : PortalApplication, IHttpModule
+    public class PortalHttpModule : IHttpModule
     {
-        #region Construction
+        #region Properties
 
-        public PortalHttpModule() : base( new Cache.Membase.Membase(), (IIndexManager) new SolrCoreManager<UUIDResult>() )
-        {
-            
-        }
-
+        protected PortalApplication PortalApplication { get; set; }
 
         #endregion
         #region IHttpModule Members
@@ -40,26 +36,42 @@ namespace CHAOS.Portal.Core.HttpModule
         public void Init( HttpApplication context )
         {
             // REVIEW: Look into moving the loading process out of the http module
+            if( context.Application["PortalApplication"] == null )
+            {
+                lock( context.Application )
+                {
+                    if( context.Application["PortalApplication"] == null )
+                    {
+                        var application = new PortalApplication( new Cache.Membase.Membase(), new SolrCoreManager<UUIDResult>() );
 
-                LoadExtensions();
-                LoadModules();
+                        context.Application["PortalApplication"] = application;
 
+                        LoadExtensions( application );
+                        LoadModules( application );
+                    }
+                }
+            }
+
+            PortalApplication = (PortalApplication) context.Application["PortalApplication"];
 
             context.BeginRequest += ContextBeginRequest;
         }
 
-        private void LoadModules()
+        private void LoadModules( PortalApplication application )
         {
             using( var db = new PortalEntities() )
             {
                 // Load modules
-                foreach( string file in System.IO.Directory.GetFiles( string.Format( "{0}\\Modules", ServiceDirectory ), "*.dll" ) )
+                foreach( string file in System.IO.Directory.GetFiles( string.Format( "{0}\\Modules", application.ServiceDirectory ), "*.dll" ) )
                 {
                     Assembly assembly = Assembly.LoadFile( file );
 
                     // Get the types and identify the IModules
-                    foreach( Type type in assembly.GetTypes() )
+                    foreach( var type in assembly.GetTypes() )
                     {
+                        if( type.IsAbstract )
+                            continue;
+
                         if( !type.Implements<IModule>() )
                             continue;
                     
@@ -80,23 +92,23 @@ namespace CHAOS.Portal.Core.HttpModule
                     
                             if( indexSettings != null )
                             {
-                                foreach( string url in XElement.Parse(indexSettings.Settings).Elements("Core").Select( core => core.Attribute( "url" ).Value ) )
+                                foreach( var url in XElement.Parse(indexSettings.Settings).Elements("Core").Select( core => core.Attribute( "url" ).Value ) )
 	                            {
-                                    IndexManager.AddIndex( module.GetType().FullName, new SolrCoreConnection( url ) );
+                                    application.IndexManager.AddIndex( module.GetType().FullName, new SolrCoreConnection( url ) );
 	                            }    
                             }
                         }
 
                         // Index modules by the Extensions they subscribe to
-                        foreach( MethodInfo method in module.GetType().GetMethods() )
+                        foreach( var method in module.GetType().GetMethods() )
                         {
                             foreach( Datatype datatypeAttribute in method.GetCustomAttributes( typeof( Datatype ), true ) )
                             {
-                                if( !LoadedModules.ContainsKey( datatypeAttribute.ExtensionName ) )
-                                    LoadedModules.Add( datatypeAttribute.ExtensionName, new Collection<IModule>() );
+                                if( !application.LoadedModules.ContainsKey( datatypeAttribute.ExtensionName ) )
+                                    application.LoadedModules.Add( datatypeAttribute.ExtensionName, new Collection<IModule>() );
 
-                                if( !LoadedModules[ datatypeAttribute.ExtensionName ].Contains( module ) )
-                                    LoadedModules[ datatypeAttribute.ExtensionName ].Add( module );
+                                if( !application.LoadedModules[ datatypeAttribute.ExtensionName ].Contains( module ) )
+                                    application.LoadedModules[ datatypeAttribute.ExtensionName ].Add( module );
                             }
                         }
                     }
@@ -104,9 +116,9 @@ namespace CHAOS.Portal.Core.HttpModule
             }
         }
 
-        private void LoadExtensions()
+        private void LoadExtensions( PortalApplication application )
         {
-            foreach( string file in System.IO.Directory.GetFiles( string.Format( "{0}\\Extensions", ServiceDirectory ), "*.dll" ) )
+            foreach( string file in System.IO.Directory.GetFiles( string.Format( "{0}\\Extensions", application.ServiceDirectory ), "*.dll" ) )
             {
                 var assembly = Assembly.LoadFile( file );
 
@@ -117,8 +129,8 @@ namespace CHAOS.Portal.Core.HttpModule
                     
                     var attribute = type.GetCustomAttribute<ExtensionAttribute>( true );
 
-                    LoadedExtensions.Add( attribute.IsNull() ? type.Name : attribute.ExtensionName,
-                                          (IExtension) assembly.CreateInstance( type.FullName ) );
+                    application.LoadedExtensions.Add( attribute.IsNull() ? type.Name : attribute.ExtensionName,
+                                                     (IExtension) assembly.CreateInstance( type.FullName ) );
                 }
             }
         }
@@ -128,26 +140,27 @@ namespace CHAOS.Portal.Core.HttpModule
 
         private void ContextBeginRequest( object sender, EventArgs e )
         {
-            var application = (HttpApplication) sender;
-
-            if( IsOnIgnoreList( application.Request.Url.AbsolutePath ) )
-                return; // TODO: 404
-
-            var callContext = CreateCallContext( application.Request );
-            
-            ProcessRequest( callContext );
-
-            application.Response.ContentEncoding = System.Text.Encoding.Unicode;
-            application.Response.ContentType     = GetContentType( callContext );
-            application.Response.Charset         = "utf-16";
-
-            using( var inputStream  = callContext.GetResponseStream() )
-            using( var outputStream = application.Response.OutputStream )
+            using( var application = (HttpApplication) sender )
             {
-                inputStream.CopyTo( outputStream );
-            }
+                if( IsOnIgnoreList( application.Request.Url.AbsolutePath ) )
+                    return; // TODO: 404
 
-            application.Response.End();
+                var callContext = CreateCallContext( application.Request );
+
+                PortalApplication.ProcessRequest(callContext);
+
+                application.Response.ContentEncoding = System.Text.Encoding.Unicode;
+                application.Response.ContentType     = GetContentType( callContext );
+                application.Response.Charset         = "utf-16";
+
+                using( var inputStream  = callContext.GetResponseStream() )
+                using( var outputStream = application.Response.OutputStream )
+                {
+                    inputStream.CopyTo( outputStream );
+                }
+
+                application.Response.End();
+            }
         }
 
         /// <summary>
@@ -202,9 +215,9 @@ namespace CHAOS.Portal.Core.HttpModule
                 case "DELETE":
                 case "PUT":
                 case "POST":
-                    return new CallContext( this, new PortalRequest( extension, action, ConvertToIDictionary( request.Form ) ), new PortalResponse() );
+                    return new CallContext( PortalApplication, new PortalRequest( extension, action, ConvertToIDictionary( request.Form ) ), new PortalResponse() );
                 case "GET":
-                    return new CallContext( this, new PortalRequest( extension, action, ConvertToIDictionary( request.QueryString ) ), new PortalResponse() );
+                    return new CallContext( PortalApplication, new PortalRequest( extension, action, ConvertToIDictionary( request.QueryString ) ), new PortalResponse() );
                 default:
                     throw new UnhandledException( "Unknown Http Method" );
             }

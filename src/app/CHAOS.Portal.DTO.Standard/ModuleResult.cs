@@ -84,7 +84,7 @@ namespace CHAOS.Portal.DTO.Standard
         /// <param name="results"></param>
         public void AddResult( IEnumerable<IResult> results )
         {
-            foreach( IResult result in results )
+            foreach( var result in results )
             {
                 AddResult( result );
             }

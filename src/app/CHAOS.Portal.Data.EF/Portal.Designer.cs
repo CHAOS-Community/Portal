@@ -1799,6 +1799,47 @@ namespace CHAOS.Portal.Data.EF
     
             return base.ExecuteFunction("Module_Create", iDParameter, nameParameter, configurationParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="moduleID">No Metadata Documentation available.</param>
+        /// <param name="settings">No Metadata Documentation available.</param>
+        public int IndexSettings_Create(Nullable<global::System.Int32> iD, Nullable<global::System.Int32> moduleID, global::System.String settings)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter moduleIDParameter;
+            if (moduleID.HasValue)
+            {
+                moduleIDParameter = new ObjectParameter("ModuleID", moduleID);
+            }
+            else
+            {
+                moduleIDParameter = new ObjectParameter("ModuleID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter settingsParameter;
+            if (settings != null)
+            {
+                settingsParameter = new ObjectParameter("Settings", settings);
+            }
+            else
+            {
+                settingsParameter = new ObjectParameter("Settings", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("IndexSettings_Create", iDParameter, moduleIDParameter, settingsParameter);
+        }
 
         #endregion
 

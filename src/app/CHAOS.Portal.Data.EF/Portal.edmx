@@ -423,8 +423,9 @@
           <Parameter Name="RequestUserGUID" Type="binary" Mode="In" />
         </Function>
         <Function Name="IndexSettings_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="ModuleID" Type="int" Mode="In" />
-          <Parameter Name="Configuration" Type="text" Mode="In" />
+          <Parameter Name="Settings" Type="text" Mode="In" />
         </Function>
         <Function Name="IndexSettings_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
           <Parameter Name="ModuleID" Type="int" Mode="In" />
@@ -713,6 +714,11 @@
             <Parameter Name="ID" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="Configuration" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="IndexSettings_Create">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ModuleID" Mode="In" Type="Int32" />
+            <Parameter Name="Settings" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="ClientSettings">
@@ -1187,6 +1193,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="Module_Get" FunctionName="PortalModel.Store.Module_Get" />
           <FunctionImportMapping FunctionImportName="Module_Create" FunctionName="PortalModel.Store.Module_Create" />
+          <FunctionImportMapping FunctionImportName="IndexSettings_Create" FunctionName="PortalModel.Store.IndexSettings_Create" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

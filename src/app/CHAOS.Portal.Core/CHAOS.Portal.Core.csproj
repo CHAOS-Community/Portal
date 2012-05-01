@@ -57,6 +57,7 @@
     <Compile Include="Extension\DefaultExtension.cs" />
     <Compile Include="Extension\ExtensionAttribute.cs" />
     <Compile Include="ICallContext.cs" />
+    <Compile Include="ILog.cs" />
     <Compile Include="IPortalAction.cs" />
     <Compile Include="IPortalResponse.cs" />
     <Compile Include="Module\IModule.cs" />

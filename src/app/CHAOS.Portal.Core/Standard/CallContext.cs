@@ -31,6 +31,7 @@ namespace CHAOS.Portal.Core.Standard
         public IPortalResponse   PortalResponse { get; set; }
         public ICache            Cache { get; set; }
         public IIndexManager     IndexManager { get; set; }
+        public ILog              Log { get; set; }
 
         /// <summary>
         /// Returns the current user, the user is cached and will not be updated during the callContexts life.
