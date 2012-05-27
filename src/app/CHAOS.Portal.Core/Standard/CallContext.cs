@@ -19,9 +19,10 @@ namespace CHAOS.Portal.Core.Standard
     {
         #region Fields
 
-        private DTO.Standard.Session               _session;
-        private DTO.Standard.UserInfo              _user;
-        private IEnumerable<DTO.Standard.Group>    _group;
+        private DTO.Standard.Session                       _session;
+        private DTO.Standard.UserInfo                      _user;
+        private IEnumerable<DTO.Standard.SubscriptionInfo> _subscriptions;
+        private IEnumerable<DTO.Standard.Group>            _group;
 
         #endregion
         #region Properties
@@ -76,6 +77,22 @@ namespace CHAOS.Portal.Core.Standard
                 }
 
                 return _session;
+            }
+        }
+
+        public IEnumerable<DTO.Standard.SubscriptionInfo> Subscriptions
+        {
+            get
+            {
+                if( _subscriptions == null )
+                {
+                    using( var db = new PortalEntities() )
+                    {
+                        _subscriptions = db.SubscriptionInfo_Get( null, User.GUID.ToByteArray() ).ToDTO().ToList();
+                    }
+                }
+
+                return _subscriptions;
             }
         }
 

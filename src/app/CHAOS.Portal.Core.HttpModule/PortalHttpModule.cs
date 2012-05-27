@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Web;
 using System.Xml.Linq;
 using CHAOS.Extensions;
-using CHAOS.Index;
 using CHAOS.Index.Solr;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.Core.Request;

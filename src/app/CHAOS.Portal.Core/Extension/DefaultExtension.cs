@@ -16,6 +16,7 @@ namespace CHAOS.Portal.Core.Extension
                 throw new ExtensionMissingException( "The requested Extension wasn't found in any loaded assembly" );
 
             // TODO: Make module execution parallel
+            // TODO: Throw error if no modules are called
             foreach( var module in callContext.PortalApplication.LoadedModules[ callContext.PortalRequest.Extension ] )
             {
                 module.CallAction( callContext );

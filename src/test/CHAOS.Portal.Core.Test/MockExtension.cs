@@ -1,4 +1,5 @@
-﻿using CHAOS.Portal.Core.Extension;
+﻿using System;
+using CHAOS.Portal.Core.Extension;
 
 namespace CHAOS.Portal.Core.Test
 {
@@ -42,6 +43,16 @@ namespace CHAOS.Portal.Core.Test
         public void TestNullableUUIDParameter( ICallContext callContext, UUID test )
         {
             callContext.PortalResponse.PortalResult.GetModule("CHAOS.Portal.Core.Test").AddResult( new StringResult( (test != null).ToString() ) );
+        }
+
+        public void TestDateTimeParameter( ICallContext callContext, DateTime test )
+        {
+            callContext.PortalResponse.PortalResult.GetModule("CHAOS.Portal.Core.Test").AddResult( new StringResult( test.ToString() ) );
+        }
+
+        public void TestNullableDateTimeParameter( ICallContext callContext, DateTime? test )
+        {
+            callContext.PortalResponse.PortalResult.GetModule("CHAOS.Portal.Core.Test").AddResult( new StringResult( ( test != null ).ToString() ) );
         }
     }
 }

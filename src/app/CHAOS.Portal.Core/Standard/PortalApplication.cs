@@ -46,7 +46,7 @@ namespace CHAOS.Portal.Core.Standard
             Bindings.Add( typeof(double), new ConvertableParameterBinding<double>() );
             Bindings.Add( typeof(float), new ConvertableParameterBinding<float>() );
             Bindings.Add( typeof(bool), new ConvertableParameterBinding<bool>() );
-            Bindings.Add( typeof(DateTime), new ConvertableParameterBinding<DateTime>() );
+            Bindings.Add( typeof(DateTime), new DateTimeParameterBinding());
             Bindings.Add( typeof(long?), new ConvertableParameterBinding<long>() );
             Bindings.Add( typeof(int?), new ConvertableParameterBinding<int>() );
             Bindings.Add( typeof(short?), new ConvertableParameterBinding<short>() );
@@ -56,7 +56,7 @@ namespace CHAOS.Portal.Core.Standard
             Bindings.Add( typeof(double?), new ConvertableParameterBinding<double>() );
             Bindings.Add( typeof(float?), new ConvertableParameterBinding<float>() );
             Bindings.Add( typeof(bool?), new ConvertableParameterBinding<bool>() );
-            Bindings.Add( typeof(DateTime?), new ConvertableParameterBinding<DateTime>() );
+            Bindings.Add( typeof(DateTime?), new DateTimeParameterBinding());
             Bindings.Add( typeof(UUID), new UUIDParameterBinding() );
             Bindings.Add( typeof(IQuery), new QueryParameterBinding() );            
         }

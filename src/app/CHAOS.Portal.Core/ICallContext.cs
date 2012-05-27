@@ -10,17 +10,18 @@ namespace CHAOS.Portal.Core
 {
     public interface ICallContext
     {
-        PortalApplication  PortalApplication { get; }
-        IPortalRequest     PortalRequest{ get; }
-        IPortalResponse    PortalResponse { get; }
-        ReturnFormat       ReturnFormat{ get; }
-        Session            Session { get; }
-        IEnumerable<Group> Groups { get; }
-        UserInfo           User { get; }
-        UUID               AnonymousUserGUID { get; }
-        bool               IsAnonymousUser { get; }
-        ICache             Cache{ get; }
-        IIndexManager      IndexManager { get; }
+        PortalApplication             PortalApplication { get; }
+        IPortalRequest                PortalRequest{ get; }
+        IPortalResponse               PortalResponse { get; }
+        ReturnFormat                  ReturnFormat{ get; }
+        Session                       Session { get; }
+        IEnumerable<SubscriptionInfo> Subscriptions { get; }
+        IEnumerable<Group>            Groups { get; }
+        UserInfo                      User { get; }
+        UUID                          AnonymousUserGUID { get; }
+        bool                          IsAnonymousUser { get; }
+        ICache                        Cache{ get; }
+        IIndexManager                 IndexManager { get; }
 
         Stream GetResponseStream();
     }

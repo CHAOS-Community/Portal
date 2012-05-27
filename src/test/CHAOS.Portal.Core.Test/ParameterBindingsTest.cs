@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using CHAOS.Portal.Exception;
 using CHAOS.Portal.Test;
 using NUnit.Framework;
@@ -15,6 +16,24 @@ namespace CHAOS.Portal.Core.Test
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestStringParameter").GetParameters()[1];
 
             Assert.AreEqual( "string value", PortalApplication.Bindings[typeof(string)].Bind( AnonCallContext, parameterInfo ) );
+        }
+
+        [Test]
+        public void Should_Should_Bind_DateTime_Parameter()
+        {
+            AnonCallContext.PortalRequest.Parameters.Add("test", new DateTime(2000,01,01).ToString());
+            ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestDateTimeParameter").GetParameters()[1];
+
+            Assert.AreEqual("01-01-2000 00:00:00", PortalApplication.Bindings[typeof(string)].Bind(AnonCallContext, parameterInfo));
+        }
+
+        [Test]
+        public void Should_Should_Bind_Null_DateTime_Parameter()
+        {
+            AnonCallContext.PortalRequest.Parameters.Add( "test", null );
+            ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestNullableDateTimeParameter").GetParameters()[1];
+
+            Assert.AreEqual( null, PortalApplication.Bindings[typeof(string)].Bind(AnonCallContext, parameterInfo));
         }
 
         [Test]
