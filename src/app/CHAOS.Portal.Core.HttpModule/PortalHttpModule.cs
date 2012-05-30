@@ -78,7 +78,7 @@ namespace CHAOS.Portal.Core.HttpModule
                         var module    = (IModule) assembly.CreateInstance( type.FullName );
 
                         // If an attribute is present on the class, load config from database
-                        if( !attribute.IsNull() )
+                        if( attribute != null )
                         {
                             var moduleConfig = db.Module_Get( null, attribute.ModuleConfigName ).FirstOrDefault();
 
@@ -128,7 +128,7 @@ namespace CHAOS.Portal.Core.HttpModule
                     
                     var attribute = type.GetCustomAttribute<ExtensionAttribute>( true );
 
-                    application.LoadedExtensions.Add( attribute.IsNull() ? type.Name : attribute.ExtensionName,
+                    application.LoadedExtensions.Add( attribute == null ? type.Name : attribute.ExtensionName,
                                                      (IExtension) assembly.CreateInstance( type.FullName ) );
                 }
             }

@@ -21,10 +21,10 @@ namespace CHAOS.Portal.Core.Test
         [Test]
         public void Should_Should_Bind_DateTime_Parameter()
         {
-            AnonCallContext.PortalRequest.Parameters.Add("test", new DateTime(2000,01,01).ToString());
+            AnonCallContext.PortalRequest.Parameters.Add("test", "27-04-2012 22:00:00");
             ParameterInfo parameterInfo = typeof(MockExtension).GetMethod("TestDateTimeParameter").GetParameters()[1];
 
-            Assert.AreEqual("01-01-2000 00:00:00", PortalApplication.Bindings[typeof(string)].Bind(AnonCallContext, parameterInfo));
+            Assert.AreEqual("27-04-2012 22:00:00", PortalApplication.Bindings[typeof(string)].Bind(AnonCallContext, parameterInfo));
         }
 
         [Test]
