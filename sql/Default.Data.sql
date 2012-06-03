@@ -1,46 +1,63 @@
-IF( 1 = 1 )
-BEGIN
+USE MCM;
 
-	DELETE FROM [Session]
-	DELETE FROM Subscription_User_Join
-	DELETE FROM Subscription
-	DELETE FROM AuthenticationProvider_User_Join
-	DELETE FROM [Group_User_Join]
-	DELETE FROM [Group]
-	DELETE FROM [User]
-	DELETE FROM ClientSetting
-	DELETE FROM XmlType
-	DELETE FROM Module
-	DELETE FROM Extension
-	DELETE FROM Permission
-	DELETE FROM AuthenticationProvider
-
-END
-
-DBCC CHECKIDENT ("AuthenticationProvider", RESEED,0)
-DBCC CHECKIDENT ("Subscription", RESEED,0)
-DBCC CHECKIDENT ("[User]", RESEED,0)
-DBCC CHECKIDENT ("[Group]", RESEED,0)
-DBCC CHECKIDENT ("Module", RESEED,0)
-DBCC CHECKIDENT ("Extension", RESEED,0)
-
-DECLARE @SubscriptionIdentifier UNIQUEIDENTIFIER
-SET @SubscriptionIdentifier = NEWID()
-
-EXECUTE Subscription_Insert @GUID = @SubscriptionIdentifier, @Name = 'Geckon'
-EXECUTE User_Insert @Guid = 'C0B231E9-7D98-4F52-885E-AF4837FAA352', @Firstname = 'Anonymous', @Email = 'Anonymous@Geckon.com'
-EXECUTE User_Insert @Guid = 'A0B231E9-7D98-4F52-885E-AF4837FAA352', @Firstname = 'Administrator', @Email = 'admin@Geckon.com'
-EXECUTE Group_Insert @GUID = 'A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA', @Name = 'Administrators'
-EXECUTE [AssociateUserWithGroup] @UserGUID = 'A0B231E9-7D98-4F52-885E-AF4837FAA352', @GroupGUID = 'A0B231E9-7D98-4F52-885E-AAAAAAAAAAAA', @Permission = -1
-EXECUTE XmlType_Insert 1, 'XML'
-EXECUTE ClientSetting_Insert 1, 1
-EXECUTE Extension_Insert 'Session', 'Geckon.Portal.Extensions.Standard.SessionExtension','Geckon.Portal.Extensions.Standard.dll'
-EXECUTE Extension_Insert 'User', 'Geckon.Portal.Extensions.Standard.UserExtension','Geckon.Portal.Extensions.Standard.dll'
-EXECUTE Extension_Insert 'Group', 'Geckon.Portal.Extensions.Standard.GroupExtension','Geckon.Portal.Extensions.Standard.dll'
-EXECUTE Extension_Insert 'Location', 'Geckon.GeoLocator.PortalExtension.LocationExtension','Geckon.GeoLocator.PortalExtension.dll'
-EXECUTE Extension_Insert 'EmailPassword', 'Geckon.Portal.Extensions.Standard.EmailPasswordExtension','Geckon.Portal.Extensions.Standard.dll'
-EXECUTE AuthenticationProvider_Insert 'Email Password', 'F9089905-3134-4A35-B475-9CA8EA9FDC26'
-EXECUTE User_AssociateWithAuthenticationProvider @UserGUID = 'A0B231E9-7D98-4F52-885E-AF4837FAA352', @AuthenticationProviderGUID = 'F9089905-3134-4A35-B475-9CA8EA9FDC26', @UniqueIdentifier = '24ebbdee2640cdec50550a6c4bed6d3ab731342b'
-EXECUTE Module_Insert 'GeoLocator', '<Settings ConnectionString="Data Source=mssql00;Initial Catalog=GeoLocator;User ID=Application;Password=-l:bCU''S\923pc[0"/>', 'Geckon.GeoLocator.dll'
-
-INSERT INTO [Permission]([TableIdentifier],[RightName],[Permission],[Description]) VALUES ('Subscription','Create User',1,'Permissoin to Create new users')
+INSERT INTO FolderType( ID, Name, DateCreated ) VALUES( 1, 'Folder', NOW() );
+INSERT INTO ObjectType( ID, Name ) VALUES( 1, 'Asset' );
+INSERT INTO ObjectFolderType( ID, Name )VALUES( 1, 'Physical' );
+INSERT INTO ObjectFolderType( ID, Name )VALUES( 2, 'Link' );
+INSERT INTO FormatType( ID, Name )VALUES( 1, 'Video' );
+INSERT INTO FormatType( ID, Name )VALUES( 2, 'Audio' );
+INSERT INTO FormatType( ID, Name )VALUES( 3, 'Image' );
+INSERT INTO FormatType( ID, Name )VALUES( 4, 'Other' );
+INSERT INTO FormatCategory( ID, FormatTypeID, Name )VALUES( 1, 1, 'Video Source' );
+INSERT INTO FormatCategory( ID, FormatTypeID, Name )VALUES( 2, 2, 'Audio Source' );
+INSERT INTO FormatCategory( ID, FormatTypeID, Name )VALUES( 3, 3, 'Image Source' );
+INSERT INTO FormatCategory( ID, FormatTypeID, Name )VALUES( 4, 4, 'Other Source' );
+INSERT INTO FormatCategory( ID, FormatTypeID, Name )VALUES( 5, 1, 'Video Preview' );
+INSERT INTO FormatCategory( ID, FormatTypeID, Name )VALUES( 6, 2, 'Audio Preview' );
+INSERT INTO FormatCategory( ID, FormatTypeID, Name )VALUES( 7, 3, 'Image Preview' );
+INSERT INTO FormatCategory( ID, FormatTypeID, Name )VALUES( 8, 4, 'Other Preview' );
+INSERT INTO FormatCategory( ID, FormatTypeID, Name )VALUES( 9, 3, 'Thumbnail' );
+INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType )VALUES( 1, 1, 'Unknown Video', null, 'application/octet-stream');
+INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType )VALUES( 2, 2, 'Unknown Audio', null, 'application/octet-stream');
+INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType )VALUES( 3, 3, 'Unknown Image', null, 'application/octet-stream');
+INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType )VALUES( 4, 4, 'Unknown Other', null, 'application/octet-stream');
+INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType )VALUES( 5, 9, 'PNG', null, 'image/png');
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'ar', 'Arabic' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'bg', 'Bulgarian' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'ca', 'Catalan' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'cz', 'Czech' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'da', 'Danish' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'de', 'German' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'de-ch', 'Swiss-German' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'el', 'Greek' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'en', 'English' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'es', 'Spanish' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'eu', 'Basque' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'fa', 'Persian' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'fi', 'Finish' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'fr', 'French' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'fr-be', 'French(Belgium)' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'fr-ch', 'French (Swiss)' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'fr-lu', 'French (Luxembourg)' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'ga', 'Irish' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'gl', 'Galician' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'hi', 'Hindi' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'hu', 'Hungarian' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'hy', 'Armenian' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'id', 'Indonesian' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'it', 'Italian' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'ja', 'Japanese' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'lv', 'Latvian' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'nl', 'Dutch' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'nl-be', 'Dutch (Belgium)' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'no', 'Norwegian' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'pl', 'Polish' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'pt', 'Portoguese' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'ro', 'Romanian' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'ru', 'Russian' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'sl', 'Slovenian' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'sv', 'Swedish' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'th', 'Thai' );
+INSERT INTO Language( LanguageCode, Name ) VALUES( 'tr', 'Turkish' );
+INSERT INTO ObjectRelationType( ID, Name ) VALUES( 1, 'Contains' );
+INSERT INTO ObjectRelationType( ID, Name ) VALUES( 2, 'Part of' );
