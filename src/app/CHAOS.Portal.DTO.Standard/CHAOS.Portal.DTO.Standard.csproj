@@ -52,6 +52,7 @@
     <Compile Include="ModuleResult.cs" />
     <Compile Include="PortalResult.cs" />
     <Compile Include="Result.cs" />
+    <Compile Include="SystemPermissions.cs" />
     <Compile Include="UUIDResult.cs" />
     <Compile Include="ClientSettings.cs" />
     <Compile Include="Extension.cs" />

@@ -12,7 +12,7 @@ namespace CHAOS.Portal.Modules.Test
         private UserModule UserModule { get; set; }
 
         [SetUp]
-        public void SetUp()
+        public new void SetUp()
         {
             base.SetUp();
 

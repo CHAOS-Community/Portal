@@ -13,7 +13,7 @@ namespace CHAOS.Portal.Modules.Test
         private SubscriptionModule SubscriptionModule { get; set; }
 
         [SetUp]
-        public void SetUp()
+        public new void SetUp()
         {
             base.SetUp();
 
