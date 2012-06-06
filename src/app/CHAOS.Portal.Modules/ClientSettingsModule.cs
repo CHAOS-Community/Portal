@@ -43,5 +43,17 @@ namespace CHAOS.Portal.Modules
         }
 
         #endregion
+        #region Set
+
+        [Datatype("ClientSettings","Set")]
+        public ClientSettings Set( ICallContext callContext, UUID guid )
+        {
+            using( var db = NewPortalEntities )
+            {
+                return db.ClientSettings_Get( guid.ToByteArray() ).ToDTO().First();
+            }
+        }
+
+        #endregion
     }
 }
