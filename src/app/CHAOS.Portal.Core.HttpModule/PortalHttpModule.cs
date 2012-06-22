@@ -41,7 +41,7 @@ namespace CHAOS.Portal.Core.HttpModule
                 {
                     if( context.Application["PortalApplication"] == null )
                     {
-                        var application = new PortalApplication( new Cache.Membase.Membase(), new SolrCoreManager<UUIDResult>() );
+                        var application = new PortalApplication( new Cache.Membase.Membase(), new SolrCoreManager() );
 
                         context.Application["PortalApplication"] = application;
 

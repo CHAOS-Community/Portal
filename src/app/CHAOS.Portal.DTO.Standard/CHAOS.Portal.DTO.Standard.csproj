@@ -47,6 +47,7 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="PagedResult.cs" />
     <Compile Include="ExtensionError.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="ModuleResult.cs" />

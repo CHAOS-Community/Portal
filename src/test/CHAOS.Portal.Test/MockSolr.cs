@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CHAOS.Index;
+using CHAOS.Portal.DTO;
 
 namespace CHAOS.Portal.Test
 {
@@ -10,9 +11,9 @@ namespace CHAOS.Portal.Test
          
         }
 
-        public IPagedResult<IIndexResult> Get(IQuery query)
+        public IIndexResponse<TReturnType> Get<TReturnType>(IQuery query) where TReturnType : IIndexResult, new()
         {
-            return null;
+            throw new System.NotImplementedException();
         }
 
         public void Remove(IQuery query)

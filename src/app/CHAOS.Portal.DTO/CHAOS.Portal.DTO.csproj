@@ -48,6 +48,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="IModuleResult.cs" />
+    <Compile Include="IPagedResult.cs" />
     <Compile Include="IPortalResult.cs" />
     <Compile Include="ResultExtensionMethods.cs" />
     <Compile Include="IResult.cs" />
