@@ -16,7 +16,7 @@ namespace CHAOS.Portal.Core.Bindings.Standard
             if( string.IsNullOrEmpty( query ) || string.IsNullOrEmpty( pageIndex ) || string.IsNullOrEmpty( pageSize ) )
                 return null;
 
-            return new SolrQuery( query, sort, int.Parse( pageIndex ), int.Parse( pageSize ) );
+            return new SolrQuery( query, sort, null, int.Parse( pageIndex ), int.Parse( pageSize ) );
         }
     }
 }
