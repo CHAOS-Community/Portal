@@ -6,14 +6,14 @@ namespace CHAOS.Portal.DTO
     {
         string Fullname { get; }
         long Duration { get; }
-        int Count { get; }
-        int? PageIndex { get; set; }
-        int? TotalPages
+        uint Count { get; }
+        uint? PageIndex { get; set; }
+        uint? TotalPages
         {
             get;
             set;
         }
-        int? TotalCount
+        uint? TotalCount
         {
             get;
             set;

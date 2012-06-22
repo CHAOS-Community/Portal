@@ -21,14 +21,14 @@ namespace CHAOS.Portal.DTO.Standard
 
         [Serialize("Count")]
         [SerializeXML(true)]
-        public int Count
+        public uint Count
         {
-            get { return Results.Count; }
+            get { return (uint) Results.Count; }
         }
 
         [Serialize("TotalCount")]
         [SerializeXML(true)]
-        public int? TotalCount
+        public uint? TotalCount
         {
             get;
             set;
@@ -36,7 +36,7 @@ namespace CHAOS.Portal.DTO.Standard
 
         [Serialize("PageIndex")]
         [SerializeXML(true)]
-        public int? PageIndex
+        public uint? PageIndex
         {
             get;
             set;
@@ -44,7 +44,7 @@ namespace CHAOS.Portal.DTO.Standard
 
         [Serialize("TotalPages")]
         [SerializeXML(true)]
-        public int? TotalPages
+        public uint? TotalPages
         {
             get;
             set;
@@ -63,7 +63,7 @@ namespace CHAOS.Portal.DTO.Standard
         {
         }
 
-        public ModuleResult( string fullname, IEnumerable<IResult> results, int? pageIndex, int? totalPages, int? totalCount )
+        public ModuleResult( string fullname, IEnumerable<IResult> results, uint? pageIndex, uint? totalPages, uint? totalCount )
         {
             Timestamp = new Stopwatch();
             Timestamp.Start();

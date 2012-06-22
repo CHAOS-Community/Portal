@@ -6,13 +6,13 @@ namespace CHAOS.Portal.DTO.Standard
     {
         #region Properties
 
-        public int FoundCount
+        public uint FoundCount
         {
             get;
             set;
         }
 
-        public int StartIndex
+        public uint StartIndex
         {
             get;
             set;
@@ -23,7 +23,7 @@ namespace CHAOS.Portal.DTO.Standard
         #endregion
         #region Construction
 
-        public PagedResult( int foundCount, int startIndex, IEnumerable<TResultType> results )
+        public PagedResult( uint foundCount, uint startIndex, IEnumerable<TResultType> results )
         {
             Results = results;
             FoundCount = foundCount;

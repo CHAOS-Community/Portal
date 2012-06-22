@@ -4,8 +4,8 @@ namespace CHAOS.Portal.DTO
 {
     public interface IPagedResult<out TReturnType>
     {
-        int FoundCount { get; }
-        int StartIndex { get; }
+        uint FoundCount { get; }
+        uint StartIndex { get; }
 
         IEnumerable<TReturnType> Results { get; }
     }
