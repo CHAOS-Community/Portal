@@ -11,16 +11,13 @@ namespace CHAOS.Portal.Core.Bindings.Standard
             var query     = qs.ContainsKey("query") ? qs["query"] : null;
             var facet     = qs.ContainsKey("facet") ? qs["facet"] : null;
             var sort      = qs.ContainsKey("sort")  ? qs["sort"] : null;
-            var pageIndex = qs.ContainsKey("pageIndex") ? qs["pageIndex"] : null;
-            var pageSize  = qs.ContainsKey("pageSize") ? qs["pageSize"] : null;
+            var pageIndex = qs.ContainsKey("pageIndex") && !string.IsNullOrEmpty( qs["pageIndex"] ) ? uint.Parse( qs["pageIndex"] ) : 0;
+            var pageSize  = qs.ContainsKey("pageSize")  && !string.IsNullOrEmpty( qs["pageSize"]  ) ? uint.Parse( qs["pageSize"]  ) : 0;
 
             if( string.IsNullOrEmpty( query ) )
                 query = "*:*";
 
-            if( string.IsNullOrEmpty( pageIndex ) || string.IsNullOrEmpty( pageSize ) )
-                return null;
-
-            return new SolrQuery( query, facet, sort, uint.Parse( pageIndex ), uint.Parse( pageSize ) );
+            return new SolrQuery( query, facet, sort, pageIndex, pageSize );
         }
     }
 }
