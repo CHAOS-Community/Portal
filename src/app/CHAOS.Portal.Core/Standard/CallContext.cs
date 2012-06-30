@@ -57,6 +57,9 @@ namespace CHAOS.Portal.Core.Standard
             }
         }
 
+		/// <summary>
+		/// Get the current session
+		/// </summary>
         public DTO.Standard.Session Session
         {
             get
@@ -79,6 +82,9 @@ namespace CHAOS.Portal.Core.Standard
             }
         }
 
+		/// <summary>
+		/// Get subscriptions associated with the current user
+		/// </summary>
         public IEnumerable<DTO.Standard.SubscriptionInfo> Subscriptions
         {
             get
@@ -114,16 +120,25 @@ namespace CHAOS.Portal.Core.Standard
             }
         }
 
+		/// <summary>
+		/// True if current user is anonymous
+		/// </summary>
         public bool IsAnonymousUser
         {
             get { return Session == null || AnonymousUserGUID.ToString() == Session.UserGUID.ToString(); }
         }
 
+		/// <summary>
+		/// Get the UUID of the anonymous user
+		/// </summary>
         public UUID AnonymousUserGUID
         {
             get { return new UUID( ConfigurationManager.AppSettings["AnonymousUserGUID"] ); }
         }
 
+		/// <summary>
+		/// Get the current Return format
+		/// </summary>
         public ReturnFormat ReturnFormat
         {
             get
@@ -148,6 +163,10 @@ namespace CHAOS.Portal.Core.Standard
         #endregion
         #region Business Logic
 
+		/// <summary>
+		/// Write any results in the portal response to a stream. The format is determined by the ReturnFormat property
+		/// </summary>
+		/// <returns></returns>
         public Stream GetResponseStream()
         {
             switch( ReturnFormat )

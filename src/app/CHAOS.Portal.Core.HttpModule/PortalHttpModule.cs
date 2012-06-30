@@ -49,6 +49,8 @@ namespace CHAOS.Portal.Core.HttpModule
                         LoadModules( application );
                     }
                 }
+
+				AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             }
 
             PortalApplication = (PortalApplication) context.Application["PortalApplication"];
@@ -56,14 +58,24 @@ namespace CHAOS.Portal.Core.HttpModule
             context.BeginRequest += ContextBeginRequest;
         }
 
-        private void LoadModules( PortalApplication application )
+		Assembly CurrentDomain_AssemblyResolve( object sender, ResolveEventArgs args )
+		{
+			if( PortalApplication.LoadedAssemblies.ContainsKey( args.Name ) )
+				return PortalApplication.LoadedAssemblies[ args.Name ];
+			
+			throw new AssemblyNotLoadedException( string.Format( "The assembly {0} is not loaded", args.Name ));
+		}
+
+    	private void LoadModules( PortalApplication application )
         {
             using( var db = new PortalEntities() )
             {
                 // Load modules
                 foreach( string file in System.IO.Directory.GetFiles( string.Format( "{0}\\Modules", application.ServiceDirectory ), "*.dll" ) )
                 {
-                    Assembly assembly = Assembly.LoadFile( file );
+                    var assembly = Assembly.LoadFile( file );
+
+					application.LoadedAssemblies.Add(assembly.FullName, assembly);
 
                     // Get the types and identify the IModules
                     foreach( var type in assembly.GetTypes() )
@@ -120,6 +132,8 @@ namespace CHAOS.Portal.Core.HttpModule
             foreach( string file in System.IO.Directory.GetFiles( string.Format( "{0}\\Extensions", application.ServiceDirectory ), "*.dll" ) )
             {
                 var assembly = Assembly.LoadFile( file );
+
+				application.LoadedAssemblies.Add( assembly.FullName, assembly );
 
                 foreach( var type in assembly.GetTypes() )
                 {

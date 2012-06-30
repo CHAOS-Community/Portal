@@ -22,10 +22,13 @@ namespace CHAOS.Portal.Core.Module
         #endregion
         #region Business Logic
 
+		/// <summary>
+		/// Invokes the methods on the module that match the specifications in the ICallContext
+		/// </summary>
+		/// <param name="callContext"></param>
         public virtual void CallAction( ICallContext callContext )
         {
             // REVIEW: Reflection is slow, cache methods for performance
-            // Call Method(s) matching the Requested Extension and Action
             foreach( var method in GetType().GetMethods() )
             {
                 var attributes  = GetType().GetCustomAttributes( typeof(ModuleAttribute), true );
@@ -74,6 +77,12 @@ namespace CHAOS.Portal.Core.Module
             }
         }
 
+		/// <summary>
+		/// Bind parameters from the callContext to parameters on the parameters.
+		/// </summary>
+		/// <param name="callContext">The ICallContext with the PortalRequest parameters to bind</param>
+		/// <param name="parameters">Specifies the types and order the return obect[] are in</param>
+		/// <returns>An object[] with the bound objects, in the same order as the parameters collection</returns>
         private static object[] BindParameters( ICallContext callContext, ICollection<ParameterInfo> parameters )
         {
             var boundParameters = new object[ parameters.Count ];

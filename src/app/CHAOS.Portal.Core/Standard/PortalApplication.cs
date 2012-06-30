@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using System.Reflection;
 using CHAOS.Index;
 using CHAOS.Portal.Core.Bindings;
 using CHAOS.Portal.Core.Bindings.Standard;
@@ -18,6 +20,7 @@ namespace CHAOS.Portal.Core.Standard
         public IDictionary<Type, IParameterBinding>      Bindings { get; set; }
         public IDictionary<string, IExtension>           LoadedExtensions { get; set; }
         public IDictionary<string, ICollection<IModule>> LoadedModules { get; set; }
+		public IDictionary<string, Assembly>			 LoadedAssemblies { get; set; }
         public ICache                                    Cache { get; set; }
         public IIndexManager                             IndexManager { get; set; }
         public string                                    ServiceDirectory { get; set; }
@@ -30,6 +33,7 @@ namespace CHAOS.Portal.Core.Standard
             Bindings         = new Dictionary<Type, IParameterBinding>();
             LoadedExtensions = new Dictionary<string, IExtension>();
             LoadedModules    = new Dictionary<string, ICollection<IModule>>();
+			LoadedAssemblies = new Dictionary<string, Assembly>();
             Cache            = cache; 
             IndexManager     = indexManager;
             ServiceDirectory = ConfigurationManager.AppSettings["ServiceDirectory"];
@@ -64,6 +68,28 @@ namespace CHAOS.Portal.Core.Standard
         #endregion
         #region Business Logic
 
+		/// <summary>
+		/// Get the loaded instance of a Module
+		/// </summary>
+		/// <typeparam name="TModuleType">The type of module to return</typeparam>
+		/// <returns>The loaded instance of the TModuleType provided</returns>
+		public TModuleType GetModule<TModuleType>() where TModuleType : IModule
+		{
+			foreach( var loadedModule in LoadedModules )
+			{
+				var module = loadedModule.Value.FirstOrDefault( modules => modules is TModuleType );
+
+				if( module != null )
+					return (TModuleType) module;
+			}
+
+			throw new ModuleNotLoadedException( string.Format( "Module ({0}) is not loaded", typeof(TModuleType).FullName ) );
+		}
+
+		/// <summary>
+		/// Process a request to portal. Any underlying extensions or modules will be called based on the callContext parameter
+		/// </summary>
+		/// <param name="callContext">contains the context of the call, what extension and action to call</param>
         public void ProcessRequest( ICallContext callContext )
         {
             IExtension extension;

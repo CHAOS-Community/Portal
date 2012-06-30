@@ -46,6 +46,8 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AssemblyNotLoadedException.cs" />
+    <Compile Include="ExtensionMissingException.cs" />
     <Compile Include="UnsupportedModuleReturnTypeException.cs" />
     <Compile Include="ModuleConfigurationMissingException.cs" />
     <Compile Include="SessionDoesNotExistException.cs" />
@@ -53,7 +55,7 @@
     <Compile Include="InsufficientPermissionsException.cs" />
     <Compile Include="WrongProtocolVersionException.cs" />
     <Compile Include="ParameterBindingMissingException.cs" />
-    <Compile Include="ExtensionMissingException.cs" />
+    <Compile Include="ModuleNotLoadedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
