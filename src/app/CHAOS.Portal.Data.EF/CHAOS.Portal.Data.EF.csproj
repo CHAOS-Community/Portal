@@ -70,26 +70,23 @@
     <ProjectReference Include="..\CHAOS.Portal.DTO.Standard\CHAOS.Portal.DTO.Standard.csproj">
       <Project>{674E8DA7-B635-484B-A11A-270AFE31E7E6}</Project>
       <Name>CHAOS.Portal.DTO.Standard</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CHAOS.Portal.DTO\CHAOS.Portal.DTO.csproj">
       <Project>{C1936050-60FC-49F3-9047-9621AFFBDC8F}</Project>
       <Name>CHAOS.Portal.DTO</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CHAOS">
       <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\EntityFramework.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2,6 +2,7 @@
 using System.IO;
 using CHAOS.Index;
 using CHAOS.Portal.Core.Cache;
+using CHAOS.Portal.Core.Logging;
 using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Core.Standard;
 using CHAOS.Portal.DTO.Standard;
@@ -22,6 +23,7 @@ namespace CHAOS.Portal.Core
         bool                          IsAnonymousUser { get; }
         ICache                        Cache{ get; }
         IIndexManager                 IndexManager { get; }
+		ILog						  Log{get;}
 
         Stream GetResponseStream();
     }

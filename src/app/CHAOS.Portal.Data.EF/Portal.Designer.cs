@@ -306,22 +306,6 @@ namespace CHAOS.Portal.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Log> Log
-        {
-            get
-            {
-                if ((_Log == null))
-                {
-                    _Log = base.CreateObjectSet<Log>("Log");
-                }
-                return _Log;
-            }
-        }
-        private ObjectSet<Log> _Log;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<IndexSettings> IndexSettings
         {
             get
@@ -350,6 +334,22 @@ namespace CHAOS.Portal.Data.EF
             }
         }
         private ObjectSet<Module> _Module;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Log> Log
+        {
+            get
+            {
+                if ((_Log == null))
+                {
+                    _Log = base.CreateObjectSet<Log>("Log");
+                }
+                return _Log;
+            }
+        }
+        private ObjectSet<Log> _Log;
 
         #endregion
 
@@ -468,14 +468,6 @@ namespace CHAOS.Portal.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Log EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToLog(Log log)
-        {
-            base.AddObject("Log", log);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the IndexSettings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToIndexSettings(IndexSettings indexSettings)
@@ -489,6 +481,14 @@ namespace CHAOS.Portal.Data.EF
         public void AddToModule(Module module)
         {
             base.AddObject("Module", module);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Log EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToLog(Log log)
+        {
+            base.AddObject("Log", log);
         }
 
         #endregion
@@ -1840,6 +1840,69 @@ namespace CHAOS.Portal.Data.EF
     
             return base.ExecuteFunction("IndexSettings_Create", iDParameter, moduleIDParameter, settingsParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="level">No Metadata Documentation available.</param>
+        /// <param name="sessionGUID">No Metadata Documentation available.</param>
+        /// <param name="duration">No Metadata Documentation available.</param>
+        /// <param name="message">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Log_Create(global::System.String name, global::System.String level, global::System.Byte[] sessionGUID, Nullable<global::System.Int32> duration, global::System.String message)
+        {
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter levelParameter;
+            if (level != null)
+            {
+                levelParameter = new ObjectParameter("Level", level);
+            }
+            else
+            {
+                levelParameter = new ObjectParameter("Level", typeof(global::System.String));
+            }
+    
+            ObjectParameter sessionGUIDParameter;
+            if (sessionGUID != null)
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+            }
+            else
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter durationParameter;
+            if (duration.HasValue)
+            {
+                durationParameter = new ObjectParameter("Duration", duration);
+            }
+            else
+            {
+                durationParameter = new ObjectParameter("Duration", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter messageParameter;
+            if (message != null)
+            {
+                messageParameter = new ObjectParameter("Message", message);
+            }
+            else
+            {
+                messageParameter = new ObjectParameter("Message", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Log_Create", nameParameter, levelParameter, sessionGUIDParameter, durationParameter, messageParameter);
+        }
 
         #endregion
 
@@ -2575,23 +2638,21 @@ namespace CHAOS.Portal.Data.EF
         /// <summary>
         /// Create a new Log object.
         /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="date">Initial value of the Date property.</param>
-        /// <param name="thread">Initial value of the Thread property.</param>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
         /// <param name="level">Initial value of the Level property.</param>
-        /// <param name="logger">Initial value of the Logger property.</param>
+        /// <param name="duration">Initial value of the Duration property.</param>
         /// <param name="message">Initial value of the Message property.</param>
-        /// <param name="exception">Initial value of the Exception property.</param>
-        public static Log CreateLog(global::System.Int64 id, global::System.DateTime date, global::System.String thread, global::System.String level, global::System.String logger, global::System.String message, global::System.String exception)
+        /// <param name="dateCreated">Initial value of the DateCreated property.</param>
+        public static Log CreateLog(global::System.Int64 id, global::System.String name, global::System.String level, global::System.Int64 duration, global::System.String message, global::System.DateTime dateCreated)
         {
             Log log = new Log();
-            log.Id = id;
-            log.Date = date;
-            log.Thread = thread;
+            log.ID = id;
+            log.Name = name;
             log.Level = level;
-            log.Logger = logger;
+            log.Duration = duration;
             log.Message = message;
-            log.Exception = exception;
+            log.DateCreated = dateCreated;
             return log;
         }
 
@@ -2604,75 +2665,51 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int64 Id
+        public global::System.Int64 ID
         {
             get
             {
-                return _Id;
+                return _ID;
             }
             set
             {
-                if (_Id != value)
+                if (_ID != value)
                 {
-                    OnIdChanging(value);
-                    ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("Id");
-                    OnIdChanged();
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
                 }
             }
         }
-        private global::System.Int64 _Id;
-        partial void OnIdChanging(global::System.Int64 value);
-        partial void OnIdChanged();
+        private global::System.Int64 _ID;
+        partial void OnIDChanging(global::System.Int64 value);
+        partial void OnIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.DateTime Date
+        public global::System.String Name
         {
             get
             {
-                return _Date;
+                return _Name;
             }
             set
             {
-                OnDateChanging(value);
-                ReportPropertyChanging("Date");
-                _Date = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Date");
-                OnDateChanged();
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
             }
         }
-        private global::System.DateTime _Date;
-        partial void OnDateChanging(global::System.DateTime value);
-        partial void OnDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Thread
-        {
-            get
-            {
-                return _Thread;
-            }
-            set
-            {
-                OnThreadChanging(value);
-                ReportPropertyChanging("Thread");
-                _Thread = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Thread");
-                OnThreadChanged();
-            }
-        }
-        private global::System.String _Thread;
-        partial void OnThreadChanging(global::System.String value);
-        partial void OnThreadChanged();
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2701,26 +2738,50 @@ namespace CHAOS.Portal.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String Logger
+        public Nullable<global::System.Guid> SessionGUID
         {
             get
             {
-                return _Logger;
+                return _SessionGUID;
             }
             set
             {
-                OnLoggerChanging(value);
-                ReportPropertyChanging("Logger");
-                _Logger = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Logger");
-                OnLoggerChanged();
+                OnSessionGUIDChanging(value);
+                ReportPropertyChanging("SessionGUID");
+                _SessionGUID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SessionGUID");
+                OnSessionGUIDChanged();
             }
         }
-        private global::System.String _Logger;
-        partial void OnLoggerChanging(global::System.String value);
-        partial void OnLoggerChanged();
+        private Nullable<global::System.Guid> _SessionGUID;
+        partial void OnSessionGUIDChanging(Nullable<global::System.Guid> value);
+        partial void OnSessionGUIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Duration
+        {
+            get
+            {
+                return _Duration;
+            }
+            set
+            {
+                OnDurationChanging(value);
+                ReportPropertyChanging("Duration");
+                _Duration = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Duration");
+                OnDurationChanged();
+            }
+        }
+        private global::System.Int64 _Duration;
+        partial void OnDurationChanging(global::System.Int64 value);
+        partial void OnDurationChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2751,24 +2812,24 @@ namespace CHAOS.Portal.Data.EF
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Exception
+        public global::System.DateTime DateCreated
         {
             get
             {
-                return _Exception;
+                return _DateCreated;
             }
             set
             {
-                OnExceptionChanging(value);
-                ReportPropertyChanging("Exception");
-                _Exception = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Exception");
-                OnExceptionChanged();
+                OnDateCreatedChanging(value);
+                ReportPropertyChanging("DateCreated");
+                _DateCreated = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateCreated");
+                OnDateCreatedChanged();
             }
         }
-        private global::System.String _Exception;
-        partial void OnExceptionChanging(global::System.String value);
-        partial void OnExceptionChanged();
+        private global::System.DateTime _DateCreated;
+        partial void OnDateCreatedChanging(global::System.DateTime value);
+        partial void OnDateCreatedChanged();
 
         #endregion
 

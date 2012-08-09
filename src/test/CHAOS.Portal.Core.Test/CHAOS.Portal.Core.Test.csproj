@@ -47,6 +47,7 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="LogTest.cs" />
     <Compile Include="MockExtension.cs" />
     <Compile Include="MockModule.cs" />
     <Compile Include="PortalApplicationTest.cs" />
@@ -54,13 +55,15 @@
     <Compile Include="ParameterBindingsTest.cs" />
     <Compile Include="StringResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MockLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CHAOS">
       <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.4.3.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\tools\NUnit-2.6.0.12051\bin\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>

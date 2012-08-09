@@ -7,6 +7,8 @@ using System.Text;
 using System.Xml.Linq;
 using CHAOS.Index;
 using CHAOS.Portal.Core.Cache;
+using CHAOS.Portal.Core.Logging;
+using CHAOS.Portal.Core.Logging.Database;
 using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Data.EF;
 using CHAOS.Portal.Exception;
@@ -32,6 +34,7 @@ namespace CHAOS.Portal.Core.Standard
         public IPortalResponse   PortalResponse { get; set; }
         public ICache            Cache { get; set; }
         public IIndexManager     IndexManager { get; set; }
+		public ILog			     Log { get; protected set; }
 
         /// <summary>
         /// Returns the current user, the user is cached and will not be updated during the callContexts life.
@@ -158,6 +161,7 @@ namespace CHAOS.Portal.Core.Standard
 
             Cache        = portalApplication.Cache;
             IndexManager = portalApplication.IndexManager;
+			Log          = new DatabaseLogger( PortalRequest.Extension, Session.GUID, LogLevel.Error ); // TODO: LogLevel should be set in config
         }
 
         #endregion

@@ -120,15 +120,15 @@
         </EntityType>
         <EntityType Name="Log">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="Thread" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="ID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
           <Property Name="Level" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="Logger" Type="varchar" Nullable="false" MaxLength="255" />
-          <Property Name="Message" Type="varchar" Nullable="false" MaxLength="4000" />
-          <Property Name="Exception" Type="varchar" Nullable="false" MaxLength="2000" />
+          <Property Name="SessionGUID" Type="guid" />
+          <Property Name="Duration" Type="uint" Nullable="false" />
+          <Property Name="Message" Type="text" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Module">
           <Key>
@@ -430,6 +430,13 @@
         <Function Name="IndexSettings_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
           <Parameter Name="ModuleID" Type="int" Mode="In" />
         </Function>
+        <Function Name="Log_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Level" Type="varchar" Mode="In" />
+          <Parameter Name="SessionGUID" Type="binary" Mode="In" />
+          <Parameter Name="Duration" Type="int" Mode="In" />
+          <Parameter Name="Message" Type="text" Mode="In" />
+        </Function>
         <Function Name="Module_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
           <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
@@ -699,7 +706,6 @@
           <FunctionImport Name="Ticket_Get" EntitySet="Ticket" ReturnType="Collection(PortalModel.Ticket)">
           <Parameter Name="GUID" Mode="In" Type="Binary" />
           </FunctionImport>
-          <EntitySet Name="Log" EntityType="PortalModel.Log" />
           <EntitySet Name="IndexSettings" EntityType="PortalModel.IndexSettings" />
           <EntitySet Name="Module" EntityType="PortalModel.Module" />
           <AssociationSet Name="FK_IndexSettings_ModuleID_Module_ID" Association="PortalModel.FK_IndexSettings_ModuleID_Module_ID">
@@ -720,15 +726,23 @@
             <Parameter Name="ModuleID" Mode="In" Type="Int32" />
             <Parameter Name="Settings" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Log" EntityType="PortalModel.Log" />
+          <FunctionImport Name="Log_Create" ReturnType="Collection(Int32)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Level" Mode="In" Type="String" />
+            <Parameter Name="SessionGUID" Mode="In" Type="Binary" />
+            <Parameter Name="Duration" Mode="In" Type="Int32" />
+            <Parameter Name="Message" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="ClientSettings">
           <Key>
             <PropertyRef Name="GUID" />
           </Key>
           <Property Name="GUID" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="Settings" Type="String" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="Settings" Type="String" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="UserSettings" Relationship="PortalModel.FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID" FromRole="ClientSettings" ToRole="UserSettings" />
         </EntityType>
         <EntityType Name="Session">
@@ -737,8 +751,8 @@
           </Key>
           <Property Name="GUID" Type="Guid" Nullable="false" />
           <Property Name="UserGUID" Type="Guid" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
-          <Property Name="DateModified" Type="DateTime" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
           <NavigationProperty Name="User" Relationship="PortalModel.FK_Session_UserGUID_User_GUID" FromRole="Session" ToRole="User" />
         </EntityType>
         <EntityType Name="Subscription">
@@ -746,8 +760,8 @@
             <PropertyRef Name="GUID" />
           </Key>
           <Property Name="GUID" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Subscription_User_Join" Relationship="PortalModel.FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID" FromRole="Subscription" ToRole="Subscription_User_Join" />
         </EntityType>
         <EntityType Name="Ticket">
@@ -756,10 +770,10 @@
           </Key>
           <Property Name="GUID" Type="Guid" Nullable="false" />
           <Property Name="TicketTypeID" Type="Int64" Nullable="false" />
-          <Property Name="XML" Type="String" />
-          <Property Name="Callback" Type="String" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
-          <Property Name="DateUsed" Type="DateTime" />
+          <Property Name="XML" Type="String" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Name="Callback" Type="String" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUsed" Type="DateTime" Precision="3" />
           <NavigationProperty Name="TicketType" Relationship="PortalModel.FK_Ticket_TicketTypeID_TicketType_ID" FromRole="Ticket" ToRole="TicketType" />
         </EntityType>
         <EntityType Name="TicketType">
@@ -767,7 +781,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Ticket" Relationship="PortalModel.FK_Ticket_TicketTypeID_TicketType_ID" FromRole="TicketType" ToRole="Ticket" />
         </EntityType>
         <EntityType Name="User">
@@ -775,8 +789,8 @@
             <PropertyRef Name="GUID" />
           </Key>
           <Property Name="GUID" Type="Guid" Nullable="false" />
-          <Property Name="Email" Type="String" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="1024" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Session" Relationship="PortalModel.FK_Session_UserGUID_User_GUID" FromRole="User" ToRole="Session" />
           <NavigationProperty Name="UserSettings" Relationship="PortalModel.FK_UserSettings_UserGUID_User_GUID" FromRole="User" ToRole="UserSettings" />
           <NavigationProperty Name="Group_User_Join" Relationship="PortalModel.FK_Group_User_Join_UserGUID_User_GUID" FromRole="User" ToRole="Group_User_Join" />
@@ -789,8 +803,8 @@
           </Key>
           <Property Name="ClientSettingsGUID" Type="Guid" Nullable="false" />
           <Property Name="UserGUID" Type="Guid" Nullable="false" />
-          <Property Name="Settings" Type="String" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="Settings" Type="String" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ClientSettings" Relationship="PortalModel.FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID" FromRole="UserSettings" ToRole="ClientSettings" />
           <NavigationProperty Name="User" Relationship="PortalModel.FK_UserSettings_UserGUID_User_GUID" FromRole="UserSettings" ToRole="User" />
         </EntityType>
@@ -802,8 +816,8 @@
           </Key>
           <Property Name="SessionGUID" Type="Guid" Nullable="false" />
           <Property Name="UserGUID" Type="Guid" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
-          <Property Name="DateModified" Type="DateTime" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="MinutesSinceRenewal" Type="Int64" />
         </EntityType>
         <Association Name="FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID">
@@ -862,7 +876,7 @@
           <Property Type="Guid" Name="GroupGUID" Nullable="false" />
           <Property Type="Guid" Name="UserGUID" Nullable="false" />
           <Property Type="Int64" Name="Permission" Nullable="false" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <NavigationProperty Name="User" Relationship="PortalModel.FK_Group_User_Join_UserGUID_User_GUID" FromRole="Group_User_Join" ToRole="User" />
           <NavigationProperty Name="Group" Relationship="PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID" FromRole="Group_User_Join" ToRole="Group" />
         </EntityType>
@@ -871,10 +885,10 @@
             <PropertyRef Name="TableIdentifier" />
             <PropertyRef Name="Permission1" />
           </Key>
-          <Property Type="String" Name="TableIdentifier" Nullable="false" />
+          <Property Type="String" Name="TableIdentifier" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Type="Int64" Name="Permission1" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Description" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="Description" MaxLength="1024" Unicode="false" FixedLength="false" />
         </EntityType>
         <EntityType Name="Subscription_User_Join">
           <Key>
@@ -884,7 +898,7 @@
           <Property Type="Guid" Name="SubscriptionGUID" Nullable="false" />
           <Property Type="Guid" Name="UserGUID" Nullable="false" />
           <Property Type="Int64" Name="Permission" Nullable="false" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <NavigationProperty Name="Subscription" Relationship="PortalModel.FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID" FromRole="Subscription_User_Join" ToRole="Subscription" />
           <NavigationProperty Name="User" Relationship="PortalModel.FK_Subscription_User_Join_UserGUID_User_GUID" FromRole="Subscription_User_Join" ToRole="User" />
         </EntityType>
@@ -895,10 +909,10 @@
             <PropertyRef Name="DateCreated" />
           </Key>
           <Property Type="Guid" Name="GUID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Type="Guid" Name="UserGUID" />
           <Property Type="Int64" Name="Permission" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_Group_User_Join_UserGUID_User_GUID">
           <End Type="PortalModel.User" Role="User" Multiplicity="1" />
@@ -942,8 +956,8 @@
           </Key>
           <Property Type="Guid" Name="GUID" Nullable="false" />
           <Property Type="Int64" Name="SystemPermission" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <NavigationProperty Name="Group_User_Join" Relationship="PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID" FromRole="Group" ToRole="Group_User_Join" />
         </EntityType>
         <Association Name="FK_Group_User_Join_GroupGUID_Group_GUID">
@@ -966,21 +980,9 @@
           <Property Type="Guid" Name="GUID" Nullable="false" />
           <Property Type="Guid" Name="SessionGUID" />
           <Property Type="Int64" Name="SystemPermission" />
-          <Property Type="String" Name="Email" Nullable="false" />
-          <Property Type="DateTime" Name="DateModified" />
-          <Property Type="DateTime" Name="SessionDateCreated" />
-        </EntityType>
-        <EntityType Name="Log">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="DateTime" Name="Date" Nullable="false" />
-          <Property Type="String" Name="Thread" Nullable="false" />
-          <Property Type="String" Name="Level" Nullable="false" />
-          <Property Type="String" Name="Logger" Nullable="false" />
-          <Property Type="String" Name="Message" Nullable="false" />
-          <Property Type="String" Name="Exception" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="1024" Unicode="false" FixedLength="false" />
+          <Property Type="DateTime" Name="DateModified" Precision="3" />
+          <Property Type="DateTime" Name="SessionDateCreated" Precision="3" />
         </EntityType>
         <EntityType Name="IndexSettings">
           <Key>
@@ -988,8 +990,8 @@
           </Key>
           <Property Type="Int64" Name="ID" Nullable="false" />
           <Property Type="Int64" Name="ModuleID" Nullable="false" />
-          <Property Type="String" Name="Settings" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="String" Name="Settings" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <NavigationProperty Name="Module" Relationship="PortalModel.FK_IndexSettings_ModuleID_Module_ID" FromRole="IndexSettings" ToRole="Module" />
         </EntityType>
         <EntityType Name="Module">
@@ -997,9 +999,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int64" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Configuration" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="Configuration" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <NavigationProperty Name="IndexSettings" Relationship="PortalModel.FK_IndexSettings_ModuleID_Module_ID" FromRole="Module" ToRole="IndexSettings" />
         </EntityType>
         <Association Name="FK_IndexSettings_ModuleID_Module_ID">
@@ -1014,6 +1016,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="Level" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Type="Guid" Name="SessionGUID" />
+          <Property Type="Int64" Name="Duration" Nullable="false" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1158,19 +1172,6 @@
           <FunctionImportMapping FunctionImportName="Ticket_Create" FunctionName="PortalModel.Store.Ticket_Create" />
           <FunctionImportMapping FunctionImportName="Ticket_Use" FunctionName="PortalModel.Store.Ticket_Use" />
           <FunctionImportMapping FunctionImportName="Ticket_Get" FunctionName="PortalModel.Store.Ticket_Get" />
-          <EntitySetMapping Name="Log">
-            <EntityTypeMapping TypeName="PortalModel.Log">
-              <MappingFragment StoreEntitySet="Log">
-                <ScalarProperty Name="Exception" ColumnName="Exception" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="Logger" ColumnName="Logger" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-                <ScalarProperty Name="Thread" ColumnName="Thread" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="IndexSettings">
             <EntityTypeMapping TypeName="PortalModel.IndexSettings">
               <MappingFragment StoreEntitySet="IndexSettings">
@@ -1194,6 +1195,20 @@
           <FunctionImportMapping FunctionImportName="Module_Get" FunctionName="PortalModel.Store.Module_Get" />
           <FunctionImportMapping FunctionImportName="Module_Create" FunctionName="PortalModel.Store.Module_Create" />
           <FunctionImportMapping FunctionImportName="IndexSettings_Create" FunctionName="PortalModel.Store.IndexSettings_Create" />
+          <EntitySetMapping Name="Log">
+            <EntityTypeMapping TypeName="PortalModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="SessionGUID" ColumnName="SessionGUID" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Log_Create" FunctionName="PortalModel.Store.Log_Create" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1273,7 +1288,6 @@
           <ConnectorPoint PointX="7.5" PointY="4.15625" />
         </AssociationConnector>
         <EntityTypeShape EntityType="PortalModel.UserInfo" Width="1.5" PointX="11.375" PointY="4.75" Height="2.1725878906250031" />
-        <EntityTypeShape EntityType="PortalModel.Log" Width="1.5" PointX="0.75" PointY="12.75" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="PortalModel.IndexSettings" Width="1.5" PointX="5.375" PointY="9.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="PortalModel.Module" Width="1.5" PointX="3.125" PointY="12.75" Height="1.9802864583333388" />
         <AssociationConnector Association="PortalModel.FK_IndexSettings_ModuleID_Module_ID" >
@@ -1281,6 +1295,7 @@
           <ConnectorPoint PointX="6.125" PointY="13.740143229166669" />
           <ConnectorPoint PointX="6.125" PointY="11.730286458333332" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="PortalModel.Log" Width="1.5" PointX="4.8490248866607555" PointY="30.838613390381735" />
       </Diagram>
     </Diagrams>
   </Designer>
