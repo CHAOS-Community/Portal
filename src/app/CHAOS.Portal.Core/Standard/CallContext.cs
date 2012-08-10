@@ -70,7 +70,7 @@ namespace CHAOS.Portal.Core.Standard
                 if( _session == null )
                 {
                     if( !PortalRequest.Parameters.ContainsKey( "sessionGUID" ) )
-                        return null;
+                        throw new NullReferenceException( "SessionGUID can't be null" );
 
                     using( var db = new PortalEntities() )
                     {
@@ -161,7 +161,7 @@ namespace CHAOS.Portal.Core.Standard
 
             Cache        = portalApplication.Cache;
             IndexManager = portalApplication.IndexManager;
-			Log          = new DatabaseLogger( PortalRequest.Extension, Session == null ? null : Session.GUID, LogLevel.Debug ); // TODO: LogLevel should be set in config
+			Log          = new DatabaseLogger( PortalRequest.Extension, Session.GUID, LogLevel.Error ); // TODO: LogLevel should be set in config
         }
 
         #endregion
