@@ -91,9 +91,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY $(TargetName).dll $(SolutionDir)bin\Portal\$(TargetName).dll
-
-COPY $(TargetName).pdb $(SolutionDir)bin\Portal\$(TargetName).pdb</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

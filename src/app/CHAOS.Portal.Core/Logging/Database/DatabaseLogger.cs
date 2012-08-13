@@ -15,7 +15,7 @@ namespace CHAOS.Portal.Core.Logging.Database
 
 		public DatabaseLogger( string name, UUID sessionGUID, LogLevel logLevel = LogLevel.Debug ) : base(name, sessionGUID, logLevel)
 		{
-			
+
 		}
 
 		#endregion
@@ -23,10 +23,14 @@ namespace CHAOS.Portal.Core.Logging.Database
 
 		public override void Commit( uint duration )
 		{
-			using( var db = new PortalEntities() )
-			{
-				db.Log_Create( Name, LogLevel.ToString().ToUpper(), SessionGUID.ToByteArray(), (int?) duration, LogBuilder.ToString() );
-			}
+			new System.Threading.Thread( () =>
+				{
+					using( var db = new PortalEntities() )
+					{
+						db.Log_Create(Name, LogLevel.ToString().ToUpper(), SessionGUID == null ? null : SessionGUID.ToByteArray(),
+						              (int?) duration, LogBuilder.ToString());
+					}
+				}).Start();
 		}
 
 		#endregion

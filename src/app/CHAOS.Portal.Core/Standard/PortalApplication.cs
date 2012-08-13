@@ -92,14 +92,14 @@ namespace CHAOS.Portal.Core.Standard
 		/// <param name="callContext">contains the context of the call, what extension and action to call</param>
         public void ProcessRequest( ICallContext callContext )
         {
-            IExtension extension;
+			callContext.Log.Info( "Processing Request" );
 
-            if( LoadedExtensions.ContainsKey( callContext.PortalRequest.Extension ) )
-                extension = GetExtension( callContext.PortalRequest.Extension );
-            else
-                extension = new DefaultExtension();
+            var extension = LoadedExtensions.ContainsKey( callContext.PortalRequest.Extension ) ? GetExtension( callContext.PortalRequest.Extension ) : new DefaultExtension();
 
             extension.CallAction( callContext );
+
+			callContext.Log.Info( "Done Processing Request" );
+			callContext.Log.Commit( (uint) callContext.PortalResponse.PortalResult.Duration );
         }
 
         protected virtual IExtension GetExtension( string extension )

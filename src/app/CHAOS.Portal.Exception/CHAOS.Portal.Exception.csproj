@@ -60,9 +60,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY CHAOS.Portal.Exception.dll $(SolutionDir)bin\Portal\CHAOS.Portal.Exception.dll
-
-COPY CHAOS.Portal.Exception.pdb $(SolutionDir)bin\Portal\CHAOS.Portal.Exception.pdb</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
