@@ -161,7 +161,7 @@ namespace CHAOS.Portal.Core.Standard
 
             Cache        = portalApplication.Cache;
             IndexManager = portalApplication.IndexManager;
-			Log          = new DatabaseLogger( PortalRequest.Extension, Session != null ? Session.GUID : null, LogLevel.Debug ); // TODO: LogLevel should be set in config
+			Log          = new DatabaseLogger( string.Format("{0}/{1}", PortalRequest.Extension, PortalRequest.Action ), Session != null ? Session.GUID : null, LogLevel.Debug ); // TODO: LogLevel should be set in config
         }
 
         #endregion

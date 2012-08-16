@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using CHAOS.Portal.Data.EF;
 
 namespace CHAOS.Portal.Core.Logging.Database
@@ -23,14 +24,17 @@ namespace CHAOS.Portal.Core.Logging.Database
 
 		public override void Commit( uint duration )
 		{
+			var t =
 			new System.Threading.Thread( () =>
 				{
 					using( var db = new PortalEntities() )
 					{
 						db.Log_Create(Name, LogLevel.ToString().ToUpper(), SessionGUID == null ? null : SessionGUID.ToByteArray(),
-						              (int?) duration, LogBuilder.ToString());
+						              (int?) duration, LogBuilder.ToString()).First();
 					}
-				}).Start();
+				});
+
+			t.Start();
 		}
 
 		#endregion
