@@ -25,6 +25,7 @@ namespace CHAOS.Portal.Core.Standard
         private DTO.Standard.UserInfo                      _user;
         private IEnumerable<DTO.Standard.SubscriptionInfo> _subscriptions;
         private IEnumerable<DTO.Standard.Group>            _group;
+		private LogLevel?								   _logLevel;
 
         #endregion
         #region Properties
@@ -139,6 +140,21 @@ namespace CHAOS.Portal.Core.Standard
             }
         }
 
+	    public LogLevel LogLevel
+	    {
+		    get
+		    {
+				if( !_logLevel.HasValue )
+				{
+					var logLevel = ConfigurationManager.AppSettings["LOG_LEVEL"];
+
+					_logLevel = (LogLevel) Enum.Parse( typeof(LogLevel), logLevel ?? "Info" );
+				}
+
+			    return _logLevel.Value;
+		    }
+	    }
+
         #endregion
         #region Constructors
 
@@ -150,7 +166,7 @@ namespace CHAOS.Portal.Core.Standard
 
             Cache        = portalApplication.Cache;
             IndexManager = portalApplication.IndexManager;
-			Log          = new DatabaseLogger( string.Format("{0}/{1}", PortalRequest.Extension, PortalRequest.Action ), GetSessionFromDatabase() != null ? GetSessionFromDatabase().GUID : null, LogLevel.Debug ); // TODO: LogLevel should be set in config
+			Log          = new DatabaseLogger( string.Format("{0}/{1}", PortalRequest.Extension, PortalRequest.Action ), GetSessionFromDatabase() != null ? GetSessionFromDatabase().GUID : null, LogLevel ); // TODO: LogLevel should be set in config
         }
 
         #endregion
@@ -165,7 +181,7 @@ namespace CHAOS.Portal.Core.Standard
             switch( ReturnFormat )
             {
                 case ReturnFormat.XML:
-                    XDocument xdoc = SerializerFactory.Get<XDocument>().Serialize(PortalResponse.PortalResult, false);
+                    var xdoc = SerializerFactory.Get<XDocument>().Serialize(PortalResponse.PortalResult, false);
                     xdoc.Declaration = new XDeclaration( "1.0", "UTF-16", "yes" );
 
                     return new MemoryStream( Encoding.Unicode.GetBytes( xdoc.Declaration + xdoc.ToString(SaveOptions.DisableFormatting) ) );

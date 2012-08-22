@@ -24,6 +24,9 @@ namespace CHAOS.Portal.Core.Logging.Database
 
 		public override void Commit( uint duration )
 		{
+			if( LogBuilder.Length == 0 )
+				return;
+
 			var t =
 			new System.Threading.Thread( () =>
 				{

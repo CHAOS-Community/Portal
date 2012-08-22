@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using CHAOS.Index;
 using CHAOS.Portal.DTO;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;

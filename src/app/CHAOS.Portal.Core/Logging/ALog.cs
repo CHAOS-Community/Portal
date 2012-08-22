@@ -6,6 +6,9 @@ namespace CHAOS.Portal.Core.Logging
 	{
 		#region Fields
 
+		private const string LOG_FORMAT_STRING       = "{0,19} [{1}] {2}\n";
+		private const string EXCEPTION_FORMAT_STRING = "\tMessage: {0}\n\tStacktrace: {1}\n";
+
 		#endregion
 		#region Properties
 
@@ -15,9 +18,6 @@ namespace CHAOS.Portal.Core.Logging
 		public UUID SessionGUID { get; set; }
 
 		protected StringBuilder LogBuilder { get; set; }
-
-		private const string LOG_FORMAT_STRING       = "{0,19} [{1,5}] {2}\n";
-		private const string EXCEPTION_FORMAT_STRING = "\tMessage: {0}\nStacktrace: {1}\n";
 
 		#endregion
 		#region Constructors
@@ -38,7 +38,7 @@ namespace CHAOS.Portal.Core.Logging
 			if( logLevel < LogLevel )
 				return;
 
-			LogBuilder.AppendFormat( LOG_FORMAT_STRING, System.DateTime.Now.ToString( "yyyy-MM-dd'T'hh:mm:ss" ), logLevel.ToString().ToUpper(), message );
+			LogBuilder.AppendFormat( LOG_FORMAT_STRING, System.DateTime.Now.ToString( "o" ), logLevel.ToString().ToUpper(), message );
 
 			for (; e != null; e = e.InnerException)
 				LogBuilder.AppendFormat( EXCEPTION_FORMAT_STRING, e.Message, e.InnerException );
