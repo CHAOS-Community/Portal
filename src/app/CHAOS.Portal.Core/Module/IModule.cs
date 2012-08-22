@@ -3,6 +3,6 @@
     public interface IModule
     {
         void Initialize( string configuration );
-        void CallAction( ICallContext callContext );
+        bool CallAction( ICallContext callContext );
     }
 }

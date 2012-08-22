@@ -26,8 +26,10 @@ namespace CHAOS.Portal.Core.Module
 		/// Invokes the methods on the module that match the specifications in the ICallContext
 		/// </summary>
 		/// <param name="callContext"></param>
-        public virtual void CallAction( ICallContext callContext )
-        {
+        public virtual bool CallAction( ICallContext callContext )
+		{
+			var wasActionCalled = false;
+
             // REVIEW: Reflection is slow, cache methods for performance
             foreach( var method in GetType().GetMethods() )
             {
@@ -42,6 +44,8 @@ namespace CHAOS.Portal.Core.Module
                         if( datatypeAttribute.ExtensionName != callContext.PortalRequest.Extension ||
                             datatypeAttribute.ActionName    != callContext.PortalRequest.Action ) 
                             continue;
+
+						wasActionCalled = true;
 
                         var parameters  = BindParameters( callContext, method.GetParameters() );
                         var result      = method.Invoke( this, parameters );
@@ -62,7 +66,7 @@ namespace CHAOS.Portal.Core.Module
                                 }
                                 else
                                     throw new UnsupportedModuleReturnTypeException( "Only a return type of IResult, IEnumerable<IResult> or PagedResult<IResult> is supported" );
-                    }
+					}
                 }
                 catch( TargetInvocationException e )
                 {
@@ -75,6 +79,8 @@ namespace CHAOS.Portal.Core.Module
                     modelResult.AddResult( new Error( e ) );
                 }
             }
+
+			return wasActionCalled;
         }
 
 		/// <summary>

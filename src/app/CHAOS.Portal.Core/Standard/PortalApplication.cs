@@ -9,6 +9,7 @@ using CHAOS.Portal.Core.Bindings.Standard;
 using CHAOS.Portal.Core.Cache;
 using CHAOS.Portal.Core.Extension;
 using CHAOS.Portal.Core.Module;
+using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
 
 namespace CHAOS.Portal.Core.Standard
@@ -92,13 +93,22 @@ namespace CHAOS.Portal.Core.Standard
 		/// <param name="callContext">contains the context of the call, what extension and action to call</param>
         public void ProcessRequest( ICallContext callContext )
         {
-			callContext.Log.Info( "Processing Request" );
+			try
+			{
+				callContext.Log.Info("Processing Request");
 
-            var extension = LoadedExtensions.ContainsKey( callContext.PortalRequest.Extension ) ? GetExtension( callContext.PortalRequest.Extension ) : new DefaultExtension();
+				var extension = LoadedExtensions.ContainsKey( callContext.PortalRequest.Extension ) ? GetExtension( callContext.PortalRequest.Extension ) : new DefaultExtension();
 
-            extension.CallAction( callContext );
+				extension.CallAction( callContext );
 
-			callContext.Log.Info( "Done Processing Request" );
+				callContext.Log.Info("Done Processing Request");
+			}
+			catch( System.Exception e )
+			{
+				callContext.Log.Fatal( "ProcessRequest() - Unhandeled exception occured during", e );
+				callContext.PortalResponse.PortalResult.GetModule("Portal").AddResult( new Error( e ) );
+			}
+
 			callContext.Log.Commit( (uint) callContext.PortalResponse.PortalResult.Duration );
         }
 

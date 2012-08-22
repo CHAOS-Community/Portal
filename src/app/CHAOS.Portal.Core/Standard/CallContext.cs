@@ -67,21 +67,10 @@ namespace CHAOS.Portal.Core.Standard
         {
             get
             {
-                if( _session == null )
-                {
-                    if( !PortalRequest.Parameters.ContainsKey( "sessionGUID" ) )
-                        return null;
+				if( GetSessionFromDatabase() == null)
+					throw new SessionDoesNotExistException( "SessionGUID is invalid or has expired" );
 
-                    using( var db = new PortalEntities() )
-                    {
-                        _session = db.Session_Get( new UUID( PortalRequest.Parameters[ "sessionGUID" ] ).ToByteArray(), null ).ToDTO().FirstOrDefault();
-
-                        if( _session == null )
-                            throw new SessionDoesNotExistException( "Session has expired" );
-                    }
-                }
-
-                return _session;
+				return _session;
             }
         }
 
@@ -161,7 +150,7 @@ namespace CHAOS.Portal.Core.Standard
 
             Cache        = portalApplication.Cache;
             IndexManager = portalApplication.IndexManager;
-			Log          = new DatabaseLogger( string.Format("{0}/{1}", PortalRequest.Extension, PortalRequest.Action ), Session != null ? Session.GUID : null, LogLevel.Debug ); // TODO: LogLevel should be set in config
+			Log          = new DatabaseLogger( string.Format("{0}/{1}", PortalRequest.Extension, PortalRequest.Action ), GetSessionFromDatabase() != null ? GetSessionFromDatabase().GUID : null, LogLevel.Debug ); // TODO: LogLevel should be set in config
         }
 
         #endregion
@@ -188,6 +177,25 @@ namespace CHAOS.Portal.Core.Standard
                     throw new NotImplementedException("Format is unknown");
             }
         }
+
+		public DTO.Standard.Session GetSessionFromDatabase()
+		{
+			if( _session == null )
+            {
+                if( !PortalRequest.Parameters.ContainsKey( "sessionGUID" ) )
+                    return null;
+
+                using( var db = new PortalEntities() )
+                {
+                    _session = db.Session_Get( new UUID( PortalRequest.Parameters[ "sessionGUID" ] ).ToByteArray(), null ).ToDTO().FirstOrDefault();
+
+					if( _session == null )
+						return null;
+                }
+            }
+
+			return _session;
+		}
 
         #endregion
     }

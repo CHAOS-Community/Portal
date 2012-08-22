@@ -15,12 +15,17 @@ namespace CHAOS.Portal.Core.Extension
             if( !callContext.PortalApplication.LoadedModules.ContainsKey( callContext.PortalRequest.Extension ) )
                 throw new ExtensionMissingException( "The requested Extension wasn't found in any loaded assembly" );
 
+	        var wasActionCalled = false;
+
             // TODO: Make module execution parallel
-            // TODO: Throw error if no modules are called
             foreach( var module in callContext.PortalApplication.LoadedModules[ callContext.PortalRequest.Extension ] )
             {
-                module.CallAction( callContext );
+                if( module.CallAction( callContext ) )
+	                wasActionCalled = true;
             }
+
+			if( !wasActionCalled )
+				throw new ActionMissingException( "The requested Action wasn't found" );
         }
 
         #endregion

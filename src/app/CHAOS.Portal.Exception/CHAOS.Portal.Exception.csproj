@@ -47,6 +47,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyNotLoadedException.cs" />
+    <Compile Include="ActionMissingException.cs" />
     <Compile Include="ExtensionMissingException.cs" />
     <Compile Include="UnsupportedModuleReturnTypeException.cs" />
     <Compile Include="ModuleConfigurationMissingException.cs" />
