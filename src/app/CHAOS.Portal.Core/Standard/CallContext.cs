@@ -19,7 +19,7 @@ namespace CHAOS.Portal.Core.Standard
 {
     public class CallContext : ICallContext
     {
-        #region Fields
+       #region Fields
 
         private DTO.Standard.Session                       _session;
         private DTO.Standard.UserInfo                      _user;
@@ -27,8 +27,10 @@ namespace CHAOS.Portal.Core.Standard
         private IEnumerable<DTO.Standard.Group>            _group;
 		private LogLevel?								   _logLevel;
 
+	    private const string SESSIONGUID_PARAMETER_NAME = "sessionGUID";
+
         #endregion
-        #region Properties
+       #region Properties
 
         public PortalApplication PortalApplication { get; set; }
         public IPortalRequest    PortalRequest { get; set; }
@@ -118,7 +120,7 @@ namespace CHAOS.Portal.Core.Standard
 		/// </summary>
         public bool IsAnonymousUser
         {
-            get { return Session == null || AnonymousUserGUID.ToString() == Session.UserGUID.ToString(); }
+            get { return GetSessionFromDatabase() == null || AnonymousUserGUID.ToString() == Session.UserGUID.ToString(); }
         }
 
 		/// <summary>
@@ -156,7 +158,7 @@ namespace CHAOS.Portal.Core.Standard
 	    }
 
         #endregion
-        #region Constructors
+       #region Constructors
 
         public CallContext( PortalApplication portalApplication, IPortalRequest portalRequest, IPortalResponse portalResponse )
         {
@@ -194,16 +196,20 @@ namespace CHAOS.Portal.Core.Standard
             }
         }
 
+		/// <summary>
+		/// Gets the current session from the database
+		/// </summary>
+		/// <returns>The current session from the database, or null if sessionGUID is not specified</returns>
 		public DTO.Standard.Session GetSessionFromDatabase()
 		{
 			if( _session == null )
             {
-                if( !PortalRequest.Parameters.ContainsKey( "sessionGUID" ) )
+                if( !PortalRequest.Parameters.ContainsKey( SESSIONGUID_PARAMETER_NAME ) )
                     return null;
 
                 using( var db = new PortalEntities() )
                 {
-                    _session = db.Session_Get( new UUID( PortalRequest.Parameters[ "sessionGUID" ] ).ToByteArray(), null ).ToDTO().FirstOrDefault();
+                    _session = db.Session_Get( new UUID( PortalRequest.Parameters[ SESSIONGUID_PARAMETER_NAME ] ).ToByteArray(), null ).ToDTO().FirstOrDefault();
 
 					if( _session == null )
 						return null;

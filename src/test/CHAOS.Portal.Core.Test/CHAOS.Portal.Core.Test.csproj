@@ -47,6 +47,7 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CallContextTest.cs" />
     <Compile Include="LogTest.cs" />
     <Compile Include="MockExtension.cs" />
     <Compile Include="MockModule.cs" />

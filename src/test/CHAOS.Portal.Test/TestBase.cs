@@ -23,6 +23,7 @@ namespace CHAOS.Portal.Test
         public DTO.Standard.ClientSettings ClientSettings { get; set; }
         public ICallContext AdminCallContext { get; set; }
         public ICallContext AnonCallContext { get; set; }
+		public ICallContext AnonCallContext2 { get; set; }
 
         public DTO.Standard.UserInfo UserAnonymous { get; set; }
         public DTO.Standard.UserInfo UserAdministrator { get; set; }
@@ -86,8 +87,9 @@ namespace CHAOS.Portal.Test
 
             PortalApplication = new PortalApplication( new MockCache(), new MockSolrManager() );
 
-            AdminCallContext = new CallContext( PortalApplication, new PortalRequest(), new MockPortalResponse() );
-            AnonCallContext  = new CallContext( PortalApplication, new PortalRequest(), new MockPortalResponse() );
+            AdminCallContext  = new CallContext( PortalApplication, new PortalRequest(), new MockPortalResponse() );
+            AnonCallContext   = new CallContext( PortalApplication, new PortalRequest(), new MockPortalResponse() );
+			AnonCallContext2  = new CallContext( PortalApplication, new PortalRequest(), new MockPortalResponse() );
 
             AdminCallContext.PortalRequest.Parameters.Add( "sessionGUID", "23456789-7D98-4F52-885E-AF4837FAA352" );
             AnonCallContext.PortalRequest.Parameters.Add( "sessionGUID", "12345678-7D98-4F52-885E-AF4837FAA352" );

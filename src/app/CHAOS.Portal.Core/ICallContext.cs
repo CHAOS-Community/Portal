@@ -24,7 +24,8 @@ namespace CHAOS.Portal.Core
         ICache                        Cache{ get; }
         IIndexManager                 IndexManager { get; }
 		ILog						  Log{get;}
-
+	    
+		Session GetSessionFromDatabase();
         Stream GetResponseStream();
     }
 }

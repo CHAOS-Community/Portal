@@ -97,7 +97,7 @@ namespace CHAOS.Portal.Core.Standard
 			{
 				callContext.Log.Info("Processing Request");
 
-				var extension = LoadedExtensions.ContainsKey( callContext.PortalRequest.Extension ) ? GetExtension( callContext.PortalRequest.Extension ) : new DefaultExtension();
+				var extension = LoadedExtensions.ContainsKey( callContext.PortalRequest.Extension ) ? LoadedExtensions[ callContext.PortalRequest.Extension ] : new DefaultExtension();
 
 				extension.CallAction( callContext );
 
@@ -110,14 +110,6 @@ namespace CHAOS.Portal.Core.Standard
 			}
 
 			callContext.Log.Commit( (uint) callContext.PortalResponse.PortalResult.Duration );
-        }
-
-        protected virtual IExtension GetExtension( string extension )
-        {
-            if( !LoadedExtensions.ContainsKey( extension ) )
-                throw new ExtensionMissingException( "Extension is not one of the available extensions" );
-
-            return LoadedExtensions[ extension ];
         }
 
         #endregion

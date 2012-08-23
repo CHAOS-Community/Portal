@@ -22,15 +22,18 @@ namespace CHAOS.Portal.DTO.Standard
         [Serialize("InnerException")]
         public Error InnerException { get; private set; }
 
+		public System.Exception Exception { get; set; }
+
         #endregion
         #region Construction
 
         public Error( System.Exception exception )
         {
-            Fullname      = exception.GetType().FullName;
+            Fullname       = exception.GetType().FullName;
             Message        = exception.Message;
             Stacktrace     = exception.StackTrace;
             InnerException = exception.InnerException != null ? new Error( exception.InnerException ) : null;
+	        Exception      = exception;
         }
 
         #endregion

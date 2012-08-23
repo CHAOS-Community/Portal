@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.Core.Request;
 using CHAOS.Portal.Core.Standard;
+using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
 using CHAOS.Portal.Test;
 using NUnit.Framework;
@@ -26,7 +27,10 @@ namespace CHAOS.Portal.Core.Test
         [Test,ExpectedException(typeof(ExtensionMissingException))]
         public void Should_Throw_ExtensionMissingException_On_Process_PortalResult_If_Extension_Isnt_Loaded()
         {
-            PortalApplication.ProcessRequest( new CallContext( PortalApplication, new PortalRequest( "MockExtension", "Test", new Dictionary<string, string>() ), new PortalResponse(  ) ) );
+			var callContext = new CallContext( PortalApplication, new PortalRequest( "MockExtension", "Test", new Dictionary<string, string>() ), new PortalResponse(  ) );
+            PortalApplication.ProcessRequest( callContext );
+
+	        throw ( callContext.PortalResponse.PortalResult.GetModule("Portal").Results[0] as Error ).Exception;
         }
 
         [Test]
