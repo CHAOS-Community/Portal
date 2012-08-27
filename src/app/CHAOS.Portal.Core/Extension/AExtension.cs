@@ -10,8 +10,9 @@ namespace CHAOS.Portal.Core.Extension
         {
             var method     = GetType().GetMethod( callContext.PortalRequest.Action );
             var parameters = BindParameters( callContext, method.GetParameters() );
+            var result     = method.Invoke( this, parameters );
 
-            method.Invoke( this, parameters );
+			callContext.PortalResponse.WriteToResponse( result, this );
         }
 
         private static object[] BindParameters( ICallContext callContext, ICollection<ParameterInfo> parameters )

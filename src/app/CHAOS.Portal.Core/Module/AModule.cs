@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using CHAOS.Portal.Core.Standard;
 using CHAOS.Portal.DTO;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
@@ -31,10 +32,6 @@ namespace CHAOS.Portal.Core.Module
             // REVIEW: Reflection is slow, cache methods for performance
             foreach( var method in GetType().GetMethods() )
             {
-                var attributes  = GetType().GetCustomAttributes( typeof(ModuleAttribute), true );
-                var moduleName  = attributes.Length == 0 ? GetType().FullName : ( (ModuleAttribute) attributes[0] ).ModuleConfigName;
-                var modelResult = callContext.PortalResponse.PortalResult.GetModule( moduleName );
-
                 try
                 {
                     foreach( Datatype datatypeAttribute in method.GetCustomAttributes(typeof(Datatype), true) )
@@ -48,33 +45,16 @@ namespace CHAOS.Portal.Core.Module
                         var parameters  = BindParameters( callContext, method.GetParameters() );
                         var result      = method.Invoke( this, parameters );
 
-                        // Save result
-                        if( result is IResult )
-                            modelResult.AddResult( (IResult) result );
-                        else
-                            if( result is IEnumerable<IResult> )
-                                modelResult.AddResult( (IEnumerable<IResult>) result );
-                            else
-                                if( result is IPagedResult<IResult> )
-                                {
-                                    var pagedResult = (IPagedResult<IResult>) result;
-
-                                    modelResult.AddResult( pagedResult.Results );
-                                    modelResult.TotalCount = pagedResult.FoundCount;
-                                }
-                                else
-                                    throw new UnsupportedModuleReturnTypeException( "Only a return type of IResult, IEnumerable<IResult> or PagedResult<IResult> is supported" );
+                        callContext.PortalResponse.WriteToResponse( result, this );
 					}
                 }
                 catch( TargetInvocationException e )
                 {
-                    modelResult.Results.Clear();
-                    modelResult.AddResult( new Error( e.InnerException ) );
+                    callContext.PortalResponse.WriteToResponse( new Error( e.InnerException ), this );
                 }
                 catch( System.Exception e )
                 {
-                    modelResult.Results.Clear();
-                    modelResult.AddResult( new Error( e ) );
+                    callContext.PortalResponse.WriteToResponse( new Error( e ), this );
                 }
             }
 

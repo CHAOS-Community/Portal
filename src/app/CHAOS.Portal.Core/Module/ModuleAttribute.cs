@@ -1,19 +1,23 @@
 ﻿using System;
+using CHAOS.Portal.Core.Standard;
 
 namespace CHAOS.Portal.Core.Module
 {
-    public class ModuleAttribute : Attribute
+    public class ModuleAttribute : PrettyNameAttribute
     {
         #region Properties
 
-        public string ModuleConfigName { get; set; }
+	    public string ModuleConfigName
+	    {
+		    get { return PrettyName; }
+	    }
 
         #endregion
         #region Constructors
 
-        public ModuleAttribute( string moduleConfigName )
+        public ModuleAttribute( string moduleConfigName ) :base( moduleConfigName )
         {
-            ModuleConfigName = moduleConfigName;
+
         }
 
         #endregion

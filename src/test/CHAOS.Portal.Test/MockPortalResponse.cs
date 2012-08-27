@@ -10,7 +10,12 @@ namespace CHAOS.Portal.Test
 
         public IPortalResult PortalResult { get; set; }
 
-        #endregion
+	    public void WriteToResponse( object result, object module )
+	    {
+		    
+	    }
+
+	    #endregion
         #region Constructors
 
         public MockPortalResponse()
