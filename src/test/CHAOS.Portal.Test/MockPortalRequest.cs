@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CHAOS.Portal.Core.Request;
+using CHAOS.Portal.Core.Standard;
 
 namespace CHAOS.Portal.Test
 {
@@ -19,5 +20,7 @@ namespace CHAOS.Portal.Test
         {
             get { throw new System.NotImplementedException(); }
         }
+
+	    public IEnumerable<FileStream> Files { get; private set; }
     }
 }

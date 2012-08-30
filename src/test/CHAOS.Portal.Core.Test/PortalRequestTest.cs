@@ -14,7 +14,7 @@ namespace CHAOS.Portal.Core.Test
         {
             IDictionary<string,string> parameters = new Dictionary<string,string>();
             parameters.Add( "someString", "hello world" );
-            PortalRequest request = new PortalRequest( "Extension", "Action", parameters );
+            PortalRequest request = new PortalRequest( "Extension", "Action", parameters, null );
 
             Assert.AreEqual( "Extension", request.Extension );
             Assert.AreEqual( "Action", request.Action );

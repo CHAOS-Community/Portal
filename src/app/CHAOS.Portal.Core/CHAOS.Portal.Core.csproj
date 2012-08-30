@@ -69,6 +69,7 @@
     <Compile Include="ReturnFormat.cs" />
     <Compile Include="Logging\ILog.cs" />
     <Compile Include="Logging\Database\DatabaseLogger.cs" />
+    <Compile Include="Standard\FileStream.cs" />
     <Compile Include="Standard\PrettyNameAttribute.cs" />
     <Compile Include="Standard\PortalApplication.cs" />
     <Compile Include="Extension\IExtension.cs" />

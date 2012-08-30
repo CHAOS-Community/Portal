@@ -16,7 +16,7 @@ namespace CHAOS.Portal.Core.Test
         [Test]
         public void Should_Process_PortalResult()
         {
-            ICallContext callContext = new CallContext( PortalApplication, new PortalRequest( "MockExtension", "Test", new Dictionary<string, string>() ), new PortalResponse(  ) );
+            ICallContext callContext = new CallContext( PortalApplication, new PortalRequest( "MockExtension", "Test", new Dictionary<string, string>(), null ), new PortalResponse(  ) );
 
             PortalApplication.LoadedExtensions.Add( "MockExtension", new MockExtension() );
             PortalApplication.ProcessRequest( callContext );
@@ -27,7 +27,7 @@ namespace CHAOS.Portal.Core.Test
         [Test,ExpectedException(typeof(ExtensionMissingException))]
         public void Should_Throw_ExtensionMissingException_On_Process_PortalResult_If_Extension_Isnt_Loaded()
         {
-			var callContext = new CallContext( PortalApplication, new PortalRequest( "MockExtension", "Test", new Dictionary<string, string>() ), new PortalResponse(  ) );
+			var callContext = new CallContext( PortalApplication, new PortalRequest( "MockExtension", "Test", new Dictionary<string, string>(), null ), new PortalResponse(  ) );
             PortalApplication.ProcessRequest( callContext );
 
 	        throw ( callContext.PortalResponse.PortalResult.GetModule("Portal").Results[0] as Error ).Exception;
@@ -36,7 +36,7 @@ namespace CHAOS.Portal.Core.Test
         [Test]
         public void Should_Process_PortalResult_Without_Extension()
         {
-            ICallContext callContext = new CallContext( PortalApplication, new PortalRequest( "Mock", "Test", new Dictionary<string, string>() ), new PortalResponse(  ) );
+            ICallContext callContext = new CallContext( PortalApplication, new PortalRequest( "Mock", "Test", new Dictionary<string, string>(), null ), new PortalResponse(  ) );
 
             PortalApplication.LoadedModules.Add( "Mock",new Collection<IModule>() );
             PortalApplication.LoadedModules["Mock"].Add( new MockModule() );

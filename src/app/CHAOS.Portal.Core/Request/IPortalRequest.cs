@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CHAOS.Portal.Core.Standard;
 
 namespace CHAOS.Portal.Core.Request
 {
@@ -7,5 +8,6 @@ namespace CHAOS.Portal.Core.Request
         string                     Extension { get; }
         string                     Action { get; }
         IDictionary<string,string> Parameters { get; }
+		IEnumerable<FileStream> Files { get; }
     }
 }
