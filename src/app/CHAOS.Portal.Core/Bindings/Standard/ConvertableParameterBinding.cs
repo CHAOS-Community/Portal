@@ -15,7 +15,7 @@ namespace CHAOS.Portal.Core.Bindings.Standard
             if( parameterInfo.ParameterType.IsNullable() )
                 return null;
 
-            throw new ParameterBindingMissingException("The parameter is missing, and the type isnt nullable");
+            throw new ParameterBindingMissingException(string.Format("The parameter ({0}) is missing, and the type isnt nullable",parameterInfo.Name));
         }
     }
 }
