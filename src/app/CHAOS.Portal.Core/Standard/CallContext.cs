@@ -172,7 +172,7 @@ namespace CHAOS.Portal.Core.Standard
         }
 
         #endregion
-        #region Business Logic
+       #region Business Logic
 
 		/// <summary>
 		/// Write any results in the portal response to a stream. The format is determined by the ReturnFormat property

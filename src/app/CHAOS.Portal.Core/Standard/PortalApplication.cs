@@ -109,7 +109,7 @@ namespace CHAOS.Portal.Core.Standard
 				callContext.PortalResponse.PortalResult.GetModule("Portal").AddResult( new Error( e ) );
 			}
 
-			callContext.Log.Commit( (uint) callContext.PortalResponse.PortalResult.Duration );
+			//callContext.Log.Commit( (uint) callContext.PortalResponse.PortalResult.Duration );
         }
 
         #endregion
