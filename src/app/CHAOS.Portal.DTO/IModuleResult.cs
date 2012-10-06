@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using CHAOS.Serialization;
 
 namespace CHAOS.Portal.DTO
 {
+    [Serialize("ModuleResult")]
     public interface IModuleResult
     {
         string Fullname { get; }

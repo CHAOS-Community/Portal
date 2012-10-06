@@ -6,11 +6,24 @@ namespace CHAOS.Portal.DTO.Standard
     [Serialize("Result")]
     public abstract class Result : IResult
     {
+        #region Fields
+
+        private string _fullname;
+
+        #endregion
+        #region Properties
+
         [SerializeXML(true)]
         [Serialize("FullName")]
-        public virtual string Fullname
+        public string Fullname
         {
-            get { return GetType().FullName; }
+            get { return _fullname ?? (_fullname = GetType().FullName); }
+            set
+            {
+                _fullname = value;
+            } 
         }
+
+        #endregion
     }
 }

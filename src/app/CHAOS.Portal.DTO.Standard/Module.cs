@@ -24,7 +24,7 @@ namespace CHAOS.Portal.DTO.Standard
 		#endregion
 		#region Construction
 
-		public Module()
+		public Module() : this(long.MinValue,null,null,DateTime.MinValue)
 		{
 			
 		}
@@ -35,6 +35,7 @@ namespace CHAOS.Portal.DTO.Standard
 			Name          = name;
 			Configuration = configuration;
 			DateCreated   = dateCreated;
+            Fullname      = "CHAOS.Portal.DTO.Standard.Module";
 		}
 
 		#endregion

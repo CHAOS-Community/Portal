@@ -13,13 +13,15 @@ namespace CHAOS.Portal.DTO.Standard
 		#endregion
 		#region Construction
 
-		public User(){}
+		public User() : this(null, null, DateTime.MinValue)
+        {}
 
 		public User( byte[] uuid, string email, DateTime dateCreated )
 		{
 			GUID        = new UUID( uuid );
 			Email       = email;
 			DateCreated = dateCreated;
+            Fullname    = "CHAOS.Portal.DTO.Standard.User";
 		}
 
 		#endregion

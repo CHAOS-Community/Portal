@@ -22,7 +22,7 @@ namespace CHAOS.Portal.DTO.Standard
 		#endregion
 		#region Construction
 
-		public Session()
+		public Session() : this( null, null, DateTime.MinValue, null)
 		{
 		}
 
@@ -36,6 +36,7 @@ namespace CHAOS.Portal.DTO.Standard
 			UserGUID     = userGUID;
 			DateCreated  = dateCreated;
 			DateModified = dateModified;
+            Fullname     = "CHAOS.Portal.DTO.Standard.Session";
 		}
 
 		#endregion

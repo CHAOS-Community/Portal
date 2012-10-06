@@ -29,7 +29,8 @@ namespace CHAOS.Portal.DTO.Standard
 		#endregion
 		#region Construction
 
-		public UserInfo(){}
+		public UserInfo() : this(Guid.Empty,null,null,null,null,null)
+        {}
 
 		public UserInfo( Guid uuid, Guid? sessionUUID, long? systemPermissions, string email, DateTime? dateCreated, DateTime? dateModified )
 		{
@@ -40,6 +41,7 @@ namespace CHAOS.Portal.DTO.Standard
 			Email                = email;
 			SessionDateCreated   = dateCreated;
 			SessionDateModified  = dateModified;
+            Fullname             = "CHAOS.Portal.DTO.Standard.UserInfo";
 		}
 
 		#endregion
