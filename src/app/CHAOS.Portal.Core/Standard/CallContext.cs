@@ -183,14 +183,16 @@ namespace CHAOS.Portal.Core.Standard
             switch( ReturnFormat )
             {
                 case ReturnFormat.XML:
+                    Log.Debug("Serializing");
                     var xdoc = SerializerFactory.Get<XDocument>().Serialize(PortalResponse.PortalResult, false);
-                    xdoc.Declaration = new XDeclaration( "1.0", "UTF-16", "yes" );
+                    Log.Debug("Serialized");
+                    xdoc.Declaration = new XDeclaration( "1.0", "UTF-8", "yes" );
 
-                    return new MemoryStream( Encoding.Unicode.GetBytes( xdoc.Declaration + xdoc.ToString(SaveOptions.DisableFormatting) ) );
+                    return new MemoryStream( Encoding.UTF8.GetBytes( xdoc.Declaration + xdoc.ToString(SaveOptions.DisableFormatting) ) );
                 case ReturnFormat.JSON:
-                    return new MemoryStream( Encoding.Unicode.GetBytes( SerializerFactory.Get<JSON>().Serialize(PortalResponse.PortalResult, false).Value ) );
+                    return new MemoryStream( Encoding.UTF8.GetBytes( SerializerFactory.Get<JSON>().Serialize(PortalResponse.PortalResult, false).Value ) );
                 case ReturnFormat.JSONP:
-                    return new MemoryStream( Encoding.Unicode.GetBytes( SerializerFactory.Get<JSON>().Serialize(PortalResponse.PortalResult, false).GetAsJSONP(PortalRequest.Parameters["callback"] ) ) );
+                    return new MemoryStream( Encoding.UTF8.GetBytes( SerializerFactory.Get<JSON>().Serialize(PortalResponse.PortalResult, false).GetAsJSONP(PortalRequest.Parameters["callback"] ) ) );
                 default:
                     throw new NotImplementedException("Format is unknown");
             }
