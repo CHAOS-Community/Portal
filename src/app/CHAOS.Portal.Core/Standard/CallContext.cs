@@ -188,7 +188,11 @@ namespace CHAOS.Portal.Core.Standard
                     Log.Debug("Serialized");
                     xdoc.Declaration = new XDeclaration( "1.0", "UTF-8", "yes" );
 
-                    return new MemoryStream( Encoding.UTF8.GetBytes( xdoc.Declaration + xdoc.ToString(SaveOptions.DisableFormatting) ) );
+                    var stream = new MemoryStream();
+
+                    xdoc.Save(stream);
+
+                    return stream;
                 case ReturnFormat.JSON:
                     return new MemoryStream( Encoding.UTF8.GetBytes( SerializerFactory.Get<JSON>().Serialize(PortalResponse.PortalResult, false).Value ) );
                 case ReturnFormat.JSONP:
