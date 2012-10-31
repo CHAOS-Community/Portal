@@ -63,6 +63,7 @@ namespace CHAOS.Portal.Core.Standard
             Bindings.Add( typeof(bool?), new ConvertableParameterBinding<bool>() );
             Bindings.Add( typeof(DateTime?), new DateTimeParameterBinding());
             Bindings.Add( typeof(UUID), new UUIDParameterBinding() );
+            Bindings.Add( typeof(Guid), new UUIDParameterBinding() );
             Bindings.Add( typeof(IQuery), new QueryParameterBinding() );            
         }
 
