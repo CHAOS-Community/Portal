@@ -16,6 +16,8 @@ namespace CHAOS.Portal.Core.Bindings.Standard
 
         private static byte[] StringToByteArray(string hex)
         {
+            hex = hex.Replace("-", "");
+
             var numberChars = hex.Length / 2;
             var bytes       = new byte[numberChars];
 
