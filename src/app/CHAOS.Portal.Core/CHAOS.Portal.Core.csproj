@@ -121,6 +121,10 @@
       <Project>{D1A3C410-8E76-4D73-B505-A0CB817BC15C}</Project>
       <Name>CHAOS.Portal.Exception</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Chaos.Portal\Chaos.Portal.csproj">
+      <Project>{9D3A1974-1D8A-4A6E-96AD-3D4B211BF475}</Project>
+      <Name>Chaos.Portal</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

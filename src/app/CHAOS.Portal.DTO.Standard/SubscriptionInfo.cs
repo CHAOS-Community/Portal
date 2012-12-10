@@ -8,7 +8,7 @@ namespace CHAOS.Portal.DTO.Standard
 		#region Properties
 
 		public UUID UserGUID { get; set; }
-		public long? Permission { get; set; }
+		public SubscriptionPermission Permission { get; set; }
 
 		#endregion
 		#region Constructors
@@ -21,7 +21,7 @@ namespace CHAOS.Portal.DTO.Standard
 		public SubscriptionInfo( Guid guid, Guid? userGUID, string name, long? permission, DateTime dateCreated ) : base( guid, name, dateCreated )
 		{
 			UserGUID    = userGUID.HasValue ? userGUID.Value.ToUUID() : null;
-			Permission  = permission;
+			Permission  = (SubscriptionPermission) permission;
 		}
 
 		#endregion

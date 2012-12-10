@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using CHAOS.Portal.Core.Standard;
-using CHAOS.Portal.DTO;
 using CHAOS.Portal.DTO.Standard;
+using CHAOS.Portal.Data.EF;
 using CHAOS.Portal.Exception;
+using Chaos.Portal.Data;
 
 namespace CHAOS.Portal.Core.Module
 {
@@ -11,10 +11,15 @@ namespace CHAOS.Portal.Core.Module
     {
         #region Properties
 
-
+        protected IPortalRepository PortalRepository { get; set; }
 
         #endregion
         #region Constructors
+
+        protected AModule()
+        {
+            PortalRepository = new PortalRepository();
+        }
 
         public abstract void Initialize( string configuration );
         

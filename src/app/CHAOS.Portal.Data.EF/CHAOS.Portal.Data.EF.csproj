@@ -52,6 +52,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Portal.edmx</DependentUpon>
     </Compile>
+    <Compile Include="PortalRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +77,10 @@
       <Project>{C1936050-60FC-49F3-9047-9621AFFBDC8F}</Project>
       <Name>CHAOS.Portal.DTO</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Chaos.Portal\Chaos.Portal.csproj">
+      <Project>{9D3A1974-1D8A-4A6E-96AD-3D4B211BF475}</Project>
+      <Name>Chaos.Portal</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -26,7 +26,8 @@
 		</librarypath>
 		
 		<inputassemblies>
-			<include name="..\src\app\CHAOS.Portal.Exception\bin\Release\CHAOS.Portal.Exception.dll" />
+      <include name="..\src\app\Chaos.Portal\bin\Release\Chaos.Portal.dll" />
+      <include name="..\src\app\CHAOS.Portal.Exception\bin\Release\CHAOS.Portal.Exception.dll" />
 			<include name="..\src\app\CHAOS.Portal.DTO\bin\Release\CHAOS.Portal.DTO.dll" />
 			<include name="..\src\app\CHAOS.Portal.DTO.Standard\bin\Release\CHAOS.Portal.DTO.Standard.dll" />
 			<include name="..\src\app\CHAOS.Portal.Data.EF\bin\Release\CHAOS.Portal.Data.EF.dll" />
