@@ -28,14 +28,20 @@
 		<inputassemblies>
       <include name="..\src\app\Chaos.Portal\bin\Release\Chaos.Portal.dll" />
       <include name="..\src\app\CHAOS.Portal.Exception\bin\Release\CHAOS.Portal.Exception.dll" />
-			<include name="..\src\app\CHAOS.Portal.DTO\bin\Release\CHAOS.Portal.DTO.dll" />
-			<include name="..\src\app\CHAOS.Portal.DTO.Standard\bin\Release\CHAOS.Portal.DTO.Standard.dll" />
-			<include name="..\src\app\CHAOS.Portal.Data.EF\bin\Release\CHAOS.Portal.Data.EF.dll" />
-			<include name="..\src\app\CHAOS.Portal.Core\bin\Release\CHAOS.Portal.Core.dll" />
-			<include name="..\src\test\CHAOS.Portal.Test\bin\Release\CHAOS.Portal.Test.dll" />
+			<include name="..\src\test\Chaos.Portal.Test\bin\Release\Chaos.Portal.Test.dll" />
 		</inputassemblies>
 		
     </ilmerge>
+
+    <nunit2>
+      <formatter type="Plain" />
+      <test assemblyname="Portal.dll">
+        <references>
+          <include name="..\tools\Moq.4.0.10827\NET40\*.dll"/>
+          <include name="..\lib\*.dll"/>
+        </references>
+      </test>
+    </nunit2>
     
   </target>
   
