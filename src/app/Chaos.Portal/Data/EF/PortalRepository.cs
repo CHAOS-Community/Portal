@@ -16,7 +16,7 @@ namespace CHAOS.Portal.Data.EF
         private string ConnectionString { get; set; }
 
         #endregion
-        #region Construction
+        #region Initialization
 
         public IPortalRepository WithConfiguration(string connectionString)
         {

@@ -13,6 +13,7 @@ namespace Chaos.Portal.Request
         public IDictionary<string,string> Parameters   { get; protected set; }
 		public IEnumerable<FileStream>    Files        { get; protected set; }
         public ReturnFormat               ReturnFormat { get; private set; }
+        public DateTime                   Time         { get; private set; }
 
         #endregion
         #region Constructors
@@ -24,6 +25,7 @@ namespace Chaos.Portal.Request
             Parameters   = parameters;
 			Files        = files;
             ReturnFormat = Parameters.ContainsKey( "format" ) ? (ReturnFormat) Enum.Parse( typeof( ReturnFormat ), Parameters["format"].ToUpper() ) : ReturnFormat.XML;
+            Time         = DateTime.Now;
         }
 
 		public PortalRequest( string extension, string action, IDictionary<string,string> parameters ) : this( extension, action, parameters, new List<FileStream>() )

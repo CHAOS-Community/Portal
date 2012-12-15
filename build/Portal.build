@@ -28,16 +28,16 @@
 		<inputassemblies>
       <include name="..\src\app\Chaos.Portal\bin\Release\Chaos.Portal.dll" />
       <include name="..\src\app\CHAOS.Portal.Exception\bin\Release\CHAOS.Portal.Exception.dll" />
-			<include name="..\src\test\Chaos.Portal.Test\bin\Release\Chaos.Portal.Test.dll" />
+			
 		</inputassemblies>
 		
     </ilmerge>
 
     <nunit2>
       <formatter type="Plain" />
-      <test assemblyname="Portal.dll">
+      <test assemblyname="..\src\test\Chaos.Portal.Test\bin\Release\Chaos.Portal.Test.dll">
         <references>
-          <include name="..\tools\Moq.4.0.10827\NET40\*.dll"/>
+          <include name="Portal.dll"/>
           <include name="..\lib\*.dll"/>
         </references>
       </test>

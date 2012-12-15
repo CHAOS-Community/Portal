@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
-using CHAOS.Portal.DTO;
 using CHAOS.Portal.Exception;
 using CHAOS.Serialization;
+using Chaos.Portal.Data.Dto;
 
 namespace Chaos.Portal.Response
 {
+    [Serialize("PortalResponse")]
     public class PortalResponse : IPortalResponse
     {
         #region Properties
@@ -13,7 +14,6 @@ namespace Chaos.Portal.Response
         public IPortalHeader Header{ get; set; }
         [Serialize]
         public IPortalResult Result { get; set; }
-
         [Serialize]
         public IPortalError  Error { get; set; }
 
@@ -47,10 +47,12 @@ namespace Chaos.Portal.Response
 
 		    if( result != null )
                 Result.Results.Add(result);
-            else if( results != null )
+            else
+            if( results != null )
                 foreach (var item in results)
                     Result.Results.Add(item);
-		    else if( pagedResult != null )
+		    else
+            if( pagedResult != null )
 		    {
                 foreach (var item in pagedResult.Results)
                     Result.Results.Add(item);
@@ -58,7 +60,9 @@ namespace Chaos.Portal.Response
                 Result.TotalCount  = pagedResult.FoundCount;
 		    }
 		    else
-		        throw new UnsupportedModuleReturnTypeException( "Only a return type of IResult, IEnumerable<IResult> or PagedResult<IResult> is supported" );
+		        throw new UnsupportedModuleReturnTypeException(
+		            "Only a return type of IResult, IEnumerable<IResult> or PagedResult<IResult> is supported, type was: " +
+		            obj.GetType().FullName);
 	    }
 
         public System.IO.Stream GetResponseStream()

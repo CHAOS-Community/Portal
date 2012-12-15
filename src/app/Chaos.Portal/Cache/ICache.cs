@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CHAOS.Portal.DTO;
+using Chaos.Portal.Data.Dto;
 
 namespace Chaos.Portal.Cache
 {

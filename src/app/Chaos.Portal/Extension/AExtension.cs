@@ -47,7 +47,7 @@ namespace Chaos.Portal.Extension
             }
             catch (TargetInvocationException e)
             {
-                callContext.Response.WriteToResponse(new PortalError(e.InnerException));
+                callContext.Response.Error.SetException(e.InnerException);
                 
                 PortalApplication.Log.Fatal("ProcessRequest() - Unhandeled exception occured during", e.InnerException);
             }

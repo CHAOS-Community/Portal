@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using CHAOS.Portal.DTO;
 using CHAOS.Serialization.Standard;
+using Chaos.Portal.Data.Dto;
 using Couchbase;
 using Enyim.Caching.Memcached;
 

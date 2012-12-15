@@ -1,5 +1,4 @@
-﻿using CHAOS.Portal.DTO;
-using CHAOS.Serialization;
+﻿using CHAOS.Serialization;
 using CHAOS.Serialization.XML;
 
 namespace Chaos.Portal.Data.Dto.Standard

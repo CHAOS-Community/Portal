@@ -1,6 +1,5 @@
 ﻿using System;
 using CHAOS;
-using CHAOS.Portal.DTO;
 using CHAOS.Serialization;
 using CHAOS.Serialization.XML;
 

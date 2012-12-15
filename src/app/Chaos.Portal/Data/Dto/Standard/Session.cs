@@ -1,5 +1,6 @@
 ﻿using System;
 using CHAOS;
+using CHAOS.Serialization;
 
 namespace Chaos.Portal.Data.Dto.Standard
 {
@@ -7,10 +8,14 @@ namespace Chaos.Portal.Data.Dto.Standard
 	{
 		#region Properties
 
+        [Serialize]
 		public UUID GUID { get; set; }
+        [Serialize]
         public UUID UserGUID { get; set; }
-		public DateTime DateCreated { get; set; }
-		public DateTime? DateModified { get; set; }
+        [Serialize]
+        public DateTime DateCreated { get; set; }
+        [Serialize]
+        public DateTime? DateModified { get; set; }
 
 		#endregion
 		#region Construction

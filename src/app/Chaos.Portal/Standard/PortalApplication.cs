@@ -87,7 +87,7 @@ namespace Chaos.Portal.Standard
             if (!LoadedExtensions.ContainsKey(request.Extension))
                 throw new ExtensionMissingException(string.Format("Extension named '{0}' not found", request.Extension));
 
-            var callContext = new CallContext(this, request, new PortalResponse(new PortalHeader(), new PortalResult(), new PortalError()));
+            var callContext = new CallContext(this, request, new PortalResponse(new PortalHeader(request.Time), new PortalResult(), new PortalError()));
             Log.Info("Processing Request");
 
 			try

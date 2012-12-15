@@ -1,6 +1,4 @@
-﻿using CHAOS.Serialization;
-
-namespace CHAOS.Portal.DTO
+﻿namespace Chaos.Portal.Data.Dto
 {
     public interface IResult
     {

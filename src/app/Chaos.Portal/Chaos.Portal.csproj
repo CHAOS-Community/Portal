@@ -58,7 +58,7 @@
     <Compile Include="Bindings\Standard\StringRequestBinding.cs" />
     <Compile Include="Bindings\Standard\UUIDParameterBinding.cs" />
     <Compile Include="Cache\ICache.cs" />
-    <Compile Include="Cache\Couchbase\Membase.cs" />
+    <Compile Include="Cache\Couchbase\Cache.cs" />
     <Compile Include="Data\Dto\IClientSettings.cs" />
     <Compile Include="Data\Dto\IGroup.cs" />
     <Compile Include="Data\Dto\IPagedResult.cs" />
@@ -76,7 +76,7 @@
     <Compile Include="Data\Dto\Standard\IndexSettings.cs" />
     <Compile Include="Data\Dto\Standard\Module.cs" />
     <Compile Include="Data\Dto\Standard\PagedResult.cs" />
-    <Compile Include="Data\Dto\Standard\PortalResult.cs" />
+    <Compile Include="Response\PortalResult.cs" />
     <Compile Include="Data\Dto\Standard\Result.cs" />
     <Compile Include="Data\Dto\Standard\ScalarResult.cs" />
     <Compile Include="Data\Dto\Standard\Session.cs" />
@@ -137,7 +137,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Data\EF\App.Config">
+    <None Include="App.Config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Data\EF\packages.config" />

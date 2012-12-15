@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CHAOS.Portal.DTO
+namespace Chaos.Portal.Data.Dto
 {
     public interface IPagedResult<out TReturnType>
     {

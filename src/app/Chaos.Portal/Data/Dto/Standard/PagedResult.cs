@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CHAOS.Portal.DTO;
 
 namespace Chaos.Portal.Data.Dto.Standard
 {

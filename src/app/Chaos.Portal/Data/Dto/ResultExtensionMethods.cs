@@ -2,7 +2,7 @@
 using CHAOS.Serialization.JSON;
 using CHAOS.Serialization.Standard;
 
-namespace CHAOS.Portal.DTO
+namespace Chaos.Portal.Data.Dto
 {
     public static class ResultExtensionMethods
     {
