@@ -4,7 +4,7 @@ using Chaos.Portal.Data.Dto;
 
 namespace Chaos.Portal.Extension.Standard
 {
-    [Extension( configurationName : "Portal" )]
+    [PortalExtension( configurationName : "Portal" )]
     public class ClientSettings : AExtension
     {
         #region Initialization

@@ -7,7 +7,7 @@ using Chaos.Portal.Data.Dto.Standard;
 
 namespace Chaos.Portal.Extension.Standard
 {
-    [Extension( configurationName : "Portal")]
+    [PortalExtension( configurationName : "Portal")]
     public class Group : AExtension
     {
         #region Initialization

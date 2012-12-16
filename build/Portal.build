@@ -22,7 +22,6 @@
 		
 		<librarypath>
 			<include name="..\lib\" />
-      <include name="..\tools\nunit\" />
 		</librarypath>
 		
 		<inputassemblies>

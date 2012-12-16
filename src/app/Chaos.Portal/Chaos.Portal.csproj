@@ -97,7 +97,7 @@
     <Compile Include="Data\TicketType.cs" />
     <Compile Include="Data\IPortalRepository.cs" />
     <Compile Include="Extension\AExtension.cs" />
-    <Compile Include="Extension\ExtensionAttribute.cs" />
+    <Compile Include="Extension\PortalExtensionAttribute.cs" />
     <Compile Include="Extension\IExtension.cs" />
     <Compile Include="Extension\Standard\ClientSettings.cs" />
     <Compile Include="Extension\Standard\Group.cs" />
