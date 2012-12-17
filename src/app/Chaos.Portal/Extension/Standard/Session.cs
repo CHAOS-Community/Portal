@@ -26,7 +26,7 @@ namespace Chaos.Portal.Extension.Standard
 
         public ISession Create( ICallContext callContext )
         {
-            return PortalRepository.SessionCreate(callContext.AnonymousUserGUID.ToGuid());
+            return PortalRepository.SessionCreate(callContext.AnonymousUserGuid);
         }
 
         #endregion

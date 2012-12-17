@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Chaos.Portal.Standard;
 
 namespace Chaos.Portal.Request
@@ -11,6 +11,6 @@ namespace Chaos.Portal.Request
         IDictionary<string,string> Parameters { get; }
 		IEnumerable<FileStream>    Files { get; }
         ReturnFormat               ReturnFormat { get; }
-        DateTime                   Time { get; }
+        Stopwatch                  Stopwatch { get; }
     }
 }

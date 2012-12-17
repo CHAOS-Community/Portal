@@ -25,7 +25,8 @@ namespace Chaos.Portal.Standard
 		
 	    private const string SESSIONGUID_PARAMETER_NAME = "sessionGUID";
 
-        private static IDictionary<ReturnFormat, IResponseSpecification> responseSpecifications = new Dictionary<ReturnFormat, IResponseSpecification>(); 
+        private static readonly Guid _anonymousUserGuid;
+        private static readonly IDictionary<ReturnFormat, IResponseSpecification> responseSpecifications = new Dictionary<ReturnFormat, IResponseSpecification>(); 
 
         #endregion
         #region Properties
@@ -95,16 +96,13 @@ namespace Chaos.Portal.Standard
 		/// </summary>
         public bool IsAnonymousUser
         {
-            get { return GetSessionFromDatabase() == null || AnonymousUserGUID.ToString() == Session.UserGUID.ToString(); }
+            get { return GetSessionFromDatabase() == null || AnonymousUserGuid.ToString() == Session.UserGUID.ToString(); }
         }
 
 		/// <summary>
 		/// Get the UUID of the anonymous user
 		/// </summary>
-        public UUID AnonymousUserGUID
-        {
-            get { return new UUID( ConfigurationManager.AppSettings["AnonymousUserGUID"] ); }
-        }
+        public Guid AnonymousUserGuid { get { return _anonymousUserGuid;  } }
 
         #endregion
         #region Constructors
@@ -114,6 +112,8 @@ namespace Chaos.Portal.Standard
             responseSpecifications.Add(ReturnFormat.XML, new XmlResponse());
             responseSpecifications.Add(ReturnFormat.JSON, new JsonResponse());
             responseSpecifications.Add(ReturnFormat.JSONP, new JsonResponse());
+
+            _anonymousUserGuid = new UUID( ConfigurationManager.AppSettings["AnonymousUserGUID"] ).ToGuid();
         }
 
         public CallContext(IPortalApplication application, IPortalRequest request, IPortalResponse response)
@@ -124,7 +124,7 @@ namespace Chaos.Portal.Standard
             Cache        = application.Cache;
             IndexManager = application.IndexManager;
 
-            Response.Header.ReturnFormat = Request.ReturnFormat;            
+            Response.Header.ReturnFormat = Request.ReturnFormat;
         }
 
         #endregion

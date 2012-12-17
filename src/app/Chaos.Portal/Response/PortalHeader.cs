@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics;
 using CHAOS.Serialization;
 
 namespace Chaos.Portal.Response
@@ -7,24 +7,24 @@ namespace Chaos.Portal.Response
     {
         #region Fields
 
-        private readonly DateTime _time;
+        private readonly Stopwatch _startTime;
         
         #endregion
         #region Properties
 
         [Serialize]
-        public uint Duration
+        public double Duration
         {
-            get { return (uint) DateTime.Now.Subtract(_time).TotalMilliseconds; }
+            get { return _startTime.Elapsed.TotalMilliseconds; }
         }
         public ReturnFormat ReturnFormat { get; set; }
 
         #endregion
         #region Initialization
 
-        public PortalHeader(DateTime time)
+        public PortalHeader(Stopwatch startTime)
         {
-            _time = time;
+            _startTime = startTime;
         }
 
         #endregion

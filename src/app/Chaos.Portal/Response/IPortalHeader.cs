@@ -7,7 +7,7 @@ namespace Chaos.Portal.Response
     {
         [Serialize("Duration")]
         [SerializeXML(true)]
-        uint Duration { get; }
+        double Duration { get; }
 
         ReturnFormat ReturnFormat { get; set; }
     }

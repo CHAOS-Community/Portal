@@ -64,7 +64,7 @@ namespace CHAOS.Portal.Data.EF
                                             sessionGuid.HasValue ? sessionGuid.Value.ToByteArray() : null, 
                                             email);
 
-                return users.ToDto();
+                return users.ToList().ToDto();
             }
         }
 
@@ -157,11 +157,11 @@ namespace CHAOS.Portal.Data.EF
         {
             using (var db = CreatePortalEntities())
             {
-                var sessionGUID = new UUID();
+                var sessionGUID = Guid.NewGuid();
 
                 db.Session_Create(sessionGUID.ToByteArray(), userGuid.ToByteArray());
 
-                return db.Session_Get(sessionGUID.ToByteArray(), null).ToList().ToDto().First();
+                return new Chaos.Portal.Data.Dto.Standard.Session(sessionGUID, userGuid, DateTime.Now, DateTime.Now);
             }
         }
 

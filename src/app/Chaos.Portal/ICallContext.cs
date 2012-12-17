@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using CHAOS;
+﻿using System;
+using System.Collections.Generic;
 using CHAOS.Index;
 using Chaos.Portal.Cache;
 using Chaos.Portal.Data.Dto;
@@ -17,7 +17,7 @@ namespace Chaos.Portal
         IEnumerable<ISubscriptionInfo> Subscriptions { get; }
         IEnumerable<IGroup>            Groups { get; }
         IUserInfo                      User { get; }
-        UUID                           AnonymousUserGUID { get; }
+        Guid                           AnonymousUserGuid { get; }
         bool                           IsAnonymousUser { get; }
         ICache                         Cache{ get; }
         IIndexManager                  IndexManager { get; }

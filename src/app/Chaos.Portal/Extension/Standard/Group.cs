@@ -19,7 +19,7 @@ namespace Chaos.Portal.Extension.Standard
         
         public IEnumerable<IGroup> Get( ICallContext callContext, Guid guid )
         {
-            if(callContext.User.GUID.ToString() == callContext.AnonymousUserGUID.ToString())
+            if(callContext.User.GUID.ToString() == callContext.AnonymousUserGuid.ToString())
                 throw new InsufficientPermissionsException( "Anonymous users cannot create groups" );
 
             return PortalRepository.GroupGet(guid, null, callContext.User.GUID.ToGuid());
@@ -30,7 +30,7 @@ namespace Chaos.Portal.Extension.Standard
 
         public IGroup Create( ICallContext callContext, string name, uint systemPermission )
         {
-            if( callContext.User.GUID.ToString() == callContext.AnonymousUserGUID.ToString() )
+            if( callContext.User.GUID.ToString() == callContext.AnonymousUserGuid.ToString() )
                 throw new InsufficientPermissionsException( "Anonymous users cannot create groups" );
 
             return PortalRepository.GroupCreate(new Guid(), name, callContext.User.GUID.ToGuid(), systemPermission);
@@ -41,7 +41,7 @@ namespace Chaos.Portal.Extension.Standard
 
         public ScalarResult Delete( ICallContext callContext, Guid guid )
         {
-            if(callContext.User.GUID.ToString() == callContext.AnonymousUserGUID.ToString())
+            if(callContext.User.GUID.ToString() == callContext.AnonymousUserGuid.ToString())
                 throw new InsufficientPermissionsException( "Anonymous users cannot delete groups" );
 
             var result = PortalRepository.GroupDelete(guid, callContext.User.GUID.ToGuid());
@@ -54,7 +54,7 @@ namespace Chaos.Portal.Extension.Standard
 
         public ScalarResult Update( ICallContext callContext, Guid guid, string newName, uint? newSystemPermission )
         {
-            if(callContext.User.GUID.ToString() == callContext.AnonymousUserGUID.ToString())
+            if(callContext.User.GUID.ToString() == callContext.AnonymousUserGuid.ToString())
                 throw new InsufficientPermissionsException( "Anonymous users cannot Update groups" );
 
             var result = PortalRepository.GroupUpdate(guid, callContext.User.GUID.ToGuid(), newName, newSystemPermission);
