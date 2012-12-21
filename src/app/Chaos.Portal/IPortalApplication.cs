@@ -20,6 +20,6 @@ namespace Chaos.Portal
         IPortalRepository                    PortalRepository { get; }
         ILog                                 Log { get; }
 
-        IPortalResponse ProcessRequest(IPortalRequest request);
+        IPortalResponse ProcessRequest( IPortalRequest request, IPortalResponse response );
     }
 }

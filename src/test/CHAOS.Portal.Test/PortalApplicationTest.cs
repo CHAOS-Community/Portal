@@ -22,12 +22,14 @@ namespace Chaos.Portal.Test
         [Test]
         public void Should_Process_Request()
         {
+            PortalResponse.SetupGet(p => p.Header).Returns(PortalHeader.Object);
             PortalRequest.SetupGet(p => p.Extension).Returns("Test");
+            PortalRequest.SetupGet(p => p.ReturnFormat).Returns(ReturnFormat.XML);
 
             var portalApplication = new PortalApplication(Cache.Object, Index.Object, PortalRepository.Object, Log.Object);
             portalApplication.LoadedExtensions.Add("Test", Extension.Object);
 
-            var response = portalApplication.ProcessRequest(PortalRequest.Object);
+            var response = portalApplication.ProcessRequest(PortalRequest.Object, PortalResponse.Object);
 
             Assert.IsNotNull(response);
         }

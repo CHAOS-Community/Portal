@@ -89,7 +89,7 @@ namespace CHAOS.Portal.Data.EF
             {
                 var errorCode = new ObjectParameter("ErrorCode", 0);
 
-                db.Group_Create(guid.HasValue ? guid.Value.ToByteArray() : new Guid().ToByteArray(), 
+                db.Group_Create(guid.Value.ToByteArray(), 
                                 name, 
                                 requestedUserGuid.ToByteArray(), 
                                 (int?) systemPermission, 

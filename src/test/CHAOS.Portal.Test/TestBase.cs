@@ -21,6 +21,7 @@ namespace Chaos.Portal.Test
         protected Mock<ILog>              Log { get; set; }
         protected Mock<IPortalRequest>    PortalRequest { get; set; }
         protected Mock<IPortalResponse>   PortalResponse { get; set; }
+        protected Mock<IPortalHeader>     PortalHeader { get; set; }
         protected Mock<IExtension>        Extension { get; set; }
 
         #endregion
@@ -36,6 +37,7 @@ namespace Chaos.Portal.Test
             PortalRequest    = new Mock<IPortalRequest>();
             PortalResponse   = new Mock<IPortalResponse>();
             Extension        = new Mock<IExtension>();
+            PortalHeader     = new Mock<IPortalHeader>();
         }
         
         #endregion

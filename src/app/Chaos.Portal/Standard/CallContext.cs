@@ -23,10 +23,10 @@ namespace Chaos.Portal.Standard
         private IEnumerable<ISubscriptionInfo> _subscriptions;
         private IEnumerable<IGroup>            _group;
 		
-	    private const string SESSIONGUID_PARAMETER_NAME = "sessionGUID";
+	    private const string SessionguidParameterName = "sessionGUID";
 
         private static readonly Guid _anonymousUserGuid;
-        private static readonly IDictionary<ReturnFormat, IResponseSpecification> responseSpecifications = new Dictionary<ReturnFormat, IResponseSpecification>(); 
+        private static readonly IDictionary<ReturnFormat, IResponseSpecification> ResponseSpecifications = new Dictionary<ReturnFormat, IResponseSpecification>(); 
 
         #endregion
         #region Properties
@@ -109,9 +109,9 @@ namespace Chaos.Portal.Standard
 
         static CallContext()
         {
-            responseSpecifications.Add(ReturnFormat.XML, new XmlResponse());
-            responseSpecifications.Add(ReturnFormat.JSON, new JsonResponse());
-            responseSpecifications.Add(ReturnFormat.JSONP, new JsonResponse());
+            ResponseSpecifications.Add(ReturnFormat.XML, new XmlResponse());
+            ResponseSpecifications.Add(ReturnFormat.JSON, new JsonResponse());
+            ResponseSpecifications.Add(ReturnFormat.JSONP, new JsonResponse());
 
             _anonymousUserGuid = new UUID( ConfigurationManager.AppSettings["AnonymousUserGUID"] ).ToGuid();
         }
@@ -120,11 +120,11 @@ namespace Chaos.Portal.Standard
         {
             Application  = application;
             Request      = request;
-            Response     = response.WithResponseSpecification(responseSpecifications[Request.ReturnFormat]);
+            Response     = response.WithResponseSpecification(ResponseSpecifications[request.ReturnFormat]);
             Cache        = application.Cache;
             IndexManager = application.IndexManager;
 
-            Response.Header.ReturnFormat = Request.ReturnFormat;
+            response.Header.ReturnFormat = request.ReturnFormat;
         }
 
         #endregion
@@ -138,10 +138,10 @@ namespace Chaos.Portal.Standard
 		{
 			if( _session == null )
             {
-                if( !Request.Parameters.ContainsKey( SESSIONGUID_PARAMETER_NAME ) )
+                if( !Request.Parameters.ContainsKey( SessionguidParameterName ) )
                     return null;
 
-                _session = Application.PortalRepository.SessionGet(new UUID(Request.Parameters[SESSIONGUID_PARAMETER_NAME]).ToGuid(), null).FirstOrDefault();
+                _session = Application.PortalRepository.SessionGet(new UUID(Request.Parameters[SessionguidParameterName]).ToGuid(), null).FirstOrDefault();
 
 				if( _session == null )
 					return null;

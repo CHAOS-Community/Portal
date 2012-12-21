@@ -7,7 +7,6 @@ using Chaos.Portal.Bindings;
 using Chaos.Portal.Bindings.Standard;
 using Chaos.Portal.Cache;
 using Chaos.Portal.Data;
-using Chaos.Portal.Data.Dto.Standard;
 using Chaos.Portal.Extension;
 using Chaos.Portal.Logging;
 using Chaos.Portal.Request;
@@ -78,33 +77,22 @@ namespace Chaos.Portal.Standard
         #endregion
         #region Business Logic
 
-		/// <summary>
-		/// Process a request to portal. Any underlying extensions or modules will be called based on the callContext parameter
-		/// </summary>
+        /// <summary>
+        /// Process a request to portal. Any underlying extensions or modules will be called based on the callContext parameter
+        /// </summary>
         /// <param name="request">contains information about what extension and action to call</param>
-        public IPortalResponse ProcessRequest( IPortalRequest request )
+        /// <param name="response">the object that contains the response</param>
+        /// <returns>The response object</returns>
+        public IPortalResponse ProcessRequest( IPortalRequest request, IPortalResponse response )
         {
             if (!LoadedExtensions.ContainsKey(request.Extension))
                 throw new ExtensionMissingException(string.Format("Extension named '{0}' not found", request.Extension));
-
-            var callContext = new CallContext(this, request, new PortalResponse(new PortalHeader(request.Stopwatch), new PortalResult(), new PortalError()));
-            Log.Info("Processing Request");
-
-			try
-			{
-			    LoadedExtensions[request.Extension].CallAction(callContext);
-			}
-			catch (Exception e)
-			{
-			    callContext.Response.Error.SetException(e);
-			    Log.Fatal("ProcessRequest() - Unhandeled exception occured during", e);
-			}
-			finally
-			{
-                Log.Info("Done Processing Request");
-			}
-
-		    return callContext.Response;
+            
+			
+			    LoadedExtensions[request.Extension].CallAction(new CallContext(this, request, response));
+			
+            
+		    return response;
         }
 
         #endregion
