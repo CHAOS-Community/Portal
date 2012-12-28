@@ -63,6 +63,7 @@ namespace Chaos.Portal.Standard
             Bindings.Add( typeof(DateTime?), new DateTimeParameterBinding());
             Bindings.Add( typeof(UUID), new UUIDParameterBinding() );
             Bindings.Add( typeof(Guid), new UUIDParameterBinding() );
+            Bindings.Add( typeof(Guid?), new UUIDParameterBinding() );
             Bindings.Add( typeof(IQuery), new QueryParameterBinding() );
 
             // load portal extensions

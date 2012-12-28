@@ -2,7 +2,6 @@
 using System.Reflection;
 using CHAOS.Portal.Exception;
 using Chaos.Portal.Data;
-using Chaos.Portal.Data.Dto.Standard;
 using Chaos.Portal.Response;
 
 namespace Chaos.Portal.Extension
@@ -13,6 +12,7 @@ namespace Chaos.Portal.Extension
 
         protected IPortalRepository  PortalRepository { get { return PortalApplication.PortalRepository; } }
         protected IPortalApplication PortalApplication { get;set; }
+        protected IDictionary<string, MethodInfo> MethodInfos { get; set; }
 
         #endregion
         #region Initialization
@@ -22,6 +22,7 @@ namespace Chaos.Portal.Extension
         public IExtension WithPortalApplication(IPortalApplication portalApplication)
         {
             PortalApplication = portalApplication;
+            MethodInfos       = new Dictionary<string, MethodInfo>();
 
             return this;
         }
@@ -35,8 +36,10 @@ namespace Chaos.Portal.Extension
         /// <param name="callContext"></param>
         public virtual IPortalResponse CallAction(ICallContext callContext)
         {
-            // REVIEW: Caching Methods could improve performance when getting the method
-            var method     = GetType().GetMethod(callContext.Request.Action);
+            if(!MethodInfos.ContainsKey(callContext.Request.Action))
+                MethodInfos.Add(callContext.Request.Action, GetType().GetMethod(callContext.Request.Action));
+
+            var method     = MethodInfos[callContext.Request.Action];
             var parameters = BindParameters(callContext, method.GetParameters());
             
             try
