@@ -8,6 +8,8 @@
 		void Error( string message, System.Exception e = null );
 		void Fatal( string message, System.Exception e = null );
 
-		void Commit( uint duration );
+		void Commit( );
+
+	    ILog WithLoglevel(LogLevel logLevel);
 	}
 }

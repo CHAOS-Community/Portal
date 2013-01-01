@@ -1,6 +1,7 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using CHAOS;
-using CHAOS.Portal.Data.EF;
+using Chaos.Portal.Data.EF;
 
 namespace Chaos.Portal.Logging.Database
 {
@@ -14,7 +15,7 @@ namespace Chaos.Portal.Logging.Database
 		#endregion
 		#region Constructors
 
-		public DatabaseLogger( string name, UUID sessionGUID, LogLevel logLevel = LogLevel.Debug ) : base(name, sessionGUID, logLevel)
+		public DatabaseLogger( string name, UUID sessionGUID, Stopwatch stopwatch, LogLevel logLevel = LogLevel.Debug ) : base(name, sessionGUID, stopwatch, logLevel)
 		{
 
 		}
@@ -22,7 +23,7 @@ namespace Chaos.Portal.Logging.Database
 		#endregion
 		#region Business Logic
 
-		public override void Commit( uint duration )
+		public override void Commit( )
 		{
 			if( LogBuilder.Length == 0 )
 				return;
@@ -34,7 +35,7 @@ namespace Chaos.Portal.Logging.Database
 					{
 						db.Log_Create(Name, 
                                       LogLevel.ToString().ToUpper(), SessionGUID == null ? null : SessionGUID.ToByteArray(),
-						              (int?) duration, 
+						              Stopwatch.ElapsedMilliseconds, 
                                       LogBuilder.ToString()).First();
 					}
 				});

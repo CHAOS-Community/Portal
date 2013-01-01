@@ -19,19 +19,19 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID", "ClientSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.ClientSettings), "UserSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.UserSettings), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_Session_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "Session", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Session), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_Ticket_TicketTypeID_TicketType_ID", "TicketType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.TicketType), "Ticket", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Ticket), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_UserSettings_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "UserSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.UserSettings), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_Group_User_Join_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "Group_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Group_User_Join), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID", "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.Subscription), "Subscription_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Subscription_User_Join), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_Subscription_User_Join_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.User), "Subscription_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Subscription_User_Join), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_Group_User_Join_GroupGUID_Group_GUID", "Group", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.Group), "Group_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.Group_User_Join), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_IndexSettings_ModuleID_Module_ID", "Module", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.Portal.Data.EF.Module), "IndexSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.Portal.Data.EF.IndexSettings), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID", "ClientSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.ClientSettings), "UserSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.UserSettings), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_Session_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.User), "Session", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.Session), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_Ticket_TicketTypeID_TicketType_ID", "TicketType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.TicketType), "Ticket", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.Ticket), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_UserSettings_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.User), "UserSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.UserSettings), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_Group_User_Join_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.User), "Group_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.Group_User_Join), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID", "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.Subscription), "Subscription_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.Subscription_User_Join), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_Subscription_User_Join_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.User), "Subscription_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.Subscription_User_Join), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_Group_User_Join_GroupGUID_Group_GUID", "Group", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.Group), "Group_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.Group_User_Join), true)]
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_IndexSettings_ModuleID_Module_ID", "Module", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.Module), "IndexSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.IndexSettings), true)]
 
 #endregion
 
-namespace CHAOS.Portal.Data.EF
+namespace Chaos.Portal.Data.EF
 {
     #region Contexts
     
@@ -1839,69 +1839,6 @@ namespace CHAOS.Portal.Data.EF
             }
     
             return base.ExecuteFunction("IndexSettings_Create", iDParameter, moduleIDParameter, settingsParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="name">No Metadata Documentation available.</param>
-        /// <param name="level">No Metadata Documentation available.</param>
-        /// <param name="sessionGUID">No Metadata Documentation available.</param>
-        /// <param name="duration">No Metadata Documentation available.</param>
-        /// <param name="message">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> Log_Create(global::System.String name, global::System.String level, global::System.Byte[] sessionGUID, Nullable<global::System.Int32> duration, global::System.String message)
-        {
-            ObjectParameter nameParameter;
-            if (name != null)
-            {
-                nameParameter = new ObjectParameter("Name", name);
-            }
-            else
-            {
-                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
-            }
-    
-            ObjectParameter levelParameter;
-            if (level != null)
-            {
-                levelParameter = new ObjectParameter("Level", level);
-            }
-            else
-            {
-                levelParameter = new ObjectParameter("Level", typeof(global::System.String));
-            }
-    
-            ObjectParameter sessionGUIDParameter;
-            if (sessionGUID != null)
-            {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
-            }
-            else
-            {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
-            }
-    
-            ObjectParameter durationParameter;
-            if (duration.HasValue)
-            {
-                durationParameter = new ObjectParameter("Duration", duration);
-            }
-            else
-            {
-                durationParameter = new ObjectParameter("Duration", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter messageParameter;
-            if (message != null)
-            {
-                messageParameter = new ObjectParameter("Message", message);
-            }
-            else
-            {
-                messageParameter = new ObjectParameter("Message", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("Log_Create", nameParameter, levelParameter, sessionGUIDParameter, durationParameter, messageParameter);
         }
 
         #endregion

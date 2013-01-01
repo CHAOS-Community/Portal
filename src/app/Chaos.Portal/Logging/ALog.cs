@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using CHAOS;
 
 namespace Chaos.Portal.Logging
@@ -15,21 +16,30 @@ namespace Chaos.Portal.Logging
 
 		public LogLevel LogLevel { get; set; }
 		public string Name { get; set; }
-		public uint Duration { get; set; }
 		public UUID SessionGUID { get; set; }
 
 		protected StringBuilder LogBuilder { get; set; }
+        protected Stopwatch Stopwatch { get; set; }
 
 		#endregion
 		#region Constructors
 
-		protected ALog( string name, UUID sessionGUID, LogLevel logLevel = LogLevel.Debug )
+        protected ALog( string name, UUID sessionGUID, Stopwatch stopwatch, LogLevel logLevel = LogLevel.Debug )
 		{
 			Name        = name;
-			LogLevel    = logLevel;
 			SessionGUID = sessionGUID;
 			LogBuilder  = new StringBuilder(  );
+            Stopwatch   = stopwatch ?? new Stopwatch();
+
+            WithLoglevel( logLevel );
 		}
+
+        public ILog WithLoglevel( LogLevel logLevel )
+        {
+            LogLevel = logLevel;
+
+            return this;
+        }
 
 		#endregion
 		#region Business Logic
@@ -70,8 +80,8 @@ namespace Chaos.Portal.Logging
 			Log( LogLevel.Fatal, message, e );
 		}
 
-		public abstract void Commit( uint duration );
+		public abstract void Commit( );
 
-		#endregion
+	    #endregion
 	}
 }
