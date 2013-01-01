@@ -94,12 +94,8 @@ namespace Chaos.Portal.Standard
         {
             if (!LoadedExtensions.ContainsKey(request.Extension))
                 throw new ExtensionMissingException(string.Format("Extension named '{0}' not found", request.Extension));
-            
 			
-			    LoadedExtensions[request.Extension].CallAction(new CallContext(this, request, response, _loggingFactory.Create()));
-			
-            
-		    return response;
+			return LoadedExtensions[request.Extension].CallAction(new CallContext(this, request, response, _loggingFactory.Create()));
         }
 
         #endregion
