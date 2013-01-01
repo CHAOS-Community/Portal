@@ -76,7 +76,9 @@
     <Compile Include="Data\Dto\Standard\IndexSettings.cs" />
     <Compile Include="Data\Dto\Standard\Module.cs" />
     <Compile Include="Data\Dto\Standard\PagedResult.cs" />
-    <Compile Include="Logging\Database\DirectDatabaseLogger.cs" />
+    <Compile Include="Logging\Database\DatabaseLoggerFactory.cs" />
+    <Compile Include="Logging\DirectLogger.cs" />
+    <Compile Include="Logging\ILogFactory.cs" />
     <Compile Include="Response\PortalResult.cs" />
     <Compile Include="Data\Dto\Standard\Result.cs" />
     <Compile Include="Data\Dto\Standard\ScalarResult.cs" />

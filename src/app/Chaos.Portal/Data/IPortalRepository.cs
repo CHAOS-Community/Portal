@@ -34,5 +34,7 @@ namespace Chaos.Portal.Data
         IEnumerable<IUserSettings> UserSettingsGet(Guid clientGuid, Guid userGuid);
         uint UserSettingsSet(Guid clientGuid, Guid userGuid, string settings);
         uint UserSettingsDelete(Guid clientGuid, Guid userGuid);
+
+        uint LogCreate(string name, Guid? sessionGuid, string loglevel, double? duration, string message);
     }
 }

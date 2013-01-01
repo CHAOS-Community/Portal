@@ -6,7 +6,7 @@ namespace Chaos.Portal.Data.Dto
 {
     public interface ISession : IResult
     {
-        [Serialize("SessionGUID")]
+        [Serialize("SessionGuid")]
         UUID GUID { get; set; }
 
         [Serialize("UserGUID")]

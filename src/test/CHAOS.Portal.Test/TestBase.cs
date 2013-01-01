@@ -18,7 +18,7 @@ namespace Chaos.Portal.Test
         protected Mock<ICache>            Cache { get; set; }
         protected Mock<IIndexManager>     Index { get; set; }
         protected Mock<IPortalRepository> PortalRepository { get; set; }
-        protected Mock<ILog>              Log { get; set; }
+        protected Mock<ILogFactory>       LoggingFactory { get; set; }
         protected Mock<IPortalRequest>    PortalRequest { get; set; }
         protected Mock<IPortalResponse>   PortalResponse { get; set; }
         protected Mock<IPortalHeader>     PortalHeader { get; set; }
@@ -33,7 +33,7 @@ namespace Chaos.Portal.Test
             Cache            = new Mock<ICache>();
             Index            = new Mock<IIndexManager>();
             PortalRepository = new Mock<IPortalRepository>();
-            Log              = new Mock<ILog>();
+            LoggingFactory   = new Mock<ILogFactory>();
             PortalRequest    = new Mock<IPortalRequest>();
             PortalResponse   = new Mock<IPortalResponse>();
             Extension        = new Mock<IExtension>();

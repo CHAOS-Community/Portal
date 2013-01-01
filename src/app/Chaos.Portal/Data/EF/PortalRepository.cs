@@ -6,6 +6,7 @@ using CHAOS.Portal.Exception;
 using Chaos.Portal.Data;
 using Chaos.Portal.Data.Dto;
 using Chaos.Portal.Data.Dto.Standard;
+using Chaos.Portal.Data.EF;
 
 namespace CHAOS.Portal.Data.EF
 {
@@ -295,6 +296,24 @@ namespace CHAOS.Portal.Data.EF
                 db.UserSettings_Delete(clientGuid.ToByteArray(), userGuid.ToByteArray());
 
                 return 1;
+            }
+        }
+
+        #endregion
+        #region Log
+
+        public uint LogCreate(string name, Guid? sessionGuid, string loglevel, double? duration, string message)
+        {
+            using(var db = CreatePortalEntities())
+            {
+                var guid = sessionGuid.HasValue ? sessionGuid.Value.ToByteArray() : null;
+
+                var result = db.Log_Create(name, loglevel, guid, duration, message).FirstOrDefault();
+
+                if (!result.HasValue)
+                    throw new UnhandledException("Unhandled exception occured in Log_Create, and was rolled back");
+
+                return (uint) result.Value;
             }
         }
 

@@ -581,11 +581,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter sessionGUIDParameter;
             if (sessionGUID != null)
             {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", sessionGUID);
             }
             else
             {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter userGUIDParameter;
@@ -611,11 +611,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter sessionGUIDParameter;
             if (sessionGUID != null)
             {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", sessionGUID);
             }
             else
             {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter userGUIDParameter;
@@ -641,11 +641,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter sessionGUIDParameter;
             if (sessionGUID != null)
             {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", sessionGUID);
             }
             else
             {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter userGUIDParameter;
@@ -682,11 +682,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter sessionGUIDParameter;
             if (sessionGUID != null)
             {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", sessionGUID);
             }
             else
             {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter emailParameter;
@@ -723,11 +723,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter sessionGUIDParameter;
             if (sessionGUID != null)
             {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", sessionGUID);
             }
             else
             {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter emailParameter;
@@ -876,11 +876,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter sessionGUIDParameter;
             if (sessionGUID != null)
             {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", sessionGUID);
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", sessionGUID);
             }
             else
             {
-                sessionGUIDParameter = new ObjectParameter("SessionGUID", typeof(global::System.Byte[]));
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter userGUIDParameter;
@@ -1840,6 +1840,69 @@ namespace Chaos.Portal.Data.EF
     
             return base.ExecuteFunction("IndexSettings_Create", iDParameter, moduleIDParameter, settingsParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="level">No Metadata Documentation available.</param>
+        /// <param name="sessionGUID">No Metadata Documentation available.</param>
+        /// <param name="duration">No Metadata Documentation available.</param>
+        /// <param name="message">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Log_Create(global::System.String name, global::System.String level, global::System.Byte[] sessionGUID, Nullable<global::System.Double> duration, global::System.String message)
+        {
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter levelParameter;
+            if (level != null)
+            {
+                levelParameter = new ObjectParameter("Level", level);
+            }
+            else
+            {
+                levelParameter = new ObjectParameter("Level", typeof(global::System.String));
+            }
+    
+            ObjectParameter sessionGUIDParameter;
+            if (sessionGUID != null)
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", sessionGUID);
+            }
+            else
+            {
+                sessionGUIDParameter = new ObjectParameter("SessionGuid", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter durationParameter;
+            if (duration.HasValue)
+            {
+                durationParameter = new ObjectParameter("Duration", duration);
+            }
+            else
+            {
+                durationParameter = new ObjectParameter("Duration", typeof(global::System.Double));
+            }
+    
+            ObjectParameter messageParameter;
+            if (message != null)
+            {
+                messageParameter = new ObjectParameter("Message", message);
+            }
+            else
+            {
+                messageParameter = new ObjectParameter("Message", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Log_Create", nameParameter, levelParameter, sessionGUIDParameter, durationParameter, messageParameter);
+        }
 
         #endregion
 
@@ -2686,9 +2749,9 @@ namespace Chaos.Portal.Data.EF
             set
             {
                 OnSessionGUIDChanging(value);
-                ReportPropertyChanging("SessionGUID");
+                ReportPropertyChanging("SessionGuid");
                 _SessionGUID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SessionGUID");
+                ReportPropertyChanged("SessionGuid");
                 OnSessionGUIDChanged();
             }
         }
@@ -3256,7 +3319,7 @@ namespace Chaos.Portal.Data.EF
         /// <summary>
         /// Create a new SessionInfo object.
         /// </summary>
-        /// <param name="sessionGUID">Initial value of the SessionGUID property.</param>
+        /// <param name="sessionGUID">Initial value of the SessionGuid property.</param>
         /// <param name="userGUID">Initial value of the UserGUID property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
         public static SessionInfo CreateSessionInfo(global::System.Guid sessionGUID, global::System.Guid userGUID, global::System.DateTime dateCreated)
@@ -3288,9 +3351,9 @@ namespace Chaos.Portal.Data.EF
                 if (_SessionGUID != value)
                 {
                     OnSessionGUIDChanging(value);
-                    ReportPropertyChanging("SessionGUID");
+                    ReportPropertyChanging("SessionGuid");
                     _SessionGUID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("SessionGUID");
+                    ReportPropertyChanged("SessionGuid");
                     OnSessionGUIDChanged();
                 }
             }
@@ -4523,9 +4586,9 @@ namespace Chaos.Portal.Data.EF
             set
             {
                 OnSessionGUIDChanging(value);
-                ReportPropertyChanging("SessionGUID");
+                ReportPropertyChanging("SessionGuid");
                 _SessionGUID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SessionGUID");
+                ReportPropertyChanged("SessionGuid");
                 OnSessionGUIDChanged();
             }
         }

@@ -7,12 +7,12 @@ namespace Chaos.Portal.Data.Dto.Standard
     {
         #region User
 
-        public static IEnumerable<User> ToDto( this IEnumerable<CHAOS.Portal.Data.EF.User> list )
+        public static IEnumerable<User> ToDto(this IEnumerable<EF.User> list)
         {
             return list.Select( ToDto );
         }
 
-	    public static User ToDto( CHAOS.Portal.Data.EF.User user )
+	    public static User ToDto( EF.User user )
 		{
 			return new User( user.GUID.ToByteArray(), user.Email, user.DateCreated );
 		}
@@ -20,12 +20,12 @@ namespace Chaos.Portal.Data.Dto.Standard
         #endregion
         #region UserInfo
 
-        public static IEnumerable<IUserInfo> ToDto( this IEnumerable<CHAOS.Portal.Data.EF.UserInfo> list )
+        public static IEnumerable<IUserInfo> ToDto(this IEnumerable<EF.UserInfo> list)
 		{ 
             return list.Select( ToDto );
 		}
 
-        public static IUserInfo ToDto( CHAOS.Portal.Data.EF.UserInfo user )
+        public static IUserInfo ToDto( EF.UserInfo user )
 		{
 			return new UserInfo( user.GUID, user.SessionGUID, user.SystemPermission, user.Email, user.SessionDateCreated, user.DateModified );
 		}
@@ -33,12 +33,12 @@ namespace Chaos.Portal.Data.Dto.Standard
         #endregion
         #region Group
 
-        public static IEnumerable<IGroup> ToDto( this IEnumerable<CHAOS.Portal.Data.EF.Group> list )
+        public static IEnumerable<IGroup> ToDto( this IEnumerable<EF.Group> list )
 		{ 
             return list.Select( ToDto );
 		}
 
-        public static IGroup ToDto( CHAOS.Portal.Data.EF.Group group )
+        public static IGroup ToDto( EF.Group group )
 		{
 			return new Group( group.GUID, group.SystemPermission, group.Name, group.DateCreated );
 		}
@@ -46,12 +46,12 @@ namespace Chaos.Portal.Data.Dto.Standard
         #endregion
         #region Session
 
-        public static IEnumerable<ISession> ToDto( this IEnumerable<CHAOS.Portal.Data.EF.Session> list )
+        public static IEnumerable<ISession> ToDto( this IEnumerable<EF.Session> list )
 		{
             return list.Select( ToDto );
 		}
 
-        public static ISession ToDto( this CHAOS.Portal.Data.EF.Session session )
+        public static ISession ToDto( this EF.Session session )
 		{
 			return new Session( session.GUID, session.UserGUID, session.DateCreated, session.DateModified );
 		}
@@ -59,12 +59,12 @@ namespace Chaos.Portal.Data.Dto.Standard
         #endregion
         #region Module
 
-        public static IEnumerable<Module> ToDto( this IEnumerable<CHAOS.Portal.Data.EF.Module> list )
+        public static IEnumerable<Module> ToDto( this IEnumerable<EF.Module> list )
         { 
             return list.Select( ToDto );
         }
 
-        public static Module ToDto( CHAOS.Portal.Data.EF.Module module )
+        public static Module ToDto(EF.Module module )
         {
             return new Module( module.ID, module.Name, module.Configuration, module.DateCreated );
         }
@@ -72,12 +72,12 @@ namespace Chaos.Portal.Data.Dto.Standard
         #endregion
 		#region SubscriptionInfo
 
-        public static IEnumerable<ISubscriptionInfo> ToDto( this IEnumerable<CHAOS.Portal.Data.EF.SubscriptionInfo> list )
+        public static IEnumerable<ISubscriptionInfo> ToDto( this IEnumerable<EF.SubscriptionInfo> list )
 		{ 
             return list.Select( ToDto );
 		}
 
-        public static ISubscriptionInfo ToDto( CHAOS.Portal.Data.EF.SubscriptionInfo subscriptionInfo )
+        public static ISubscriptionInfo ToDto(EF.SubscriptionInfo subscriptionInfo )
 		{
 			return new SubscriptionInfo( subscriptionInfo.GUID, subscriptionInfo.UserGUID, subscriptionInfo.Name, subscriptionInfo.Permission, subscriptionInfo.DateCreated );
 		}
@@ -85,12 +85,12 @@ namespace Chaos.Portal.Data.Dto.Standard
 		#endregion
 		#region ClientSettings
 
-        public static IEnumerable<IClientSettings> ToDto( this IEnumerable<CHAOS.Portal.Data.EF.ClientSettings> list )
+        public static IEnumerable<IClientSettings> ToDto( this IEnumerable<EF.ClientSettings> list )
 		{ 
             return list.Select( ToDto );
 		}
 
-        public static IClientSettings ToDto( CHAOS.Portal.Data.EF.ClientSettings clientSettings )
+        public static IClientSettings ToDto(EF.ClientSettings clientSettings )
 		{
 			return new ClientSettings( clientSettings.GUID.ToByteArray(), clientSettings.Name, clientSettings.Settings, clientSettings.DateCreated );
 		}
@@ -98,12 +98,12 @@ namespace Chaos.Portal.Data.Dto.Standard
 		#endregion
         #region UserSettings
         
-        public static IEnumerable<UserSettings> ToDto( this IEnumerable<CHAOS.Portal.Data.EF.UserSettings> list )
+        public static IEnumerable<UserSettings> ToDto( this IEnumerable<EF.UserSettings> list )
 		{ 
             return list.Select( ToDto );
 		}
 
-        public static UserSettings ToDto( CHAOS.Portal.Data.EF.UserSettings userSettings )
+        public static UserSettings ToDto(EF.UserSettings userSettings )
 		{
 			return new UserSettings(userSettings.ClientSettingsGUID.ToByteArray(), userSettings.UserGUID.ToByteArray(), userSettings.Settings, userSettings.DateCreated );
 		}

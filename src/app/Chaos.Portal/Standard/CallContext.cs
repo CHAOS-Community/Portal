@@ -8,6 +8,7 @@ using CHAOS.Index;
 using CHAOS.Portal.Exception;
 using Chaos.Portal.Cache;
 using Chaos.Portal.Data.Dto;
+using Chaos.Portal.Logging;
 using Chaos.Portal.Request;
 using Chaos.Portal.Response;
 using Chaos.Portal.Response.Specification;
@@ -36,6 +37,7 @@ namespace Chaos.Portal.Standard
         public IPortalResponse    Response { get; set; }
         public ICache             Cache { get; set; }
         public IIndexManager      IndexManager { get; set; }
+        public ILog               Log { get; private set; }
 
         /// <summary>
         /// Returns the current user, the user is cached and will not be updated during the callContexts life.
@@ -66,7 +68,7 @@ namespace Chaos.Portal.Standard
             get
             {
 				if( GetSessionFromDatabase() == null)
-					throw new SessionDoesNotExistException( "SessionGUID is invalid or has expired" );
+					throw new SessionDoesNotExistException( "SessionGuid is invalid or has expired" );
 
 				return _session;
             }
@@ -116,13 +118,14 @@ namespace Chaos.Portal.Standard
             _anonymousUserGuid = new UUID( ConfigurationManager.AppSettings["AnonymousUserGUID"] ).ToGuid();
         }
 
-        public CallContext(IPortalApplication application, IPortalRequest request, IPortalResponse response)
+        public CallContext(IPortalApplication application, IPortalRequest request, IPortalResponse response, ILog log)
         {
             Application  = application;
             Request      = request;
             Response     = response.WithResponseSpecification(ResponseSpecifications[request.ReturnFormat]);
             Cache        = application.Cache;
             IndexManager = application.IndexManager;
+            Log          = log;
 
             response.Header.ReturnFormat = request.ReturnFormat;
         }

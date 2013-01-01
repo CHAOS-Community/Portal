@@ -6,6 +6,13 @@
     <edmx:StorageModels>
     <Schema Namespace="PortalModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="PortalModelStoreContainer" />
+        <Function Name="Log_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Portal">
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Level" Type="varchar" Mode="In" />
+          <Parameter Name="SessionGuid" Type="binary" Mode="In" />
+          <Parameter Name="Duration" Type="double" Mode="In" />
+          <Parameter Name="Message" Type="text" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -44,16 +51,16 @@
           <Parameter Name="GUID" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="Session_Create">
-            <Parameter Name="SessionGUID" Mode="In" Type="Binary" />
+            <Parameter Name="SessionGuid" Mode="In" Type="Binary" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="Session_Get" EntitySet="Session" ReturnType="Collection(PortalModel.Session)">
-            <Parameter Name="SessionGUID" Mode="In" Type="Binary" />
+            <Parameter Name="SessionGuid" Mode="In" Type="Binary" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="UserInfo_Get" EntitySet="UserInfo" ReturnType="Collection(PortalModel.UserInfo)">
             <Parameter Name="GUID" Mode="In" Type="Binary" />
-            <Parameter Name="SessionGUID" Mode="In" Type="Binary" />
+            <Parameter Name="SessionGuid" Mode="In" Type="Binary" />
             <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Group_Get" EntitySet="Group" ReturnType="Collection(PortalModel.Group)">
@@ -63,11 +70,11 @@
           </FunctionImport>
           <FunctionImport Name="Session_Update" ReturnType="Collection(Int32)">
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
-            <Parameter Name="WhereSessionGUID" Mode="In" Type="Binary" />
+            <Parameter Name="WhereSessionGuid" Mode="In" Type="Binary" />
             <Parameter Name="WhereUserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="Session_Delete" ReturnType="Collection(Int32)">
-            <Parameter Name="SessionGUID" Mode="In" Type="Binary" />
+            <Parameter Name="SessionGuid" Mode="In" Type="Binary" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="UserSettings_Set">
@@ -205,6 +212,13 @@
             <Parameter Name="Settings" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="Log" EntityType="PortalModel.Log" />
+          <FunctionImport Name="Log_Create" ReturnType="Collection(Int32)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Level" Mode="In" Type="String" />
+            <Parameter Name="SessionGuid" Mode="In" Type="Binary" />
+            <Parameter Name="Duration" Mode="In" Type="Double" />
+            <Parameter Name="Message" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="ClientSettings">
           <Key>
@@ -281,11 +295,11 @@
         </EntityType>
         <EntityType Name="SessionInfo">
           <Key>
-            <PropertyRef Name="SessionGUID" />
+            <PropertyRef Name="SessionGuid" />
             <PropertyRef Name="UserGUID" />
             <PropertyRef Name="DateCreated" />
           </Key>
-          <Property Name="SessionGUID" Type="Guid" Nullable="false" />
+          <Property Name="SessionGuid" Type="Guid" Nullable="false" />
           <Property Name="UserGUID" Type="Guid" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
@@ -449,7 +463,7 @@
             <PropertyRef Name="Email" />
           </Key>
           <Property Type="Guid" Name="GUID" Nullable="false" />
-          <Property Type="Guid" Name="SessionGUID" />
+          <Property Type="Guid" Name="SessionGuid" />
           <Property Type="Int64" Name="SystemPermission" />
           <Property Type="String" Name="Email" Nullable="false" MaxLength="1024" Unicode="false" FixedLength="false" />
           <Property Type="DateTime" Name="DateModified" Precision="3" />
@@ -494,7 +508,7 @@
           <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Type="String" Name="Level" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Type="Guid" Name="SessionGUID" />
+          <Property Type="Guid" Name="SessionGuid" />
           <Property Type="Int64" Name="Duration" Nullable="false" />
           <Property Type="String" Name="Message" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
@@ -505,7 +519,8 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="PortalModelStoreContainer" CdmEntityContainer="PortalEntities">
-          </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="Log_Create" FunctionName="PortalModel.Store.Log_Create" />
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

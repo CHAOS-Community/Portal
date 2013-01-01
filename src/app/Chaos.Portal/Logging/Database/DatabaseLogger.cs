@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using CHAOS;
-using Chaos.Portal.Data.EF;
+﻿using Chaos.Portal.Data;
 
 namespace Chaos.Portal.Logging.Database
 {
@@ -9,15 +6,17 @@ namespace Chaos.Portal.Logging.Database
 	{
 		#region Fields
 
+	    private readonly IPortalRepository _portalRepository;
+
 		#endregion
 		#region Properties
 
 		#endregion
 		#region Constructors
 
-		public DatabaseLogger( string name, UUID sessionGUID, Stopwatch stopwatch, LogLevel logLevel = LogLevel.Debug ) : base(name, sessionGUID, stopwatch, logLevel)
+		public DatabaseLogger(IPortalRepository portalRepository)
 		{
-
+		    _portalRepository = portalRepository;
 		}
 
 		#endregion
@@ -29,16 +28,11 @@ namespace Chaos.Portal.Logging.Database
 				return;
 
 			var t =
-			new System.Threading.Thread( () =>
-				{
-					using( var db = new PortalEntities() )
-					{
-						db.Log_Create(Name, 
-                                      LogLevel.ToString().ToUpper(), SessionGUID == null ? null : SessionGUID.ToByteArray(),
-						              Stopwatch.ElapsedMilliseconds, 
-                                      LogBuilder.ToString()).First();
-					}
-				});
+			new System.Threading.Thread( () => _portalRepository.LogCreate(Name,
+			                                                               SessionGuid,
+			                                                               LogLevel.ToString().ToUpper(),
+			                                                               Stopwatch.ElapsedMilliseconds,
+			                                                               LogBuilder.ToString()));
 
 			t.Start();
 		}

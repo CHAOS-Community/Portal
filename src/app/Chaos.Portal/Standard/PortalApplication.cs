@@ -16,6 +16,11 @@ namespace Chaos.Portal.Standard
 {
     public class PortalApplication : IPortalApplication
     {
+        #region Fields
+
+        private readonly ILogFactory _loggingFactory;
+
+        #endregion
         #region Properties
 
         public IDictionary<Type, IParameterBinding> Bindings { get; set; }
@@ -28,15 +33,16 @@ namespace Chaos.Portal.Standard
         #endregion
         #region Constructors
 
-        public PortalApplication( ICache cache, IIndexManager indexManager, IPortalRepository portalRepository, ILog log )
+        public PortalApplication( ICache cache, IIndexManager indexManager, IPortalRepository portalRepository, ILogFactory loggingFactory )
         {
             Bindings         = new Dictionary<Type, IParameterBinding>();
             LoadedExtensions = new Dictionary<string, IExtension>();
+            Log              = new DirectLogger(loggingFactory);
             Cache            = cache; 
             IndexManager     = indexManager;
             PortalRepository = portalRepository;
-            Log              = log;
-            
+            _loggingFactory  = loggingFactory;
+
             // Load bindings
             Bindings.Add( typeof(string), new StringParameterBinding() );
             Bindings.Add( typeof(ICallContext), new CallContextParameterBinding() );
@@ -90,7 +96,7 @@ namespace Chaos.Portal.Standard
                 throw new ExtensionMissingException(string.Format("Extension named '{0}' not found", request.Extension));
             
 			
-			    LoadedExtensions[request.Extension].CallAction(new CallContext(this, request, response));
+			    LoadedExtensions[request.Extension].CallAction(new CallContext(this, request, response, _loggingFactory.Create()));
 			
             
 		    return response;

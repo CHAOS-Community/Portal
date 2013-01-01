@@ -9,7 +9,7 @@ namespace Chaos.Portal.Test
         [Test]
         public void Should_Initialize_Application()
         {
-            var portalApplication = new PortalApplication(Cache.Object, Index.Object, PortalRepository.Object, Log.Object);
+            var portalApplication = new PortalApplication(Cache.Object, Index.Object, PortalRepository.Object, LoggingFactory.Object);
 
             Assert.Greater(portalApplication.Bindings.Count, 0);
             Assert.IsNotNull(portalApplication.Cache);
@@ -26,7 +26,7 @@ namespace Chaos.Portal.Test
             PortalRequest.SetupGet(p => p.Extension).Returns("Test");
             PortalRequest.SetupGet(p => p.ReturnFormat).Returns(ReturnFormat.XML);
 
-            var portalApplication = new PortalApplication(Cache.Object, Index.Object, PortalRepository.Object, Log.Object);
+            var portalApplication = new PortalApplication(Cache.Object, Index.Object, PortalRepository.Object, LoggingFactory.Object);
             portalApplication.LoadedExtensions.Add("Test", Extension.Object);
 
             var response = portalApplication.ProcessRequest(PortalRequest.Object, PortalResponse.Object);
