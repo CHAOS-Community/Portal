@@ -113,7 +113,8 @@ namespace Chaos.Portal.Standard
         {
             ResponseSpecifications.Add(ReturnFormat.XML, new XmlResponse());
             ResponseSpecifications.Add(ReturnFormat.JSON, new JsonResponse());
-            ResponseSpecifications.Add(ReturnFormat.JSONP, new JsonResponse());
+            ResponseSpecifications.Add(ReturnFormat.JSONP, new JsonpResponse());
+            ResponseSpecifications.Add(ReturnFormat.ATTACHMENT, new StreamResponse());
 
             _anonymousUserGuid = new UUID( ConfigurationManager.AppSettings["AnonymousUserGUID"] ).ToGuid();
         }
@@ -128,6 +129,7 @@ namespace Chaos.Portal.Standard
             Log          = log;
 
             response.Header.ReturnFormat = request.ReturnFormat;
+            response.Header.Callback     = request.Parameters.ContainsKey("callback") ? request.Parameters["callback"] : null;
         }
 
         #endregion

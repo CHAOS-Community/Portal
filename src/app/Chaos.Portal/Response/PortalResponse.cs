@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using CHAOS.Portal.Exception;
 using CHAOS.Serialization;
 using Chaos.Portal.Data.Dto;
@@ -16,6 +17,8 @@ namespace Chaos.Portal.Response
         public IPortalResult Result { get; set; }
         [Serialize]
         public IPortalError  Error { get; set; }
+
+        public Stream Stream { get; set; }
 
         private IResponseSpecification ResponseSpecification { get; set; }
 
@@ -44,6 +47,7 @@ namespace Chaos.Portal.Response
             var result      = obj as IResult;
             var results     = obj as IEnumerable<IResult>;
             var pagedResult = obj as IPagedResult<IResult>;
+            var stream      = obj as Stream;
 
 		    if( result != null )
                 Result.Results.Add(result);
@@ -59,13 +63,18 @@ namespace Chaos.Portal.Response
 
                 Result.TotalCount  = pagedResult.FoundCount;
 		    }
-		    else
+		    else 
+            if( stream != null )
+		    {
+		        
+		    }
+            else
 		        throw new UnsupportedModuleReturnTypeException(
 		            "Only a return type of IResult, IEnumerable<IResult> or PagedResult<IResult> is supported, type was: " +
 		            obj.GetType().FullName);
 	    }
 
-        public System.IO.Stream GetResponseStream()
+        public Stream GetResponseStream()
         {
             return ResponseSpecification.GetStream(this);
         }

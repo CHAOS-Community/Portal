@@ -121,6 +121,8 @@
     <Compile Include="Response\IPortalResult.cs" />
     <Compile Include="Response\IResponseSpecification.cs" />
     <Compile Include="Response\PortalHeader.cs" />
+    <Compile Include="Response\Specification\JsonpResponse.cs" />
+    <Compile Include="Response\Specification\StreamResponse.cs" />
     <Compile Include="Response\Specification\JsonResponse.cs" />
     <Compile Include="Response\Specification\XmlResponse.cs" />
     <Compile Include="ReturnFormat.cs" />

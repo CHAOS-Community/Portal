@@ -17,6 +17,9 @@ namespace Chaos.Portal.Response
         {
             get { return _startTime.Elapsed.TotalMilliseconds; }
         }
+
+        public string Callback { get; set; }
+
         public ReturnFormat ReturnFormat { get; set; }
 
         #endregion

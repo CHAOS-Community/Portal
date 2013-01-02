@@ -9,6 +9,8 @@ namespace Chaos.Portal.Response
         [SerializeXML(true)]
         double Duration { get; }
 
+        string Callback { get; set; }
+
         ReturnFormat ReturnFormat { get; set; }
     }
 }
