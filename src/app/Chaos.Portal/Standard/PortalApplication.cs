@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CHAOS;
 using CHAOS.Index;
 using CHAOS.Portal.Exception;
@@ -74,11 +75,11 @@ namespace Chaos.Portal.Standard
 
             // load portal extensions
             LoadedExtensions.Add("ClientSettings", new Extension.Standard.ClientSettings().WithPortalApplication(this));
-            LoadedExtensions.Add("Group", new Extension.Standard.Group().WithPortalApplication(this));
-            LoadedExtensions.Add("Session", new Extension.Standard.Session().WithPortalApplication(this));
-            LoadedExtensions.Add("Subscription", new Extension.Standard.Subscription().WithPortalApplication(this));
-            LoadedExtensions.Add("User", new Extension.Standard.User().WithPortalApplication(this));
-            LoadedExtensions.Add("UserSettings", new Extension.Standard.UserSettings().WithPortalApplication(this));
+            LoadedExtensions.Add("Group",          new Extension.Standard.Group().WithPortalApplication(this));
+            LoadedExtensions.Add("Session",        new Extension.Standard.Session().WithPortalApplication(this));
+            LoadedExtensions.Add("Subscription",   new Extension.Standard.Subscription().WithPortalApplication(this));
+            LoadedExtensions.Add("User",           new Extension.Standard.User().WithPortalApplication(this));
+            LoadedExtensions.Add("UserSettings",   new Extension.Standard.UserSettings().WithPortalApplication(this));
         }
 
         #endregion
@@ -92,10 +93,26 @@ namespace Chaos.Portal.Standard
         /// <returns>The response object</returns>
         public IPortalResponse ProcessRequest( IPortalRequest request, IPortalResponse response )
         {
-            if (!LoadedExtensions.ContainsKey(request.Extension))
-                throw new ExtensionMissingException(string.Format("Extension named '{0}' not found", request.Extension));
-			
-			return LoadedExtensions[request.Extension].CallAction(new CallContext(this, request, response, _loggingFactory.Create()));
+            return GetExtension(request.Extension).CallAction(new CallContext(this, request, response, _loggingFactory.Create()));
+        }
+
+
+        public IExtension GetExtension(string extension)
+        {
+            if (!LoadedExtensions.ContainsKey(extension))
+                throw new ExtensionMissingException(string.Format("Extension named '{0}' not found", extension));
+
+            return LoadedExtensions[extension];
+        }
+
+        public TExtension GetExtension<TExtension>() where TExtension : IExtension
+        {
+            var extension = LoadedExtensions.FirstOrDefault(ext => ext.Value is TExtension).Value;
+
+            if(extension == null)
+                throw new ExtensionMissingException(string.Format("Extension of type '{0}' not found", typeof(TExtension).FullName));
+
+            return (TExtension) extension;
         }
 
         #endregion
