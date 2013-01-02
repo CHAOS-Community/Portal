@@ -65,12 +65,10 @@ namespace Chaos.Portal.Response
 		    }
 		    else 
             if( stream != null )
-		    {
-		        
-		    }
+                Stream = stream;
             else
 		        throw new UnsupportedModuleReturnTypeException(
-		            "Only a return type of IResult, IEnumerable<IResult> or PagedResult<IResult> is supported, type was: " +
+		            "Return type is not supported: " +
 		            obj.GetType().FullName);
 	    }
 
