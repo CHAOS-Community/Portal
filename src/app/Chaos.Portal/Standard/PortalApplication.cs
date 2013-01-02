@@ -96,8 +96,7 @@ namespace Chaos.Portal.Standard
             return GetExtension(request.Extension).CallAction(new CallContext(this, request, response, _loggingFactory.Create()));
         }
 
-
-        public IExtension GetExtension(string extension)
+        private IExtension GetExtension(string extension)
         {
             if (!LoadedExtensions.ContainsKey(extension))
                 throw new ExtensionMissingException(string.Format("Extension named '{0}' not found", extension));
@@ -105,6 +104,11 @@ namespace Chaos.Portal.Standard
             return LoadedExtensions[extension];
         }
 
+        /// <summary>
+        /// Return the loaded instance of the requested extension
+        /// </summary>
+        /// <typeparam name="TExtension">The type of extension to get</typeparam>
+        /// <returns>The loaded the instance of the extension</returns>
         public TExtension GetExtension<TExtension>() where TExtension : IExtension
         {
             var extension = LoadedExtensions.FirstOrDefault(ext => ext.Value is TExtension).Value;
