@@ -7,9 +7,6 @@ namespace Chaos.Portal.Response.Specification
 {
     public class JsonpResponse : IResponseSpecification
     {
-        #region MyRegion
-        
-        #endregion
         #region Business Logic
 
         public Stream GetStream(IPortalResponse response)

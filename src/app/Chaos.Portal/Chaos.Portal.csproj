@@ -126,12 +126,12 @@
     <Compile Include="Response\Specification\JsonResponse.cs" />
     <Compile Include="Response\Specification\XmlResponse.cs" />
     <Compile Include="ReturnFormat.cs" />
-    <Compile Include="Standard\CallContext.cs" />
-    <Compile Include="Standard\FileStream.cs" />
+    <Compile Include="CallContext.cs" />
+    <Compile Include="Request\FileStream.cs" />
     <Compile Include="IPortalApplication.cs" />
     <Compile Include="Response\IPortalError.cs" />
     <Compile Include="Response\IPortalHeader.cs" />
-    <Compile Include="Standard\PortalApplication.cs" />
+    <Compile Include="PortalApplication.cs" />
     <Compile Include="Response\PortalResponse.cs" />
   </ItemGroup>
   <ItemGroup>
