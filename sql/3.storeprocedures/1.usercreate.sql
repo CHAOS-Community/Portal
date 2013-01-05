@@ -7,4 +7,8 @@ BEGIN
     INSERT INTO `User` (GUID, Email, DateCreated)
          VALUES ( GUID, Email, NOW() );
 
+
+
+    SELECT ROW_COUNT();
+
 END

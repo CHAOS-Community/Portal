@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9ed9babd6ccc41188c0ed78b66c965af" Name="Diagram1">
+        <EntityTypeShape EntityType="PortalModel.ClientSettings" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PortalModel.Group" Width="1.5" PointX="0.75" PointY="1.25" />
+        <EntityTypeShape EntityType="PortalModel.User" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="PortalModel.Group_User_Join" Width="1.5" PointX="3" PointY="1.125" />
+        <AssociationConnector Association="PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID" />
+        <AssociationConnector Association="PortalModel.FK_Group_User_Join_UserGUID_User_GUID" />
+        <EntityTypeShape EntityType="PortalModel.IndexSettings" Width="1.5" PointX="8" PointY="4.875" />
+        <EntityTypeShape EntityType="PortalModel.Log" Width="1.5" PointX="5.75" PointY="7.75" />
+        <EntityTypeShape EntityType="PortalModel.Module" Width="1.5" PointX="5.75" PointY="4.875" />
+        <EntityTypeShape EntityType="PortalModel.Permission" Width="1.5" PointX="7.75" PointY="7.75" />
+        <EntityTypeShape EntityType="PortalModel.Session" Width="1.5" PointX="9.75" PointY="7.75" />
+        <EntityTypeShape EntityType="PortalModel.Subscription" Width="1.5" PointX="0.75" PointY="7.375" />
+        <EntityTypeShape EntityType="PortalModel.Subscription_User_Join" Width="1.5" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="PortalModel.Ticket" Width="1.5" PointX="8" PointY="1" />
+        <EntityTypeShape EntityType="PortalModel.TicketType" Width="1.5" PointX="5.75" PointY="1.375" />
+        <EntityTypeShape EntityType="PortalModel.UserSettings" Width="1.5" PointX="3" PointY="7.125" />
+        <AssociationConnector Association="PortalModel.FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID" />
+        <AssociationConnector Association="PortalModel.FK_IndexSettings_ModuleID_Module_ID" />
+        <AssociationConnector Association="PortalModel.FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID" />
+        <AssociationConnector Association="PortalModel.FK_Subscription_User_Join_UserGUID_User_GUID" />
+        <AssociationConnector Association="PortalModel.FK_Ticket_TicketTypeID_TicketType_ID" />
+        <AssociationConnector Association="PortalModel.FK_UserSettings_UserGUID_User_GUID" />
+        <EntityTypeShape EntityType="PortalModel.SessionInfo" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PortalModel.SubscriptionInfo" Width="1.5" PointX="2.75" PointY="10.75" />
+        <EntityTypeShape EntityType="PortalModel.UserInfo" Width="1.5" PointX="10.75" PointY="3.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -40,7 +40,7 @@ namespace CHAOS.Portal.Data.EF
         {
             using (var db = CreatePortalEntities())
             {
-                return (uint) db.Ticket_Create(guid.ToByteArray(), (int?) ticketTypeID, xml, callback);
+                return (uint) db.Ticket_Create(guid.ToByteArray(), (int?) ticketTypeID, xml, callback).First().Value;
             }
         }
 

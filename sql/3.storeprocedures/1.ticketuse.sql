@@ -7,4 +7,6 @@ BEGIN
        SET  DateUsed = NOW()
      WHERE  GUID = WhereGUID;
 
+    SELECT ROW_COUNT();
+
 END

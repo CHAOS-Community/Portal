@@ -38,7 +38,7 @@ namespace Chaos.Portal
         {
             Bindings         = new Dictionary<Type, IParameterBinding>();
             LoadedExtensions = new Dictionary<string, IExtension>();
-            Log              = new DirectLogger(loggingFactory);
+            Log              = new DirectLogger(loggingFactory).WithName("Portal Application");
             Cache            = cache; 
             IndexManager     = indexManager;
             PortalRepository = portalRepository;

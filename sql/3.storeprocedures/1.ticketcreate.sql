@@ -9,4 +9,6 @@ BEGIN
     INSERT INTO Ticket( GUID, TicketTypeID, XML, Callback, DateCreated, DateUsed )
          VALUES ( GUID, TicketTypeID, XML, Callback, NOW(), null );
 
+    SELECT ROW_COUNT();
+
 END

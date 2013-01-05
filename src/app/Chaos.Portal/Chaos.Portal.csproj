@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Chaos.Portal</RootNamespace>
     <AssemblyName>Chaos.Portal</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CHAOS">
@@ -35,6 +38,10 @@
     </Reference>
     <Reference Include="Couchbase">
       <HintPath>..\..\..\lib\Couchbase.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Enyim.Caching">
       <HintPath>..\..\..\lib\Enyim.Caching.dll</HintPath>
@@ -45,6 +52,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -76,6 +84,72 @@
     <Compile Include="Data\Dto\Standard\IndexSettings.cs" />
     <Compile Include="Data\Dto\Standard\Module.cs" />
     <Compile Include="Data\Dto\Standard\PagedResult.cs" />
+    <Compile Include="Data\EF\ClientSettings.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\Group.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\Group_User_Join.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\IndexSettings.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\Log.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\Module.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\Permission.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\Portal.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Portal.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\Portal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <None Include="Data\EF\Portal.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Portal.edmx</DependentUpon>
+    </None>
+    <Compile Include="Data\EF\Session.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\SessionInfo.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\Subscription.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\SubscriptionInfo.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\Subscription_User_Join.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\Ticket.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\TicketType.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\User.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\UserInfo.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EF\UserSettings.cs">
+      <DependentUpon>Portal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Logging\Database\DatabaseLoggerFactory.cs" />
     <Compile Include="Logging\DirectLogger.cs" />
     <Compile Include="Logging\ILogFactory.cs" />
@@ -91,11 +165,6 @@
     <Compile Include="Data\Dto\Standard\UserInfo.cs" />
     <Compile Include="Data\Dto\Standard\UserSettings.cs" />
     <Compile Include="Data\Dto\Standard\UUIDResult.cs" />
-    <Compile Include="Data\EF\Portal.Designer.cs">
-      <DependentUpon>Portal.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Data\EF\PortalRepository.cs" />
     <Compile Include="Data\TicketType.cs" />
     <Compile Include="Data\IPortalRepository.cs" />
@@ -140,16 +209,31 @@
       <Name>CHAOS.Portal.Exception</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Data\EF\packages.config" />
     <EntityDeploy Include="Data\EF\Portal.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Portal.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Data\EF\Portal.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Portal.edmx</DependentUpon>
+      <LastGenOutput>Portal.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Data\EF\Portal.edmx.diagram">
+      <DependentUpon>Portal.edmx</DependentUpon>
+    </None>
+    <None Include="Data\EF\Portal.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Portal.edmx</DependentUpon>
+      <LastGenOutput>Portal.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
