@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using CHAOS.Extensions;
-using CHAOS.Portal.Exception;
+using Chaos.Portal.Exceptions;
 
 namespace Chaos.Portal.Bindings.Standard
 {

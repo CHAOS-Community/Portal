@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using CHAOS.Extensions;
-using CHAOS.Portal.Exception;
 using Chaos.Portal.Data.Dto;
 using Chaos.Portal.Data.Dto.Standard;
+using Chaos.Portal.Exceptions;
 
 namespace Chaos.Portal.Extension.Standard
 {

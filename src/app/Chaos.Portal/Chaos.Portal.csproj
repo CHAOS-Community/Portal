@@ -150,6 +150,21 @@
     <Compile Include="Data\EF\UserSettings.cs">
       <DependentUpon>Portal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\ActionMissingException.cs" />
+    <Compile Include="Exceptions\AssemblyNotLoadedException.cs" />
+    <Compile Include="Exceptions\ViewNotLoadedException.cs" />
+    <Compile Include="Exceptions\ExtensionMissingException.cs" />
+    <Compile Include="Exceptions\InsufficientPermissionsException.cs" />
+    <Compile Include="Exceptions\ModuleConfigurationMissingException.cs" />
+    <Compile Include="Exceptions\ModuleNotLoadedException.cs" />
+    <Compile Include="Exceptions\ParameterBindingMissingException.cs" />
+    <Compile Include="Exceptions\SessionDoesNotExistException.cs" />
+    <Compile Include="Exceptions\UnhandledException.cs" />
+    <Compile Include="Exceptions\UnsupportedModuleReturnTypeException.cs" />
+    <Compile Include="Exceptions\WrongProtocolVersionException.cs" />
+    <Compile Include="Index\IView.cs" />
+    <Compile Include="Index\IViewManager.cs" />
+    <Compile Include="Index\ViewManager.cs" />
     <Compile Include="Logging\Database\DatabaseLoggerFactory.cs" />
     <Compile Include="Logging\DirectLogger.cs" />
     <Compile Include="Logging\ILogFactory.cs" />
@@ -204,12 +219,6 @@
     <Compile Include="Response\PortalResponse.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CHAOS.Portal.Exception\CHAOS.Portal.Exception.csproj">
-      <Project>{D1A3C410-8E76-4D73-B505-A0CB817BC15C}</Project>
-      <Name>CHAOS.Portal.Exception</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +244,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

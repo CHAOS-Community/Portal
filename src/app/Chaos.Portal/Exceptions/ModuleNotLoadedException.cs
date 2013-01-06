@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace CHAOS.Portal.Exception
+namespace Chaos.Portal.Exceptions
 {
     public class ModuleNotLoadedException : System.Exception
     {

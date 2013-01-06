@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using CHAOS;
 using CHAOS.Index;
-using CHAOS.Portal.Exception;
 using Chaos.Portal.Bindings;
 using Chaos.Portal.Bindings.Standard;
 using Chaos.Portal.Cache;
 using Chaos.Portal.Data;
+using Chaos.Portal.Exceptions;
 using Chaos.Portal.Extension;
+using Chaos.Portal.Index;
 using Chaos.Portal.Logging;
 using Chaos.Portal.Request;
 using Chaos.Portal.Response;
@@ -28,22 +29,24 @@ namespace Chaos.Portal
         public IDictionary<string, IExtension>      LoadedExtensions { get; set; }
         public ICache                               Cache { get; protected set; }
         public IIndexManager                        IndexManager { get; protected set; }
+        public IViewManager                         ViewManager { get; protected set; }
         public ILog                                 Log { get; protected set; }
         public IPortalRepository                    PortalRepository { get; set; }
 
         #endregion
         #region Constructors
 
-        public PortalApplication( ICache cache, IIndexManager indexManager, IPortalRepository portalRepository, ILogFactory loggingFactory )
+        public PortalApplication( ICache cache, IIndexManager indexManager, IViewManager viewManager, IPortalRepository portalRepository, ILogFactory loggingFactory )
         {
             Bindings         = new Dictionary<Type, IParameterBinding>();
             LoadedExtensions = new Dictionary<string, IExtension>();
             Log              = new DirectLogger(loggingFactory).WithName("Portal Application");
-            Cache            = cache; 
+            Cache            = cache;
             IndexManager     = indexManager;
+            ViewManager      = viewManager;
             PortalRepository = portalRepository;
             _loggingFactory  = loggingFactory;
-
+            
             // Load bindings
             Bindings.Add( typeof(string), new StringParameterBinding() );
             Bindings.Add( typeof(ICallContext), new CallContextParameterBinding() );

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Data.Objects;
 using System.Linq;
-using CHAOS.Portal.Exception;
 using Chaos.Portal.Data;
 using Chaos.Portal.Data.Dto;
 using Chaos.Portal.Data.Dto.Standard;
 using Chaos.Portal.Data.EF;
+using Chaos.Portal.Exceptions;
 
 namespace CHAOS.Portal.Data.EF
 {

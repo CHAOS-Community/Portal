@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using CHAOS.Portal.Exception;
 using Chaos.Portal.Data;
+using Chaos.Portal.Exceptions;
 using Chaos.Portal.Response;
 
 namespace Chaos.Portal.Extension

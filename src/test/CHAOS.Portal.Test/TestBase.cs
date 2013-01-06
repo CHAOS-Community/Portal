@@ -2,6 +2,7 @@
 using Chaos.Portal.Cache;
 using Chaos.Portal.Data;
 using Chaos.Portal.Extension;
+using Chaos.Portal.Index;
 using Chaos.Portal.Logging;
 using Chaos.Portal.Request;
 using Chaos.Portal.Response;
@@ -17,6 +18,7 @@ namespace Chaos.Portal.Test
 
         protected Mock<ICache>            Cache { get; set; }
         protected Mock<IIndexManager>     Index { get; set; }
+        protected Mock<IViewManager>      ViewManager { get; set; }
         protected Mock<IPortalRepository> PortalRepository { get; set; }
         protected Mock<ILogFactory>       LoggingFactory { get; set; }
         protected Mock<IPortalRequest>    PortalRequest { get; set; }
@@ -38,6 +40,7 @@ namespace Chaos.Portal.Test
             PortalResponse   = new Mock<IPortalResponse>();
             Extension        = new Mock<IExtension>();
             PortalHeader     = new Mock<IPortalHeader>();
+            ViewManager      = new Mock<IViewManager>();
         }
         
         #endregion

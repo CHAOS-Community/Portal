@@ -25,9 +25,7 @@
 		</librarypath>
 		
 		<inputassemblies>
-      <include name="..\src\app\Chaos.Portal\bin\Release\Chaos.Portal.dll" />
-      <include name="..\src\app\CHAOS.Portal.Exception\bin\Release\CHAOS.Portal.Exception.dll" />
-			
+      <include name="..\src\app\Chaos.Portal\bin\Release\Chaos.Portal.dll" />	
 		</inputassemblies>
 		
     </ilmerge>

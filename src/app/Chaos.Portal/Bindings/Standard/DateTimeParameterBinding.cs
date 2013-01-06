@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reflection;
 using CHAOS.Extensions;
-using CHAOS.Portal.Exception;
 using CHAOS.Serialization.Standard.String;
+using Chaos.Portal.Exceptions;
 
 namespace Chaos.Portal.Bindings.Standard
 {

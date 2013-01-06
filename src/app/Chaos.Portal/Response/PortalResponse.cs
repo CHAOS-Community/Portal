@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using CHAOS.Portal.Exception;
 using CHAOS.Serialization;
 using Chaos.Portal.Data.Dto;
+using Chaos.Portal.Exceptions;
 
 namespace Chaos.Portal.Response
 {
