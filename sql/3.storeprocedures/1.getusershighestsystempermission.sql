@@ -7,10 +7,14 @@ BEGIN
     DECLARE AccumulatedPermission   INT UNSIGNED;
     DECLARE NO_MORE_ROWS            BOOLEAN;
     DECLARE SystemPermission_CURSOR CURSOR FOR
-        SELECT  G.SystemPermission
-          FROM  `Group` AS G
-                INNER JOIN Group_User_Join AS GUJ ON GUJ.GroupGUID = G.GUID
-         WHERE  GUJ.UserGUID = UserGUID;
+    
+    SELECT
+        G.SystemPermission
+      FROM
+        `Group` AS G
+        INNER JOIN Group_User_Join AS GUJ ON GUJ.GroupGUID = G.GUID
+     WHERE
+        GUJ.UserGUID = UserGUID;
     
     DECLARE CONTINUE HANDLER FOR NOT FOUND
         SET NO_MORE_ROWS = TRUE;

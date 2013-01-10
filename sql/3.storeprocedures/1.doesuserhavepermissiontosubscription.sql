@@ -10,13 +10,16 @@ BEGIN
     DECLARE RequiredPermission INT;
     SET RequiredPermission = GetPermissionForAction( 'Subscription', PermissionName );
 
-    SELECT	COUNT() INTO Result
-      FROM	Subscription_User_Join AS SUJ
-     WHERE	SUJ.UserGUID         = UserGUID AND
-            SUJ.SubscriptionGUID = SubscriptionGUID AND
-            SUJ.Permission & RequiredPermission = RequiredPermission;
+    SELECT	
+        COUNT(*) INTO Result
+    FROM	
+        Subscription_User_Join AS SUJ
+    WHERE	
+            SUJ.UserGUID         = UserGUID 
+        AND SUJ.SubscriptionGUID = SubscriptionGUID 
+        AND SUJ.Permission & RequiredPermission = RequiredPermission;
 
     -- Return the result of the function
-    RETURN (Result  0);
+    RETURN (Result);
 
 END

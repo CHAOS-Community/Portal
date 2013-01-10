@@ -45,7 +45,6 @@ namespace Chaos.Portal.Index
         }
 
         #endregion
-
     }
 
 }

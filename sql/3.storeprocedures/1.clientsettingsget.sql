@@ -1,10 +1,14 @@
-CREATE PROCEDURE `ClientSettings_Get`(
+CREATE PROCEDURE ClientSettings_Get
+(
     GUID    BINARY(16)
 )
 BEGIN
 
-    SELECT  *
-      FROM  ClientSettings AS CS
-     WHERE  CS.GUID = GUID;
+    SELECT  
+    	*
+	FROM  
+		ClientSettings AS CS
+	WHERE  
+		CS.GUID = GUID;
     
-END$$
+END

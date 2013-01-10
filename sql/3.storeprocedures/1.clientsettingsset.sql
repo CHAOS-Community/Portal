@@ -1,4 +1,5 @@
-CREATE PROCEDURE `ClientSettings_Set`(
+CREATE PROCEDURE ClientSettings_Set
+(
     GUID        BINARY(16),
     Name        VARCHAR(255),
     Settings    TEXT

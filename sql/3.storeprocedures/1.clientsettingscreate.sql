@@ -5,7 +5,9 @@ CREATE PROCEDURE `ClientSetting_Create`(
 )
 BEGIN
 
-    INSERT INTO ClientSettings( GUID, Name, Settings, DateCreated )
-		     VALUES ( GUID, Name, Settings, NOW() );
+    INSERT INTO ClientSettings
+    	( GUID, Name, Settings, DateCreated )
+	VALUES 
+		( GUID, Name, Settings, NOW() );
 
 END
