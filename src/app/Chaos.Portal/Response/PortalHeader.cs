@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 using CHAOS.Serialization;
 
 namespace Chaos.Portal.Response
@@ -19,15 +20,17 @@ namespace Chaos.Portal.Response
         }
 
         public string Callback { get; set; }
+        public Encoding Encoding { get; set; }
 
         public ReturnFormat ReturnFormat { get; set; }
 
         #endregion
         #region Initialization
 
-        public PortalHeader(Stopwatch startTime)
+        public PortalHeader(Stopwatch startTime, Encoding encoding)
         {
             _startTime = startTime;
+            Encoding   = encoding;
         }
 
         #endregion

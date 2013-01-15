@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Text;
 using CHAOS.Serialization.JSON;
 using CHAOS.Serialization.Standard;
 
@@ -13,7 +12,7 @@ namespace Chaos.Portal.Response.Specification
         {
             var callback = response.Header.Callback ?? "portal_callback";
 
-            return new MemoryStream(Encoding.UTF8.GetBytes(SerializerFactory.Get<JSON>().Serialize(response, false).GetAsJSONP(callback)));
+            return new MemoryStream(response.Header.Encoding.GetBytes(SerializerFactory.Get<JSON>().Serialize(response, false).GetAsJSONP(callback)));
         }
 
         #endregion

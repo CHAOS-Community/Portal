@@ -7,6 +7,8 @@ namespace Chaos.Portal.Logging.Database
         #region Fields
 
         private readonly IPortalRepository _portalRepository;
+        
+        private LogLevel _logLevel;
 
         #endregion
         #region Initialization
@@ -16,6 +18,13 @@ namespace Chaos.Portal.Logging.Database
             _portalRepository = portalRepository;
         }
 
+        public ILogFactory WithLogLevel(LogLevel logLevel)
+        {
+            _logLevel = logLevel;
+
+            return this;
+        }
+
         #endregion
         #region Business Logic
 
@@ -23,6 +32,7 @@ namespace Chaos.Portal.Logging.Database
         {
             return new DatabaseLogger(_portalRepository);
         }
+
 
         #endregion
     }

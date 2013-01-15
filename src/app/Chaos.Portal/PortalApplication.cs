@@ -96,7 +96,9 @@ namespace Chaos.Portal
         /// <returns>The response object</returns>
         public IPortalResponse ProcessRequest( IPortalRequest request, IPortalResponse response )
         {
-            return GetExtension(request.Extension).CallAction(new CallContext(this, request, response, _loggingFactory.Create()));
+            var callContext = new CallContext(this, request, response, _loggingFactory.Create());
+
+            return GetExtension(request.Extension).CallAction(callContext);
         }
 
         private IExtension GetExtension(string extension)

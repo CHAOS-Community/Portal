@@ -11,7 +11,7 @@ namespace Chaos.Portal.Response.Specification
         public Stream GetStream(IPortalResponse response)
         {
             var xdoc = SerializerFactory.Get<XDocument>().Serialize(response, false);
-            xdoc.Declaration = new XDeclaration("1.0", "UTF-8", "yes");
+            xdoc.Declaration = new XDeclaration("1.0", response.Header.Encoding.HeaderName, "yes");
 
             var stream = new MemoryStream();
 

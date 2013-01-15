@@ -11,6 +11,7 @@ namespace Chaos.Portal.Response
 
         string Callback { get; set; }
 
+        System.Text.Encoding Encoding { get; set; }
         ReturnFormat ReturnFormat { get; set; }
     }
 }

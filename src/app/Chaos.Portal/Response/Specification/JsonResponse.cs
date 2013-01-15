@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Text;
 using CHAOS.Serialization.JSON;
 using CHAOS.Serialization.Standard;
 
@@ -11,7 +10,7 @@ namespace Chaos.Portal.Response.Specification
 
         public Stream GetStream(IPortalResponse response)
         {
-            return new MemoryStream(Encoding.UTF8.GetBytes(SerializerFactory.Get<JSON>().Serialize(response, false).Value));
+            return new MemoryStream(response.Header.Encoding.GetBytes(SerializerFactory.Get<JSON>().Serialize(response, false).Value));
         }
 
         #endregion
