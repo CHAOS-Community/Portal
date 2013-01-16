@@ -160,10 +160,13 @@
     <Compile Include="Exceptions\ParameterBindingMissingException.cs" />
     <Compile Include="Exceptions\SessionDoesNotExistException.cs" />
     <Compile Include="Exceptions\UnhandledException.cs" />
-    <Compile Include="Exceptions\UnsupportedModuleReturnTypeException.cs" />
+    <Compile Include="Exceptions\UnsupportedExtensionReturnTypeException.cs" />
     <Compile Include="Exceptions\WrongProtocolVersionException.cs" />
+    <Compile Include="Extension\Standard\View.cs" />
     <Compile Include="Index\IView.cs" />
     <Compile Include="Index\IViewManager.cs" />
+    <Compile Include="Index\Standard\GroupView.cs" />
+    <Compile Include="Index\Standard\SessionView.cs" />
     <Compile Include="Index\ViewManager.cs" />
     <Compile Include="Logging\Database\DatabaseLoggerFactory.cs" />
     <Compile Include="Logging\DirectLogger.cs" />

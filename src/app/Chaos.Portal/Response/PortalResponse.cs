@@ -2,6 +2,7 @@
 using System.IO;
 using CHAOS.Serialization;
 using Chaos.Portal.Data.Dto;
+using Chaos.Portal.Data.Dto.Standard;
 using Chaos.Portal.Exceptions;
 
 namespace Chaos.Portal.Response
@@ -48,9 +49,10 @@ namespace Chaos.Portal.Response
             var results     = obj as IEnumerable<IResult>;
             var pagedResult = obj as IPagedResult<IResult>;
             var stream      = obj as Stream;
+            var uinteger    = obj as uint?;
+            var integer     = obj as int?;
 
-		    if( result != null )
-                Result.Results.Add(result);
+		    if( result != null ) Result.Results.Add(result);
             else
             if( results != null )
                 foreach (var item in results)
@@ -63,11 +65,11 @@ namespace Chaos.Portal.Response
 
                 Result.TotalCount  = pagedResult.FoundCount;
 		    }
-		    else 
-            if( stream != null )
-                Stream = stream;
-            else
-		        throw new UnsupportedModuleReturnTypeException(
+            else if (stream != null) Stream = stream;
+            else if (uinteger != null) Result.Results.Add(new ScalarResult((int)uinteger.Value));
+            else if (integer != null) Result.Results.Add(new ScalarResult(integer.Value));
+            else 
+		        throw new UnsupportedExtensionReturnTypeException(
 		            "Return type is not supported: " +
 		            obj.GetType().FullName);
 	    }
