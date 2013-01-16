@@ -20,6 +20,10 @@ namespace Chaos.Portal.Logging
         public DirectLogger(ILogFactory loggerFactory)
         {
             _loggerFactory = loggerFactory;
+            _logLevel = LogLevel.Debug;
+            _name = "unnamed";
+            _stopwatch = new Stopwatch();
+            _stopwatch.Start();
         }
 
         public ILog WithLoglevel( LogLevel logLevel )
