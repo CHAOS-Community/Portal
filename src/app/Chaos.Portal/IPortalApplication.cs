@@ -5,6 +5,7 @@ using Chaos.Portal.Bindings;
 using Chaos.Portal.Cache;
 using Chaos.Portal.Data;
 using Chaos.Portal.Extension;
+using Chaos.Portal.Index;
 using Chaos.Portal.Logging;
 using Chaos.Portal.Request;
 using Chaos.Portal.Response;
@@ -19,6 +20,7 @@ namespace Chaos.Portal
         IIndexManager                        IndexManager { get; }
         IPortalRepository                    PortalRepository { get; }
         ILog                                 Log { get; }
+        IViewManager                         ViewManager { get; }
 
         /// <summary>
         /// Process a request to portal. Any underlying extensions or modules will be called based on the callContext parameter

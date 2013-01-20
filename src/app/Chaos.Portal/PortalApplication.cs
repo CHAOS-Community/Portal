@@ -1,4 +1,4 @@
-﻿namespace Chaos.Portal
+namespace Chaos.Portal
 {
     using System;
     using System.Collections.Generic;
@@ -85,6 +85,11 @@
             LoadedExtensions.Add("Subscription",   new Extension.Standard.Subscription().WithPortalApplication(this));
             LoadedExtensions.Add("User",           new Extension.Standard.User().WithPortalApplication(this));
             LoadedExtensions.Add("UserSettings",   new Extension.Standard.UserSettings().WithPortalApplication(this));
+            LoadedExtensions.Add("View",           new Extension.Standard.View().WithPortalApplication(this));
+
+            // load portal views
+            ViewManager.AddView("GroupView", new GroupView());
+            ViewManager.AddView("SessionView", new SessionView());
         }
 
         #endregion

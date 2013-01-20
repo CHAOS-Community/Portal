@@ -28,13 +28,14 @@ namespace Chaos.Portal.Index
 
         public void Index(IEnumerable<object> obj)
         {
+
             foreach (var view in _loadedViews.Values)
                 view.Index(obj);
         }
 
         public IEnumerable<IIndexResult> Query(string key, IQuery query)
         {
-            if (!_loadedViews.ContainsKey(key)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded"));
+            if (!_loadedViews.ContainsKey(key)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", key));
 
             return _loadedViews[key].Query(query);
         }
