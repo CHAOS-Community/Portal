@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CHAOS;
-using CHAOS.Index;
-using Chaos.Portal.Bindings;
-using Chaos.Portal.Bindings.Standard;
-using Chaos.Portal.Cache;
-using Chaos.Portal.Data;
-using Chaos.Portal.Exceptions;
-using Chaos.Portal.Extension;
-using Chaos.Portal.Index;
-using Chaos.Portal.Logging;
-using Chaos.Portal.Request;
-using Chaos.Portal.Response;
-
-namespace Chaos.Portal
+﻿namespace Chaos.Portal
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using CHAOS;
+    using CHAOS.Index;
+
+    using Chaos.Portal.Bindings;
+    using Chaos.Portal.Bindings.Standard;
+    using Chaos.Portal.Cache;
+    using Chaos.Portal.Data;
+    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Extension;
+    using Chaos.Portal.Index;
+    using Chaos.Portal.Logging;
+    using Chaos.Portal.Request;
+    using Chaos.Portal.Response;
+
     public class PortalApplication : IPortalApplication
     {
         #region Fields

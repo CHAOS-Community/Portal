@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-
-namespace Chaos.Portal.Test
+﻿namespace Chaos.Portal.Test
 {
+    using NUnit.Framework;
+
     [TestFixture]
     public class PortalApplicationTest : TestBase
     {
