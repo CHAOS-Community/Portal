@@ -1,40 +1,88 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using CHAOS.Index;
-using CHAOS.Index.Solr;
-using Chaos.Portal.Data.Dto;
-
-namespace Chaos.Portal.Index.Standard
+﻿namespace Chaos.Portal.Index.Standard
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+
+    using Chaos.Portal.Data.Dto;
+
+    using CHAOS.Index;
+    using CHAOS.Index.Solr;
+
+    using Chaos.Portal.Data.Dto.Standard;
+
+    /// <summary>
+    /// This view is responsible for indexing and querying groups
+    /// </summary>
     public class GroupView : IView
     {
         #region Fields
 
+        /// <summary>
+        /// The _index.
+        /// </summary>
         private readonly IIndex _index;
 
         #endregion
         #region Initialize
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GroupView"/> class.
+        /// </summary>
         public GroupView()
         {
-            _index = new Solr { Cores = new List<SolrCoreConnection> { new SolrCoreConnection("http://172.18.5.1:8080/solr/core0") } };
+            this._index = new Solr { Cores = new List<SolrCoreConnection> { new SolrCoreConnection("http://172.18.5.1:8080/solr/core0") } };
         }
 
         #endregion
         #region Business Logic
 
-        public void Index(IEnumerable<object> objs)
+        /// <summary>
+        /// Attempts to _index the objects.
+        /// </summary>
+        /// <param name="objs">
+        /// The objects to _index.
+        /// </param>
+        /// <returns>
+        /// The <see>
+        ///       <cref>IViewReport</cref>
+        ///     </see> .
+        /// </returns>
+        public IViewReport Index(IEnumerable<object> objs)
         {
-            _index.Set(objs.OfType<IGroup>().Select(Index));
+            var groups = objs.OfType<IGroup>().ToList();
+
+            this._index.Set(groups.Select(Index));
+
+            return new ViewReport { NumberOfIndexedDocuments = (uint)groups.Count };
         }
 
+        /// <summary>
+        /// The _index.
+        /// </summary>
+        /// <param name="group">
+        /// The group.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IIndexable"/>.
+        /// </returns>
         public IIndexable Index(IGroup group)
         {
             return new IndexableGroup(group);
         }
 
+        /// <summary>
+        /// The query.
+        /// </summary>
+        /// <param name="query">
+        /// The query.
+        /// </param>
+        /// <returns>
+        /// Returns a <see>
+        ///       <cref>IEnumerable</cref>
+        ///     </see> containing the query result.
+        /// </returns>
         public IEnumerable<IIndexResult> Query(IQuery query)
         {
             throw new NotImplementedException();

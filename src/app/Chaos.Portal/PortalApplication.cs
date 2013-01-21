@@ -4,9 +4,6 @@ namespace Chaos.Portal
     using System.Collections.Generic;
     using System.Linq;
 
-    using CHAOS;
-    using CHAOS.Index;
-
     using Chaos.Portal.Bindings;
     using Chaos.Portal.Bindings.Standard;
     using Chaos.Portal.Cache;
@@ -14,31 +11,48 @@ namespace Chaos.Portal
     using Chaos.Portal.Exceptions;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Index;
+    using Chaos.Portal.Index.Standard;
     using Chaos.Portal.Logging;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;
 
+    using CHAOS;
+    using CHAOS.Index;
+
+    /// <summary>
+    /// The portal application.
+    /// </summary>
     public class PortalApplication : IPortalApplication
     {
         #region Fields
 
+        /// <summary>
+        /// The _logging factory.
+        /// </summary>
         private readonly ILogFactory _loggingFactory;
-
-        #endregion
-        #region Properties
-
-        public IDictionary<Type, IParameterBinding> Bindings { get; set; }
-        public IDictionary<string, IExtension>      LoadedExtensions { get; set; }
-        public ICache                               Cache { get; protected set; }
-        public IIndexManager                        IndexManager { get; protected set; }
-        public IViewManager                         ViewManager { get; protected set; }
-        public ILog                                 Log { get; protected set; }
-        public IPortalRepository                    PortalRepository { get; set; }
 
         #endregion
         #region Constructors
 
-        public PortalApplication( ICache cache, IIndexManager indexManager, IViewManager viewManager, IPortalRepository portalRepository, ILogFactory loggingFactory )
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PortalApplication"/> class.
+        /// </summary>
+        /// <param name="cache">
+        /// The cache.
+        /// </param>
+        /// <param name="indexManager">
+        /// The index manager.
+        /// </param>
+        /// <param name="viewManager">
+        /// The view manager.
+        /// </param>
+        /// <param name="portalRepository">
+        /// The portal repository.
+        /// </param>
+        /// <param name="loggingFactory">
+        /// The logging factory.
+        /// </param>
+        public PortalApplication(ICache cache, IIndexManager indexManager, IViewManager viewManager, IPortalRepository portalRepository, ILogFactory loggingFactory)
         {
             Bindings         = new Dictionary<Type, IParameterBinding>();
             LoadedExtensions = new Dictionary<string, IExtension>();
@@ -91,6 +105,17 @@ namespace Chaos.Portal
             ViewManager.AddView("GroupView", new GroupView());
             ViewManager.AddView("SessionView", new SessionView());
         }
+
+        #endregion
+        #region Properties
+
+        public IDictionary<Type, IParameterBinding> Bindings { get; set; }
+        public IDictionary<string, IExtension> LoadedExtensions { get; set; }
+        public ICache Cache { get; protected set; }
+        public IIndexManager IndexManager { get; protected set; }
+        public IViewManager ViewManager { get; protected set; }
+        public ILog Log { get; protected set; }
+        public IPortalRepository PortalRepository { get; set; }
 
         #endregion
         #region Business Logic

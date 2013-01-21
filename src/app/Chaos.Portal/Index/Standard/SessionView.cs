@@ -1,14 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using CHAOS;
-using CHAOS.Index;
-using CHAOS.Index.Solr;
-using Chaos.Portal.Data.Dto;
-
 namespace Chaos.Portal.Index.Standard
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+
+    using Chaos.Portal.Data.Dto;
+
+    using CHAOS;
+    using CHAOS.Index;
+    using CHAOS.Index.Solr;
+
+    using Chaos.Portal.Data.Dto.Standard;
+
     public class SessionView : IView
     {
         #region Fields
@@ -26,9 +30,24 @@ namespace Chaos.Portal.Index.Standard
         #endregion
         #region Business Logic
 
-        public void Index(IEnumerable<object> objs)
+        /// <summary>
+        /// The index.
+        /// </summary>
+        /// <param name="objs">
+        /// The objects.
+        /// </param>
+        /// <returns>
+        /// The <see>
+        ///       <cref>IViewReport</cref>
+        ///     </see> .
+        /// </returns>
+        public IViewReport Index(IEnumerable<object> objs)
         {
-            _index.Set(objs.OfType<ISession>().Select(Index));
+            var sessions = objs.OfType<ISession>().ToList();
+
+            _index.Set(sessions.Select(Index));
+
+            return new ViewReport { NumberOfIndexedDocuments = (uint)sessions.Count};
         }
 
         public IIndexable Index(ISession session)
@@ -51,9 +70,9 @@ namespace Chaos.Portal.Index.Standard
         public IndexableSession(ISession session)
         {
             UniqueIdentifier = new KeyValuePair<string, string>("Guid", session.GUID.ToString());
-            UserGUID = session.UserGUID;
-            DateModified = session.DateModified;
-            DateCreated = session.DateCreated;
+            UserGUID         = session.UserGUID;
+            DateModified     = session.DateModified;
+            DateCreated      = session.DateCreated;
         }
 
         #endregion
