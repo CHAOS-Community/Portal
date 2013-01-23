@@ -1,5 +1,6 @@
 ﻿namespace Chaos.Portal.Index
 {
+    using System;
     using System.Collections.Generic;
 
     using Chaos.Portal.Data.Dto;
@@ -74,7 +75,11 @@
 
         public void AddView(string key, IView view)
         {
-            _loadedViews.Add(key, view);
+            if(key == null) throw new NullReferenceException("Cannot load a view with a null key");
+            if(view == null) throw new NullReferenceException("Cannot load a null view");
+            
+            if(!_loadedViews.ContainsKey(key))
+                _loadedViews.Add(key, view);
         }
 
         #endregion
