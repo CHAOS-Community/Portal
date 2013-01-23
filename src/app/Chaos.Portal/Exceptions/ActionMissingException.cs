@@ -1,25 +1,52 @@
-﻿using System.Runtime.Serialization;
-
-namespace Chaos.Portal.Exceptions
+﻿namespace Chaos.Portal.Exceptions
 {
+    using System.Runtime.Serialization;
+
+    /// <summary>
+    /// An exception indicating that an action is missing
+    /// </summary>
     public class ActionMissingException : System.Exception
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ActionMissingException"/> class.
+        /// </summary>
         public ActionMissingException()
         {
         }
 
-        public ActionMissingException(string message)
-            : base(message)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ActionMissingException"/> class.
+        /// </summary>
+        /// <param name="message">
+        /// The message.
+        /// </param>
+        public ActionMissingException(string message) : base(message)
         {
         }
 
-        public ActionMissingException(string message, System.Exception innerException)
-            : base(message, innerException)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ActionMissingException"/> class.
+        /// </summary>
+        /// <param name="message">
+        /// The message.
+        /// </param>
+        /// <param name="innerException">
+        /// The inner exception.
+        /// </param>
+        public ActionMissingException(string message, System.Exception innerException) : base(message, innerException)
         {
         }
 
-		protected ActionMissingException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ActionMissingException"/> class.
+        /// </summary>
+        /// <param name="info">
+        /// The info.
+        /// </param>
+        /// <param name="context">
+        /// The context.
+        /// </param>
+        protected ActionMissingException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

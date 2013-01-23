@@ -69,14 +69,17 @@
     <Compile Include="Cache\Couchbase\Cache.cs" />
     <Compile Include="Data\Dto\IClientSettings.cs" />
     <Compile Include="Data\Dto\IGroup.cs" />
+    <Compile Include="Data\Dto\IIndexReport.cs" />
     <Compile Include="Data\Dto\IPagedResult.cs" />
     <Compile Include="Data\Dto\IResult.cs" />
     <Compile Include="Data\Dto\ISession.cs" />
     <Compile Include="Data\Dto\ISubscriptionInfo.cs" />
     <Compile Include="Data\Dto\IUserInfo.cs" />
+    <Compile Include="Data\Dto\IViewReport.cs" />
     <Compile Include="Data\Dto\ResultExtensionMethods.cs" />
     <Compile Include="Data\Dto\Standard\ClientSettings.cs" />
     <Compile Include="Data\Dto\IUserSettings.cs" />
+    <Compile Include="Data\Dto\Standard\IndexReport.cs" />
     <Compile Include="Data\Dto\Standard\PortalError.cs" />
     <Compile Include="Data\Dto\Standard\Extension.cs" />
     <Compile Include="Data\Dto\Standard\ExtensionMethods.cs" />
@@ -84,6 +87,7 @@
     <Compile Include="Data\Dto\Standard\IndexSettings.cs" />
     <Compile Include="Data\Dto\Standard\Module.cs" />
     <Compile Include="Data\Dto\Standard\PagedResult.cs" />
+    <Compile Include="Data\Dto\Standard\ViewReport.cs" />
     <Compile Include="Data\EF\ClientSettings.cs">
       <DependentUpon>Portal.tt</DependentUpon>
     </Compile>
