@@ -17,4 +17,8 @@ Thumbs.db
 *.xap
 
 *.bak
+
 *.dat
+*.log
+*.Cache
+*.StyleCop
