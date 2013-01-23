@@ -47,6 +47,7 @@
         /// The index.
         /// </summary>
         /// <param name="obj">The object.</param>
+        /// <returns>The IndexReport of the index process</returns>
         public IIndexReport Index(object obj)
         {
             return Index(new[] {obj});
