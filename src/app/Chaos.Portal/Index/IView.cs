@@ -14,7 +14,12 @@
         /// <summary>
         /// The index.
         /// </summary>
-        /// <param name="obj">The object. </param>
+        /// <param name="obj">
+        /// The object. 
+        /// </param>
+        /// <returns>
+        /// The <see cref="IViewReport"/>.
+        /// </returns>
         IViewReport Index(IEnumerable<object> obj);
 
         /// <summary>

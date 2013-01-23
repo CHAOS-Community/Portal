@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Exceptions;
 
     using CHAOS.Index;
@@ -24,9 +26,17 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewManager"/> class.
         /// </summary>
-        public ViewManager()
+        public ViewManager() : this(new Dictionary<string, IView>())
         {
-            _loadedViews = new Dictionary<string, IView>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ViewManager"/> class.
+        /// </summary>
+        /// <param name="dictionary">The dictionary.</param>
+        public ViewManager(IDictionary<string, IView> dictionary)
+        {
+            _loadedViews = dictionary;
         }
 
         #endregion
@@ -36,20 +46,23 @@
         /// The index.
         /// </summary>
         /// <param name="obj">The object.</param>
-        public void Index(object obj)
+        public IIndexReport Index(object obj)
         {
-            Index(new[] {obj});
+            return Index(new[] {obj});
         }
 
         /// <summary>
         /// The index.
         /// </summary>
         /// <param name="obj">The objects.</param>
-        public void Index(IEnumerable<object> obj)
+        public IIndexReport Index(IEnumerable<object> obj)
         {
-
+            var report = new IndexReport();
+            
             foreach (var view in _loadedViews.Values)
-                view.Index(obj);
+                report.Views.Add(view.Index(obj));
+
+            return report;
         }
 
         public IEnumerable<IIndexResult> Query(string key, IQuery query)

@@ -1,7 +1,6 @@
 ﻿namespace Chaos.Portal.Test.Index
 {
     using System.Collections.Generic;
-    using System.Linq;
 
     using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Index;
@@ -67,35 +66,7 @@
         #endregion
         #region Index
 
-        [Test]
-        public void Index_Object_ReturnIndexReportWithOneIndexedObject()
-        {
-            var obj = new object();
 
-            _dictionary.SetupGet(p => p.Values).Returns((new[] { _view.Object }));
-
-            _view.Setup(m => m.Index(new[] { obj })).Returns(new ViewReport { NumberOfIndexedDocuments = 1 });
-
-            var report = _viewManager.Index(obj);
-
-            _view.Verify(m => m.Index(new []{obj}));
-            Assert.AreEqual(1, report.Views.First().NumberOfIndexedDocuments);
-        }
-
-        [Test]
-        public void Index_Object_ReturnIndexReportWithZeroIndexedObjects()
-        {
-            var obj = new object();
-
-            _dictionary.SetupGet(p => p.Values).Returns((new[] { _view.Object }));
-
-            _view.Setup(m => m.Index(new[] { obj })).Returns(new ViewReport ());
-
-            var report = _viewManager.Index(obj);
-
-            _view.Verify(m => m.Index(new[] { obj }));
-            Assert.AreEqual(0, report.Views.Count);
-        }
 
         #endregion
     }

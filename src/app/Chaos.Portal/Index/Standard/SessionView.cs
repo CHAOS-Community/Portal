@@ -6,30 +6,58 @@ namespace Chaos.Portal.Index.Standard
     using System.Linq;
 
     using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Data.Dto.Standard;
 
     using CHAOS;
     using CHAOS.Index;
-    using CHAOS.Index.Solr;
 
-    using Chaos.Portal.Data.Dto.Standard;
-
+    /// <summary>
+    /// The session view.
+    /// </summary>
     public class SessionView : IView
     {
         #region Fields
 
+        /// <summary>
+        /// The _index.
+        /// </summary>
         private readonly IIndex _index;
 
         #endregion
         #region Initialize
 
-        public SessionView()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SessionView"/> class.
+        /// </summary>
+        /// <param name="index">
+        /// The index.
+        /// </param>
+        public SessionView(IIndex index)
         {
-            _index = new Solr { Cores = new List<SolrCoreConnection> { new SolrCoreConnection("http://172.18.5.1:8080/solr/core1") } };
+            _index = index;
         }
 
         #endregion
         #region Business Logic
 
+        /// <summary>
+        /// The query.
+        /// </summary>
+        /// <param name="query">
+        /// The query.
+        /// </param>
+        /// <returns>
+        /// The <see>
+        ///       <cref>IEnumerable</cref>
+        ///     </see> .
+        /// </returns>
+        /// <exception cref="NotImplementedException">not implemented
+        /// </exception>
+        public IEnumerable<IIndexResult> Query(IQuery query)
+        {
+            throw new NotImplementedException();
+        }
+        
         /// <summary>
         /// The index.
         /// </summary>
@@ -50,14 +78,18 @@ namespace Chaos.Portal.Index.Standard
             return new ViewReport { NumberOfIndexedDocuments = (uint)sessions.Count};
         }
 
-        public IIndexable Index(ISession session)
+        /// <summary>
+        /// The index.
+        /// </summary>
+        /// <param name="session">
+        /// The session.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IIndexable"/>.
+        /// </returns>
+        private static IIndexable Index(ISession session)
         {
             return new IndexableSession(session);
-        }
-
-        public IEnumerable<IIndexResult> Query(IQuery query)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

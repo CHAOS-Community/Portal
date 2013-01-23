@@ -92,8 +92,6 @@ namespace Chaos.Portal
             LoadedExtensions.Add("View",           new Extension.Standard.View().WithPortalApplication(this));
 
             // load portal views
-            ViewManager.AddView("GroupView", new GroupView());
-            ViewManager.AddView("SessionView", new SessionView());
         }
 
         #endregion
