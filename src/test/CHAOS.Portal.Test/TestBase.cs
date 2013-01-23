@@ -1,16 +1,19 @@
-﻿using CHAOS.Index;
-using Chaos.Portal.Cache;
-using Chaos.Portal.Data;
-using Chaos.Portal.Extension;
-using Chaos.Portal.Index;
-using Chaos.Portal.Logging;
-using Chaos.Portal.Request;
-using Chaos.Portal.Response;
-using Moq;
-using NUnit.Framework;
-
-namespace Chaos.Portal.Test
+﻿namespace Chaos.Portal.Test
 {
+    using Chaos.Portal.Cache;
+    using Chaos.Portal.Data;
+    using Chaos.Portal.Extension;
+    using Chaos.Portal.Index;
+    using Chaos.Portal.Logging;
+    using Chaos.Portal.Request;
+    using Chaos.Portal.Response;
+
+    using CHAOS.Index;
+
+    using Moq;
+
+    using NUnit.Framework;
+
     [TestFixture]
     public class TestBase
     {
