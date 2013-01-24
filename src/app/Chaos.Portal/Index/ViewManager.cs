@@ -67,7 +67,7 @@
             return report;
         }
 
-        public IEnumerable<IIndexResult> Query(string key, IQuery query)
+        public IEnumerable<IResult> Query(string key, IQuery query)
         {
             if (!_loadedViews.ContainsKey(key)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", key));
 

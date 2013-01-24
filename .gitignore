@@ -24,3 +24,4 @@ Thumbs.db
 *.StyleCop
 *.ncrunchsolution
 *.ncrunchproject
+_NCrunch*

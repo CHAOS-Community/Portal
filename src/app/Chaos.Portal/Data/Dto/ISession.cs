@@ -1,10 +1,16 @@
-﻿using System;
-using CHAOS;
-using CHAOS.Serialization;
-
-namespace Chaos.Portal.Data.Dto
+﻿namespace Chaos.Portal.Data.Dto
 {
-    public interface ISession : IResult
+    using System;
+
+    using Chaos.Portal.Cache.Couchbase;
+
+    using CHAOS;
+    using CHAOS.Serialization;
+
+    /// <summary>
+    /// The Session interface.
+    /// </summary>
+    public interface ISession : IResult, ICacheable
     {
         [Serialize("SessionGuid")]
         UUID GUID { get; set; }

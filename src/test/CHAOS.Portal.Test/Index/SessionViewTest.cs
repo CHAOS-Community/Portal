@@ -2,11 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using CHAOS;
     using CHAOS.Index;
+    using CHAOS.Index.Solr;
 
+    using Chaos.Portal.Cache;
     using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Index.Standard;
 
     using Moq;
@@ -19,14 +23,16 @@
         #region Fields
 
         private Mock<IIndex> _indexMock;
+        private Mock<ICache> _cacheMock;
 
-        #endregion
+            #endregion
         #region Initialization
 
         [SetUp]
         public void SetUp()
         {
             _indexMock = new Mock<IIndex>();
+            _cacheMock = new Mock<ICache>();
         }
 
         #endregion
@@ -36,9 +42,9 @@
         public void Index_SingleObject_CallUnderlyingIndexInfrastructureWithFieldsToIndex()
         {
             var view    = Make_SessionView();
-            var session = Make_SessionMock();
+            var session = Make_Session();
 
-            var report = view.Index(new object[] { session.Object });
+            var report = view.Index(new object[] { session });
 
             _indexMock.Verify(m => m.Set(It.IsAny<IEnumerable<IIndexable>>()));
             Assert.AreEqual(1, report.NumberOfIndexedDocuments);
@@ -48,32 +54,64 @@
         public void Index_MultipleObjects_CallUnderlyingIndexInfrastructireWithFieldsToIndex()
         {
             var view    = Make_SessionView();
-            var session = Make_SessionMock();
+            var session = Make_Session();
 
-            var report = view.Index(new object[] { session.Object, session.Object });
+            var report = view.Index(new object[] { session, session });
 
             _indexMock.Verify(m => m.Set(It.IsAny<IEnumerable<IIndexable>>()));
             Assert.AreEqual(2, report.NumberOfIndexedDocuments);
         }
 
+        [Test]
+        public void Index_SingleObject_CallUnderlyingCachingInfrastructureWithSerializableDto()
+        {
+            var view    = Make_SessionView();
+            var session = Make_Session();
+
+            var report = view.Index(new object[] { session });
+
+            _cacheMock.Verify(m => m.Store(session));
+            Assert.AreEqual(1, report.NumberOfIndexedDocuments);
+        }
+
+        #endregion
+        #region Query
+
+        [Test]
+        public void Query_SolrQuery_CallsIndexAndRetrievesResultFromCacheAndReturnsDto()
+        {
+            var view    = this.Make_SessionView();
+            var query   = new SolrQuery();
+            var session = Make_Session();
+            _indexMock.Setup(m => m.Get<IndexableSession>(query)).Returns(new Response<IndexableSession>());
+            _cacheMock.Setup(p => p.Get<Session>(It.IsAny<IEnumerable<string>>())).Returns(new []{session});
+
+            var results = view.Query(query);
+
+            Assert.AreEqual(1, results.Count());
+            Assert.AreEqual(session.GUID.ToString(), (results.First() as ISession).GUID.ToString());
+            _indexMock.Verify(m => m.Get<IndexableSession>(query));
+        }
+
         #endregion
         #region Factory methods
 
-        private static Mock<ISession> Make_SessionMock()
+        private static Session Make_Session()
         {
-            var session = new Mock<ISession>();
-
-            session.SetupGet(p => p.GUID).Returns(new UUID("149e26c8-4c64-40ca-9338-15305dc17b5f"));
-            session.SetupGet(p => p.UserGUID).Returns(new UUID("c63f54ec-769d-4d6b-9092-96e64a28eaba"));
-            session.SetupGet(p => p.DateCreated).Returns(new DateTime(1990, 5, 5));
-            session.SetupGet(p => p.DateModified).Returns(new DateTime(1990, 5, 6));
+            var session = new Session
+                {
+                    GUID         = new UUID("149e26c8-4c64-40ca-9338-15305dc17b5f"),
+                    UserGUID     = new UUID("c63f54ec-769d-4d6b-9092-96e64a28eaba"),
+                    DateCreated  = new DateTime(1990, 5, 5),
+                    DateModified = new DateTime(1990, 5, 6)
+                };
 
             return session;
         }
 
         private SessionView Make_SessionView()
         {
-            return new SessionView(_indexMock.Object);
+            return new SessionView(_indexMock.Object,_cacheMock.Object);
         }
 
         #endregion

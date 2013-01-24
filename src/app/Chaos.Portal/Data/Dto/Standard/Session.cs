@@ -1,12 +1,25 @@
-﻿using System;
-using CHAOS;
-using CHAOS.Serialization;
-
-namespace Chaos.Portal.Data.Dto.Standard
+﻿namespace Chaos.Portal.Data.Dto.Standard
 {
+    using System;
+
+    using CHAOS;
+    using CHAOS.Serialization;
+
 	public class Session : Result, ISession
 	{
 		#region Properties
+
+        public string DocumentID 
+        { 
+            get
+            {
+                return GUID.ToString();
+            }
+            set
+            {
+                GUID = new UUID(value);
+            }
+        }
 
         [Serialize]
 		public UUID GUID { get; set; }

@@ -31,6 +31,6 @@
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        IEnumerable<IIndexResult> Query(IQuery query);
+        IEnumerable<IResult> Query(IQuery query);
     }
 }

@@ -1,11 +1,14 @@
-﻿using System;
-using CHAOS;
-using CHAOS.Serialization;
-using Chaos.Portal.Data.Dto.Standard;
-
-namespace Chaos.Portal.Data.Dto
+﻿namespace Chaos.Portal.Data.Dto
 {
-    public interface IUserInfo : IResult
+    using System;
+
+    using Chaos.Portal.Cache.Couchbase;
+    using Chaos.Portal.Data.Dto.Standard;
+
+    using CHAOS;
+    using CHAOS.Serialization;
+
+    public interface IUserInfo : IResult, ICacheable
     {
         [Serialize("GUID")]
         UUID GUID { get; set; }
