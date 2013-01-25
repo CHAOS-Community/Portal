@@ -2,11 +2,16 @@ namespace Chaos.Portal.Index.Standard
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
+    using System.Xml.Linq;
 
+    using Chaos.Portal.Cache;
+    using Chaos.Portal.Cache.Couchbase;
     using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Data.Dto.Standard;
 
+    using CHAOS;
     using CHAOS.Index;
 
     /// <summary>
@@ -21,6 +26,8 @@ namespace Chaos.Portal.Index.Standard
         /// </summary>
         private readonly IIndex _index;
 
+        private readonly ICache _cache;
+
         #endregion
         #region Initialize
 
@@ -30,9 +37,11 @@ namespace Chaos.Portal.Index.Standard
         /// <param name="index">
         /// The index.
         /// </param>
-        public SessionView(IIndex index)
+        /// <param name="cache">The cache object to use for caching Dtos</param>
+        public SessionView(IIndex index, ICache cache)
         {
             _index = index;
+            _cache = cache;
         }
 
         #endregion
@@ -51,9 +60,12 @@ namespace Chaos.Portal.Index.Standard
         /// </returns>
         /// <exception cref="NotImplementedException">not implemented
         /// </exception>
-        public IEnumerable<IIndexResult> Query(IQuery query)
+        public IEnumerable<IResult> Query(IQuery query)
         {
-            throw new NotImplementedException();
+            var indexResponse = _index.Get<IndexableSession>(query);
+            var documentIdList = indexResponse.QueryResult.Results.Select(item => item.DocumentID);
+
+            return _cache.Get<Session>(documentIdList);
         }
         
         /// <summary>
@@ -73,6 +85,8 @@ namespace Chaos.Portal.Index.Standard
 
             _index.Set(sessions.Select(Index));
 
+            sessions.ForEach((session) => _cache.Store(session));
+
             return new ViewReport { NumberOfIndexedDocuments = (uint)sessions.Count};
         }
 
@@ -91,5 +105,58 @@ namespace Chaos.Portal.Index.Standard
         }
 
         #endregion
+    }
+
+    public class IndexableSession : IIndexable, IIndexResult, ICacheable
+    {
+        #region Initialize
+
+        public IndexableSession(ISession session)
+        {
+            UniqueIdentifier = new KeyValuePair<string, string>("Guid", session.GUID.ToString());
+            UserGUID         = session.UserGUID;
+            DateModified     = session.DateModified;
+            DateCreated      = session.DateCreated;
+        }
+
+        public IndexableSession()
+        {
+            
+        }
+
+        public IIndexResult Init(XElement element)
+        {
+
+            return this;
+        }
+
+        #endregion
+
+        public IEnumerable<KeyValuePair<string, string>> GetIndexableFields()
+        {
+            yield return UniqueIdentifier;
+            yield return new KeyValuePair<string, string>("UserGuid", UserGUID.ToString());
+            yield return new KeyValuePair<string, string>("DateCreated", DateCreated.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", CultureInfo.InvariantCulture));
+
+            if (DateModified.HasValue) yield return new KeyValuePair<string, string>("DateModified", DateModified.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", CultureInfo.InvariantCulture));
+        }
+
+        public KeyValuePair<string, string> UniqueIdentifier { get; private set; }
+
+        public UUID UserGUID { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime? DateModified { get; set; }
+
+        public string DocumentID
+        {
+            get
+            {
+                return UniqueIdentifier.Value;
+            }
+            set
+            {
+                UniqueIdentifier = new KeyValuePair<string, string>("Guid", value);
+            }
+        }
     }
 }

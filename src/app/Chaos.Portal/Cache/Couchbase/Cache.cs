@@ -5,11 +5,10 @@
     using System.Linq;
     using System.Xml.Linq;
 
-    using Chaos.Portal.Data.Dto;
-
     using CHAOS.Serialization.Standard;
 
     using global::Couchbase;
+    using global::Couchbase.Extensions;
 
     using Enyim.Caching.Memcached;
 
@@ -54,11 +53,11 @@
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public bool Put(string key, IResult value, TimeSpan timeSpan)
+        public bool Put(string key, ICacheable value, TimeSpan timeSpan)
         {
             var xml = SerializerFactory.XMLSerializer.Serialize(value, false);
-            
-            return Client.Store(StoreMode.Set, key, xml.ToString(SaveOptions.None), timeSpan);
+
+            return Client.Store(StoreMode.Set, value.DocumentID, xml.ToString(SaveOptions.None), timeSpan);
         }
 
         /// <summary>
@@ -76,20 +75,33 @@
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public bool Put(string key, IResult value, DateTime dateTime)
+        public bool Put(string key, ICacheable value, DateTime dateTime)
         {
             var xml = SerializerFactory.XMLSerializer.Serialize(value, false);
 
-            return Client.Store(StoreMode.Set, key, xml.ToString(SaveOptions.None), dateTime);
+            return Client.Store(StoreMode.Set, value.DocumentID, xml.ToString(SaveOptions.None), dateTime);
         }
 
+        /// <summary>
+        /// The store.
+        /// </summary>
+        /// <param name="value">
+        /// The value.
+        /// </param>
+        /// <returns>
+        /// True if the object was correctly cached.
+        /// </returns>
+        public bool Store(ICacheable value)
+        {
+            return Client.StoreJson(StoreMode.Set, value.DocumentID, value);
+        }
         /// <summary>
         /// Used to get a object from the cache
         /// </summary>
         /// <typeparam name="T">The type of object to deserialize to</typeparam>
         /// <param name="key">The key to get from the cache</param>
         /// <returns>The object retrieved from cache</returns>
-        public T Get<T>(string key) where T : IResult, new()
+        public T Get<T>(string key) where T : ICacheable
         {
             var get = (string)Client.Get(key);
 
@@ -102,11 +114,16 @@
         /// <typeparam name="T">The type of object to deserialize to</typeparam>
         /// <param name="keys">A list of keys to retrieve from the cache</param>
         /// <returns>An IEnumerable of the returned objects</returns>
-        public IEnumerable<T> Get<T>(IEnumerable<string> keys) where T : IResult, new()
+        public IEnumerable<T> Get<T>(IEnumerable<string> keys) where T : ICacheable
         {
             return Client.Get(keys).Select(item => SerializerFactory.XMLSerializer.Deserialize<T>(XDocument.Parse((string) item.Value), false));
         }
 
         #endregion
+    }
+
+    public interface ICacheable
+    {
+        string DocumentID { get; set; }
     }
 }

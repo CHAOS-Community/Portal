@@ -49,7 +49,7 @@ namespace Chaos.Portal.Index
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        IEnumerable<IIndexResult> Query(string key, IQuery query);
+        IEnumerable<IResult> Query(string key, IQuery query);
 
         /// <summary>
         /// The add view.
