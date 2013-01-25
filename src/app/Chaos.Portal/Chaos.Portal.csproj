@@ -169,6 +169,7 @@
     <Compile Include="Extension\Standard\View.cs" />
     <Compile Include="Index\IView.cs" />
     <Compile Include="Index\IViewManager.cs" />
+    <Compile Include="Index\Standard\IndexableSession.cs" />
     <Compile Include="Index\Standard\SessionView.cs" />
     <Compile Include="Index\ViewManager.cs" />
     <Compile Include="Logging\Database\DatabaseLoggerFactory.cs" />

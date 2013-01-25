@@ -2,13 +2,11 @@ namespace Chaos.Portal.Index.Standard
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
 
     using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Data.Dto.Standard;
 
-    using CHAOS;
     using CHAOS.Index;
 
     /// <summary>
@@ -93,35 +91,5 @@ namespace Chaos.Portal.Index.Standard
         }
 
         #endregion
-    }
-
-    class IndexableSession : IIndexable
-    {
-        #region Initialize
-
-        public IndexableSession(ISession session)
-        {
-            UniqueIdentifier = new KeyValuePair<string, string>("Guid", session.GUID.ToString());
-            UserGUID         = session.UserGUID;
-            DateModified     = session.DateModified;
-            DateCreated      = session.DateCreated;
-        }
-
-        #endregion
-
-        public IEnumerable<KeyValuePair<string, string>> GetIndexableFields()
-        {
-            yield return UniqueIdentifier;
-            yield return new KeyValuePair<string, string>("UserGuid", UserGUID.ToString());
-            yield return new KeyValuePair<string, string>("DateCreated", DateCreated.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", CultureInfo.InvariantCulture));
-
-            if (DateModified.HasValue) yield return new KeyValuePair<string, string>("DateModified", DateModified.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", CultureInfo.InvariantCulture));
-        }
-
-        public KeyValuePair<string, string> UniqueIdentifier { get; private set; }
-
-        public UUID UserGUID { get; set; }
-        public DateTime DateCreated { get; set; }
-        public DateTime? DateModified { get; set; }
     }
 }
