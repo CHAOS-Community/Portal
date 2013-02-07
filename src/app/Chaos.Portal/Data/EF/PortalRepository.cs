@@ -47,6 +47,19 @@ namespace CHAOS.Portal.Data.EF
         #endregion
         #region User
 
+        public uint CreateUser(Guid guid, string email)
+        {
+            using(var db = this.CreatePortalEntities())
+            {
+                var result = db.User_Create(guid.ToByteArray(), email).FirstOrDefault();
+
+                if(!result.HasValue)
+                    throw new UnhandledException("Unknown exception in User Created on the database");
+
+                return (uint)result.Value;
+            }
+        }
+
         public IUserInfo GetUserInfo(string email)
         {
             var user = GetUserInfo(null, null, email).FirstOrDefault();

@@ -65,6 +65,7 @@
     <Compile Include="Bindings\IParameterBinding.cs" />
     <Compile Include="Bindings\Standard\CallContextParameterBinding.cs" />
     <Compile Include="Bindings\Standard\ConvertableParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\XDocumentBinding.cs" />
     <Compile Include="Bindings\Standard\DateTimeParameterBinding.cs" />
     <Compile Include="Bindings\Standard\GuidParameterBinding.cs" />
     <Compile Include="Bindings\Standard\QueryParameterBinding.cs" />
