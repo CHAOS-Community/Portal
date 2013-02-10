@@ -1,13 +1,13 @@
-﻿using System;
-using CHAOS;
-using CHAOS.Serialization;
-
-namespace Chaos.Portal.Data.Dto
+﻿namespace Chaos.Portal.Data.Dto
 {
+    using System;
+
+    using CHAOS.Serialization;
+    
     public interface IGroup : IResult
     {
         [Serialize]
-        UUID GUID { get; set; }
+        Guid Guid { get; set; }
 
         [Serialize]
         long? SystemPermission { get; set; }

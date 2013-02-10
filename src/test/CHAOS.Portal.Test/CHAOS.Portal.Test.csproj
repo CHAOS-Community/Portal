@@ -48,6 +48,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bindings\GuidParameterBindingTest.cs" />
+    <Compile Include="Bindings\EnumerableOfGuidBindingTest.cs" />
     <Compile Include="Bindings\XDocumentBindingTest.cs" />
     <Compile Include="ExtensionMock.cs" />
     <Compile Include="Index\SessionViewTest.cs" />

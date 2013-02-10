@@ -10,7 +10,7 @@
     public interface IClientSettings : IResult
     {
         /// <summary>
-        /// Gets or sets the GUID.
+        /// Gets or sets the Guid.
         /// </summary>
         [Serialize]
         UUID GUID { get; set; }

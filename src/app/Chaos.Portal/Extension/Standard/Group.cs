@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using CHAOS.Extensions;
-using Chaos.Portal.Data.Dto;
-using Chaos.Portal.Data.Dto.Standard;
-using Chaos.Portal.Exceptions;
-
-namespace Chaos.Portal.Extension.Standard
+﻿namespace Chaos.Portal.Extension.Standard
 {
-    [PortalExtension( configurationName : "Portal")]
+    using System;
+    using System.Collections.Generic;
+
+    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Exceptions;
+
+    [PortalExtension(configurationName: "Portal")]
     public class Group : AExtension
     {
         #region Initialization
@@ -19,10 +19,10 @@ namespace Chaos.Portal.Extension.Standard
         
         public IEnumerable<IGroup> Get( ICallContext callContext, Guid guid )
         {
-            if(callContext.User.GUID.ToString() == callContext.AnonymousUserGuid.ToString())
+            if(callContext.User.Guid.ToString() == callContext.AnonymousUserGuid.ToString())
                 throw new InsufficientPermissionsException( "Anonymous users cannot create groups" );
 
-            return PortalRepository.GroupGet(guid, null, callContext.User.GUID.ToGuid());
+            return PortalRepository.GroupGet(guid, null, callContext.User.Guid);
         }
 
         #endregion
@@ -30,10 +30,10 @@ namespace Chaos.Portal.Extension.Standard
 
         public IGroup Create( ICallContext callContext, string name, uint systemPermission )
         {
-            if( callContext.User.GUID.ToString() == callContext.AnonymousUserGuid.ToString() )
+            if( callContext.User.Guid.ToString() == callContext.AnonymousUserGuid.ToString() )
                 throw new InsufficientPermissionsException( "Anonymous users cannot create groups" );
 
-            return PortalRepository.GroupCreate(new Guid(), name, callContext.User.GUID.ToGuid(), systemPermission);
+            return PortalRepository.GroupCreate(new Guid(), name, callContext.User.Guid, systemPermission);
         }
 
         #endregion
@@ -41,10 +41,10 @@ namespace Chaos.Portal.Extension.Standard
 
         public ScalarResult Delete( ICallContext callContext, Guid guid )
         {
-            if(callContext.User.GUID.ToString() == callContext.AnonymousUserGuid.ToString())
+            if(callContext.User.Guid.ToString() == callContext.AnonymousUserGuid.ToString())
                 throw new InsufficientPermissionsException( "Anonymous users cannot delete groups" );
 
-            var result = PortalRepository.GroupDelete(guid, callContext.User.GUID.ToGuid());
+            var result = PortalRepository.GroupDelete(guid, callContext.User.Guid);
 
             return new ScalarResult((int) result);
         }
@@ -54,10 +54,10 @@ namespace Chaos.Portal.Extension.Standard
 
         public ScalarResult Update( ICallContext callContext, Guid guid, string newName, uint? newSystemPermission )
         {
-            if(callContext.User.GUID.ToString() == callContext.AnonymousUserGuid.ToString())
+            if(callContext.User.Guid.ToString() == callContext.AnonymousUserGuid.ToString())
                 throw new InsufficientPermissionsException( "Anonymous users cannot Update groups" );
 
-            var result = PortalRepository.GroupUpdate(guid, callContext.User.GUID.ToGuid(), newName, newSystemPermission);
+            var result = PortalRepository.GroupUpdate(guid, callContext.User.Guid, newName, newSystemPermission);
 
             return new ScalarResult((int) result);
         }

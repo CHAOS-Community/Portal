@@ -4,7 +4,6 @@
 
     using Chaos.Portal.Cache.Couchbase;
 
-    using CHAOS;
     using CHAOS.Serialization;
 
     /// <summary>
@@ -13,10 +12,10 @@
     public interface ISession : IResult, ICacheable
     {
         [Serialize("SessionGuid")]
-        UUID GUID { get; set; }
+        Guid Guid { get; set; }
 
-        [Serialize("UserGUID")]
-        UUID UserGUID { get; set; }
+        [Serialize("UserGuid")]
+        Guid UserGuid { get; set; }
 
         [Serialize("DateCreated")]
         DateTime DateCreated { get; set; }

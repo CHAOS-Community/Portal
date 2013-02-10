@@ -9,7 +9,7 @@ namespace Chaos.Portal.Data.Dto.Standard
 		#region Properties
 
 		[Serialize]
-		public UUID GUID { get; set; }
+		public Guid Guid { get; set; }
 
 		[Serialize]
 		public long? SystemPermission { get; set; }
@@ -30,7 +30,7 @@ namespace Chaos.Portal.Data.Dto.Standard
 
 		public Group( Guid guid, long? systemPermission, string name, DateTime dateCreated )
 		{
-			GUID             = new UUID( guid.ToByteArray() );
+			Guid             = guid;
 			SystemPermission = systemPermission;
 			Name             = name;
 			DateCreated      = dateCreated;

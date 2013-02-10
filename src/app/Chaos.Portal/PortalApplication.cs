@@ -81,6 +81,7 @@ namespace Chaos.Portal
             Bindings.Add( typeof(Guid), new UUIDParameterBinding() );
             Bindings.Add( typeof(Guid?), new UUIDParameterBinding() );
             Bindings.Add( typeof(IQuery), new QueryParameterBinding() );
+            Bindings.Add( typeof(IEnumerable<Guid>), new EnumerableOfGuidParameterBinding());
 
             // load portal extensions
             LoadedExtensions.Add("ClientSettings", new Extension.Standard.ClientSettings().WithPortalApplication(this));

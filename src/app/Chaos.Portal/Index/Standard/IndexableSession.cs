@@ -26,10 +26,10 @@ namespace Chaos.Portal.Index.Standard
         /// </param>
         public IndexableSession(ISession session)
         {
-            UniqueIdentifier = new KeyValuePair<string, string>("Guid", session.GUID.ToString());
-            this.UserGuid = session.UserGUID;
-            DateModified = session.DateModified;
-            DateCreated = session.DateCreated;
+            UniqueIdentifier = new KeyValuePair<string, string>("Guid", session.Guid.ToString());
+            UserGuid         = session.UserGuid;
+            DateModified     = session.DateModified;
+            DateCreated      = session.DateCreated;
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Chaos.Portal.Index.Standard
         /// <summary>
         /// Gets or sets the user guid.
         /// </summary>
-        public UUID UserGuid { get; set; }
+        public Guid UserGuid { get; set; }
 
         /// <summary>
         /// Gets or sets the date created.

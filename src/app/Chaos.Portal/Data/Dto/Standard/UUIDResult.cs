@@ -30,7 +30,7 @@ namespace Chaos.Portal.Data.Dto.Standard
 
         public IIndexResult Init( XElement element )
         {
-            Guid = new UUID( element.Elements("str").Where( node => node.Attribute("name").Value == "GUID" ).First().Value );
+            Guid = new UUID( element.Elements("str").Where( node => node.Attribute("name").Value == "Guid" ).First().Value );
 
             return this;
         }

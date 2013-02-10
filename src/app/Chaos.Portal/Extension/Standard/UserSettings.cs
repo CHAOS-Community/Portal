@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using CHAOS.Extensions;
-using Chaos.Portal.Data.Dto;
-using Chaos.Portal.Data.Dto.Standard;
-
-namespace Chaos.Portal.Extension.Standard
+﻿namespace Chaos.Portal.Extension.Standard
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Data.Dto.Standard;
+    
     [PortalExtension(configurationName : "Portal")]
     public class UserSettings : AExtension
     {
@@ -20,7 +20,7 @@ namespace Chaos.Portal.Extension.Standard
 
         public IEnumerable<IUserSettings> Get( ICallContext callContext, Guid clientGUID )
         {
-            return PortalRepository.UserSettingsGet(clientGUID, callContext.User.GUID.ToGuid());
+            return PortalRepository.UserSettingsGet(clientGUID, callContext.User.Guid);
         }
 
         #endregion
@@ -28,7 +28,7 @@ namespace Chaos.Portal.Extension.Standard
 
         public ScalarResult Set( ICallContext callContext, Guid clientGUID, string settings )
         {
-            var result = PortalRepository.UserSettingsSet(clientGUID, callContext.User.GUID.ToGuid(), settings);
+            var result = PortalRepository.UserSettingsSet(clientGUID, callContext.User.Guid, settings);
 
             return new ScalarResult((int) result);
         }
@@ -38,7 +38,7 @@ namespace Chaos.Portal.Extension.Standard
 
         public ScalarResult Delete( ICallContext callContext, Guid clientGUID )
         {
-            var result = PortalRepository.UserSettingsDelete(clientGUID, callContext.User.GUID.ToGuid());
+            var result = PortalRepository.UserSettingsDelete(clientGUID, callContext.User.Guid);
 
             return new ScalarResult((int) result);
         }
