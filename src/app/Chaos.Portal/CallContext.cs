@@ -48,12 +48,12 @@ namespace Chaos.Portal
             {
                 if( _user == null )
                 {
-                    _user = Application.PortalRepository.GetUserInfo(null, Session.GUID.ToGuid(), null).FirstOrDefault();
+                    _user = Application.PortalRepository.GetUserInfo(null, Session.Guid, null).FirstOrDefault();
                         
                     if( _user == null )
                         throw new SessionDoesNotExistException( "Session has expired" );
 
-                    Cache.Put(string.Format( "[UserInfo:sid={0}]", Session.GUID ), _user, new TimeSpan(0, 1, 0) );
+                    Cache.Put(string.Format( "[UserInfo:sid={0}]", Session.Guid ), _user, new TimeSpan(0, 1, 0) );
                 }
 
                 return _user;
@@ -81,7 +81,7 @@ namespace Chaos.Portal
         {
             get 
             {
-                return _subscriptions ?? (_subscriptions = Application.PortalRepository.SubscriptionGet(null, User.GUID.ToGuid()));
+                return _subscriptions ?? (_subscriptions = Application.PortalRepository.SubscriptionGet(null, User.Guid));
             }
         }
 
@@ -90,7 +90,7 @@ namespace Chaos.Portal
         /// </summary>
         public IEnumerable<IGroup> Groups
         {
-            get { return _group ?? (_group = Application.PortalRepository.GroupGet(null, null, User.GUID.ToGuid())); }
+            get { return _group ?? (_group = Application.PortalRepository.GroupGet(null, null, User.Guid)); }
         }
 
 		/// <summary>
@@ -98,7 +98,7 @@ namespace Chaos.Portal
 		/// </summary>
         public bool IsAnonymousUser
         {
-            get { return GetSessionFromDatabase() == null || AnonymousUserGuid.ToString() == Session.UserGUID.ToString(); }
+            get { return GetSessionFromDatabase() == null || AnonymousUserGuid.ToString() == Session.UserGuid.ToString(); }
         }
 
 		/// <summary>

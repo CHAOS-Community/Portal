@@ -2,7 +2,6 @@
 {
     using System;
 
-    using CHAOS;
     using CHAOS.Serialization;
 
     public class UserInfo : Result, IUserInfo
@@ -13,18 +12,18 @@
         {
             get
             {
-                return GUID.ToString();
+                return this.Guid.ToString();
             }
             set
             {
-                GUID = new UUID(value);
+                this.Guid = new Guid(value);
             }
         }
 
-        [Serialize("GUID")]
-		public UUID GUID { get; set; }
+        [Serialize("Guid")]
+		public Guid Guid { get; set; }
 
-		public UUID SessionGUID { get; set; }
+		public Guid? SessionGuid { get; set; }
 
 		[Serialize]
 		public long? SystemPermissions { get; set; }
@@ -46,10 +45,10 @@
 		public UserInfo() : this(Guid.Empty,null,null,null,null,null)
         {}
 
-		public UserInfo( Guid uuid, Guid? sessionUUID, long? systemPermissions, string email, DateTime? dateCreated, DateTime? dateModified )
+		public UserInfo( Guid guid, Guid? sessionGuid, long? systemPermissions, string email, DateTime? dateCreated, DateTime? dateModified )
 		{
-			GUID                 = new UUID( uuid.ToByteArray() );
-			SessionGUID          = sessionUUID.HasValue ? new UUID( sessionUUID.Value.ToByteArray() ) : null;
+			Guid                 = guid;
+			SessionGuid          = sessionGuid;
 			SystemPermissions    = systemPermissions;
             SystemPermissonsEnum = systemPermissions.HasValue ? (SystemPermissons)systemPermissions : SystemPermissons.None;
 			Email                = email;

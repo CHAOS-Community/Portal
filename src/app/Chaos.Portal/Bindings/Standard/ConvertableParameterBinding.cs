@@ -11,9 +11,9 @@ namespace Chaos.Portal.Bindings.Standard
         {
             if( callContext.Request.Parameters.ContainsKey( parameterInfo.Name ) && !string.IsNullOrEmpty( callContext.Request.Parameters[ parameterInfo.Name ] ) )
                 return Convert.ChangeType( callContext.Request.Parameters[ parameterInfo.Name ], typeof(T) );
-            
-            if( parameterInfo.ParameterType.IsNullable() )
-                return null;
+
+            if (parameterInfo.ParameterType.IsNullable()) return null;
+            if (parameterInfo.HasDefaultValue) return parameterInfo.DefaultValue;
 
             throw new ParameterBindingMissingException(string.Format("The parameter ({0}) is missing, and the type isnt nullable",parameterInfo.Name));
         }

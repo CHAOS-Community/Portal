@@ -2,12 +2,16 @@ namespace Chaos.Portal.Index.Standard
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
+    using System.Xml.Linq;
 
     using Chaos.Portal.Cache;
+    using Chaos.Portal.Cache.Couchbase;
     using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Data.Dto.Standard;
 
+    using CHAOS;
     using CHAOS.Index;
 
     /// <summary>
@@ -22,9 +26,6 @@ namespace Chaos.Portal.Index.Standard
         /// </summary>
         private readonly IIndex _index;
 
-        /// <summary>
-        /// The _cache.
-        /// </summary>
         private readonly ICache _cache;
 
         #endregion
@@ -36,7 +37,7 @@ namespace Chaos.Portal.Index.Standard
         /// <param name="index">
         /// The index.
         /// </param>
-        /// <param name="cache">The cache object to use for caching data objects</param>
+        /// <param name="cache">The cache object to use for caching Dtos</param>
         public SessionView(IIndex index, ICache cache)
         {
             _index = index;
@@ -45,7 +46,7 @@ namespace Chaos.Portal.Index.Standard
 
         #endregion
         #region Business Logic
-        
+
         /// <summary>
         /// The query.
         /// </summary>
@@ -61,8 +62,8 @@ namespace Chaos.Portal.Index.Standard
         /// </exception>
         public IEnumerable<IResult> Query(IQuery query)
         {
-            var indexResponse  = _index.Get<IndexableSession>(query);
-            var documentIdList = indexResponse.QueryResult.Results.Select(item => item.UniqueIdentifier.ToString());
+            var indexResponse = _index.Get<IndexableSession>(query);
+            var documentIdList = indexResponse.QueryResult.Results.Select(item => item.DocumentID);
 
             return _cache.Get<Session>(documentIdList);
         }
@@ -84,9 +85,9 @@ namespace Chaos.Portal.Index.Standard
 
             _index.Set(sessions.Select(Index));
 
-            sessions.ForEach(session => _cache.Store(session));
+            sessions.ForEach((session) => _cache.Store(session));
 
-            return new ViewReport { NumberOfIndexedDocuments = (uint)sessions.Count };
+            return new ViewReport { NumberOfIndexedDocuments = (uint)sessions.Count};
         }
 
         /// <summary>

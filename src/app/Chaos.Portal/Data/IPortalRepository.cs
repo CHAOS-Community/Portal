@@ -10,6 +10,7 @@ namespace Chaos.Portal.Data
 
         uint CreateTicket(Guid guid, uint ticketTypeID, string xml, string callback);
 
+        uint CreateUser(Guid guid, string email);
         IUserInfo GetUserInfo(string email);
         IEnumerable<IUserInfo> GetUserInfo(Guid? userGuid, Guid? sessionGuid, string email);
 

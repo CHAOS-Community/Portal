@@ -86,10 +86,10 @@
             _indexMock.Setup(m => m.Get<IndexableSession>(query)).Returns(new Response<IndexableSession>());
             _cacheMock.Setup(p => p.Get<Session>(It.IsAny<IEnumerable<string>>())).Returns(new []{session});
 
-            var results = view.Query(query).ToList();
+            var results = view.Query(query);
 
             Assert.AreEqual(1, results.Count());
-            Assert.AreEqual(session.GUID.ToString(), (results[0] as ISession).GUID.ToString());
+            Assert.AreEqual(session.Guid.ToString(), (results.First() as ISession).Guid.ToString());
             _indexMock.Verify(m => m.Get<IndexableSession>(query));
         }
 
@@ -100,8 +100,8 @@
         {
             var session = new Session
                 {
-                    GUID         = new UUID("149e26c8-4c64-40ca-9338-15305dc17b5f"),
-                    UserGUID     = new UUID("c63f54ec-769d-4d6b-9092-96e64a28eaba"),
+                    Guid         = new Guid("149e26c8-4c64-40ca-9338-15305dc17b5f"),
+                    UserGuid     = new Guid("c63f54ec-769d-4d6b-9092-96e64a28eaba"),
                     DateCreated  = new DateTime(1990, 5, 5),
                     DateModified = new DateTime(1990, 5, 6)
                 };
@@ -115,5 +115,6 @@
         }
 
         #endregion
+
     }
 }

@@ -10,7 +10,7 @@ namespace Chaos.Portal.Data.Dto
         [Serialize("ClientSettingGUID")]
         UUID ClientSettingGUID { get; set; }
 
-        [Serialize("UserGUID")]
+        [Serialize("UserGuid")]
         UUID UserGUID { get; set; }
 
         [SerializeXML(false, true)]

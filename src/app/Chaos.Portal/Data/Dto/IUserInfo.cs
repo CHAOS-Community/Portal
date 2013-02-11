@@ -5,15 +5,14 @@
     using Chaos.Portal.Cache.Couchbase;
     using Chaos.Portal.Data.Dto.Standard;
 
-    using CHAOS;
     using CHAOS.Serialization;
 
     public interface IUserInfo : IResult, ICacheable
     {
-        [Serialize("GUID")]
-        UUID GUID { get; set; }
+        [Serialize("Guid")]
+        Guid Guid { get; set; }
 
-        UUID SessionGUID { get; set; }
+        Guid? SessionGuid { get; set; }
 
         [Serialize]
         long? SystemPermissions { get; set; }

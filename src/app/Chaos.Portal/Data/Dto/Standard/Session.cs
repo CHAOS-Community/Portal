@@ -13,18 +13,18 @@
         { 
             get
             {
-                return GUID.ToString();
+                return this.Guid.ToString();
             }
             set
             {
-                GUID = new UUID(value);
+                this.Guid = new Guid(value);
             }
         }
 
         [Serialize]
-		public UUID GUID { get; set; }
+		public Guid Guid { get; set; }
         [Serialize]
-        public UUID UserGUID { get; set; }
+        public Guid UserGuid { get; set; }
         [Serialize]
         public DateTime DateCreated { get; set; }
         [Serialize]
@@ -33,18 +33,14 @@
 		#endregion
 		#region Construction
 
-		public Session() : this( null, null, DateTime.MinValue, null)
+		public Session() : this( Guid.Empty, Guid.Empty, DateTime.MinValue, null)
 		{
 		}
 
-		public Session( Guid guid, Guid userGUID, DateTime dateCreated, DateTime? dateModified ) : this( new UUID( guid.ToByteArray() ), new UUID( userGUID.ToByteArray() ), dateCreated, dateModified )
+        public Session( Guid guid, Guid userGuid, DateTime dateCreated, DateTime? dateModified )
 		{
-		}
-
-        public Session( UUID guid, UUID userGUID, DateTime dateCreated, DateTime? dateModified )
-		{
-			GUID         = guid;
-			UserGUID     = userGUID;
+			Guid         = guid;
+			UserGuid     = userGuid;
 			DateCreated  = dateCreated;
 			DateModified = dateModified;
             Fullname     = "CHAOS.Portal.DTO.Standard.Session";

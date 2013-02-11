@@ -8,7 +8,7 @@ namespace Chaos.Portal.Data.Dto
     public interface ISubscriptionInfo
     {
         [Serialize]
-        UUID GUID { get; set; }
+        Guid Guid { get; set; }
 
         [Serialize]
         string Name { get; set; }

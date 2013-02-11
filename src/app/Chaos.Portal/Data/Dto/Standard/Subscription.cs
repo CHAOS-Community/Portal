@@ -1,16 +1,16 @@
-﻿using System;
-using CHAOS;
-using CHAOS.Extensions;
-using CHAOS.Serialization;
-
-namespace Chaos.Portal.Data.Dto.Standard
+﻿namespace Chaos.Portal.Data.Dto.Standard
 {
-	public class Subscription : Result
+    using System;
+
+    using CHAOS.Extensions;
+    using CHAOS.Serialization;
+    
+    public class Subscription : Result
 	{
 		#region Properties
 
 		[Serialize]
-		public UUID     GUID { get; set; }
+		public Guid     Guid { get; set; }
 
 		[Serialize]
 		public string   Name { get; set; }
@@ -28,7 +28,7 @@ namespace Chaos.Portal.Data.Dto.Standard
 
 		public Subscription( Guid guid, string name, DateTime dateCreated )
 		{
-			GUID        = guid.ToUUID();
+			Guid        = guid;
 			Name        = name;
 			DateCreated = dateCreated;
 		}
