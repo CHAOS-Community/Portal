@@ -86,10 +86,10 @@
             _indexMock.Setup(m => m.Get<IndexableSession>(query)).Returns(new Response<IndexableSession>());
             _cacheMock.Setup(p => p.Get<Session>(It.IsAny<IEnumerable<string>>())).Returns(new []{session});
 
-            var results = view.Query(query);
+            var results = view.Query(query).ToList();
 
             Assert.AreEqual(1, results.Count());
-            Assert.AreEqual(session.GUID.ToString(), (results.First() as ISession).GUID.ToString());
+            Assert.AreEqual(session.GUID.ToString(), (results[0] as ISession).GUID.ToString());
             _indexMock.Verify(m => m.Get<IndexableSession>(query));
         }
 
@@ -115,6 +115,5 @@
         }
 
         #endregion
-
     }
 }

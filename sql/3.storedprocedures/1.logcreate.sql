@@ -7,6 +7,11 @@ CREATE PROCEDURE `Log_Create`(
 )
 BEGIN
 
+	DELETE FROM
+	    Portal.Log
+	WHERE
+	    TIMESTAMPDIFF( DAY, DateCreated, NOW() ) > 7;
+
     INSERT INTO Log( Name, Level, SessionGUID, Duration, Message, DateCreated ) 
              VALUES( Name, Level, SessionGUID, Duration, Message, NOW()       );
              

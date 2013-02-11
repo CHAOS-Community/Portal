@@ -3,6 +3,7 @@ namespace Chaos.Portal.Index.Standard
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Xml.Linq;
 
     using Chaos.Portal.Data.Dto;
 
@@ -12,7 +13,7 @@ namespace Chaos.Portal.Index.Standard
     /// <summary>
     /// The indexable session
     /// </summary>
-    public class IndexableSession : IIndexable
+    public class IndexableSession : IIndexable, IIndexResult
     {
         #region Initialize
 
@@ -22,6 +23,11 @@ namespace Chaos.Portal.Index.Standard
             this.UserGUID         = session.UserGUID;
             this.DateModified     = session.DateModified;
             this.DateCreated      = session.DateCreated;
+        }
+
+        public IndexableSession()
+        {
+            
         }
 
         #endregion
@@ -40,5 +46,10 @@ namespace Chaos.Portal.Index.Standard
         public UUID UserGUID { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime? DateModified { get; set; }
+
+        public IIndexResult Init(XElement element)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -11,7 +11,6 @@ namespace Chaos.Portal
     using Chaos.Portal.Exceptions;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Index;
-    using Chaos.Portal.Index.Standard;
     using Chaos.Portal.Logging;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;
@@ -78,8 +77,8 @@ namespace Chaos.Portal
             Bindings.Add( typeof(bool?), new ConvertableParameterBinding<bool>() );
             Bindings.Add( typeof(DateTime?), new DateTimeParameterBinding());
             Bindings.Add( typeof(UUID), new UUIDParameterBinding() );
-            Bindings.Add( typeof(Guid), new UUIDParameterBinding() );
-            Bindings.Add( typeof(Guid?), new UUIDParameterBinding() );
+            Bindings.Add( typeof(Guid), new GuidParameterBinding() );
+            Bindings.Add( typeof(Guid?), new GuidParameterBinding() );
             Bindings.Add( typeof(IQuery), new QueryParameterBinding() );
 
             // load portal extensions
