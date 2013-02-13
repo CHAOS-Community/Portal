@@ -11,6 +11,7 @@ namespace Chaos.Portal
     using Chaos.Portal.Exceptions;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Index;
+    using Chaos.Portal.Index.Standard;
     using Chaos.Portal.Logging;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;
@@ -89,7 +90,7 @@ namespace Chaos.Portal
             LoadedExtensions.Add("Subscription",   new Extension.Standard.Subscription().WithPortalApplication(this));
             LoadedExtensions.Add("User",           new Extension.Standard.User().WithPortalApplication(this));
             LoadedExtensions.Add("UserSettings",   new Extension.Standard.UserSettings().WithPortalApplication(this));
-            LoadedExtensions.Add("View",           new Extension.Standard.View().WithPortalApplication(this));
+            LoadedExtensions.Add("View",           new View().WithPortalApplication(this));
 
             // load portal views
         }

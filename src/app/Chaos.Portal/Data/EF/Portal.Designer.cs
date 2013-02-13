@@ -19,9 +19,9 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
+[assembly: EdmRelationshipAttribute("PortalModel", "FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID", "ClientSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.ClientSettings), "UserSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.UserSettings), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_Group_User_Join_GroupGUID_Group_GUID", "Group", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.Group), "Group_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.Group_User_Join), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_Group_User_Join_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.User), "Group_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.Group_User_Join), true)]
-[assembly: EdmRelationshipAttribute("PortalModel", "FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID", "ClientSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.ClientSettings), "UserSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.UserSettings), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_IndexSettings_ModuleID_Module_ID", "Module", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.Module), "IndexSettings", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.IndexSettings), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID", "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.Subscription), "Subscription_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.Subscription_User_Join), true)]
 [assembly: EdmRelationshipAttribute("PortalModel", "FK_Subscription_User_Join_UserGUID_User_GUID", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Portal.Data.EF.User), "Subscription_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Portal.Data.EF.Subscription_User_Join), true)]
@@ -109,22 +109,6 @@ namespace Chaos.Portal.Data.EF
             }
         }
         private ObjectSet<Group> _Group;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<User> User
-        {
-            get
-            {
-                if ((_User == null))
-                {
-                    _User = base.CreateObjectSet<User>("User");
-                }
-                return _User;
-            }
-        }
-        private ObjectSet<User> _User;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -289,6 +273,22 @@ namespace Chaos.Portal.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<User> User
+        {
+            get
+            {
+                if ((_User == null))
+                {
+                    _User = base.CreateObjectSet<User>("User");
+                }
+                return _User;
+            }
+        }
+        private ObjectSet<User> _User;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<UserSettings> UserSettings
         {
             get
@@ -368,14 +368,6 @@ namespace Chaos.Portal.Data.EF
         public void AddToGroup(Group group)
         {
             base.AddObject("Group", group);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the User EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToUser(User user)
-        {
-            base.AddObject("User", user);
         }
     
         /// <summary>
@@ -459,6 +451,14 @@ namespace Chaos.Portal.Data.EF
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the User EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUser(User user)
+        {
+            base.AddObject("User", user);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the UserSettings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToUserSettings(UserSettings userSettings)
@@ -503,11 +503,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             return base.ExecuteFunction<ClientSettings>("ClientSettings_Get", gUIDParameter);
@@ -522,11 +522,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             return base.ExecuteFunction<ClientSettings>("ClientSettings_Get", mergeOption, gUIDParameter);
@@ -543,11 +543,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter nameParameter;
@@ -639,11 +639,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter nameParameter;
@@ -690,11 +690,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter userGUIDParameter;
@@ -721,11 +721,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter nameParameter;
@@ -762,11 +762,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter nameParameter;
@@ -1258,11 +1258,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter requestUserGUIDParameter;
@@ -1288,11 +1288,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter requestUserGUIDParameter;
@@ -1320,11 +1320,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter nameParameter;
@@ -1393,11 +1393,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter newNameParameter;
@@ -1435,11 +1435,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter ticketTypeIDParameter;
@@ -1484,11 +1484,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             return base.ExecuteFunction<Ticket>("Ticket_Get", gUIDParameter);
@@ -1503,11 +1503,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             return base.ExecuteFunction<Ticket>("Ticket_Get", mergeOption, gUIDParameter);
@@ -1542,11 +1542,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter emailParameter;
@@ -1571,11 +1571,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             return base.ExecuteFunction<User>("User_Get", gUIDParameter);
@@ -1590,11 +1590,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             return base.ExecuteFunction<User>("User_Get", mergeOption, gUIDParameter);
@@ -1611,11 +1611,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter sessionGUIDParameter;
@@ -1652,11 +1652,11 @@ namespace Chaos.Portal.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("Guid", gUID);
+                gUIDParameter = new ObjectParameter("GUID", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
             }
     
             ObjectParameter sessionGUIDParameter;
@@ -1834,7 +1834,7 @@ namespace Chaos.Portal.Data.EF
         /// <summary>
         /// Create a new ClientSettings object.
         /// </summary>
-        /// <param name="gUID">Initial value of the Guid property.</param>
+        /// <param name="gUID">Initial value of the GUID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
         public static ClientSettings CreateClientSettings(global::System.Guid gUID, global::System.String name, global::System.DateTime dateCreated)
@@ -1866,9 +1866,9 @@ namespace Chaos.Portal.Data.EF
                 if (_GUID != value)
                 {
                     OnGUIDChanging(value);
-                    ReportPropertyChanging("Guid");
-                    _GUID = StructuralObject.SetValidValue(value, "Guid");
-                    ReportPropertyChanged("Guid");
+                    ReportPropertyChanging("GUID");
+                    _GUID = StructuralObject.SetValidValue(value, "GUID");
+                    ReportPropertyChanged("GUID");
                     OnGUIDChanged();
                 }
             }
@@ -1992,7 +1992,7 @@ namespace Chaos.Portal.Data.EF
         /// <summary>
         /// Create a new Group object.
         /// </summary>
-        /// <param name="gUID">Initial value of the Guid property.</param>
+        /// <param name="gUID">Initial value of the GUID property.</param>
         /// <param name="systemPermission">Initial value of the SystemPermission property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
@@ -2026,9 +2026,9 @@ namespace Chaos.Portal.Data.EF
                 if (_GUID != value)
                 {
                     OnGUIDChanging(value);
-                    ReportPropertyChanging("Guid");
-                    _GUID = StructuralObject.SetValidValue(value, "Guid");
-                    ReportPropertyChanged("Guid");
+                    ReportPropertyChanging("GUID");
+                    _GUID = StructuralObject.SetValidValue(value, "GUID");
+                    ReportPropertyChanged("GUID");
                     OnGUIDChanged();
                 }
             }
@@ -3046,7 +3046,7 @@ namespace Chaos.Portal.Data.EF
         /// <summary>
         /// Create a new Session object.
         /// </summary>
-        /// <param name="gUID">Initial value of the Guid property.</param>
+        /// <param name="gUID">Initial value of the GUID property.</param>
         /// <param name="userGUID">Initial value of the UserGUID property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
         public static Session CreateSession(global::System.Guid gUID, global::System.Guid userGUID, global::System.DateTime dateCreated)
@@ -3078,9 +3078,9 @@ namespace Chaos.Portal.Data.EF
                 if (_GUID != value)
                 {
                     OnGUIDChanging(value);
-                    ReportPropertyChanging("Guid");
-                    _GUID = StructuralObject.SetValidValue(value, "Guid");
-                    ReportPropertyChanged("Guid");
+                    ReportPropertyChanging("GUID");
+                    _GUID = StructuralObject.SetValidValue(value, "GUID");
+                    ReportPropertyChanged("GUID");
                     OnGUIDChanged();
                 }
             }
@@ -3340,7 +3340,7 @@ namespace Chaos.Portal.Data.EF
         /// <summary>
         /// Create a new Subscription object.
         /// </summary>
-        /// <param name="gUID">Initial value of the Guid property.</param>
+        /// <param name="gUID">Initial value of the GUID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
         public static Subscription CreateSubscription(global::System.Guid gUID, global::System.String name, global::System.DateTime dateCreated)
@@ -3372,9 +3372,9 @@ namespace Chaos.Portal.Data.EF
                 if (_GUID != value)
                 {
                     OnGUIDChanging(value);
-                    ReportPropertyChanging("Guid");
-                    _GUID = StructuralObject.SetValidValue(value, "Guid");
-                    ReportPropertyChanged("Guid");
+                    ReportPropertyChanging("GUID");
+                    _GUID = StructuralObject.SetValidValue(value, "GUID");
+                    ReportPropertyChanged("GUID");
                     OnGUIDChanged();
                 }
             }
@@ -3691,7 +3691,7 @@ namespace Chaos.Portal.Data.EF
         /// <summary>
         /// Create a new SubscriptionInfo object.
         /// </summary>
-        /// <param name="gUID">Initial value of the Guid property.</param>
+        /// <param name="gUID">Initial value of the GUID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
         public static SubscriptionInfo CreateSubscriptionInfo(global::System.Guid gUID, global::System.String name, global::System.DateTime dateCreated)
@@ -3723,9 +3723,9 @@ namespace Chaos.Portal.Data.EF
                 if (_GUID != value)
                 {
                     OnGUIDChanging(value);
-                    ReportPropertyChanging("Guid");
-                    _GUID = StructuralObject.SetValidValue(value, "Guid");
-                    ReportPropertyChanged("Guid");
+                    ReportPropertyChanging("GUID");
+                    _GUID = StructuralObject.SetValidValue(value, "GUID");
+                    ReportPropertyChanged("GUID");
                     OnGUIDChanged();
                 }
             }
@@ -3853,7 +3853,7 @@ namespace Chaos.Portal.Data.EF
         /// <summary>
         /// Create a new Ticket object.
         /// </summary>
-        /// <param name="gUID">Initial value of the Guid property.</param>
+        /// <param name="gUID">Initial value of the GUID property.</param>
         /// <param name="ticketTypeID">Initial value of the TicketTypeID property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
         public static Ticket CreateTicket(global::System.Guid gUID, global::System.Int64 ticketTypeID, global::System.DateTime dateCreated)
@@ -3885,9 +3885,9 @@ namespace Chaos.Portal.Data.EF
                 if (_GUID != value)
                 {
                     OnGUIDChanging(value);
-                    ReportPropertyChanging("Guid");
-                    _GUID = StructuralObject.SetValidValue(value, "Guid");
-                    ReportPropertyChanged("Guid");
+                    ReportPropertyChanging("GUID");
+                    _GUID = StructuralObject.SetValidValue(value, "GUID");
+                    ReportPropertyChanged("GUID");
                     OnGUIDChanged();
                 }
             }
@@ -4183,7 +4183,7 @@ namespace Chaos.Portal.Data.EF
         /// <summary>
         /// Create a new User object.
         /// </summary>
-        /// <param name="gUID">Initial value of the Guid property.</param>
+        /// <param name="gUID">Initial value of the GUID property.</param>
         /// <param name="email">Initial value of the Email property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
         public static User CreateUser(global::System.Guid gUID, global::System.String email, global::System.DateTime dateCreated)
@@ -4215,9 +4215,9 @@ namespace Chaos.Portal.Data.EF
                 if (_GUID != value)
                 {
                     OnGUIDChanging(value);
-                    ReportPropertyChanging("Guid");
-                    _GUID = StructuralObject.SetValidValue(value, "Guid");
-                    ReportPropertyChanged("Guid");
+                    ReportPropertyChanging("GUID");
+                    _GUID = StructuralObject.SetValidValue(value, "GUID");
+                    ReportPropertyChanged("GUID");
                     OnGUIDChanged();
                 }
             }
@@ -4361,7 +4361,7 @@ namespace Chaos.Portal.Data.EF
         /// <summary>
         /// Create a new UserInfo object.
         /// </summary>
-        /// <param name="gUID">Initial value of the Guid property.</param>
+        /// <param name="gUID">Initial value of the GUID property.</param>
         /// <param name="email">Initial value of the Email property.</param>
         public static UserInfo CreateUserInfo(global::System.Guid gUID, global::System.String email)
         {
@@ -4391,9 +4391,9 @@ namespace Chaos.Portal.Data.EF
                 if (_GUID != value)
                 {
                     OnGUIDChanging(value);
-                    ReportPropertyChanging("Guid");
-                    _GUID = StructuralObject.SetValidValue(value, "Guid");
-                    ReportPropertyChanged("Guid");
+                    ReportPropertyChanging("GUID");
+                    _GUID = StructuralObject.SetValidValue(value, "GUID");
+                    ReportPropertyChanged("GUID");
                     OnGUIDChanged();
                 }
             }

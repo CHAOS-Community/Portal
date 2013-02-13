@@ -18,14 +18,16 @@ namespace Chaos.Portal.Data.EF
     
     public partial class PortalEntities : DbContext
     {
-        public PortalEntities() : base("name=PortalEntities")
+        public PortalEntities()
+            : base("name=PortalEntities")
         {
         }
 
-        public PortalEntities( string connectionString ) : base( connectionString )
+        public PortalEntities(string connectionString)
+            : base( connectionString )
         {
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -33,7 +35,6 @@ namespace Chaos.Portal.Data.EF
     
         public DbSet<ClientSettings> ClientSettings { get; set; }
         public DbSet<Group> Group { get; set; }
-        public DbSet<User> User { get; set; }
         public DbSet<Group_User_Join> Group_User_Join { get; set; }
         public DbSet<IndexSettings> IndexSettings { get; set; }
         public DbSet<Log> Log { get; set; }
@@ -44,6 +45,7 @@ namespace Chaos.Portal.Data.EF
         public DbSet<Subscription_User_Join> Subscription_User_Join { get; set; }
         public DbSet<Ticket> Ticket { get; set; }
         public DbSet<TicketType> TicketType { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<UserSettings> UserSettings { get; set; }
         public DbSet<SessionInfo> SessionInfo { get; set; }
         public DbSet<SubscriptionInfo> SubscriptionInfo { get; set; }
@@ -52,8 +54,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<ClientSettings> ClientSettings_Get(byte[] gUID)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ClientSettings>("ClientSettings_Get", gUIDParameter);
         }
@@ -61,8 +63,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<ClientSettings> ClientSettings_Get(byte[] gUID, MergeOption mergeOption)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ClientSettings>("ClientSettings_Get", mergeOption, gUIDParameter);
         }
@@ -70,8 +72,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<Nullable<int>> ClientSettings_Set(byte[] gUID, string name, string settings)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var nameParameter = name != null ?
                 new ObjectParameter("Name", name) :
@@ -91,8 +93,8 @@ namespace Chaos.Portal.Data.EF
                 new ObjectParameter("GroupGUID", typeof(byte[]));
     
             var userGUIDParameter = userGUID != null ?
-                new ObjectParameter("UserGuid", userGUID) :
-                new ObjectParameter("UserGuid", typeof(byte[]));
+                new ObjectParameter("UserGUID", userGUID) :
+                new ObjectParameter("UserGUID", typeof(byte[]));
     
             var permissionParameter = permission.HasValue ?
                 new ObjectParameter("Permission", permission) :
@@ -108,8 +110,8 @@ namespace Chaos.Portal.Data.EF
         public virtual int Group_Create(byte[] gUID, string name, byte[] requestUserGUID, Nullable<int> systemPermission, ObjectParameter errorCode)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var nameParameter = name != null ?
                 new ObjectParameter("Name", name) :
@@ -129,12 +131,12 @@ namespace Chaos.Portal.Data.EF
         public virtual int Group_Delete(byte[] gUID, byte[] userGUID, ObjectParameter errorCode)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var userGUIDParameter = userGUID != null ?
-                new ObjectParameter("UserGuid", userGUID) :
-                new ObjectParameter("UserGuid", typeof(byte[]));
+                new ObjectParameter("UserGUID", userGUID) :
+                new ObjectParameter("UserGUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Group_Delete", gUIDParameter, userGUIDParameter, errorCode);
         }
@@ -142,8 +144,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<Group> Group_Get(byte[] gUID, string name, byte[] requestUserGUID)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var nameParameter = name != null ?
                 new ObjectParameter("Name", name) :
@@ -159,8 +161,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<Group> Group_Get(byte[] gUID, string name, byte[] requestUserGUID, MergeOption mergeOption)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var nameParameter = name != null ?
                 new ObjectParameter("Name", name) :
@@ -240,8 +242,8 @@ namespace Chaos.Portal.Data.EF
                 new ObjectParameter("Level", typeof(string));
     
             var sessionGUIDParameter = sessionGUID != null ?
-                new ObjectParameter("SessionGuid", sessionGUID) :
-                new ObjectParameter("SessionGuid", typeof(byte[]));
+                new ObjectParameter("SessionGUID", sessionGUID) :
+                new ObjectParameter("SessionGUID", typeof(byte[]));
     
             var durationParameter = duration.HasValue ?
                 new ObjectParameter("Duration", duration) :
@@ -300,12 +302,12 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<Nullable<int>> Session_Create(byte[] sessionGUID, byte[] userGUID)
         {
             var sessionGUIDParameter = sessionGUID != null ?
-                new ObjectParameter("SessionGuid", sessionGUID) :
-                new ObjectParameter("SessionGuid", typeof(byte[]));
+                new ObjectParameter("SessionGUID", sessionGUID) :
+                new ObjectParameter("SessionGUID", typeof(byte[]));
     
             var userGUIDParameter = userGUID != null ?
-                new ObjectParameter("UserGuid", userGUID) :
-                new ObjectParameter("UserGuid", typeof(byte[]));
+                new ObjectParameter("UserGUID", userGUID) :
+                new ObjectParameter("UserGUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("Session_Create", sessionGUIDParameter, userGUIDParameter);
         }
@@ -313,12 +315,12 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<Nullable<int>> Session_Delete(byte[] sessionGUID, byte[] userGUID)
         {
             var sessionGUIDParameter = sessionGUID != null ?
-                new ObjectParameter("SessionGuid", sessionGUID) :
-                new ObjectParameter("SessionGuid", typeof(byte[]));
+                new ObjectParameter("SessionGUID", sessionGUID) :
+                new ObjectParameter("SessionGUID", typeof(byte[]));
     
             var userGUIDParameter = userGUID != null ?
-                new ObjectParameter("UserGuid", userGUID) :
-                new ObjectParameter("UserGuid", typeof(byte[]));
+                new ObjectParameter("UserGUID", userGUID) :
+                new ObjectParameter("UserGUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("Session_Delete", sessionGUIDParameter, userGUIDParameter);
         }
@@ -326,12 +328,12 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<Session> Session_Get(byte[] sessionGUID, byte[] userGUID)
         {
             var sessionGUIDParameter = sessionGUID != null ?
-                new ObjectParameter("SessionGuid", sessionGUID) :
-                new ObjectParameter("SessionGuid", typeof(byte[]));
+                new ObjectParameter("SessionGUID", sessionGUID) :
+                new ObjectParameter("SessionGUID", typeof(byte[]));
     
             var userGUIDParameter = userGUID != null ?
-                new ObjectParameter("UserGuid", userGUID) :
-                new ObjectParameter("UserGuid", typeof(byte[]));
+                new ObjectParameter("UserGUID", userGUID) :
+                new ObjectParameter("UserGUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Session>("Session_Get", sessionGUIDParameter, userGUIDParameter);
         }
@@ -339,12 +341,12 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<Session> Session_Get(byte[] sessionGUID, byte[] userGUID, MergeOption mergeOption)
         {
             var sessionGUIDParameter = sessionGUID != null ?
-                new ObjectParameter("SessionGuid", sessionGUID) :
-                new ObjectParameter("SessionGuid", typeof(byte[]));
+                new ObjectParameter("SessionGUID", sessionGUID) :
+                new ObjectParameter("SessionGUID", typeof(byte[]));
     
             var userGUIDParameter = userGUID != null ?
-                new ObjectParameter("UserGuid", userGUID) :
-                new ObjectParameter("UserGuid", typeof(byte[]));
+                new ObjectParameter("UserGUID", userGUID) :
+                new ObjectParameter("UserGUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Session>("Session_Get", mergeOption, sessionGUIDParameter, userGUIDParameter);
         }
@@ -352,8 +354,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<Nullable<int>> Session_Update(byte[] userGUID, byte[] whereSessionGUID, byte[] whereUserGUID)
         {
             var userGUIDParameter = userGUID != null ?
-                new ObjectParameter("UserGuid", userGUID) :
-                new ObjectParameter("UserGuid", typeof(byte[]));
+                new ObjectParameter("UserGUID", userGUID) :
+                new ObjectParameter("UserGUID", typeof(byte[]));
     
             var whereSessionGUIDParameter = whereSessionGUID != null ?
                 new ObjectParameter("WhereSessionGUID", whereSessionGUID) :
@@ -369,8 +371,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<SubscriptionInfo> SubscriptionInfo_Get(byte[] gUID, byte[] requestUserGUID)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var requestUserGUIDParameter = requestUserGUID != null ?
                 new ObjectParameter("RequestUserGUID", requestUserGUID) :
@@ -382,8 +384,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<SubscriptionInfo> SubscriptionInfo_Get(byte[] gUID, byte[] requestUserGUID, MergeOption mergeOption)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var requestUserGUIDParameter = requestUserGUID != null ?
                 new ObjectParameter("RequestUserGUID", requestUserGUID) :
@@ -395,8 +397,8 @@ namespace Chaos.Portal.Data.EF
         public virtual int Subscription_Create(byte[] gUID, string name, byte[] requestUserGUID, ObjectParameter errorCode)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var nameParameter = name != null ?
                 new ObjectParameter("Name", name) :
@@ -425,8 +427,8 @@ namespace Chaos.Portal.Data.EF
         public virtual int Subscription_Update(byte[] gUID, string newName, byte[] requestUserGUID, ObjectParameter errorCode)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var newNameParameter = newName != null ?
                 new ObjectParameter("NewName", newName) :
@@ -442,8 +444,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<Nullable<int>> Ticket_Create(byte[] gUID, Nullable<int> ticketTypeID, string xML, string callback)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var ticketTypeIDParameter = ticketTypeID.HasValue ?
                 new ObjectParameter("TicketTypeID", ticketTypeID) :
@@ -463,8 +465,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<Ticket> Ticket_Get(byte[] gUID)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Ticket>("Ticket_Get", gUIDParameter);
         }
@@ -472,8 +474,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<Ticket> Ticket_Get(byte[] gUID, MergeOption mergeOption)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Ticket>("Ticket_Get", mergeOption, gUIDParameter);
         }
@@ -490,8 +492,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<Nullable<int>> User_Create(byte[] gUID, string email)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var emailParameter = email != null ?
                 new ObjectParameter("Email", email) :
@@ -503,8 +505,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<User> User_Get(byte[] gUID)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("User_Get", gUIDParameter);
         }
@@ -512,8 +514,8 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<User> User_Get(byte[] gUID, MergeOption mergeOption)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("User_Get", mergeOption, gUIDParameter);
         }
@@ -521,12 +523,12 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<UserInfo> UserInfo_Get(byte[] gUID, byte[] sessionGUID, string email)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var sessionGUIDParameter = sessionGUID != null ?
-                new ObjectParameter("SessionGuid", sessionGUID) :
-                new ObjectParameter("SessionGuid", typeof(byte[]));
+                new ObjectParameter("SessionGUID", sessionGUID) :
+                new ObjectParameter("SessionGUID", typeof(byte[]));
     
             var emailParameter = email != null ?
                 new ObjectParameter("Email", email) :
@@ -538,12 +540,12 @@ namespace Chaos.Portal.Data.EF
         public virtual ObjectResult<UserInfo> UserInfo_Get(byte[] gUID, byte[] sessionGUID, string email, MergeOption mergeOption)
         {
             var gUIDParameter = gUID != null ?
-                new ObjectParameter("Guid", gUID) :
-                new ObjectParameter("Guid", typeof(byte[]));
+                new ObjectParameter("GUID", gUID) :
+                new ObjectParameter("GUID", typeof(byte[]));
     
             var sessionGUIDParameter = sessionGUID != null ?
-                new ObjectParameter("SessionGuid", sessionGUID) :
-                new ObjectParameter("SessionGuid", typeof(byte[]));
+                new ObjectParameter("SessionGUID", sessionGUID) :
+                new ObjectParameter("SessionGUID", typeof(byte[]));
     
             var emailParameter = email != null ?
                 new ObjectParameter("Email", email) :
@@ -559,8 +561,8 @@ namespace Chaos.Portal.Data.EF
                 new ObjectParameter("ClientSettingsGUID", typeof(byte[]));
     
             var userGUIDParameter = userGUID != null ?
-                new ObjectParameter("UserGuid", userGUID) :
-                new ObjectParameter("UserGuid", typeof(byte[]));
+                new ObjectParameter("UserGUID", userGUID) :
+                new ObjectParameter("UserGUID", typeof(byte[]));
     
             var settingsParameter = settings != null ?
                 new ObjectParameter("Settings", settings) :
@@ -576,8 +578,8 @@ namespace Chaos.Portal.Data.EF
                 new ObjectParameter("ClientSettingsGUID", typeof(byte[]));
     
             var userGUIDParameter = userGUID != null ?
-                new ObjectParameter("UserGuid", userGUID) :
-                new ObjectParameter("UserGuid", typeof(byte[]));
+                new ObjectParameter("UserGUID", userGUID) :
+                new ObjectParameter("UserGUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("UserSettings_Delete", clientSettingsGUIDParameter, userGUIDParameter);
         }
@@ -589,8 +591,8 @@ namespace Chaos.Portal.Data.EF
                 new ObjectParameter("ClientSettingsGUID", typeof(byte[]));
     
             var userGUIDParameter = userGUID != null ?
-                new ObjectParameter("UserGuid", userGUID) :
-                new ObjectParameter("UserGuid", typeof(byte[]));
+                new ObjectParameter("UserGUID", userGUID) :
+                new ObjectParameter("UserGUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserSettings>("UserSettings_Get", clientSettingsGUIDParameter, userGUIDParameter);
         }
@@ -602,8 +604,8 @@ namespace Chaos.Portal.Data.EF
                 new ObjectParameter("ClientSettingsGUID", typeof(byte[]));
     
             var userGUIDParameter = userGUID != null ?
-                new ObjectParameter("UserGuid", userGUID) :
-                new ObjectParameter("UserGuid", typeof(byte[]));
+                new ObjectParameter("UserGUID", userGUID) :
+                new ObjectParameter("UserGUID", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserSettings>("UserSettings_Get", mergeOption, clientSettingsGUIDParameter, userGUIDParameter);
         }

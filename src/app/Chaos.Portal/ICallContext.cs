@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CHAOS.Index;
+
 using Chaos.Portal.Cache;
 using Chaos.Portal.Data.Dto;
 using Chaos.Portal.Request;
@@ -8,6 +8,8 @@ using Chaos.Portal.Response;
 
 namespace Chaos.Portal
 {
+    using Chaos.Portal.Index;
+
     public interface ICallContext
     {
         IPortalApplication             Application { get; }
@@ -20,7 +22,7 @@ namespace Chaos.Portal
         Guid                           AnonymousUserGuid { get; }
         bool                           IsAnonymousUser { get; }
         ICache                         Cache{ get; }
-        IIndexManager                  IndexManager { get; }
+        IViewManager                   ViewManager { get; }
 	    
 		ISession GetSessionFromDatabase();
     }

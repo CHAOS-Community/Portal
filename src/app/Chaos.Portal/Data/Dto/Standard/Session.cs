@@ -2,7 +2,6 @@
 {
     using System;
 
-    using CHAOS;
     using CHAOS.Serialization;
 
 	public class Session : Result, ISession
@@ -13,11 +12,11 @@
         { 
             get
             {
-                return this.Guid.ToString();
+                return Guid.ToString();
             }
             set
             {
-                this.Guid = new Guid(value);
+                Guid = new Guid(value);
             }
         }
 

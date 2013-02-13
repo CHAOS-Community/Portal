@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Chaos.Portal.Data.Dto.Standard
+﻿namespace Chaos.Portal.Data.Dto.Standard
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
 	public static class ExtensionMethods
     {
         #region User
@@ -27,7 +27,7 @@ namespace Chaos.Portal.Data.Dto.Standard
 
         public static IUserInfo ToDto( EF.UserInfo user )
 		{
-			return new UserInfo( user.GUID, user.SessionGUID, user.SystemPermission, user.Email, user.SessionDateCreated, user.DateModified );
+            return new UserInfo( user.GUID, user.SessionGUID, user.SystemPermission, user.Email, user.SessionDateCreated, user.DateModified );
 		}
 
         #endregion
@@ -40,7 +40,7 @@ namespace Chaos.Portal.Data.Dto.Standard
 
         public static IGroup ToDto( EF.Group group )
 		{
-			return new Group( group.GUID, group.SystemPermission, group.Name, group.DateCreated );
+            return new Group( group.GUID, group.SystemPermission, group.Name, group.DateCreated );
 		}
 
         #endregion
@@ -53,7 +53,7 @@ namespace Chaos.Portal.Data.Dto.Standard
 
         public static ISession ToDto( this EF.Session session )
 		{
-			return new Session( session.GUID, session.UserGUID, session.DateCreated, session.DateModified );
+            return new Session( session.GUID, session.UserGUID, session.DateCreated, session.DateModified );
 		}
 
         #endregion
@@ -79,7 +79,7 @@ namespace Chaos.Portal.Data.Dto.Standard
 
         public static ISubscriptionInfo ToDto(EF.SubscriptionInfo subscriptionInfo )
 		{
-			return new SubscriptionInfo( subscriptionInfo.GUID, subscriptionInfo.UserGUID, subscriptionInfo.Name, subscriptionInfo.Permission, subscriptionInfo.DateCreated );
+            return new SubscriptionInfo( subscriptionInfo.GUID, subscriptionInfo.UserGUID, subscriptionInfo.Name, subscriptionInfo.Permission, subscriptionInfo.DateCreated );
 		}
 
 		#endregion
@@ -92,7 +92,7 @@ namespace Chaos.Portal.Data.Dto.Standard
 
         public static IClientSettings ToDto(EF.ClientSettings clientSettings )
 		{
-			return new ClientSettings( clientSettings.GUID.ToByteArray(), clientSettings.Name, clientSettings.Settings, clientSettings.DateCreated );
+            return new ClientSettings( clientSettings.GUID.ToByteArray(), clientSettings.Name, clientSettings.Settings, clientSettings.DateCreated );
 		}
 
 		#endregion
@@ -105,7 +105,7 @@ namespace Chaos.Portal.Data.Dto.Standard
 
         public static UserSettings ToDto(EF.UserSettings userSettings )
 		{
-			return new UserSettings(userSettings.ClientSettingsGUID.ToByteArray(), userSettings.UserGUID.ToByteArray(), userSettings.Settings, userSettings.DateCreated );
+            return new UserSettings( userSettings.ClientSettingsGUID.ToByteArray(), userSettings.UserGUID.ToByteArray(), userSettings.Settings, userSettings.DateCreated );
 		}
 
         #endregion

@@ -76,22 +76,22 @@
 
         #endregion
         #region Query
-
-        [Test]
-        public void Query_SolrQuery_CallsIndexAndRetrievesResultFromCacheAndReturnsDto()
-        {
-            var view    = this.Make_SessionView();
-            var query   = new SolrQuery();
-            var session = Make_Session();
-            _indexMock.Setup(m => m.Get<IndexableSession>(query)).Returns(new Response<IndexableSession>());
-            _cacheMock.Setup(p => p.Get<Session>(It.IsAny<IEnumerable<string>>())).Returns(new []{session});
-
-            var results = view.Query(query);
-
-            Assert.AreEqual(1, results.Count());
-            Assert.AreEqual(session.Guid.ToString(), (results.First() as ISession).Guid.ToString());
-            _indexMock.Verify(m => m.Get<IndexableSession>(query));
-        }
+      
+//        [Test]
+//        public void Query_SolrQuery_CallsIndexAndRetrievesResultFromCacheAndReturnsDto()
+//        {
+//            var view    = this.Make_SessionView();
+//            var query   = new SolrQuery();
+//            var session = Make_Session();
+//            _indexMock.Setup(m => m.Get<IndexableSession>(query)).Returns(new Response<IndexableSession>());
+//            _cacheMock.Setup(p => p.Get<Session>(It.IsAny<IEnumerable<string>>())).Returns(new []{session});
+//
+//            var results = view.Query(query);
+//
+//            Assert.AreEqual(1, results.Count());
+//            Assert.AreEqual(session.Guid.ToString(), (results.First() as ISession).Guid.ToString());
+//            _indexMock.Verify(m => m.Get<IndexableSession>(query));
+//        }
 
         #endregion
         #region Factory methods

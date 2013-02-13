@@ -15,6 +15,8 @@ using Chaos.Portal.Response.Specification;
 
 namespace Chaos.Portal
 {
+    using Chaos.Portal.Index;
+
     public class CallContext : ICallContext
     {
         #region Fields
@@ -36,7 +38,7 @@ namespace Chaos.Portal
         public IPortalRequest     Request { get; set; }
         public IPortalResponse    Response { get; set; }
         public ICache             Cache { get; set; }
-        public IIndexManager      IndexManager { get; set; }
+        public IViewManager       ViewManager { get; set; }
         public ILog               Log { get; private set; }
 
         /// <summary>
@@ -121,13 +123,13 @@ namespace Chaos.Portal
 
         public CallContext(IPortalApplication application, IPortalRequest request, IPortalResponse response, ILog log)
         {
-            Application  = application;
-            Request      = request;
-            Response     = response.WithResponseSpecification(ResponseSpecifications[request.ReturnFormat]);
-            Cache        = application.Cache;
-            IndexManager = application.IndexManager;
-            Log          = log;
-
+            Application = application;
+            Request     = request;
+            Response    = response.WithResponseSpecification(ResponseSpecifications[request.ReturnFormat]);
+            Cache       = application.Cache;
+            ViewManager = application.ViewManager;
+            Log         = log;
+            
             response.Header.ReturnFormat = request.ReturnFormat;
             response.Header.Callback     = request.Parameters.ContainsKey("callback") ? request.Parameters["callback"] : null;
         }
