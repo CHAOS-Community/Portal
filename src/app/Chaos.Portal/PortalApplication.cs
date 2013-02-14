@@ -11,7 +11,6 @@ namespace Chaos.Portal
     using Chaos.Portal.Exceptions;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Index;
-    using Chaos.Portal.Index.Standard;
     using Chaos.Portal.Logging;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;

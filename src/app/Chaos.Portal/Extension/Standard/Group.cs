@@ -19,10 +19,7 @@
         
         public IEnumerable<IGroup> Get( ICallContext callContext, Guid guid )
         {
-            if(callContext.User.Guid.ToString() == callContext.AnonymousUserGuid.ToString())
-                throw new InsufficientPermissionsException( "Anonymous users cannot create groups" );
-
-            return PortalRepository.GroupGet(guid, null, callContext.User.Guid);
+            return callContext.Groups;
         }
 
         #endregion

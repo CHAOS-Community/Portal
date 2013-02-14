@@ -1,5 +1,3 @@
-USE Portal;
-
 INSERT INTO Permission(TableIdentifier,Permission,Name,Description)VALUES('Group', '1', 'DELETE', 'Permission to Delete Group' );
 INSERT INTO Permission(TableIdentifier,Permission,Name,Description)VALUES('Group', '2', 'UPDATE', 'Permission to Update Group');
 INSERT INTO Permission(TableIdentifier,Permission,Name,Description)VALUES('Group', '4', 'GET', 'Permission to Get Group');
