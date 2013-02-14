@@ -148,7 +148,7 @@ namespace Chaos.Portal
                 if( !Request.Parameters.ContainsKey( SessionguidParameterName ) )
                     return null;
 
-                _session = Application.PortalRepository.SessionGet(new UUID(Request.Parameters[SessionguidParameterName]).ToGuid(), null).FirstOrDefault();
+                _session = Application.PortalRepository.SessionGet(new Guid(Request.Parameters[SessionguidParameterName]), null).FirstOrDefault();
 
 				if( _session == null )
 					return null;

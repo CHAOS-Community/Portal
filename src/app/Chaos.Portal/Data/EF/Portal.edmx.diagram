@@ -28,14 +28,8 @@
         <EntityTypeShape EntityType="PortalModel.SessionInfo" Width="1.5" PointX="10.75" PointY="0.75" />
         <EntityTypeShape EntityType="PortalModel.SubscriptionInfo" Width="1.5" PointX="2.75" PointY="10.75" />
         <EntityTypeShape EntityType="PortalModel.UserInfo" Width="1.5" PointX="10.75" PointY="3.75" />
-        <AssociationConnector Association="PortalModel.FK_UserSettings_ClientSettingsGUID_ClientSettings_GUID" />
-        <AssociationConnector Association="PortalModel.FK_Group_User_Join_GroupGUID_Group_GUID" />
-        <AssociationConnector Association="PortalModel.FK_Group_User_Join_UserGUID_User_GUID" />
         <AssociationConnector Association="PortalModel.FK_IndexSettings_ModuleID_Module_ID" />
-        <AssociationConnector Association="PortalModel.FK_Subscription_User_Join_SubscriptionGUID_Subscription_GUID" />
-        <AssociationConnector Association="PortalModel.FK_Subscription_User_Join_UserGUID_User_GUID" />
         <AssociationConnector Association="PortalModel.FK_Ticket_TicketTypeID_TicketType_ID" />
-        <AssociationConnector Association="PortalModel.FK_UserSettings_UserGUID_User_GUID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
