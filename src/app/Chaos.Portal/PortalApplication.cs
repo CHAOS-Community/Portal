@@ -120,7 +120,7 @@ namespace Chaos.Portal
         {
             var extensionName = LoadedExtensions.FirstOrDefault(ext => ext.Value is TExtension).Key;
 
-            return (TExtension)this.GetExtension(extensionName);
+            return (TExtension)GetExtension(extensionName);
         }
 
         /// <summary>

@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Linq;
 using CHAOS;
 using CHAOS.Extensions;
-using CHAOS.Index;
+
 using Chaos.Portal.Cache;
 using Chaos.Portal.Data.Dto;
 using Chaos.Portal.Exceptions;
