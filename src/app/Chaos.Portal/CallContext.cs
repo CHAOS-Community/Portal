@@ -92,7 +92,7 @@ namespace Chaos.Portal
         /// </summary>
         public IEnumerable<IGroup> Groups
         {
-            get { return _group ?? (_group = Application.PortalRepository.GroupGet(null, null, User.Guid)); }
+            get { return _group ?? (_group = Application.PortalRepository.GroupGet(null, null, User.Guid).ToList()); }
         }
 
 		/// <summary>

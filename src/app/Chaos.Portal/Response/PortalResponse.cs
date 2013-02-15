@@ -7,6 +7,8 @@ using Chaos.Portal.Exceptions;
 
 namespace Chaos.Portal.Response
 {
+    using System;
+
     [Serialize("PortalResponse")]
     public class PortalResponse : IPortalResponse
     {
@@ -44,7 +46,9 @@ namespace Chaos.Portal.Response
 		#region Business Logic
 
 		public void WriteToResponse( object obj )
-	    {
+        {
+            if(obj == null) throw new NullReferenceException("Returned object is null");
+
             var result      = obj as IResult;
             var results     = obj as IEnumerable<IResult>;
             var pagedResult = obj as IPagedResult<IResult>;

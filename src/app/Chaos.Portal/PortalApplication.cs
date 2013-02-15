@@ -3,6 +3,7 @@ namespace Chaos.Portal
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Xml.Linq;
 
     using Chaos.Portal.Bindings;
     using Chaos.Portal.Bindings.Standard;
@@ -81,6 +82,7 @@ namespace Chaos.Portal
             Bindings.Add( typeof(Guid?), new GuidParameterBinding() );
             Bindings.Add( typeof(IQuery), new QueryParameterBinding() );
             Bindings.Add( typeof(IEnumerable<Guid>), new EnumerableOfGuidParameterBinding());
+            Bindings.Add( typeof(XDocument), new XDocumentBinding() );
 
             // load portal extensions
             LoadedExtensions.Add("ClientSettings", new Extension.Standard.ClientSettings().WithPortalApplication(this));
