@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CHAOS.Index;
+
 using Chaos.Portal.Bindings;
 using Chaos.Portal.Cache;
 using Chaos.Portal.Data;
@@ -17,7 +17,6 @@ namespace Chaos.Portal
         IDictionary<string, IExtension>      LoadedExtensions { get; set; }
         IDictionary<Type, IParameterBinding> Bindings { get; }
         ICache                               Cache { get; }
-        IIndexManager                        IndexManager { get; }
         IPortalRepository                    PortalRepository { get; }
         ILog                                 Log { get; }
         IViewManager                         ViewManager { get; }

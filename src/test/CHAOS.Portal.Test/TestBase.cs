@@ -8,8 +8,6 @@
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;
 
-    using CHAOS.Index;
-
     using Moq;
 
     using NUnit.Framework;
@@ -20,7 +18,6 @@
         #region Properties
 
         protected Mock<ICache>            Cache { get; set; }
-        protected Mock<IIndexManager>     Index { get; set; }
         protected Mock<IViewManager>      ViewManager { get; set; }
         protected Mock<IPortalRepository> PortalRepository { get; set; }
         protected Mock<ILogFactory>       LoggingFactory { get; set; }
@@ -36,7 +33,6 @@
         public void SetUp()
         {
             Cache            = new Mock<ICache>();
-            Index            = new Mock<IIndexManager>();
             PortalRepository = new Mock<IPortalRepository>();
             LoggingFactory   = new Mock<ILogFactory>();
             PortalRequest    = new Mock<IPortalRequest>();

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Data.Dto.Standard;
@@ -48,23 +49,21 @@
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns>The IndexReport of the index process</returns>
-        public IIndexReport Index(object obj)
+        public void Index(object obj)
         {
-            return Index(new[] {obj});
+            Index(new[] {obj});
         }
 
         /// <summary>
         /// The index.
         /// </summary>
         /// <param name="obj">The objects.</param>
-        public IIndexReport Index(IEnumerable<object> obj)
+        public void Index(IEnumerable<object> obj)
         {
-            var report = new IndexReport();
-            
-            foreach (var view in _loadedViews.Values)
-                report.Views.Add(view.Index(obj));
+            var objects = obj as List<object> ?? obj.ToList();
 
-            return report;
+            foreach (var view in _loadedViews.Values)
+                view.Index(objects);
         }
 
         public IEnumerable<IResult> Query(string key, IQuery query)
@@ -78,9 +77,9 @@
         {
             if(key == null) throw new NullReferenceException("Cannot load a view with a null key");
             if(view == null) throw new NullReferenceException("Cannot load a null view");
-            
-            if(!_loadedViews.ContainsKey(key))
-                _loadedViews.Add(key, view);
+            if(_loadedViews.ContainsKey(key)) throw new ArgumentException("Key already added", key);
+
+            _loadedViews.Add(key, view);
         }
 
         #endregion

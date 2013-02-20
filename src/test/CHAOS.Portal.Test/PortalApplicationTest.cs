@@ -2,8 +2,6 @@
 {
     using Chaos.Portal.Exceptions;
 
-    using Moq;
-
     using NUnit.Framework;
 
     [TestFixture]
@@ -11,7 +9,7 @@
     {
         private PortalApplication Make_PortalApplication()
         {
-            return new PortalApplication( this.Cache.Object, this.Index.Object, this.ViewManager.Object, this.PortalRepository.Object, this.LoggingFactory.Object );
+            return new PortalApplication( this.Cache.Object, this.ViewManager.Object, this.PortalRepository.Object, this.LoggingFactory.Object );
         }
 
         [Test]
@@ -21,7 +19,6 @@
 
             Assert.Greater(portalApplication.Bindings.Count, 0);
             Assert.IsNotNull(portalApplication.Cache);
-            Assert.IsNotNull(portalApplication.IndexManager);
             Assert.IsNotNull(portalApplication.LoadedExtensions);
             Assert.IsNotNull(portalApplication.Log);
             Assert.IsNotNull(portalApplication.PortalRepository);

@@ -34,7 +34,6 @@ namespace Chaos.Portal
         public IDictionary<Type, IParameterBinding> Bindings { get; set; }
         public IDictionary<string, IExtension>      LoadedExtensions { get; set; }
         public ICache                               Cache { get; protected set; }
-        public IIndexManager                        IndexManager { get; protected set; }
         public IViewManager                         ViewManager { get; protected set; }
         public ILog                                 Log { get; protected set; }
         public IPortalRepository                    PortalRepository { get; set; }
@@ -42,13 +41,12 @@ namespace Chaos.Portal
         #endregion
         #region Constructors
 
-        public PortalApplication( ICache cache, IIndexManager indexManager, IViewManager viewManager, IPortalRepository portalRepository, ILogFactory loggingFactory )
+        public PortalApplication( ICache cache, IViewManager viewManager, IPortalRepository portalRepository, ILogFactory loggingFactory )
         {
             Bindings         = new Dictionary<Type, IParameterBinding>();
             LoadedExtensions = new Dictionary<string, IExtension>();
             Log              = new DirectLogger(loggingFactory).WithName("Portal Application");
             Cache            = cache;
-            IndexManager     = indexManager;
             ViewManager      = viewManager;
             PortalRepository = portalRepository;
             _loggingFactory  = loggingFactory;

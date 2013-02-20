@@ -22,7 +22,7 @@ namespace Chaos.Portal.Index
         ///       <cref>IIndexReport</cref>
         ///     </see> .
         /// </returns>
-        IIndexReport Index(object obj);
+        void Index(object obj);
 
         /// <summary>
         /// The index.
@@ -35,7 +35,7 @@ namespace Chaos.Portal.Index
         ///       <cref>IIndexReport</cref>
         ///     </see> .
         /// </returns>
-        IIndexReport Index(IEnumerable<object> obj);
+        void Index(IEnumerable<object> obj);
 
         /// <summary>
         /// The query.

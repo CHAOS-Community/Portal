@@ -1,8 +1,10 @@
 ﻿namespace Chaos.Portal.Test.Index
 {
+    using System;
     using System.Collections.Generic;
 
-    using Chaos.Portal.Data.Dto.Standard;
+    using CHAOS.Index;
+
     using Chaos.Portal.Index;
 
     using Moq;
@@ -15,15 +17,15 @@
         #region Setup
 
         private ViewManager _viewManager;
-        private Mock<IDictionary<string, IView>> _dictionary;
+        private IDictionary<string, IView> _dictionary;
         private Mock<IView> _view;
         private string _viewName;
 
         [SetUp]
         public void SetUp()
         {
-            _dictionary = new Mock<IDictionary<string, IView>>();
-            _viewManager = new ViewManager(_dictionary.Object);
+            _dictionary = new Dictionary<string, IView>();
+            _viewManager = new ViewManager(_dictionary);
             _view = new Mock<IView>();
             _viewName = "ViewName";
         }
@@ -34,11 +36,9 @@
         [Test]
         public void AddView_MockView_TheViewShouldBeStoredInTheDictionary()
         {
-            _dictionary.Setup(m => m.ContainsKey(_viewName)).Returns(false);
-
             _viewManager.AddView(_viewName, _view.Object);
 
-            _dictionary.Verify(m => m.Add(_viewName, _view.Object));
+            Assert.IsTrue(_dictionary.ContainsKey(_viewName));
         }
 
         [Test, ExpectedException(typeof(System.NullReferenceException))]
@@ -47,26 +47,60 @@
             _viewManager.AddView(_viewName, null);
         }
 
-        [Test, ExpectedException(typeof(System.NullReferenceException))]
+        [Test, ExpectedException(typeof(NullReferenceException))]
         public void AddView_NullKey_ThrowNullReferenceException()
         {
             _viewManager.AddView(null, new Mock<IView>().Object);
         }
 
-        [Test]
-        public void AddView_DuplicateView_ThrowEsception()
+        [Test, ExpectedException(typeof(ArgumentException))]
+        public void AddView_DuplicateView_ThrowException()
         {
-            _dictionary.Setup(m => m.ContainsKey(_viewName)).Returns(true);
-
             _viewManager.AddView(_viewName, _view.Object);
 
-            _dictionary.Verify(m => m.Add(_viewName, _view.Object), Times.Never());
+            _viewManager.AddView(_viewName, _view.Object);
         }
 
         #endregion
         #region Index
 
+        [Test]
+        public void Index_OneObject_CallEachViewsIndexMethodWithTheObject()
+        {
+            var expected = new object();
+            _viewManager.AddView(_viewName, _view.Object);
 
+            _viewManager.Index(expected);
+
+            _view.Verify(m => m.Index(new[]{expected}));
+        }
+
+        [Test]
+        public void Index_MultipleObjects_CallEachViewsIndexMethodWithTheObjects()
+        {
+            var expected = new[] { new object(), new object() };
+            _viewManager.AddView(_viewName, _view.Object);
+
+            _viewManager.Index(expected);
+
+            _view.Verify(m => m.Index(expected));
+        }
+
+        #endregion
+        #region Query
+
+//        [Test]
+//        public void Query_GivenQueryToViewThatExist_CallViewsQueryMethodWithQueryAndReturnResult()
+//        {
+//            var query = new Mock<IQuery>();
+//            var expected = new ;
+//            _view.Setup(m => m.Query(query.Object)).Returns(expected);
+//
+//            var result = _viewManager.Query(_viewName, query.Object);
+//
+//            
+//
+//        }
 
         #endregion
     }
