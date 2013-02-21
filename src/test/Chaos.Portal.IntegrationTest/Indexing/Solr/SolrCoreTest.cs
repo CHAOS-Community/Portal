@@ -32,7 +32,7 @@
 
             var list = result.QueryResult.Results.ToList();
             Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(new Guid("2e37473f-5f0e-43b7-aaad-4551004a735e"), list[0].Guid);
+            Assert.AreEqual(ResultOne, list[0].Guid);
         }
 
         [Test]
@@ -44,7 +44,7 @@
 
             var list = result.QueryResult.Results.ToList();
             Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(new Guid("3e37473f-5f0e-43b7-aaad-4551004a735e"), list[0].Guid);
+            Assert.AreEqual(ResultTwo, list[0].Guid);
         }
 
         [Test]
@@ -56,8 +56,8 @@
 
             var list = result.QueryResult.Results.ToList();
             Assert.AreEqual(2, list.Count);
-            Assert.AreEqual(new Guid("2e37473f-5f0e-43b7-aaad-4551004a735e"), list[0].Guid);
-            Assert.AreEqual(new Guid("3e37473f-5f0e-43b7-aaad-4551004a735e"), list[1].Guid);
+            Assert.AreEqual(ResultOne, list[0].Guid);
+            Assert.AreEqual(ResultTwo, list[1].Guid);
         }
 
         #endregion
