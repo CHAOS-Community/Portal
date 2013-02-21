@@ -35,6 +35,31 @@
             Assert.AreEqual(new Guid("2e37473f-5f0e-43b7-aaad-4551004a735e"), list[0].Guid);
         }
 
+        [Test]
+        public void Query_GetPageIndexOne_ReturnGuidAtPageIndexOne()
+        {
+            var solr = Make_SolrCore();
+
+            var result = solr.Query(new SolrQuery().WithQuery("*:*").WithPageIndex(1).WithPageSize(1));
+
+            var list = result.QueryResult.Results.ToList();
+            Assert.AreEqual(1, list.Count);
+            Assert.AreEqual(new Guid("3e37473f-5f0e-43b7-aaad-4551004a735e"), list[0].Guid);
+        }
+
+        [Test]
+        public void Query_GetMultipleResults_ReturnPageSizeOfTwo()
+        {
+            var solr = Make_SolrCore();
+
+            var result = solr.Query(new SolrQuery().WithQuery("*:*").WithPageIndex(0).WithPageSize(2));
+
+            var list = result.QueryResult.Results.ToList();
+            Assert.AreEqual(2, list.Count);
+            Assert.AreEqual(new Guid("2e37473f-5f0e-43b7-aaad-4551004a735e"), list[0].Guid);
+            Assert.AreEqual(new Guid("3e37473f-5f0e-43b7-aaad-4551004a735e"), list[1].Guid);
+        }
+
         #endregion
         #region Index
 

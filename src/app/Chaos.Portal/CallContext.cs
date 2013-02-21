@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using CHAOS;
-using CHAOS.Extensions;
-
-using Chaos.Portal.Cache;
-using Chaos.Portal.Data.Dto;
-using Chaos.Portal.Exceptions;
-using Chaos.Portal.Logging;
-using Chaos.Portal.Request;
-using Chaos.Portal.Response;
-using Chaos.Portal.Response.Specification;
-
-namespace Chaos.Portal
+﻿namespace Chaos.Portal
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
+
+    using Chaos.Portal.Cache;
+    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Exceptions;
     using Chaos.Portal.Indexing.View;
+    using Chaos.Portal.Logging;
+    using Chaos.Portal.Request;
+    using Chaos.Portal.Response;
+    using Chaos.Portal.Response.Specification;
+    
 
     public class CallContext : ICallContext
     {
@@ -118,7 +116,7 @@ namespace Chaos.Portal
             ResponseSpecifications.Add(ReturnFormat.JSONP, new JsonpResponse());
             ResponseSpecifications.Add(ReturnFormat.ATTACHMENT, new StreamResponse());
 
-            _anonymousUserGuid = new UUID( ConfigurationManager.AppSettings["AnonymousUserGUID"] ).ToGuid();
+            _anonymousUserGuid = new Guid( ConfigurationManager.AppSettings["AnonymousUserGUID"] );
         }
 
         public CallContext(IPortalApplication application, IPortalRequest request, IPortalResponse response, ILog log)
