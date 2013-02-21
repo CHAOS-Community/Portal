@@ -3,7 +3,7 @@
     using Chaos.Portal.Cache;
     using Chaos.Portal.Data;
     using Chaos.Portal.Extension;
-    using Chaos.Portal.Index;
+    using Chaos.Portal.Indexing.View;
     using Chaos.Portal.Logging;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;

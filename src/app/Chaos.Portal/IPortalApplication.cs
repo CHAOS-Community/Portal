@@ -5,13 +5,14 @@ using Chaos.Portal.Bindings;
 using Chaos.Portal.Cache;
 using Chaos.Portal.Data;
 using Chaos.Portal.Extension;
-using Chaos.Portal.Index;
 using Chaos.Portal.Logging;
 using Chaos.Portal.Request;
 using Chaos.Portal.Response;
 
 namespace Chaos.Portal
 {
+    using Chaos.Portal.Indexing.View;
+
     public interface IPortalApplication
     {
         IDictionary<string, IExtension>      LoadedExtensions { get; set; }

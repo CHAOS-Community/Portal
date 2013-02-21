@@ -1,8 +1,9 @@
 ﻿using System.Reflection;
-using CHAOS.Index.Solr;
 
 namespace Chaos.Portal.Bindings.Standard
 {
+    using Chaos.Portal.Indexing.Solr;
+
     public class QueryParameterBinding : IParameterBinding
     {
         public object Bind( ICallContext callContext, ParameterInfo parameterInfo )

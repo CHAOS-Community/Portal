@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
 using CHAOS;
-using CHAOS.Index;
 using CHAOS.Serialization;
 
 namespace Chaos.Portal.Data.Dto.Standard
 {
+    using Chaos.Portal.Indexing.Solr;
+
     public class UUIDResult : Result, IIndexResult
     {
         #region Properties

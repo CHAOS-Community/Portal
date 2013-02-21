@@ -11,13 +11,11 @@ namespace Chaos.Portal
     using Chaos.Portal.Data;
     using Chaos.Portal.Exceptions;
     using Chaos.Portal.Extension;
-    using Chaos.Portal.Index;
+    using Chaos.Portal.Indexing.Solr;
+    using Chaos.Portal.Indexing.View;
     using Chaos.Portal.Logging;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;
-
-    using CHAOS;
-    using CHAOS.Index;
 
     /// <summary>
     /// The portal application.
@@ -75,7 +73,6 @@ namespace Chaos.Portal
             Bindings.Add( typeof(float?), new ConvertableParameterBinding<float>() );
             Bindings.Add( typeof(bool?), new ConvertableParameterBinding<bool>() );
             Bindings.Add( typeof(DateTime?), new DateTimeParameterBinding());
-            Bindings.Add( typeof(UUID), new UUIDParameterBinding() );
             Bindings.Add( typeof(Guid), new GuidParameterBinding() );
             Bindings.Add( typeof(Guid?), new GuidParameterBinding() );
             Bindings.Add( typeof(IQuery), new QueryParameterBinding() );

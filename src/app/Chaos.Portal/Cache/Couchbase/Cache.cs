@@ -22,9 +22,9 @@
         /// <summary>
         /// Initializes static members of the <see cref="Cache"/> class.
         /// </summary>
-        static Cache()
+        public Cache(ICouchbaseClient client)
         {
-            Client = new CouchbaseClient();
+            Client = client;
         }
 
         #endregion

@@ -1,10 +1,10 @@
-namespace Chaos.Portal.Index
+namespace Chaos.Portal.Indexing.View
 {
     using System.Collections.Generic;
 
     using Chaos.Portal.Data.Dto;
 
-    using CHAOS.Index;
+    using IQuery = Chaos.Portal.Indexing.Solr.IQuery;
 
     /// <summary>
     /// The ViewManager interface.

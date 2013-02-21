@@ -8,7 +8,7 @@ using Chaos.Portal.Response;
 
 namespace Chaos.Portal
 {
-    using Chaos.Portal.Index;
+    using Chaos.Portal.Indexing.View;
 
     public interface ICallContext
     {

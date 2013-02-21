@@ -1,10 +1,11 @@
-﻿namespace Chaos.Portal.Index
+namespace Chaos.Portal.Indexing.View
 {
     using System.Collections.Generic;
 
-    using CHAOS.Index;
-
     using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Indexing.Solr;
+
+    using GuidResult = Chaos.Portal.Indexing.Solr.GuidResult;
 
     /// <summary>
     /// The View interface.
@@ -31,6 +32,6 @@
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        IEnumerable<IIndexResponse<>> Query(IQuery query);
+        IIndexResponse<GuidResult> Query(IQuery query);
     }
 }

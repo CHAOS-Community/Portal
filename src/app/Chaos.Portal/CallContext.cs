@@ -15,7 +15,7 @@ using Chaos.Portal.Response.Specification;
 
 namespace Chaos.Portal
 {
-    using Chaos.Portal.Index;
+    using Chaos.Portal.Indexing.View;
 
     public class CallContext : ICallContext
     {

@@ -1,0 +1,86 @@
+namespace Chaos.Portal.Indexing.View
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Chaos.Portal.Cache;
+    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Exceptions;
+
+    using IQuery = Chaos.Portal.Indexing.Solr.IQuery;
+
+    /// <summary>
+    /// The view manager.
+    /// </summary>
+    public class ViewManager : IViewManager
+    {
+        #region Fields
+
+        /// <summary>
+        /// The _loaded views.
+        /// </summary>
+        private readonly IDictionary<string, IView> _loadedViews;
+        private readonly ICache                     _cache;
+
+        #endregion
+        #region Initialization
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ViewManager"/> class.
+        /// </summary>
+        /// <param name="dictionary">The dictionary.</param>
+        public ViewManager(IDictionary<string, IView> dictionary, ICache cache)
+        {
+            _loadedViews = dictionary;
+            _cache       = cache;
+        }
+
+        #endregion
+        #region Business Logic
+
+        /// <summary>
+        /// The index.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>The IndexReport of the index process</returns>
+        public void Index(object obj)
+        {
+            this.Index(new[] {obj});
+        }
+
+        /// <summary>
+        /// The index.
+        /// </summary>
+        /// <param name="obj">The objects.</param>
+        public void Index(IEnumerable<object> obj)
+        {
+            var objects = obj as List<object> ?? obj.ToList();
+
+            foreach (var view in this._loadedViews.Values)
+                view.Index(objects);
+        }
+
+        public IEnumerable<IResult> Query(string key, IQuery query)
+        {
+            if (!this._loadedViews.ContainsKey(key)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", key));
+
+            var guids = this._loadedViews[key].Query(query).QueryResult.Results.Select(item => item.Guid.ToString());
+
+            throw new NotImplementedException();
+        }
+
+        public void AddView(string key, IView view)
+        {
+            if(key == null) throw new NullReferenceException("Cannot load a view with a null key");
+            if(view == null) throw new NullReferenceException("Cannot load a null view");
+            if(this._loadedViews.ContainsKey(key)) throw new ArgumentException("Key already added", key);
+
+            this._loadedViews.Add(key, view);
+        }
+
+        #endregion
+    }
+
+}
