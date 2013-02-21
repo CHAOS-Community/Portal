@@ -1,5 +1,6 @@
 ﻿namespace Chaos.Portal.IntegrationTest.Indexing.Solr
 {
+    using System.Configuration;
     using System.Xml.Linq;
 
     using CHAOS.Net;
@@ -16,7 +17,7 @@
         [SetUp]
         public void SetUp()
         {
-            _solrUrl        = "http://solr.fyhr.dk:8080/solr/core0/";
+            _solrUrl        = ConfigurationManager.AppSettings["SOLR_URL"];
             _httpConnection = new HttpConnection(_solrUrl);
 
             _httpConnection.Post("update", XElement.Parse("<delete><query>*:*</query></delete>")).Dispose();

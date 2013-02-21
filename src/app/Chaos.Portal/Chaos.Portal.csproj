@@ -126,6 +126,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Portal.tt</DependentUpon>
     </Compile>
+    <None Include="App.Config.sample">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Data\EF\Portal.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
