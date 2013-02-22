@@ -7,6 +7,8 @@
 
     using CHAOS.Serialization.Standard;
 
+    using Newtonsoft.Json;
+
     using global::Couchbase;
     using global::Couchbase.Extensions;
 
@@ -82,6 +84,11 @@
             return Client.Store(StoreMode.Set, value.DocumentID, xml.ToString(SaveOptions.None), dateTime);
         }
 
+        public bool Store(string key, ICacheable value)
+        {
+            return Client.StoreJson(StoreMode.Set, key, value);
+        }
+
         /// <summary>
         /// The store.
         /// </summary>
@@ -101,11 +108,10 @@
         /// <typeparam name="T">The type of object to deserialize to</typeparam>
         /// <param name="key">The key to get from the cache</param>
         /// <returns>The object retrieved from cache</returns>
-        public T Get<T>(string key) where T : ICacheable
+        public T Get<T>(string key) where T : class, ICacheable
         {
-            var get = (string)Client.Get(key);
+            return Client.GetJson<T>(key);
 
-            return get == null ? default(T) : SerializerFactory.XMLSerializer.Deserialize<T>(XDocument.Parse(get), false);
         }
 
         /// <summary>
@@ -116,7 +122,7 @@
         /// <returns>An IEnumerable of the returned objects</returns>
         public IEnumerable<T> Get<T>(IEnumerable<string> keys) where T : ICacheable
         {
-            return Client.Get(keys).Select(item => SerializerFactory.XMLSerializer.Deserialize<T>(XDocument.Parse((string) item.Value), false));
+            return Client.Get(keys).Select(item => JsonConvert.DeserializeObject<T>(item.Value.ToString()));
         }
 
         #endregion

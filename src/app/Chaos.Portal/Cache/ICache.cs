@@ -4,7 +4,6 @@
     using System.Collections.Generic;
 
     using Chaos.Portal.Cache.Couchbase;
-    using Chaos.Portal.Data.Dto;
 
     /// <summary>
     /// The Cache interface.
@@ -17,7 +16,7 @@
 
         bool Store(ICacheable value);
 
-        T Get<T>(string key) where T : ICacheable;
+        T Get<T>(string key) where T : class, ICacheable;
 
         IEnumerable<T> Get<T>(IEnumerable<string> keys) where T : ICacheable;
     }
