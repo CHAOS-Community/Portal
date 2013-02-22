@@ -10,9 +10,11 @@
     /// </summary>
     public interface ICache
     {
-        bool Put(string key, ICacheable value, TimeSpan timeSpan);
+        bool Store(string key, ICacheable value, TimeSpan timeSpan);
 
-        bool Put(string key, ICacheable value, DateTime dateTime);
+        bool Store(string key, ICacheable value, DateTime dateTime);
+
+        bool Store(string key, ICacheable value);
 
         bool Store(ICacheable value);
 

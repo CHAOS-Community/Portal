@@ -50,10 +50,7 @@
                 {
                     _user = Application.PortalRepository.GetUserInfo(null, Session.Guid, null).FirstOrDefault();
                         
-                    if( _user == null )
-                        throw new SessionDoesNotExistException( "Session has expired" );
-
-                    Cache.Put(string.Format( "[UserInfo:sid={0}]", Session.Guid ), _user, new TimeSpan(0, 1, 0) );
+                    if( _user == null ) throw new SessionDoesNotExistException( "Session has expired" );
                 }
 
                 return _user;
@@ -67,8 +64,7 @@
         {
             get
             {
-				if( GetSessionFromDatabase() == null)
-					throw new SessionDoesNotExistException( "SessionGuid is invalid or has expired" );
+				if( GetSessionFromDatabase() == null) throw new SessionDoesNotExistException( "SessionGuid is invalid or has expired" );
 
 				return _session;
             }

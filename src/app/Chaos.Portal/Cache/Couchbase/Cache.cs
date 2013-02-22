@@ -3,9 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Xml.Linq;
-
-    using CHAOS.Serialization.Standard;
 
     using Newtonsoft.Json;
 
@@ -55,11 +52,9 @@
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public bool Put(string key, ICacheable value, TimeSpan timeSpan)
+        public bool Store(string key, ICacheable value, TimeSpan timeSpan)
         {
-            var xml = SerializerFactory.XMLSerializer.Serialize(value, false);
-
-            return Client.Store(StoreMode.Set, value.DocumentID, xml.ToString(SaveOptions.None), timeSpan);
+            return Client.Store(StoreMode.Set, value.DocumentID, JsonConvert.SerializeObject(value), timeSpan);
         }
 
         /// <summary>
@@ -77,13 +72,17 @@
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public bool Put(string key, ICacheable value, DateTime dateTime)
+        public bool Store(string key, ICacheable value, DateTime dateTime)
         {
-            var xml = SerializerFactory.XMLSerializer.Serialize(value, false);
-
-            return Client.Store(StoreMode.Set, value.DocumentID, xml.ToString(SaveOptions.None), dateTime);
+            return Client.Store(StoreMode.Set, value.DocumentID, JsonConvert.SerializeObject(value), dateTime);
         }
 
+        /// <summary>
+        /// Stores an object in the cahce
+        /// </summary>
+        /// <param name="key">the key to retrieve by</param>
+        /// <param name="value">the value object</param>
+        /// <returns></returns>
         public bool Store(string key, ICacheable value)
         {
             return Client.StoreJson(StoreMode.Set, key, value);

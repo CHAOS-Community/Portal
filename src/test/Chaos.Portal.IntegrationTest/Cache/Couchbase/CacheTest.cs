@@ -51,8 +51,8 @@
         public void Get_GivenTestKey_ReturnSession()
         {
             var expected = Make_Session();
-
             _cache.Store("test", expected);
+
             var actual = _cache.Get<Session>("test");
 
             Assert.That(actual.Guid, Is.EqualTo(expected.Guid));
