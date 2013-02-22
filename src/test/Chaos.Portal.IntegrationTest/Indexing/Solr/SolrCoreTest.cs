@@ -17,7 +17,7 @@
 
         private SolrCore Make_SolrCore()
         {
-            return new SolrCore(_httpConnection);
+            return new SolrCore(_httpConnection, "core0");
         }
 
         #endregion

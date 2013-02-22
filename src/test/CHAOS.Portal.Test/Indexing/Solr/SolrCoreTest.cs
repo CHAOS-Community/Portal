@@ -18,7 +18,7 @@
 
         private SolrCore Make_SolrCore()
         {
-            return new SolrCore(this.HttpConnection.Object);
+            return new SolrCore(this.HttpConnection.Object, "testcore");
         }
 
         #endregion
@@ -30,12 +30,12 @@
             var core = this.Make_SolrCore();
             var query = new SolrQuery();
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(this.SolrResponseSampleWithoutFacet));
-            this.HttpConnection.Setup(m => m.Get("select", It.IsAny<string>())).Returns(stream);
+            this.HttpConnection.Setup(m => m.Get("testcore/select", It.IsAny<string>())).Returns(stream);
 
             var result = core.Query(query);
 
             Assert.IsNotNull(result);
-            this.HttpConnection.Verify(m => m.Get("select", It.IsAny<string>()));
+            this.HttpConnection.Verify(m => m.Get("testcore/select", It.IsAny<string>()));
         }
 
         #endregion
@@ -50,7 +50,7 @@
 
             core.Index(objectToIndex.Object);
 
-            this.HttpConnection.Verify(m => m.Post("update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<add><doc><field name=\"key\">value</field></doc></add>")));
+            this.HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<add><doc><field name=\"key\">value</field></doc></add>")));
         }
 
         [Test]
@@ -62,7 +62,7 @@
 
             core.Index(objectToIndex.Object);
 
-            this.HttpConnection.Verify(m => m.Post("update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<add><doc><field name=\"key\">1</field><field name=\"key\">2</field></doc></add>")));
+            this.HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<add><doc><field name=\"key\">1</field><field name=\"key\">2</field></doc></add>")));
         }
 
         [Test]
@@ -76,7 +76,7 @@
 
             core.Index(new[] { objectToIndex1.Object, objectToIndex2.Object });
 
-            this.HttpConnection.Verify(m => m.Post("update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<add><doc><field name=\"key\">1</field><field name=\"key\">2</field></doc><doc><field name=\"key\">3</field><field name=\"key\">4</field></doc></add>")));
+            this.HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<add><doc><field name=\"key\">1</field><field name=\"key\">2</field></doc><doc><field name=\"key\">3</field><field name=\"key\">4</field></doc></add>")));
         }
 
         [Test]
@@ -86,7 +86,7 @@
 
             core.Index(new Mock<IIndexable>().Object);
 
-            this.HttpConnection.Verify(m => m.Post("update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<commit softCommit=\"true\" />")));
+            this.HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<commit softCommit=\"true\" />")));
         }
 
         #endregion
@@ -99,7 +99,7 @@
 
             core.Commit();
 
-            this.HttpConnection.Verify(m => m.Post("update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<commit softCommit=\"false\" />")));
+            this.HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<commit softCommit=\"false\" />")));
         }
 
         #endregion
@@ -112,7 +112,7 @@
 
             core.Optimize();
 
-            this.HttpConnection.Verify(m => m.Post("update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<optimize />")));
+            this.HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<optimize />")));
         }
 
         #endregion
@@ -125,7 +125,7 @@
 
             core.Delete();
 
-            this.HttpConnection.Verify(m => m.Post("update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<delete><query>*:*</query></delete>")));
+            this.HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<delete><query>*:*</query></delete>")));
         }
 
         #endregion

@@ -2,14 +2,12 @@
 {
     using System;
 
-    using Chaos.Portal.Cache.Couchbase;
-
     using CHAOS.Serialization;
 
     /// <summary>
     /// The Session interface.
     /// </summary>
-    public interface ISession : IResult, ICacheable
+    public interface ISession : IResult
     {
         [Serialize("SessionGuid")]
         Guid Guid { get; set; }

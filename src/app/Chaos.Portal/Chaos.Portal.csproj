@@ -186,6 +186,7 @@
     <Compile Include="Indexing\Solr\IFacetsResult.cs" />
     <Compile Include="Indexing\Solr\IFacetFieldsResult.cs" />
     <Compile Include="Indexing\Solr\FacetFieldsResult.cs" />
+    <Compile Include="Indexing\Solr\IIndex.cs" />
     <Compile Include="Indexing\Solr\QueryResult.cs" />
     <Compile Include="Indexing\Solr\Response.cs" />
     <Compile Include="Indexing\Solr\IIndexable.cs" />
@@ -195,7 +196,9 @@
     <Compile Include="Indexing\Solr\IIndexResult.cs" />
     <Compile Include="Indexing\Solr\IIndexResponse.cs" />
     <Compile Include="Indexing\Solr\SolrCore.cs" />
+    <Compile Include="Indexing\View\AView.cs" />
     <Compile Include="Indexing\View\IView.cs" />
+    <Compile Include="Indexing\View\IViewData.cs" />
     <Compile Include="Indexing\View\IViewManager.cs" />
     <Compile Include="Indexing\View\ViewManager.cs" />
     <Compile Include="Logging\Database\DatabaseLoggerFactory.cs" />

@@ -26,7 +26,6 @@ namespace Chaos.Portal.Indexing.View
         #endregion
         #region Initialization
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewManager"/> class.
         /// </summary>
@@ -47,7 +46,7 @@ namespace Chaos.Portal.Indexing.View
         /// <returns>The IndexReport of the index process</returns>
         public void Index(object obj)
         {
-            this.Index(new[] {obj});
+            Index(new[] {obj});
         }
 
         /// <summary>
@@ -58,17 +57,15 @@ namespace Chaos.Portal.Indexing.View
         {
             var objects = obj as List<object> ?? obj.ToList();
 
-            foreach (var view in this._loadedViews.Values)
+            foreach (var view in _loadedViews.Values)
                 view.Index(objects);
         }
 
         public IEnumerable<IResult> Query(string key, IQuery query)
         {
-            if (!this._loadedViews.ContainsKey(key)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", key));
+            if (!_loadedViews.ContainsKey(key)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", key));
 
-            var guids = this._loadedViews[key].Query(query).QueryResult.Results.Select(item => item.Guid.ToString());
-
-            throw new NotImplementedException();
+            return _loadedViews[key].Query(query);
         }
 
         public void AddView(string key, IView view)

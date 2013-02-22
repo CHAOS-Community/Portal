@@ -51,7 +51,6 @@
             GuidAction action = delegate( Guid guid ) { };
             var callContext   = new Mock<ICallContext>();
             var binding       = new GuidParameterBinding();
-            var inputGuids    = "00000000-0000-0000-0000-000000000000";
             var parameterInfo = action.Method.GetParameters()[0];
             callContext.SetupGet( p => p.Request.Parameters ).Returns( new Dictionary<string, string>() { { "guid", "" } } );
 
@@ -64,7 +63,6 @@
             GuidAction action = delegate( Guid guid ) { };
             var callContext   = new Mock<ICallContext>();
             var binding       = new GuidParameterBinding();
-            var inputGuids    = "00000000-0000-0000-0000-000000000000";
             var parameterInfo = action.Method.GetParameters()[0];
             callContext.SetupGet( p => p.Request.Parameters ).Returns( new Dictionary<string, string>() );
 

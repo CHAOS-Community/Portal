@@ -2,12 +2,11 @@
 {
     using System;
 
-    using Chaos.Portal.Cache.Couchbase;
     using Chaos.Portal.Data.Dto.Standard;
 
     using CHAOS.Serialization;
 
-    public interface IUserInfo : IResult, ICacheable
+    public interface IUserInfo : IResult
     {
         [Serialize("Guid")]
         Guid Guid { get; set; }

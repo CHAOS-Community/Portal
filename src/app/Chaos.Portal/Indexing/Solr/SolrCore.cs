@@ -6,7 +6,7 @@
 
     using CHAOS.Net;
 
-    public class SolrCore
+    public class SolrCore : IIndex
     {
         #region Fields
 
@@ -15,17 +15,23 @@
         #endregion
         #region Construction
 
-        public SolrCore(IHttpConnection httpConnection)
+        public SolrCore(IHttpConnection httpConnection, string core)
         {
             _httpConnection = httpConnection;
+            Core = core;
         }
+
+        #endregion
+        #region Properties
+
+        public string Core { get; protected set; }
 
         #endregion
         #region Business Logic
 
-        public Response<GuidResult> Query(SolrQuery query)
+        public Response<GuidResult> Query(IQuery query)
         {
-            using (var stream = _httpConnection.Get("select", query.SolrQueryString))
+            using (var stream = _httpConnection.Get(Core + "/select", query.ToString()))
             {
                 var response = new Response<GuidResult>(stream);
 
@@ -42,7 +48,7 @@
         {
             var post = new XElement("add", indexables.Select(ConvertToSolrDocument));
 
-            using (_httpConnection.Post("update", post))
+            using (_httpConnection.Post(Core + "/update", post))
             {
                 
             }
@@ -54,7 +60,7 @@
         {
             var format = string.Format("<commit softCommit=\"{0}\"/>", isSoftCommit.ToString().ToLower());
 
-            using (_httpConnection.Post("update", XElement.Parse(format)))
+            using (_httpConnection.Post(Core + "/update", XElement.Parse(format)))
             {
                 
             }
@@ -64,7 +70,7 @@
         {
             var optimizeString = "<optimize/>";
 
-            using (_httpConnection.Post("update", XElement.Parse(optimizeString)))
+            using (_httpConnection.Post(Core + "/update", XElement.Parse(optimizeString)))
             {
                 
             }
@@ -77,7 +83,7 @@
         {
             var deleteString = "<delete><query>*:*</query></delete>";
 
-            using (_httpConnection.Post("update", XElement.Parse(deleteString)))
+            using (_httpConnection.Post(Core + "/update", XElement.Parse(deleteString)))
             {
                 
             }
