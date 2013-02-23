@@ -10,6 +10,8 @@ using Chaos.Portal.Exceptions;
 
 namespace CHAOS.Portal.Data.EF
 {
+    using Module = Chaos.Portal.Data.Dto.Standard.Module;
+
     public class PortalRepository : IPortalRepository
     {
         #region Properties
@@ -327,6 +329,17 @@ namespace CHAOS.Portal.Data.EF
                     throw new UnhandledException("Unhandled exception occured in Log_Create, and was rolled back");
 
                 return (uint) result.Value;
+            }
+        }
+
+        #endregion
+        #region Module
+
+        public Module ModuleGet(string configurationName)
+        {
+            using(var db = CreatePortalEntities())
+            {
+                return db.Module_Get(null, configurationName).ToDto().FirstOrDefault();
             }
         }
 

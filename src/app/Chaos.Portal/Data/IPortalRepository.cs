@@ -37,5 +37,7 @@ namespace Chaos.Portal.Data
         uint UserSettingsDelete(Guid clientGuid, Guid userGuid);
 
         uint LogCreate(string name, Guid? sessionGuid, string loglevel, double? duration, string message);
+
+        Dto.Standard.Module ModuleGet(string configurationName);
     }
 }

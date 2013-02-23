@@ -78,17 +78,6 @@ namespace Chaos.Portal
             Bindings.Add( typeof(IQuery), new QueryParameterBinding() );
             Bindings.Add( typeof(IEnumerable<Guid>), new EnumerableOfGuidParameterBinding());
             Bindings.Add( typeof(XDocument), new XDocumentBinding() );
-
-            // load portal extensions
-            LoadedExtensions.Add("ClientSettings", new Extension.Standard.ClientSettings().WithPortalApplication(this));
-            LoadedExtensions.Add("Group",          new Extension.Standard.Group().WithPortalApplication(this));
-            LoadedExtensions.Add("Session",        new Extension.Standard.Session().WithPortalApplication(this));
-            LoadedExtensions.Add("Subscription",   new Extension.Standard.Subscription().WithPortalApplication(this));
-            LoadedExtensions.Add("User",           new Extension.Standard.User().WithPortalApplication(this));
-            LoadedExtensions.Add("UserSettings",   new Extension.Standard.UserSettings().WithPortalApplication(this));
-            LoadedExtensions.Add("View",           new View().WithPortalApplication(this));
-
-            // load portal views
         }
 
         #endregion
@@ -117,6 +106,11 @@ namespace Chaos.Portal
             var extensionName = LoadedExtensions.FirstOrDefault(ext => ext.Value is TExtension).Key;
 
             return (TExtension)GetExtension(extensionName);
+        }
+
+        public void AddExtension(string key, IExtension value)
+        {
+            LoadedExtensions.Add(key, value);
         }
 
         /// <summary>

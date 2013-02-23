@@ -1,11 +1,10 @@
 namespace Chaos.Portal.Extension
 {
-    using System;
     using System.Collections.Generic;
 
     using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Indexing.Solr;
 
-    [PortalExtension( configurationName : "Portal" )]
     public class View : AExtension
     {
         #region Initialization
@@ -15,20 +14,9 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
 
-        public IEnumerable<IClientSettings> Get( ICallContext callContext, Guid guid )
+        public IEnumerable<IResult> Get( ICallContext callContext, string view, IQuery query )
         {
-            return PortalRepository.ClientSettingsGet(guid);
-        }
-
-        #endregion
-        #region Set
-
-        public uint Index( ICallContext callContext )
-        {
-            PortalApplication.ViewManager.Index(PortalRepository.GroupGet(null,null,null));
-            PortalApplication.ViewManager.Index(PortalRepository.SessionGet(null, null));
-
-            return 1;
+            return callContext.ViewManager.Query(view, query);
         }
 
         #endregion

@@ -1,26 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Chaos.Portal.Bindings;
-using Chaos.Portal.Cache;
-using Chaos.Portal.Data;
-using Chaos.Portal.Extension;
-using Chaos.Portal.Logging;
-using Chaos.Portal.Request;
-using Chaos.Portal.Response;
-
-namespace Chaos.Portal
+﻿namespace Chaos.Portal
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Chaos.Portal.Bindings;
     using Chaos.Portal.Indexing.View;
+    using Chaos.Portal.Cache;
+    using Chaos.Portal.Data;
+    using Chaos.Portal.Extension;
+    using Chaos.Portal.Logging;
+    using Chaos.Portal.Request;
+    using Chaos.Portal.Response;
 
     public interface IPortalApplication
     {
-        IDictionary<string, IExtension>      LoadedExtensions { get; set; }
-        IDictionary<Type, IParameterBinding> Bindings { get; }
-        ICache                               Cache { get; }
-        IPortalRepository                    PortalRepository { get; }
-        ILog                                 Log { get; }
-        IViewManager                         ViewManager { get; }
+        ICache            Cache { get; }
+        IPortalRepository PortalRepository { get; }
+        ILog              Log { get; }
+        IViewManager      ViewManager { get; }
+
+        IDictionary<Type, IParameterBinding> Bindings { get; set; }
 
         /// <summary>
         /// Process a request to portal. Any underlying extensions or modules will be called based on the callContext parameter
@@ -36,5 +35,7 @@ namespace Chaos.Portal
         /// <typeparam name="TExtension">The type of extension to get</typeparam>
         /// <returns>The loaded the instance of the extension</returns>
         TExtension GetExtension<TExtension>() where TExtension : IExtension;
+
+        void AddExtension(string key, IExtension value);
     }
 }

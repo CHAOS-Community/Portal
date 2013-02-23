@@ -204,6 +204,7 @@
     <Compile Include="Logging\Database\DatabaseLoggerFactory.cs" />
     <Compile Include="Logging\DirectLogger.cs" />
     <Compile Include="Logging\ILogFactory.cs" />
+    <Compile Include="Module\IModule.cs" />
     <Compile Include="Module\PortalModule.cs" />
     <Compile Include="Response\PortalResult.cs" />
     <Compile Include="Data\Dto\Standard\Result.cs" />
