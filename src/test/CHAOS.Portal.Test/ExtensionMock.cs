@@ -19,5 +19,7 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public IPortalApplication PortalApplication { get; set; }
     }
 }

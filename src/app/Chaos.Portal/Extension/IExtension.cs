@@ -8,5 +8,7 @@ namespace Chaos.Portal.Extension
         IExtension WithConfiguration(string configuration);
 
         IPortalResponse CallAction(ICallContext callContext);
+
+        IPortalApplication PortalApplication { get; set; }
     }
 }

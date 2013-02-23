@@ -11,8 +11,9 @@ namespace Chaos.Portal.Extension
         #region Properties
 
         protected IPortalRepository  PortalRepository { get { return PortalApplication.PortalRepository; } }
-        protected IPortalApplication PortalApplication { get;set; }
         protected IDictionary<string, MethodInfo> MethodInfos { get; set; }
+
+        public IPortalApplication PortalApplication { get;set; }
 
         #endregion
         #region Initialization
