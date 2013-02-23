@@ -14,7 +14,7 @@
       <arg value="/t:Rebuild" />
     </msbuild>
 
-    <ilmerge outputfile="Portal.dll"
+    <ilmerge outputfile="Chaos.Portal.dll"
              targetkind="dll"
              logfile="ilmerge.log"
              targetplatform="v4"
@@ -34,7 +34,7 @@
       <formatter type="Plain" />
       <test assemblyname="..\src\test\Chaos.Portal.Test\bin\Release\Chaos.Portal.Test.dll">
         <references>
-          <include name="Portal.dll"/>
+          <include name="Chaos.Portal.dll"/>
           <include name="..\lib\*.dll"/>
         </references>
       </test>

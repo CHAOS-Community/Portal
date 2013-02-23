@@ -14,6 +14,7 @@ namespace Chaos.Portal
     using Chaos.Portal.Indexing.Solr;
     using Chaos.Portal.Indexing.View;
     using Chaos.Portal.Logging;
+    using Chaos.Portal.Module;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;
 
@@ -36,11 +37,14 @@ namespace Chaos.Portal
         public ILog                                 Log { get; protected set; }
         public IPortalRepository                    PortalRepository { get; set; }
 
+        private IDictionary<string, IModule> LoadedModule { get; set; }
+
         #endregion
         #region Constructors
 
         public PortalApplication( ICache cache, IViewManager viewManager, IPortalRepository portalRepository, ILogFactory loggingFactory )
         {
+            LoadedModule     = new Dictionary<string, IModule>();
             Bindings         = new Dictionary<Type, IParameterBinding>();
             LoadedExtensions = new Dictionary<string, IExtension>();
             Log              = new DirectLogger(loggingFactory).WithName("Portal Application");
@@ -111,6 +115,18 @@ namespace Chaos.Portal
         public void AddExtension(string key, IExtension value)
         {
             LoadedExtensions.Add(key, value);
+        }
+
+        public TResult GetModule<TResult>() where TResult : IModule
+        {
+            return (TResult)LoadedModule[typeof(TResult).FullName];
+        }
+
+        public void AddModule(IModule module)
+        {
+            module.Load(this);
+
+            LoadedModule.Add(module.GetType().FullName, module);
         }
 
         /// <summary>

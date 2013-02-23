@@ -5,6 +5,7 @@ namespace Chaos.Portal.Extension
     public interface IExtension
     {
         IExtension WithPortalApplication(IPortalApplication portalApplication);
+        //todo: remove WithConfiguration
         IExtension WithConfiguration(string configuration);
 
         IPortalResponse CallAction(ICallContext callContext);

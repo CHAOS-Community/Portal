@@ -1,6 +1,5 @@
 ﻿namespace Chaos.Portal.Indexing.View
 {
-    using System;
     using System.Collections.Generic;
 
     using Chaos.Portal.Cache;
@@ -12,6 +11,7 @@
 
         protected ICache _cache;
         protected IIndex _index;
+        protected IPortalApplication _portalApplication;
 
         private string _name;
 
@@ -33,6 +33,13 @@
         public IView WithIndex(IIndex index)
         {
             _index = index;
+
+            return this;
+        }
+
+        public IView WithPortalApplication(IPortalApplication portalApplication)
+        {
+            _portalApplication = portalApplication;
 
             return this;
         }

@@ -44,31 +44,31 @@
         [Test]
         public void Index_GivenOneIIndexableObject_CallHttpConnectionWithAddXml()
         {
-            var core = this.Make_SolrCore();
+            var core          = Make_SolrCore();
             var objectToIndex = new Mock<IIndexable>();
             objectToIndex.Setup(m => m.GetIndexableFields()).Returns(new[] { new KeyValuePair<string, string>("key", "value") });
 
             core.Index(objectToIndex.Object);
 
-            this.HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<add><doc><field name=\"key\">value</field></doc></add>")));
+            HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<add><doc><field name=\"key\">value</field></doc></add>")));
         }
 
         [Test]
         public void Index_GivenMultipleFields_CallHttpConnectionWithAddXml()
         {
-            var core = this.Make_SolrCore();
+            var core          = Make_SolrCore();
             var objectToIndex = new Mock<IIndexable>();
             objectToIndex.Setup(m => m.GetIndexableFields()).Returns(new[] { new KeyValuePair<string, string>("key", "1"), new KeyValuePair<string, string>("key", "2") });
 
             core.Index(objectToIndex.Object);
 
-            this.HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<add><doc><field name=\"key\">1</field><field name=\"key\">2</field></doc></add>")));
+            HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<add><doc><field name=\"key\">1</field><field name=\"key\">2</field></doc></add>")));
         }
 
         [Test]
         public void Index_GivenMultipleObjects_CallHttpConnectionWithAddXml()
         {
-            var core = this.Make_SolrCore();
+            var core           = Make_SolrCore();
             var objectToIndex1 = new Mock<IIndexable>();
             var objectToIndex2 = new Mock<IIndexable>();
             objectToIndex1.Setup(m => m.GetIndexableFields()).Returns(new[] { new KeyValuePair<string, string>("key", "1"), new KeyValuePair<string, string>("key", "2") });
@@ -76,17 +76,17 @@
 
             core.Index(new[] { objectToIndex1.Object, objectToIndex2.Object });
 
-            this.HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<add><doc><field name=\"key\">1</field><field name=\"key\">2</field></doc><doc><field name=\"key\">3</field><field name=\"key\">4</field></doc></add>")));
+            HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<add><doc><field name=\"key\">1</field><field name=\"key\">2</field></doc><doc><field name=\"key\">3</field><field name=\"key\">4</field></doc></add>")));
         }
 
         [Test]
         public void Index_WhenIndexing_CallHttpConnectionWithSoftCommitXml()
         {
-            var core = this.Make_SolrCore();
+            var core = Make_SolrCore();
 
             core.Index(new Mock<IIndexable>().Object);
 
-            this.HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<commit softCommit=\"true\" />")));
+            HttpConnection.Verify(m => m.Post("testcore/update", It.Is<XElement>(b => b.ToString(SaveOptions.DisableFormatting) == "<commit softCommit=\"true\" />")));
         }
 
         #endregion
