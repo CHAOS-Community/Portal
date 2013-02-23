@@ -37,6 +37,17 @@ namespace Chaos.Portal.Indexing.View
         }
 
         #endregion
+        #region Properties
+
+        public IEnumerable<IView> LoadedViews
+        {
+            get
+            {
+                return _loadedViews.Select(item => item.Value);
+            }
+        }
+
+        #endregion
         #region Business Logic
 
         /// <summary>

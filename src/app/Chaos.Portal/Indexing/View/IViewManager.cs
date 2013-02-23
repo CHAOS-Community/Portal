@@ -61,5 +61,7 @@ namespace Chaos.Portal.Indexing.View
         /// The view.
         /// </param>
         void AddView(string key, IView view);
+
+        IEnumerable<IView> LoadedViews { get; }
     }
 }

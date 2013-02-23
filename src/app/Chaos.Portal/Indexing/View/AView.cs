@@ -13,14 +13,12 @@
         protected IIndex _index;
         protected IPortalApplication _portalApplication;
 
-        private string _name;
-
         #endregion
         #region Initialization
 
         protected AView()
         {
-            _name = GetType().Name;
+            Name = GetType().Name;
         }
 
         public IView WithCache(ICache cache)
@@ -43,6 +41,11 @@
 
             return this;
         }
+
+        #endregion
+        #region Properties
+
+        public string Name { get; private set; }
 
         #endregion
         #region Abstract methods
@@ -73,7 +76,7 @@
 
         protected string CreateKey(string key)
         {
-            return string.Format("{0}_{1}", _name, key);
+            return string.Format("{0}_{1}", Name, key);
         }
 
         #endregion

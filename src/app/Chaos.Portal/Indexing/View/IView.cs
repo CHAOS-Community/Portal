@@ -17,5 +17,7 @@ namespace Chaos.Portal.Indexing.View
         IView WithCache(ICache cache);
         IView WithIndex(IIndex index);
         IView WithPortalApplication(IPortalApplication portalApplication);
+
+        string Name { get; }
     }
 }
