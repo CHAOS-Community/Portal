@@ -18,13 +18,17 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Initialization
 
+        protected AExtension()
+        {
+            MethodInfos = new Dictionary<string, MethodInfo>();
+        }
+
         public abstract IExtension WithConfiguration(string configuration);
 
         public IExtension WithPortalApplication(IPortalApplication portalApplication)
         {
             PortalApplication = portalApplication;
-            MethodInfos       = new Dictionary<string, MethodInfo>();
-
+            
             return this;
         }
 
