@@ -1,5 +1,5 @@
 ﻿using System;
-using CHAOS;
+
 using CHAOS.Serialization;
 
 namespace Chaos.Portal.Data.Dto.Standard
@@ -9,7 +9,7 @@ namespace Chaos.Portal.Data.Dto.Standard
 		#region Properties
 
 		[Serialize]
-		public UUID GUID { get; set; }
+		public Guid Guid { get; set; }
 
 		[Serialize]
 		public string Name { get; set; }
@@ -30,7 +30,7 @@ namespace Chaos.Portal.Data.Dto.Standard
 
 		public ClientSettings( byte[] guid, string name, string settings, DateTime dateCreated )
 		{
-			GUID        = new UUID( guid );
+			Guid        = new Guid( guid );
 			Name        = name;
 			Settings    = settings;
 			DateCreated = dateCreated;

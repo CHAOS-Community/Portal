@@ -1,7 +1,6 @@
 ﻿namespace Chaos.Portal.Module
 {
     using Chaos.Portal.Extension;
-    using Chaos.Portal.Extension.Standard;
 
     public class PortalModule : IModule
     {

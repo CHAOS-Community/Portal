@@ -13,7 +13,7 @@
         /// Gets or sets the Guid.
         /// </summary>
         [Serialize]
-        UUID GUID { get; set; }
+        Guid Guid { get; set; }
 
         /// <summary>
         /// Gets or sets the name.

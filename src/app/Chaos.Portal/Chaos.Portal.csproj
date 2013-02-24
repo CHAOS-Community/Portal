@@ -176,6 +176,12 @@
     <Compile Include="Exceptions\UnhandledException.cs" />
     <Compile Include="Exceptions\UnsupportedExtensionReturnTypeException.cs" />
     <Compile Include="Exceptions\WrongProtocolVersionException.cs" />
+    <Compile Include="Extension\ClientSettings.cs" />
+    <Compile Include="Extension\Group.cs" />
+    <Compile Include="Extension\Session.cs" />
+    <Compile Include="Extension\Subscription.cs" />
+    <Compile Include="Extension\User.cs" />
+    <Compile Include="Extension\UserSettings.cs" />
     <Compile Include="Extension\View.cs" />
     <Compile Include="Indexing\Solr\Facet.cs" />
     <Compile Include="Indexing\Solr\FacetQueriesResult.cs" />
@@ -224,12 +230,6 @@
     <Compile Include="Extension\AExtension.cs" />
     <Compile Include="Extension\PortalExtensionAttribute.cs" />
     <Compile Include="Extension\IExtension.cs" />
-    <Compile Include="Extension\Standard\ClientSettings.cs" />
-    <Compile Include="Extension\Standard\Group.cs" />
-    <Compile Include="Extension\Standard\Session.cs" />
-    <Compile Include="Extension\Standard\Subscription.cs" />
-    <Compile Include="Extension\Standard\User.cs" />
-    <Compile Include="Extension\Standard\UserSettings.cs" />
     <Compile Include="ICallContext.cs" />
     <Compile Include="IPortalAction.cs" />
     <Compile Include="Response\IPortalResponse.cs" />
@@ -282,7 +282,9 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Extension\Standard\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
