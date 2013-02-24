@@ -18,6 +18,7 @@
 
     using ClientSettings = Chaos.Portal.Extension.ClientSettings;
     using Group = Chaos.Portal.Extension.Group;
+    using Session = Chaos.Portal.Extension.Session;
 
     [TestFixture]
     public class TestBase
@@ -80,6 +81,25 @@
                 };
         }
 
+        protected IUserInfo Make_User()
+        {
+            return new UserInfo
+                {
+                    Guid = new Guid("00100000-0000-0000-0000-000000000100"),
+                    Email = "test@test.test"
+                };
+        }
+
+        protected Data.Dto.Standard.Session Make_Session()
+        {
+            return new Data.Dto.Standard.Session
+                {
+                    Guid        = new Guid("00001000-0000-0000-0000-000000010000"),
+                    UserGuid    = Make_User().Guid,
+                    DateCreated = new DateTime(2000, 01, 01)
+                };
+        }
+
         protected ClientSettings Make_ClientSettingsExtension()
         {
             return (ClientSettings)new ClientSettings().WithPortalApplication(PortalApplication.Object);
@@ -90,15 +110,11 @@
             return (Group)new Group().WithPortalApplication(PortalApplication.Object);
         }
 
-        #endregion
-
-        protected IUserInfo Make_User()
+        protected Session Make_SessionExtension()
         {
-            return new UserInfo
-                {
-                    Guid = new Guid("00100000-0000-0000-0000-000000000100"),
-                    Email = "test@test.test"
-                };
+            return (Session)new Session().WithPortalApplication(PortalApplication.Object);
         }
+
+        #endregion
     }
 }

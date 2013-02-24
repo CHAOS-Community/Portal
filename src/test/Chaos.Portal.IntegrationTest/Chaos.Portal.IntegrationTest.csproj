@@ -36,6 +36,9 @@
     <Reference Include="CHAOS">
       <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
     </Reference>
+    <Reference Include="Chaos.Deployment.UI.Console">
+      <HintPath>..\..\..\tools\chaos.deployment\Chaos.Deployment.UI.Console.exe</HintPath>
+    </Reference>
     <Reference Include="Couchbase, Version=1.2.0.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Chaos.Portal.Test\bin\Debug\Couchbase.dll</HintPath>
@@ -61,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache\Couchbase\CacheTest.cs" />
+    <Compile Include="Data\PortalRepositoryTest.cs" />
     <Compile Include="Indexing\Solr\SolrCoreTest.cs" />
     <Compile Include="Indexing\Solr\TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
