@@ -29,5 +29,35 @@
 
             Assert.That(actual, Is.SameAs(expected));
         }
+        
+        [Test]
+        public void Update_RenewCurrentSeesion_ReturnSession()
+        {
+            var extension = Make_SessionExtension();
+            var expected  = Make_Session();
+            var user      = Make_User();
+            CallContext.SetupGet(p => p.User).Returns(user);
+            CallContext.SetupGet(p => p.Session).Returns(expected);
+            PortalRepository.Setup(m => m.SessionUpdate(expected.Guid, user.Guid)).Returns(expected);
+
+            var actual = extension.Update(CallContext.Object);
+
+            Assert.That(actual, Is.SameAs(expected));
+        }
+
+        [Test]
+        public void Delete_CurrentSeesion_ReturnOne()
+        {
+            var extension = Make_SessionExtension();
+            var expected = Make_Session();
+            var user = Make_User();
+            CallContext.SetupGet(p => p.User).Returns(user);
+            CallContext.SetupGet(p => p.Session).Returns(expected);
+            PortalRepository.Setup(m => m.SessionDelete(expected.Guid, user.Guid)).Returns(1);
+
+            var actual = extension.Delete(CallContext.Object);
+
+            Assert.That(actual.Value, Is.EqualTo(1));
+        }
     }
 }
