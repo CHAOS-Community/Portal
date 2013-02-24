@@ -218,7 +218,7 @@ namespace CHAOS.Portal.Data.EF
             }
         }
 
-        public uint ClientSettingsSet(Guid guid)
+        public uint ClientSettingsSet(Guid guid, string name, string settings)
         {
             throw new NotImplementedException("ClientSettingsSet not implemented");
         }

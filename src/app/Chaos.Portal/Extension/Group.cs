@@ -17,7 +17,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
         
-        public IEnumerable<IGroup> Get( ICallContext callContext, Guid guid )
+        public IEnumerable<IGroup> Get( ICallContext callContext)
         {
             return callContext.Groups;
         }
@@ -27,8 +27,7 @@ namespace Chaos.Portal.Extension
 
         public IGroup Create( ICallContext callContext, string name, uint systemPermission )
         {
-            if( callContext.User.Guid.ToString() == callContext.AnonymousUserGuid.ToString() )
-                throw new InsufficientPermissionsException( "Anonymous users cannot create groups" );
+            if( callContext.IsAnonymousUser ) throw new InsufficientPermissionsException( "Anonymous users cannot create groups" );
 
             return PortalRepository.GroupCreate(new Guid(), name, callContext.User.Guid, systemPermission);
         }
@@ -38,8 +37,7 @@ namespace Chaos.Portal.Extension
 
         public ScalarResult Delete( ICallContext callContext, Guid guid )
         {
-            if(callContext.User.Guid.ToString() == callContext.AnonymousUserGuid.ToString())
-                throw new InsufficientPermissionsException( "Anonymous users cannot delete groups" );
+            if(callContext.IsAnonymousUser) throw new InsufficientPermissionsException( "Anonymous users cannot delete groups" );
 
             var result = PortalRepository.GroupDelete(guid, callContext.User.Guid);
 
@@ -51,8 +49,7 @@ namespace Chaos.Portal.Extension
 
         public ScalarResult Update( ICallContext callContext, Guid guid, string newName, uint? newSystemPermission )
         {
-            if(callContext.User.Guid.ToString() == callContext.AnonymousUserGuid.ToString())
-                throw new InsufficientPermissionsException( "Anonymous users cannot Update groups" );
+            if(callContext.IsAnonymousUser) throw new InsufficientPermissionsException( "Anonymous users cannot Update groups" );
 
             var result = PortalRepository.GroupUpdate(guid, callContext.User.Guid, newName, newSystemPermission);
 

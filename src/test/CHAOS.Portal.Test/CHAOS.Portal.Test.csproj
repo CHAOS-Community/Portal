@@ -61,6 +61,8 @@
     <Compile Include="Bindings\XDocumentBindingTest.cs" />
     <Compile Include="ExtensionMock.cs" />
     <Compile Include="Extension\ClientSettingsTest.cs" />
+    <Compile Include="Extension\GroupTest.cs" />
+    <Compile Include="Extension\SessionTest.cs" />
     <Compile Include="Indexing\Solr\SolrCoreTest.cs" />
     <Compile Include="Indexing\Solr\TestBase.cs" />
     <Compile Include="Indexing\View\ViewManagerTest.cs" />

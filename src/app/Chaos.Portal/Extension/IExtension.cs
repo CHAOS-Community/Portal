@@ -2,6 +2,8 @@
 
 namespace Chaos.Portal.Extension
 {
+    using Chaos.Portal.Data;
+
     public interface IExtension
     {
         IExtension WithPortalApplication(IPortalApplication portalApplication);

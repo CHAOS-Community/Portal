@@ -30,7 +30,7 @@ namespace Chaos.Portal.Data
         uint SessionDelete(Guid sessionGuid, Guid userGuid);
 
         IEnumerable<IClientSettings> ClientSettingsGet(Guid guid);
-        uint ClientSettingsSet(Guid guid);
+        uint ClientSettingsSet(Guid guid, string name, string settings);
 
         IEnumerable<IUserSettings> UserSettingsGet(Guid clientGuid, Guid userGuid);
         uint UserSettingsSet(Guid clientGuid, Guid userGuid, string settings);

@@ -23,9 +23,9 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Set
 
-        public uint Set( ICallContext callContext, Guid guid )
+        public uint Set( ICallContext callContext, Guid guid, string name, string settings )
         {
-            return PortalRepository.ClientSettingsSet(guid);
+            return PortalRepository.ClientSettingsSet(guid, name, settings);
         }
 
         #endregion
