@@ -1,12 +1,12 @@
 CREATE PROCEDURE Session_Create(
-    IN  SessionGUID BINARY(16),
-    IN  UserGUID    BINARY(16)
+	Guid BINARY(16),
+	UserGuid    BINARY(16)
 )
 BEGIN
 
     INSERT INTO Session( GUID, UserGUID, DateCreated, DateModified )
-         VALUES ( SessionGUID, UserGUID, NOW(), NULL );
+         VALUES ( Guid, UserGuid, NOW(), NULL );
 
-    SELECT 1;
+    SELECT ROW_COUNT();
 
 END

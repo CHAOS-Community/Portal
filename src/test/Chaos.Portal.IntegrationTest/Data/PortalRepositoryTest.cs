@@ -139,6 +139,17 @@
             Assert.That(actual.UserGuid, Is.EqualTo(session.UserGuid));
         }
 
+        [Test]
+        public void SessionCreate_GivenUserGuid_ReturnNewSession()
+        {
+            var session = Make_Session();
+
+            var actual = PortalRepository.SessionCreate(session.UserGuid);
+
+            Assert.That(actual.Guid, Is.Not.EqualTo(Guid.Empty));
+            Assert.That(actual.UserGuid, Is.EqualTo(session.UserGuid));
+        }
+
         private Session Make_Session()
         {
             return new Session

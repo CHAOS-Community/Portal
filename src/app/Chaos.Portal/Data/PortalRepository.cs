@@ -136,16 +136,15 @@ namespace Chaos.Portal.Data
 
         public ISession SessionCreate(Guid userGuid)
         {
-//            using (var db = CreatePortalEntities())
-//            {
-//                var sessionGUID = Guid.NewGuid();
-//
-//                db.Session_Create(sessionGUID.ToByteArray(), userGuid.ToByteArray());
-//
-//                return new Chaos.Portal.Data.Dto.Standard.Session(sessionGUID, userGuid, DateTime.Now, DateTime.Now);
-            //            }
+            var guid = Guid.NewGuid();
 
-            throw new NotImplementedException();
+            var result = Gateway.ExecuteNonQuery("Session_Create", new[]
+                {
+                    new MySqlParameter("Guid", guid.ToByteArray()), 
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray())
+                });
+
+            return SessionGet(guid, null).First();
         }
 
         public ISession SessionUpdate(Guid sessionGuid, Guid userGuid)
