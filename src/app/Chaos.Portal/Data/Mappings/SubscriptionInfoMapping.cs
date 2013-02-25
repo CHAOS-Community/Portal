@@ -15,7 +15,7 @@
             {
                 yield return new SubscriptionInfo
                     {
-                        Guid        = reader.GetGuid("GUID"),
+                        Guid        = reader.GetGuid("Guid"),
                         Name        = reader.GetString("Name"),
                         UserGuid    = reader.GetGuid("UserGuid"),
                         Permission  = (SubscriptionPermission) reader.GetUint32("Permission"),

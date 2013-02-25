@@ -17,7 +17,7 @@
             {
                 yield return new UserInfo
                     {
-                        Guid                = reader.GetGuid("GUID"),
+                        Guid                = reader.GetGuid("Guid"),
                         SessionGuid         = reader.GetGuidNullable("SessionGUID"),
                         SystemPermissions   = reader.GetUint32Nullable("SystemPermission"),
                         Email               = reader.GetString("Email"),

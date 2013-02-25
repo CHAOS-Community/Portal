@@ -41,7 +41,7 @@
         {
             var userThatExist = Make_UserInfoThatExist();
 
-            var results = PortalRepository.GetUserInfo(userThatExist.Guid, null, null);
+            var results = PortalRepository.UserInfoGet(userThatExist.Guid, null, null);
 
             Assert.That(results, Is.Not.Empty);
             var actual = results.First();
@@ -54,7 +54,7 @@
         {
             var userThatExist = Make_UserInfoThatExist();
 
-            var actual = PortalRepository.GetUserInfo(userThatExist.Email);
+            var actual = PortalRepository.UserInfoGet(userThatExist.Email);
 
             Assert.That(actual.Guid, Is.EqualTo(userThatExist.Guid));
             Assert.That(actual.Email, Is.EqualTo(userThatExist.Email));
@@ -63,7 +63,7 @@
         [Test, ExpectedException(typeof(ArgumentException))]
         public void UserInfoGet_ByEmailGiveUserTheDoesntExist_ThrowArgumentException()
         {
-            PortalRepository.GetUserInfo("fake@fake.fake");
+            PortalRepository.UserInfoGet("fake@fake.fake");
         }
 
         [Test]

@@ -15,7 +15,7 @@
             {
                 yield return new Group
                     {
-                        Guid             = reader.GetGuid("GUID"),
+                        Guid             = reader.GetGuid("Guid"),
                         SystemPermission = reader.GetUint32("SystemPermission"),
                         Name             = reader.GetString("Name"),
                         DateCreated      = reader.GetDateTime("DateCreated"),

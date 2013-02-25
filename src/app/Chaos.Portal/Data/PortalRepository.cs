@@ -46,7 +46,7 @@ namespace Chaos.Portal.Data
         #region Business Logic
         #region User
 
-        public IEnumerable<UserInfo> GetUserInfo(Guid? userGuid, Guid? sessionGuid, string email)
+        public IEnumerable<UserInfo> UserInfoGet(Guid? userGuid, Guid? sessionGuid, string email)
         {
             return Gateway.ExecuteQuery<UserInfo>("UserInfo_Get", new[]
                 {
@@ -56,9 +56,9 @@ namespace Chaos.Portal.Data
                 });
         }
 
-        public UserInfo GetUserInfo(string email)
+        public UserInfo UserInfoGet(string email)
         {
-            var user = GetUserInfo(null, null, email).FirstOrDefault();
+            var user = UserInfoGet(null, null, email).FirstOrDefault();
             
             if (user == null) throw new ArgumentException("Email not found"); // TODO: Replace with custom Exception
 
@@ -154,9 +154,9 @@ namespace Chaos.Portal.Data
         {
             var result = Gateway.ExecuteNonQuery("Session_Update", new[]
                 {
-                    new MySqlParameter("UserGuid", null), 
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
                     new MySqlParameter("WhereSessionGuid", guid.ToByteArray()), 
-                    new MySqlParameter("WhereUserGuid", userGuid.ToByteArray()) 
+                    new MySqlParameter("WhereUserGuid", null) 
                 });
 
             return SessionGet(guid, userGuid).First();

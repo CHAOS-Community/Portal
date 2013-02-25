@@ -14,22 +14,13 @@
         public void Load(IPortalApplication portalApplication)
         {
             Extensions = new IExtension[7];
-            Extensions[0] = new ClientSettings();
-            Extensions[1] = new Group();
-            Extensions[2] = new Session();
-            Extensions[3] = new Subscription();
-            Extensions[4] = new User();
-            Extensions[5] = new UserSettings();
-            Extensions[6] = new View();
-
-            var configuration = portalApplication.PortalRepository.ModuleGet(CONFIGURATION_NAME);
-            
-            foreach(var extension in Extensions)
-            {
-                extension.WithPortalApplication(portalApplication);
-
-                if (configuration != null) extension.WithConfiguration(configuration.Configuration);
-            }
+            Extensions[0] = new ClientSettings().WithPortalApplication(portalApplication);
+            Extensions[1] = new Group().WithPortalApplication(portalApplication);
+            Extensions[2] = new Session().WithPortalApplication(portalApplication);
+            Extensions[3] = new Subscription().WithPortalApplication(portalApplication);
+            Extensions[4] = new User().WithPortalApplication(portalApplication);
+            Extensions[5] = new UserSettings().WithPortalApplication(portalApplication);
+            Extensions[6] = new View().WithPortalApplication(portalApplication);
 
             portalApplication.AddExtension("ClientSettings", Extensions[0]);
             portalApplication.AddExtension("Group", Extensions[1]);
@@ -41,7 +32,6 @@
         }
 
         #endregion
-
         #region Properties
 
         public IExtension[] Extensions { get; private set; }

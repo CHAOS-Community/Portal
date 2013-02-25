@@ -17,7 +17,7 @@
             {
                 yield return new ClientSettings
                     {
-                        Guid        = reader.GetGuid("GUID"),
+                        Guid        = reader.GetGuid("Guid"),
                         Name        = reader.GetString("Name"),
                         Settings    = reader.GetString("Settings"),
                         DateCreated = reader.GetDateTime("DateCreated")

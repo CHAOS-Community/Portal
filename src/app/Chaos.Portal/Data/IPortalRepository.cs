@@ -9,8 +9,8 @@ namespace Chaos.Portal.Data
     {
         IPortalRepository WithConfiguration(string connectionString);
 
-        UserInfo GetUserInfo(string email);
-        IEnumerable<UserInfo> GetUserInfo(Guid? userGuid, Guid? sessionGuid, string email);
+        UserInfo UserInfoGet(string email);
+        IEnumerable<UserInfo> UserInfoGet(Guid? userGuid, Guid? sessionGuid, string email);
 
         IEnumerable<SubscriptionInfo> SubscriptionGet(Guid? guid, Guid? requestingUserGuid);
         SubscriptionInfo SubscriptionCreate(Guid? guid, string name, Guid requestingUserGuid);
@@ -36,6 +36,6 @@ namespace Chaos.Portal.Data
 
         uint LogCreate(string name, Guid? sessionGuid, string level, double? duration, string message);
 
-        Dto.Standard.Module ModuleGet(string name);
+        Module ModuleGet(string name);
     }
 }
