@@ -7,6 +7,7 @@
     using Chaos.Deployment.UI.Console.Action.Database.Import;
     using Chaos.Portal.Data;
     using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Exceptions;
 
     using NUnit.Framework;
 
@@ -89,6 +90,26 @@
             Assert.That(actual.Guid, Is.EqualTo(group.Guid));
             Assert.That(actual.Name, Is.EqualTo(group.Name));
             Assert.That(actual.SystemPermission, Is.EqualTo(group.SystemPermission));
+        }
+
+        [Test, ExpectedException(typeof(InsufficientPermissionsException))]
+        public void GroupCreate_GivenSystemPermissionHigherThatWhatTheUserHas_ThrowInssuficientPermissionException()
+        {
+            var group = Make_GroupThatDoesntExist();
+            var user  = Make_UserInfoThatExist();
+
+            PortalRepository.GroupCreate(group.Guid, group.Name, user.Guid, uint.MaxValue);
+        }
+
+        [Test]
+        public void GroupDelete_WithPermission_ReturnOne()
+        {
+            var group = Make_GroupThatExist();
+            var user  = Make_UserInfoThatExist();
+
+            var actual = PortalRepository.GroupDelete(group.Guid, user.Guid);
+
+            Assert.That(actual, Is.EqualTo(1));
         }
 
         private Group Make_GroupThatExist()

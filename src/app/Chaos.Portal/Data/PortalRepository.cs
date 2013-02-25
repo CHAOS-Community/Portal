@@ -94,22 +94,16 @@ namespace Chaos.Portal.Data
 
         public uint GroupDelete(Guid guid, Guid userGuid)
         {
-//            using (var db = CreatePortalEntities())
-//            {
-//                var errorCode = new ObjectParameter("ErrorCode", 0);
-//
-//                db.Group_Delete(guid.ToByteArray(), userGuid.ToByteArray(), errorCode);
-//
-//                if (((int)errorCode.Value) == -100)
-//                    throw new InsufficientPermissionsException("User has insufficient permissions to delete groups");
-//
-//                if (((int)errorCode.Value) == -200)
-//                    throw new UnhandledException("Group_Delete was rolled back");
-//
-//                return 1;
-            //            }
+            var result = Gateway.ExecuteNonQuery("Group_Delete", new[]
+                {
+                    new MySqlParameter("Guid", guid.ToByteArray()), 
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
+                });
 
-            throw new NotImplementedException();
+            if(result == -100) throw new InsufficientPermissionsException("User has insufficient permissions to delete groups");
+            if(result == -200) throw new UnhandledException("Group_Delete had an unhandled exception and was rolled back");
+
+            return (uint)result;
         }
 
         public uint GroupUpdate(Guid guid, Guid userGuid, string newName, uint? newSystemPermission)

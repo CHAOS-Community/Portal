@@ -1,29 +1,30 @@
 CREATE PROCEDURE `Group_Delete`(
-    IN  GUID		  BINARY(16),
-    IN  UserGUID	BINARY(16),
-    OUT ErrorCode INT
+	Guid		  BINARY(16),
+	UserGuid	BINARY(16)
 )
 BEGIN
     DECLARE EXIT HANDLER
     FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
-        ROLLBACK;
-        SET ErrorCode = -200;
+    BEGIN
+		ROLLBACK;
+        SELECT -200;
+	END;
 
-    IF DoesUserHavePermissionToGroup( UserGUID, GUID, 'DELETE' ) = 0 THEN
-        SET ErrorCode = -100;
+    IF DoesUserHavePermissionToGroup( UserGuid, Guid, 'DELETE' ) = 0 THEN
+        SELECT -100;
     ELSE
         
         START TRANSACTION;
     
         DELETE
           FROM	Group_User_Join
-         WHERE	GroupGUID = GUID;
+         WHERE	GroupGUID = Guid;
 
          DELETE
            FROM	`Group`
-          WHERE	`Group`.GUID = GUID;
+          WHERE	`Group`.GUID = Guid;
      
-        SET ErrorCode = 1;
+        SELECT ROW_COUNT();
         
         COMMIT;
      
