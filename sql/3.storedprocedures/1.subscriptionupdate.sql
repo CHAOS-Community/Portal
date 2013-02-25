@@ -1,20 +1,23 @@
 CREATE PROCEDURE `Subscription_Update`(
-    IN  GUID            BINARY(16),
-    IN  NewName         VARCHAR(255),
-    IN  RequestUserGUID BINARY(16),
-    OUT ErrorCode       INTEGER
+	Guid            BINARY(16),
+	NewName         VARCHAR(255),
+	RequestingUserGuid BINARY(16)
 )
 BEGIN
 
-    IF DoesUserHavePermissionToSubscription( RequestUserGUID, GUID, 'UPDATE' ) = 0 THEN
-        SET ErrorCode = -100;
+    IF DoesUserHavePermissionToSubscription( RequestingUserGuid, Guid, 'UPDATE' ) = 0 THEN
+        SELECT -100;
     ELSE
     
-        UPDATE	Subscription
-           SET	Subscription.Name = NewName
-         WHERE	Subscription.GUID = GUID;
+        UPDATE	
+			Subscription
+        SET	
+			Subscription.Name = NewName
+        WHERE
+			Subscription.GUID = Guid;
          
-        SET ErrorCode = 1;
+        SELECT ROW_COUNT();
+
     END IF;
 
 END

@@ -235,21 +235,18 @@ namespace Chaos.Portal.Data
             return (uint)result;
         }
 
-        public uint SubscriptionUpdate(Guid guid, string newName, Guid requestionUserGuid)
+        public uint SubscriptionUpdate(Guid guid, string newName, Guid requestingUserGuid)
         {
-//            var errorCode = new ObjectParameter("ErrorCode", 0);
-//
-//            using (var db = CreatePortalEntities())
-//            {
-//                db.Subscription_Update(guid.ToByteArray(), newName, requestionUserGuid.ToByteArray(), errorCode);
-//            }
-//
-//            if (((int)errorCode.Value) == -100)
-//                throw new InsufficientPermissionsException("User does not have sufficient permissions to access the subscription");
-//
-            //            return 1;
+            var result = Gateway.ExecuteNonQuery("Subscription_Update", new[]
+                {
+                    new MySqlParameter("Guid", guid.ToByteArray()), 
+                    new MySqlParameter("NewName", newName), 
+                    new MySqlParameter("RequestingUserGuid", requestingUserGuid.ToByteArray()) 
+                });
 
-            throw new NotImplementedException();
+            if (result == -100) throw new InsufficientPermissionsException("User does not have sufficient permissions to update the subscription");
+
+            return (uint)result;
         }
 
         #endregion

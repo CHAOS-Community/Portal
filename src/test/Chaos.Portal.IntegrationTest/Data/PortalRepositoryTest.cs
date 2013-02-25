@@ -234,6 +234,17 @@
             Assert.That(actual, Is.EqualTo(1));
         }
 
+        [Test]
+        public void SubscriptionUpdate_WithPermission_ReturnOne()
+        {
+            var subscription = Make_Subscription();
+            var newName      = "new name";
+
+            var actual = PortalRepository.SubscriptionUpdate(subscription.Guid, newName, subscription.UserGuid);
+
+            Assert.That(actual, Is.EqualTo(1));
+        }
+
         private SubscriptionInfo Make_Subscription()
         {
             return new SubscriptionInfo
