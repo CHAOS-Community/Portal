@@ -17,7 +17,7 @@
                     {
                         Guid        = reader.GetGuid("GUID"),
                         Name        = reader.GetString("Name"),
-                        UserGuid    = reader.GetGuid("UserGUID"),
+                        UserGuid    = reader.GetGuid("UserGuid"),
                         Permission  = (SubscriptionPermission) reader.GetUint32("Permission"),
                         DateCreated = reader.GetDateTime("DateCreated")
                     };

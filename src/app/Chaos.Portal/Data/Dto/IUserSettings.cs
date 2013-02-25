@@ -1,17 +1,17 @@
-﻿using System;
-using CHAOS;
-using CHAOS.Serialization;
-using CHAOS.Serialization.XML;
-
-namespace Chaos.Portal.Data.Dto
+﻿namespace Chaos.Portal.Data.Dto
 {
+    using System;
+
+    using CHAOS.Serialization;
+    using CHAOS.Serialization.XML;
+
     public interface IUserSettings : IResult
     {
-        [Serialize("ClientSettingGUID")]
-        UUID ClientSettingGUID { get; set; }
+        [Serialize("ClientSettingGuid")]
+        Guid ClientSettingGuid { get; set; }
 
         [Serialize("UserGuid")]
-        UUID UserGUID { get; set; }
+        Guid UserGuid { get; set; }
 
         [SerializeXML(false, true)]
         [Serialize("Settings")]

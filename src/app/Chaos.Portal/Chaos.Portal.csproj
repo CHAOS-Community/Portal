@@ -103,6 +103,7 @@
     <Compile Include="Data\Mappings\SessionMapping.cs" />
     <Compile Include="Data\Mappings\SubscriptionInfoMapping.cs" />
     <Compile Include="Data\Mappings\UserInfoMapping.cs" />
+    <Compile Include="Data\Mappings\UserSettingsMapping.cs" />
     <Compile Include="Data\PortalRepository.cs" />
     <Compile Include="Exceptions\ActionMissingException.cs" />
     <Compile Include="Exceptions\AssemblyNotLoadedException.cs" />

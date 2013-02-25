@@ -4,6 +4,8 @@
     using System.Configuration;
     using System.Linq;
 
+    using CHAOS;
+
     using Chaos.Deployment.UI.Console.Action.Database.Import;
     using Chaos.Portal.Data;
     using Chaos.Portal.Data.Dto.Standard;
@@ -243,6 +245,32 @@
             var actual = PortalRepository.SubscriptionUpdate(subscription.Guid, newName, subscription.UserGuid);
 
             Assert.That(actual, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void UserSettingsGet_GivenUserGuid_ReturnUserSettings()
+        {
+            var userSettings = Make_UserSettings();
+
+            var results = PortalRepository.UserSettingsGet(userSettings.ClientSettingGuid, userSettings.UserGuid);
+
+            Assert.That(results, Is.Not.Empty);
+            var actual = results.First();
+            Assert.That(actual.ClientSettingGuid, Is.EqualTo(userSettings.ClientSettingGuid));
+            Assert.That(actual.UserGuid, Is.EqualTo(userSettings.UserGuid));
+            Assert.That(actual.Settings, Is.EqualTo(userSettings.Settings));
+            Assert.That(actual.DateCreated, Is.EqualTo(userSettings.DateCreated));
+        }
+
+        private UserSettings Make_UserSettings()
+        {
+            return new UserSettings
+                {
+                    ClientSettingGuid = Make_ClientSettingsThatExist().Guid,
+                    UserGuid          = Make_UserInfoThatExist().Guid,
+                    Settings          = "user settings",
+                    DateCreated       = new DateTime(2000,01,01,00,00,00)
+                };
         }
 
         private SubscriptionInfo Make_Subscription()

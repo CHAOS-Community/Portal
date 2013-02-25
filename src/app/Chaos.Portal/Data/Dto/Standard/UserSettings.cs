@@ -1,19 +1,19 @@
-﻿using System;
-using CHAOS;
-using CHAOS.Serialization;
-using CHAOS.Serialization.XML;
-
-namespace Chaos.Portal.Data.Dto.Standard
+﻿namespace Chaos.Portal.Data.Dto.Standard
 {
+    using System;
+
+    using CHAOS.Serialization;
+    using CHAOS.Serialization.XML;
+    
     public class UserSettings : Result, IUserSettings
     {
         #region Properties
 
-        [Serialize("ClientSettingGUID")]
-		public UUID ClientSettingGUID { get; set; }
+        [Serialize("ClientSettingGuid")]
+		public Guid ClientSettingGuid { get; set; }
 
         [Serialize("UserGuid")]
-		public UUID UserGUID { get; set; }
+		public Guid UserGuid { get; set; }
 
 		[SerializeXML(false, true)]
 		[Serialize("Settings")]
@@ -23,21 +23,5 @@ namespace Chaos.Portal.Data.Dto.Standard
 		public DateTime DateCreated { get; set; }
 
         #endregion
-		#region Constructor
-
-		public UserSettings()
-		{
-			
-		}
-
-		public UserSettings( byte[] clientSettingGUID, byte[] userGUID, string settings, DateTime dateCreated )
-		{
-			ClientSettingGUID = new UUID( clientSettingGUID );
-			UserGUID          = new UUID( userGUID );
-			Settings          = settings;
-			DateCreated       = dateCreated;
-		}
-
-		#endregion
 	}
 }

@@ -7,7 +7,6 @@ namespace Chaos.Portal.Data
     using CHAOS.Data;
     using CHAOS.Data.MySql;
 
-    using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Data.Mappings;
     using Chaos.Portal.Exceptions;
@@ -23,6 +22,7 @@ namespace Chaos.Portal.Data
             // todo: add better error message when mapping is missing
             ReaderExtensions.Mappings.Add(typeof(SubscriptionInfo), new SubscriptionInfoMapping());
             ReaderExtensions.Mappings.Add(typeof(ClientSettings), new ClientSettingsMapping());
+            ReaderExtensions.Mappings.Add(typeof(UserSettings), new UserSettingsMapping());
             ReaderExtensions.Mappings.Add(typeof(UserInfo), new UserInfoMapping());
             ReaderExtensions.Mappings.Add(typeof(Session), new SessionMapping());
             ReaderExtensions.Mappings.Add(typeof(Group), new GroupMapping());
@@ -55,7 +55,7 @@ namespace Chaos.Portal.Data
                 });
         }
 
-        public IUserInfo GetUserInfo(string email)
+        public UserInfo GetUserInfo(string email)
         {
             var user = GetUserInfo(null, null, email).FirstOrDefault();
             
@@ -77,7 +77,7 @@ namespace Chaos.Portal.Data
                 });
         }
 
-        public IGroup GroupCreate(Guid? guid, string name, Guid requestedUserGuid, uint systemPermission )
+        public Group GroupCreate(Guid? guid, string name, Guid requestedUserGuid, uint systemPermission )
         {
             guid = guid ?? Guid.NewGuid();
 
@@ -136,7 +136,7 @@ namespace Chaos.Portal.Data
                 });
         }
 
-        public ISession SessionCreate(Guid userGuid)
+        public Session SessionCreate(Guid userGuid)
         {
             var guid = Guid.NewGuid();
 
@@ -149,7 +149,7 @@ namespace Chaos.Portal.Data
             return SessionGet(guid, null).First();
         }
 
-        public ISession SessionUpdate(Guid guid, Guid userGuid)
+        public Session SessionUpdate(Guid guid, Guid userGuid)
         {
             var result = Gateway.ExecuteNonQuery("Session_Update", new[]
                 {
@@ -252,14 +252,13 @@ namespace Chaos.Portal.Data
         #endregion
         #region User Settings
 
-        public IEnumerable<IUserSettings> UserSettingsGet(Guid clientGuid, Guid userGuid)
+        public IEnumerable<UserSettings> UserSettingsGet(Guid clientGuid, Guid userGuid)
         {
-//            using(var db = CreatePortalEntities())
-//            {
-//                return db.UserSettings_Get(clientGuid.ToByteArray(), userGuid.ToByteArray()).ToDto();
-            //            }
-
-            throw new NotImplementedException();
+            return Gateway.ExecuteQuery<UserSettings>("UserSettings_Get", new[]
+                {
+                    new MySqlParameter("ClientSettingsGuid", clientGuid.ToByteArray()), 
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray()) 
+                });
         }
 
         public uint UserSettingsSet(Guid clientGuid, Guid userGuid, string settings)

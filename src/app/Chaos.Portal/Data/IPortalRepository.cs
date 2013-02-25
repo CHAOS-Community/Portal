@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Chaos.Portal.Data.Dto;
 
 namespace Chaos.Portal.Data
 {
@@ -10,7 +9,7 @@ namespace Chaos.Portal.Data
     {
         IPortalRepository WithConfiguration(string connectionString);
 
-        IUserInfo GetUserInfo(string email);
+        UserInfo GetUserInfo(string email);
         IEnumerable<UserInfo> GetUserInfo(Guid? userGuid, Guid? sessionGuid, string email);
 
         IEnumerable<SubscriptionInfo> SubscriptionGet(Guid? guid, Guid? requestingUserGuid);
@@ -19,19 +18,19 @@ namespace Chaos.Portal.Data
         uint SubscriptionDelete(Guid guid, Guid requestingUserGuid);
 
         IEnumerable<Group> GroupGet(Guid? guid, string name, Guid? requestedUserGuid);
-        IGroup GroupCreate(Guid? guid, string name, Guid requestedUserGuid, uint systemPermission);
+        Group GroupCreate(Guid? guid, string name, Guid requestedUserGuid, uint systemPermission);
         uint GroupUpdate(Guid guid, Guid userGuid, string newName, uint? newSystemPermission);
         uint GroupDelete(Guid guid, Guid userGuid);
 
         IEnumerable<Session> SessionGet(Guid? guid, Guid? userGuid);
-        ISession SessionCreate(Guid userGuid);
-        ISession SessionUpdate(Guid guid, Guid userGuid);
+        Session SessionCreate(Guid userGuid);
+        Session SessionUpdate(Guid guid, Guid userGuid);
         uint SessionDelete(Guid guid, Guid userGuid);
 
         ClientSettings ClientSettingsGet(Guid guid);
         uint ClientSettingsSet(Guid guid, string name, string settings);
 
-        IEnumerable<IUserSettings> UserSettingsGet(Guid clientGuid, Guid userGuid);
+        IEnumerable<UserSettings> UserSettingsGet(Guid clientGuid, Guid userGuid);
         uint UserSettingsSet(Guid clientGuid, Guid userGuid, string settings);
         uint UserSettingsDelete(Guid clientGuid, Guid userGuid);
 
