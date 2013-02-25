@@ -21,6 +21,7 @@ namespace Chaos.Portal.Data
         static PortalRepository()
         {
             // todo: add better error message when mapping is missing
+            ReaderExtensions.Mappings.Add(typeof(SubscriptionInfo), new SubscriptionInfoMapping());
             ReaderExtensions.Mappings.Add(typeof(ClientSettings), new ClientSettingsMapping());
             ReaderExtensions.Mappings.Add(typeof(UserInfo), new UserInfoMapping());
             ReaderExtensions.Mappings.Add(typeof(Session), new SessionMapping());
@@ -194,6 +195,15 @@ namespace Chaos.Portal.Data
         #endregion
         #region Subscription
 
+        public IEnumerable<SubscriptionInfo> SubscriptionGet(Guid? guid, Guid? requestingUserGuid)
+        {
+            return Gateway.ExecuteQuery<SubscriptionInfo>("SubscriptionInfo_Get", new[]
+                {
+                    new MySqlParameter("Guid", guid.HasValue ? guid.Value.ToByteArray() : null), 
+                    new MySqlParameter("RequestUserGuid", requestingUserGuid.HasValue ? requestingUserGuid.Value.ToByteArray() : null)
+                });
+        }
+
         public ISubscriptionInfo SubscriptionCreate(Guid? guid, string name, Guid requestingUserGuid)
         {
 //            using (var db = CreatePortalEntities())
@@ -209,17 +219,6 @@ namespace Chaos.Portal.Data
 //                var subscriptionInfo = db.SubscriptionInfo_Get(guid.Value.ToByteArray(), requestingUserGuid.ToByteArray()).ToDto().First();
 //
 //                return subscriptionInfo;
-            //            }
-
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<ISubscriptionInfo> SubscriptionGet(Guid? guid, Guid? requestingUserGuid)
-        {
-//            using (var db = CreatePortalEntities())
-//            {
-//                return db.SubscriptionInfo_Get(guid.HasValue ? guid.Value.ToByteArray() : null,
-//                                               requestingUserGuid.HasValue ? requestingUserGuid.Value.ToByteArray() : null).ToDto().ToList();
             //            }
 
             throw new NotImplementedException();

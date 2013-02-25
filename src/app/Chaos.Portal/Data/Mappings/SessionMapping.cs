@@ -16,7 +16,7 @@
                 yield return new Session
                     {
                         Guid         = reader.GetGuid("GUID"),
-                        UserGuid     = reader.GetGuid("UserGUID"),
+                        UserGuid     = reader.GetGuid("UserGuid"),
                         DateCreated  = reader.GetDateTime("DateCreated"),
                         DateModified = reader.GetDateTimeNullable("DateModified")
                     };

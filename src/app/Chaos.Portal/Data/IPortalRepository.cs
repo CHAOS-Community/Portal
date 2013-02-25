@@ -13,7 +13,7 @@ namespace Chaos.Portal.Data
         IUserInfo GetUserInfo(string email);
         IEnumerable<UserInfo> GetUserInfo(Guid? userGuid, Guid? sessionGuid, string email);
 
-        IEnumerable<ISubscriptionInfo> SubscriptionGet(Guid? guid, Guid? requestingUserGuid);
+        IEnumerable<SubscriptionInfo> SubscriptionGet(Guid? guid, Guid? requestingUserGuid);
         ISubscriptionInfo SubscriptionCreate(Guid? guid, string name, Guid requestingUserGuid);
         uint SubscriptionUpdate(Guid guid, string newName, Guid requestionUserGuid);
         uint SubscriptionDelete(Guid guid, Guid requestingUserGuid);

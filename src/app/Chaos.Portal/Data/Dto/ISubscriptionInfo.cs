@@ -1,5 +1,5 @@
 ﻿using System;
-using CHAOS;
+
 using CHAOS.Serialization;
 using Chaos.Portal.Data.Dto.Standard;
 
@@ -17,7 +17,7 @@ namespace Chaos.Portal.Data.Dto
         DateTime DateCreated { get; set; }
 
         [Serialize]
-        UUID UserGUID { get; set; }
+        Guid UserGuid { get; set; }
 
         SubscriptionPermission Permission { get; set; }
     }

@@ -1,12 +1,15 @@
 CREATE PROCEDURE `SubscriptionInfo_Get`(
-    IN  GUID               BINARY(16),
-    IN  RequestUserGUID    BINARY(16)
+	Guid               BINARY(16),
+	RequestUserGuid    BINARY(16)
 )
 BEGIN
 
-    SELECT	SubscriptionInfo.*
-	    FROM	SubscriptionInfo 
-	   WHERE	( GUID IS NULL OR SubscriptionInfo.GUID = GUID ) AND
-            DoesUserHavePermissionToSubscription( RequestUserGUID, SubscriptionInfo.GUID, 'Get' ) = 1 ;
+    SELECT	
+		SubscriptionInfo.*
+	FROM	
+		SubscriptionInfo 
+	WHERE	
+			( GUid IS NULL OR SubscriptionInfo.GUID = Guid )
+        AND DoesUserHavePermissionToSubscription( RequestUserGuid, SubscriptionInfo.GUID, 'Get' ) = 1 ;
 
 END

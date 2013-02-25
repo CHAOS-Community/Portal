@@ -194,6 +194,34 @@
             Assert.That(actual, Is.EqualTo(1));
         }
 
+        [Test]
+        public void SubscriptionGet_GivenUserGuid_ReturnAllOfUsersSubscriptions()
+        {
+            var subscription = Make_Subscription();
+
+            var results = PortalRepository.SubscriptionGet(null, subscription.UserGuid);
+
+            Assert.That(results, Is.Not.Empty);
+            var actual = results.First();
+            Assert.That(actual.Guid, Is.EqualTo(subscription.Guid));
+            Assert.That(actual.UserGuid, Is.EqualTo(subscription.UserGuid));
+            Assert.That(actual.Name, Is.EqualTo(subscription.Name));
+            Assert.That(actual.Permission, Is.EqualTo(subscription.Permission));
+            Assert.That(actual.DateCreated, Is.EqualTo(subscription.DateCreated));
+        }
+
+        private SubscriptionInfo Make_Subscription()
+        {
+            return new SubscriptionInfo
+                {
+                    Guid        = new Guid("00000000-0000-0000-0000-000000010000"),
+                    Name        = "test subscription",
+                    UserGuid    = Make_UserInfoThatExist().Guid,
+                    Permission  = SubscriptionPermission.Max,
+                    DateCreated = new DateTime(2000,01,01,00,00,00)
+                };
+        }
+
         private ClientSettings Make_ClientSettingsThatExist()
         {
             return new ClientSettings
