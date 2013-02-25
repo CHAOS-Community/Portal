@@ -24,10 +24,10 @@
             _solrUrl        = ConfigurationManager.AppSettings["SOLR_URL"];
             _httpConnection = new HttpConnection(_solrUrl);
 
-            _httpConnection.Post("core0/update", XElement.Parse("<delete><query>*:*</query></delete>")).Dispose();
-            _httpConnection.Post("core0/update", XElement.Parse("<commit/>")).Dispose();
-            _httpConnection.Post("core0/update", XElement.Parse("<add><doc><field name=\"Guid\">" + ResultOne + "</field></doc><doc><field name=\"Guid\">" + ResultTwo + "</field></doc><doc><field name=\"Guid\">" + ResultThree + "</field></doc></add>")).Dispose();
-            _httpConnection.Post("core0/update", XElement.Parse("<commit softCommit=\"true\"/>")).Dispose();
+            _httpConnection.Post("search/update", XElement.Parse("<delete><query>*:*</query></delete>")).Dispose();
+            _httpConnection.Post("search/update", XElement.Parse("<commit/>")).Dispose();
+            _httpConnection.Post("search/update", XElement.Parse("<add><doc><field name=\"Guid\">" + ResultOne + "</field></doc><doc><field name=\"Guid\">" + ResultTwo + "</field></doc><doc><field name=\"Guid\">" + ResultThree + "</field></doc></add>")).Dispose();
+            _httpConnection.Post("search/update", XElement.Parse("<commit softCommit=\"true\"/>")).Dispose();
         }
 
         #endregion
