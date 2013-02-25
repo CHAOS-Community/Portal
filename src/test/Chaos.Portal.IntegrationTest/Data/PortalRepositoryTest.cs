@@ -112,6 +112,20 @@
             Assert.That(actual, Is.EqualTo(1));
         }
 
+        [Test]
+        public void GroupUpdate_ChangeName_ReturnOne()
+        {
+            var group   = Make_GroupThatExist();
+            var user    = Make_UserInfoThatExist();
+            var newName = "newName";
+            
+            var actual = PortalRepository.GroupUpdate(group.Guid, user.Guid, newName, null);
+
+            Assert.That(actual, Is.EqualTo(1));
+            var results = PortalRepository.GroupGet(group.Guid, newName, user.Guid);
+            Assert.That(results, Is.Not.Empty);
+        }
+
         private Group Make_GroupThatExist()
         {
             return new Group

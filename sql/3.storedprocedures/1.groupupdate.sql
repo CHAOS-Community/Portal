@@ -1,19 +1,19 @@
 CREATE PROCEDURE `Group_Update`(
-    IN  NewName             VARCHAR(255),
-    IN  NewSystemPermission INT UNSIGNED,
-    IN  WhereGroupGUID      BINARY(16),
-    IN  RequestUserGUID     BINARY(16)
+	NewName             VARCHAR(255),
+	NewSystemPermission INT UNSIGNED,
+	WhereGroupGuid      BINARY(16),
+	RequestUserGuid     BINARY(16)
 )
 BEGIN
 
-    IF DoesUserHavePermissionToGroup( RequestUserGUID,WhereGroupGUID, 'UPDATE' ) = 0 THEN
+    IF DoesUserHavePermissionToGroup( RequestUserGuid,WhereGroupGuid, 'UPDATE' ) = 0 THEN
         SELECT -100;
     ELSE
     
         UPDATE	`Group`
            SET	Name             = COALESCE( NewName, Name ),
                 SystemPermission = COALESCE( NewSystemPermission, SystemPermission )
-         WHERE	GUID = WhereGroupGUID;
+         WHERE	GUID = WhereGroupGuid;
          
          SELECT ROW_COUNT();
     

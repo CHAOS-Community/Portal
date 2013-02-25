@@ -108,22 +108,17 @@ namespace Chaos.Portal.Data
 
         public uint GroupUpdate(Guid guid, Guid userGuid, string newName, uint? newSystemPermission)
         {
-//            using (var db = CreatePortalEntities())
-//            {
-//                var result = db.Group_Update(newName, 
-//                                             (int?) newSystemPermission, 
-//                                             guid.ToByteArray(),
-//                                             userGuid.ToByteArray()).FirstOrDefault();
-//                if (!result.HasValue)
-//                    throw new UnhandledException("An error occured on in Group_Delete and was rolled back");
-//
-//                if (result == -100)
-//                    throw new InsufficientPermissionsException("User does not have permission to update group");
-//
-//                return(1);
-            //            }
+            var result = Gateway.ExecuteNonQuery("Group_Update", new[]
+                {
+                    new MySqlParameter("NewName", newName), 
+                    new MySqlParameter("NewSystemPermission", newSystemPermission), 
+                    new MySqlParameter("WhereGroupGuid", guid.ToByteArray()), 
+                    new MySqlParameter("RequestUserGuid", userGuid.ToByteArray()), 
+                });
 
-            throw new NotImplementedException();
+            if(result == -100) throw new InsufficientPermissionsException("User does not have permission to update group");
+//          
+            return (uint)result;
         }
 
         #endregion
