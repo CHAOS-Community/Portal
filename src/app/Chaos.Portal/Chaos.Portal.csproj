@@ -89,81 +89,15 @@
     <Compile Include="Data\Dto\Standard\IndexReport.cs" />
     <Compile Include="Data\Dto\Standard\PortalError.cs" />
     <Compile Include="Data\Dto\Standard\Extension.cs" />
-    <Compile Include="Data\Dto\Standard\ExtensionMethods.cs" />
     <Compile Include="Data\Dto\Standard\Group.cs" />
     <Compile Include="Data\Dto\Standard\IndexSettings.cs" />
     <Compile Include="Data\Dto\Standard\Module.cs" />
     <Compile Include="Data\Dto\Standard\PagedResult.cs" />
     <Compile Include="Data\Dto\Standard\ViewReport.cs" />
-    <Compile Include="Data\EF\ClientSettings.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\Group.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\Group_User_Join.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\IndexSettings.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\Log.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\Module.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\Permission.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\Portal.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Portal.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\Portal.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
     <None Include="App.config.sample">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Data\EF\Portal.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Portal.edmx</DependentUpon>
-    </None>
-    <Compile Include="Data\EF\Session.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\SessionInfo.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\Subscription.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\SubscriptionInfo.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\Subscription_User_Join.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\Ticket.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\TicketType.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\User.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\UserInfo.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\EF\UserSettings.cs">
-      <DependentUpon>Portal.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Data\PortalRepository.cs" />
     <Compile Include="Exceptions\ActionMissingException.cs" />
     <Compile Include="Exceptions\AssemblyNotLoadedException.cs" />
     <Compile Include="Exceptions\ViewNotLoadedException.cs" />
@@ -224,7 +158,6 @@
     <Compile Include="Data\Dto\Standard\UserInfo.cs" />
     <Compile Include="Data\Dto\Standard\UserSettings.cs" />
     <Compile Include="Data\Dto\Standard\UUIDResult.cs" />
-    <Compile Include="Data\EF\PortalRepository.cs" />
     <Compile Include="Data\TicketType.cs" />
     <Compile Include="Data\IPortalRepository.cs" />
     <Compile Include="Extension\AExtension.cs" />
@@ -263,28 +196,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <EntityDeploy Include="Data\EF\Portal.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Portal.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Data\EF\Portal.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Portal.edmx</DependentUpon>
-      <LastGenOutput>Portal.Context.cs</LastGenOutput>
-    </None>
-    <None Include="Data\EF\Portal.edmx.diagram">
-      <DependentUpon>Portal.edmx</DependentUpon>
-    </None>
-    <None Include="Data\EF\Portal.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Portal.edmx</DependentUpon>
-      <LastGenOutput>Portal.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extension\Standard\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

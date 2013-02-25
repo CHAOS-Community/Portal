@@ -19,9 +19,15 @@
 
             importer.Run();
 
-            importer.Parameters.Path = "integraion_tests_base_data.sql";
+       //     importer.Parameters.Path = "integraion_tests_base_data.sql";
 
-            importer.Run();
+       //     importer.Run();
+        }
+
+        [Test]
+        public void UnitUnderTest_Scenario_ExpectedResult()
+        {
+            
         }
     }
 }
