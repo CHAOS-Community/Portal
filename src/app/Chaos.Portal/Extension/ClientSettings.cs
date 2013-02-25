@@ -1,7 +1,6 @@
 namespace Chaos.Portal.Extension
 {
     using System;
-    using System.Collections.Generic;
 
     using Chaos.Portal.Data.Dto;
 
@@ -15,7 +14,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
 
-        public IEnumerable<IClientSettings> Get( ICallContext callContext, Guid guid )
+        public IClientSettings Get( ICallContext callContext, Guid guid )
         {
             return PortalRepository.ClientSettingsGet(guid);
         }

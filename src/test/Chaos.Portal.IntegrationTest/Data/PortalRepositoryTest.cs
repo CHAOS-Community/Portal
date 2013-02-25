@@ -170,6 +170,30 @@
             Assert.That(actual, Is.EqualTo(1));
         }
 
+        [Test]
+        public void ClientSettingsGet_GivenGuid_ReturnClientSettings()
+        {
+            var clientSettings = Make_ClientSettingsThatExist();
+
+            var actual = PortalRepository.ClientSettingsGet(clientSettings.Guid);
+
+            Assert.That(actual.Guid, Is.EqualTo(clientSettings.Guid));
+            Assert.That(actual.Name, Is.EqualTo(clientSettings.Name));
+            Assert.That(actual.DateCreated, Is.EqualTo(clientSettings.DateCreated));
+            Assert.That(actual.Settings, Is.EqualTo(clientSettings.Settings));
+        }
+
+        private ClientSettings Make_ClientSettingsThatExist()
+        {
+            return new ClientSettings
+                {
+                    Guid        = new Guid("00000000-0000-0000-0000-000000001000"),
+                    Name        = "test client",
+                    Settings    = "test settings",
+                    DateCreated = new DateTime(2000,01,01,00,00,00)
+                };
+        }
+
         private Session Make_Session()
         {
             return new Session

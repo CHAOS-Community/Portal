@@ -21,6 +21,7 @@ namespace Chaos.Portal.Data
         static PortalRepository()
         {
             // todo: add better error message when mapping is missing
+            ReaderExtensions.Mappings.Add(typeof(ClientSettings), new ClientSettingsMapping());
             ReaderExtensions.Mappings.Add(typeof(UserInfo), new UserInfoMapping());
             ReaderExtensions.Mappings.Add(typeof(Session), new SessionMapping());
             ReaderExtensions.Mappings.Add(typeof(Group), new GroupMapping());
@@ -173,14 +174,9 @@ namespace Chaos.Portal.Data
         #endregion
         #region Client Settings
 
-        public IEnumerable<IClientSettings> ClientSettingsGet(Guid guid)
+        public ClientSettings ClientSettingsGet(Guid guid)
         {
-//            using (var db = CreatePortalEntities())
-//            {
-//                return db.ClientSettings_Get(guid.ToByteArray()).ToList().ToDto();
-            //            }
-
-            throw new NotImplementedException();
+            return Gateway.ExecuteQuery<ClientSettings>("ClientSettings_Get", new MySqlParameter("Guid", guid.ToByteArray()) ).FirstOrDefault();
         }
 
         public uint ClientSettingsSet(Guid guid, string name, string settings)

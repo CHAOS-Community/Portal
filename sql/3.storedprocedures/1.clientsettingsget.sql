@@ -1,14 +1,14 @@
 CREATE PROCEDURE ClientSettings_Get
 (
-    GUID    BINARY(16)
+    Guid	BINARY(16)
 )
 BEGIN
 
     SELECT  
     	*
 	FROM  
-		ClientSettings AS CS
+		ClientSettings
 	WHERE  
-		CS.GUID = GUID;
+		ClientSettings.GUID = Guid;
     
 END

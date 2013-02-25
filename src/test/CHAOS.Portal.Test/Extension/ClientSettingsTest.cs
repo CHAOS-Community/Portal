@@ -1,7 +1,5 @@
 ﻿namespace Chaos.Portal.Test.Extension
 {
-    using System.Linq;
-
     using NUnit.Framework;
 
     [TestFixture]
@@ -12,11 +10,11 @@
         {
             var extension      = Make_ClientSettingsExtension();
             var clientSettings = Make_ClientSettings();
-            PortalRepository.Setup(m => m.ClientSettingsGet(clientSettings.Guid)).Returns(new[] { clientSettings });
+            PortalRepository.Setup(m => m.ClientSettingsGet(clientSettings.Guid)).Returns(clientSettings);
 
-            var results = extension.Get(CallContext.Object, clientSettings.Guid).ToList();
+            var results = extension.Get(CallContext.Object, clientSettings.Guid);
 
-            Assert.That(results[0], Is.SameAs(clientSettings));
+            Assert.That(results, Is.SameAs(clientSettings));
         }
 
         [Test]
