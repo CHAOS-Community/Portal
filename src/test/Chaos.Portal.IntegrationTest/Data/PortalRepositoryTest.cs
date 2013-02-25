@@ -210,6 +210,30 @@
             Assert.That(actual.DateCreated, Is.EqualTo(subscription.DateCreated));
         }
 
+        [Test]
+        public void SubscriptionCreate_WithPermission_ReturnNewSubscription()
+        {
+            var subscription = Make_Subscription();
+            var newGuid      = new Guid("00000000-0000-0000-0000-000000020000");
+
+            var actual = PortalRepository.SubscriptionCreate(newGuid, subscription.Name, subscription.UserGuid);
+
+            Assert.That(actual.Guid, Is.EqualTo(newGuid));
+            Assert.That(actual.UserGuid, Is.EqualTo(subscription.UserGuid));
+            Assert.That(actual.Name, Is.EqualTo(subscription.Name));
+            Assert.That(actual.Permission, Is.EqualTo(subscription.Permission));
+        }
+
+        [Test]
+        public void SubscriptionDelete_WithPermission_ReturnOne()
+        {
+            var subscription = Make_Subscription();
+
+            var actual = PortalRepository.SubscriptionDelete(subscription.Guid, subscription.UserGuid);
+
+            Assert.That(actual, Is.EqualTo(1));
+        }
+
         private SubscriptionInfo Make_Subscription()
         {
             return new SubscriptionInfo

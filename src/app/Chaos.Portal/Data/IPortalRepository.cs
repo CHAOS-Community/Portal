@@ -14,7 +14,7 @@ namespace Chaos.Portal.Data
         IEnumerable<UserInfo> GetUserInfo(Guid? userGuid, Guid? sessionGuid, string email);
 
         IEnumerable<SubscriptionInfo> SubscriptionGet(Guid? guid, Guid? requestingUserGuid);
-        ISubscriptionInfo SubscriptionCreate(Guid? guid, string name, Guid requestingUserGuid);
+        SubscriptionInfo SubscriptionCreate(Guid? guid, string name, Guid requestingUserGuid);
         uint SubscriptionUpdate(Guid guid, string newName, Guid requestionUserGuid);
         uint SubscriptionDelete(Guid guid, Guid requestingUserGuid);
 

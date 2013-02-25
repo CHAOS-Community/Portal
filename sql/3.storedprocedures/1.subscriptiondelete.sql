@@ -1,28 +1,34 @@
 CREATE PROCEDURE `Subscription_Delete`(
-    IN  SubscriptionGUID    BINARY(16),
-    IN  RequestUserGUID     BINARY(16),
-    OUT ErrorCode           INTEGER
+    Guid			    BINARY(16),
+    RequestingUserGuid     BINARY(16)
 )
 BEGIN
     DECLARE EXIT HANDLER
     FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
+	BEGIN
         ROLLBACK;
-
-    IF DoesUserHavePermissionToSubscription( RequestUserGUID, SubscriptionGUID, 'DELETE' ) = 0 THEN
-        SET ErrorCode = -100;
+		SELECT -200;
+	END;
+		
+    IF DoesUserHavePermissionToSubscription( RequestingUserGuid, Guid, 'DELETE' ) = 0 THEN
+        SELECT -100;
     ELSE
     
     START TRANSACTION;
     
-    DELETE
-	    FROM	Subscription_User_Join
-	   WHERE	SubscriptionGUID = SubscriptionGUID;
+		DELETE
+		FROM	
+			Subscription_User_Join
+		WHERE	
+			SubscriptionGUID = Guid;
 	
-    DELETE
-      FROM	Subscription
-     WHERE	GUID = SubscriptionGUID;
+		DELETE
+		FROM	
+			Subscription
+		WHERE	
+			GUID = Guid;
     
-    SET ErrorCode = 1;
+		SELECT ROW_COUNT();
     
     COMMIT;
     

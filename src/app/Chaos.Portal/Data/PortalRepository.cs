@@ -204,41 +204,35 @@ namespace Chaos.Portal.Data
                 });
         }
 
-        public ISubscriptionInfo SubscriptionCreate(Guid? guid, string name, Guid requestingUserGuid)
+        public SubscriptionInfo SubscriptionCreate(Guid? guid, string name, Guid requestingUserGuid)
         {
-//            using (var db = CreatePortalEntities())
-//            {
-//                guid = guid ?? new Guid();
-//                var errorCode = new ObjectParameter("ErrorCode", 0);
-//
-//                db.Subscription_Create(guid.Value.ToByteArray(), name, requestingUserGuid.ToByteArray(), errorCode);
-//
-//                if (((int)errorCode.Value) == -100)
-//                    throw new InsufficientPermissionsException("User does not have sufficient permissions to access the subscription");
-//
-//                var subscriptionInfo = db.SubscriptionInfo_Get(guid.Value.ToByteArray(), requestingUserGuid.ToByteArray()).ToDto().First();
-//
-//                return subscriptionInfo;
-            //            }
+            guid = guid ?? Guid.NewGuid();
 
-            throw new NotImplementedException();
+            var result = Gateway.ExecuteNonQuery("Subscription_Create", new[]
+                {
+                    new MySqlParameter("Guid", guid.Value.ToByteArray()), 
+                    new MySqlParameter("Name", name), 
+                    new MySqlParameter("RequestUserGuid", requestingUserGuid.ToByteArray()), 
+                });
+
+            if(result == -100) throw new InsufficientPermissionsException("User does not have sufficient permissions to access the subscription");
+            if(result == -200) throw new UnhandledException("Unhanded exception in Subscription_Create and was rolled back");
+
+            return SubscriptionGet(guid, requestingUserGuid).First();
         }
 
         public uint SubscriptionDelete(Guid guid, Guid requestingUserGuid)
         {
-//            using (var db = CreatePortalEntities())
-//            {
-//                var errorCode = new ObjectParameter("ErrorCode", 0);
-//
-//                db.Subscription_Delete(guid.ToByteArray(), requestingUserGuid.ToByteArray(), errorCode);
-//
-//                if (((int)errorCode.Value) == -100)
-//                    throw new InsufficientPermissionsException("User does not have sufficient permissions to delete the subscription");
-//
-//                return 1;
-            //            }
+            var result = Gateway.ExecuteNonQuery("Subscription_Delete", new[]
+                {
+                    new MySqlParameter("Guid", guid.ToByteArray()), 
+                    new MySqlParameter("RequestingUserGuid", requestingUserGuid.ToByteArray()) 
+                });
 
-            throw new NotImplementedException();
+            if(result == -100) throw new InsufficientPermissionsException("User does not have sufficient permissions to delete the subscription");
+            if(result == -200) throw new UnhandledException("Unhanded exception in Subscription_Delete and was rolled back");
+            
+            return (uint)result;
         }
 
         public uint SubscriptionUpdate(Guid guid, string newName, Guid requestionUserGuid)

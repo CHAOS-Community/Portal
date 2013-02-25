@@ -1,27 +1,29 @@
 CREATE PROCEDURE `Subscription_Create`(
-    IN  GUID			        BINARY(16),
-    IN  Name			        VARCHAR(255),
-    IN  RequestUserGUID   BINARY(16),
-    OUT ErrorCode         INTEGER
+	Guid			BINARY(16),
+	Name			VARCHAR(255),
+	RequestUserGuid	BINARY(16)
 )
 BEGIN
     DECLARE EXIT HANDLER
     FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
+	BEGIN
         ROLLBACK;
+		SELECT -200;
+	END;
 
-    IF DoesUserHavePermissionToSystem( RequestUserGUID, 'CREATE_SUBSCRIPTION' ) = 0 THEN
-        SET ErrorCode = -100;
+    IF DoesUserHavePermissionToSystem( RequestUserGuid, 'CREATE_SUBSCRIPTION' ) = 0 THEN
+        SELECT -100;
     ELSE
         
         START TRANSACTION;
 
         INSERT INTO Subscription ( GUID, Name, DateCreated )
-		         VALUES ( GUID, Name, NOW() );
+		         VALUES ( Guid, Name, NOW() );
 
         INSERT INTO Subscription_User_Join ( SubscriptionGUID, UserGUID, Permission, DateCreated ) 
-		         VALUES ( GUID, RequestUserGUID, 4294967295, NOW() );
+		         VALUES ( Guid, RequestUserGuid, 4294967295, NOW() );
 
-        SET ErrorCode = 1;
+		SELECT ROW_COUNT();
 
         COMMIT;
 
