@@ -14,7 +14,7 @@
         Guid? SessionGuid { get; set; }
 
         [Serialize]
-        long? SystemPermissions { get; set; }
+        uint? SystemPermissions { get; set; }
         SystemPermissons SystemPermissonsEnum { get; set; }
 
         [Serialize]

@@ -2,18 +2,28 @@ namespace Chaos.Portal.Data
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.Objects;
     using System.Linq;
 
+    using CHAOS.Data;
     using CHAOS.Data.MySql;
 
     using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Mappings;
     using Chaos.Portal.Exceptions;
+
+    using MySql.Data.MySqlClient;
 
     public class PortalRepository : IPortalRepository
     {
         #region Initialization
+
+        static PortalRepository()
+        {
+            // todo: add better error message when mapping is missing
+            ReaderExtensions.Mappings.Add( typeof(UserInfo), new UserInfoMapping());
+            ReaderExtensions.Mappings.Add(typeof(Group), new GroupMapping());
+        }
 
         public IPortalRepository WithConfiguration(string connectionString)
         {
@@ -30,101 +40,56 @@ namespace Chaos.Portal.Data
         #endregion
 
         #region Business Logic
-
-        #region Ticket
-
-        public uint CreateTicket(Guid guid, uint ticketTypeID, string xml, string callback )
-        {
-//            using (var db = CreatePortalEntities())
-//            {
-//                return (uint) db.Ticket_Create(guid.ToByteArray(), (int?) ticketTypeID, xml, callback).First().Value;
-            //            }
-
-            throw new NotImplementedException();
-        }
-
-        #endregion
         #region User
 
-        public uint CreateUser(Guid guid, string email)
+        public IEnumerable<UserInfo> GetUserInfo(Guid? userGuid, Guid? sessionGuid, string email)
         {
-//            using(var db = this.CreatePortalEntities())
-//            {
-//                var result = db.User_Create(guid.ToByteArray(), email).FirstOrDefault();
-//
-//                if(!result.HasValue)
-//                    throw new UnhandledException("Unknown exception in User Created on the database");
-//
-//                return (uint)result.Value;
-            //            }
-
-            throw new NotImplementedException();
+            return Gateway.ExecuteQuery<UserInfo>("UserInfo_Get", new[]
+                {
+                    new MySqlParameter("Guid", userGuid.HasValue ? userGuid.Value.ToByteArray() : null),
+                    new MySqlParameter("SessionGuid", sessionGuid.HasValue ? sessionGuid.Value.ToByteArray() : null),
+                    new MySqlParameter("Email", email)
+                });
         }
 
         public IUserInfo GetUserInfo(string email)
         {
-//            var user = GetUserInfo(null, null, email).FirstOrDefault();
-//            
-//            if (user == null) throw new ArgumentException("Email not found"); // TODO: Replace with custom Exception
-//
-            //            return user;
+            var user = GetUserInfo(null, null, email).FirstOrDefault();
+            
+            if (user == null) throw new ArgumentException("Email not found"); // TODO: Replace with custom Exception
 
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<IUserInfo> GetUserInfo(Guid? userGuid, Guid? sessionGuid, string email)
-        {
-//            using (var db = CreatePortalEntities())
-//            {
-//                var users = db.UserInfo_Get(userGuid.HasValue ? userGuid.Value.ToByteArray() : null,
-//                                            sessionGuid.HasValue ? sessionGuid.Value.ToByteArray() : null, 
-//                                            email);
-//
-//                return users.ToList().ToDto();
-            //            }
-
-            throw new NotImplementedException();
+            return user;
         }
 
         #endregion
         #region Group
 
-        public IEnumerable<IGroup> GroupGet( Guid? guid, string name, Guid? requestedUserGuid)
+        public IEnumerable<Group> GroupGet( Guid? guid, string name, Guid? requestedUserGuid)
         {
-//            using (var db = CreatePortalEntities())
-//            {
-//                return db.Group_Get(guid.HasValue ? guid.Value.ToByteArray() : null, 
-//                                    name,
-//                                    requestedUserGuid.HasValue ? requestedUserGuid.Value.ToByteArray() : null).ToList().ToDto();
-            //            }
-
-            throw new NotImplementedException();
+            return Gateway.ExecuteQuery<Group>("Group_Get", new[]
+                {
+                    new MySqlParameter("Guid", guid.HasValue ? guid.Value.ToByteArray() : null), 
+                    new MySqlParameter("Name", name), 
+                    new MySqlParameter("RequestUserGuid", requestedUserGuid.HasValue ? requestedUserGuid.Value.ToByteArray() : null), 
+                });
         }
 
         public IGroup GroupCreate(Guid? guid, string name, Guid requestedUserGuid, uint systemPermission )
         {
-//            guid = guid ?? new Guid();
-//
-//            using (var db = CreatePortalEntities())
-//            {
-//                var errorCode = new ObjectParameter("ErrorCode", 0);
-//
-//                db.Group_Create(guid.Value.ToByteArray(), 
-//                                name, 
-//                                requestedUserGuid.ToByteArray(), 
-//                                (int?) systemPermission, 
-//                                errorCode);
-//
-//                if (((int)errorCode.Value) == -100)
-//                    throw new InsufficientPermissionsException("User has insufficient permissions to create groups");
-//
-//                if (((int)errorCode.Value) == -200)
-//                    throw new UnhandledException("Group_Create was rolled back");
-//            }
+            guid = guid ?? Guid.NewGuid();
 
-            //            return GroupGet(guid, name, requestedUserGuid).First();
+            var result = Gateway.ExecuteNonQuery("Group_Create", new MySqlParameter[]
+                {
+                    new MySqlParameter("Guid", guid.Value.ToByteArray()),
+                    new MySqlParameter("Name", name),
+                    new MySqlParameter("RequestUserGuid", requestedUserGuid.ToByteArray()),
+                    new MySqlParameter("SystemPermission", systemPermission),
+                });
 
-            throw new NotImplementedException();
+            if (result == -100) throw new InsufficientPermissionsException("User has insufficient permissions to create groups");
+            if (result == -200) throw new UnhandledException("Group_Create had an unhandled exception and was rolled back");
+
+            return GroupGet(guid, null, null).First();
         }
 
         public uint GroupDelete(Guid guid, Guid userGuid)

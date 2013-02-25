@@ -47,6 +47,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\Enyim.Caching.dll</HintPath>
     </Reference>
+    <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\Newtonsoft.Json.dll</HintPath>
@@ -97,6 +98,8 @@
     <None Include="App.config.sample">
       <SubType>Designer</SubType>
     </None>
+    <Compile Include="Data\Mappings\GroupMapping.cs" />
+    <Compile Include="Data\Mappings\UserInfoMapping.cs" />
     <Compile Include="Data\PortalRepository.cs" />
     <Compile Include="Exceptions\ActionMissingException.cs" />
     <Compile Include="Exceptions\AssemblyNotLoadedException.cs" />

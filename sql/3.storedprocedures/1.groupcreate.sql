@@ -1,36 +1,36 @@
 CREATE PROCEDURE `Group_Create`(
-    IN  GUID                BINARY(16),
-    IN  Name	              VARCHAR(255),
-    IN  RequestUserGUID     BINARY(16),
-    IN  SystemPermission    INT UNSIGNED,
-    OUT ErrorCode           INT
+	Guid                BINARY(16),
+	Name	            VARCHAR(255),
+	RequestUserGuid     BINARY(16),
+	SystemPermission    INT UNSIGNED
 )
 BEGIN
     DECLARE EXIT HANDLER
     FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
+	BEGIN
         ROLLBACK;
-        SET ErrorCode = -200;
+        SELECT -200;
+	END;
 
-    IF RequestUserGUID IS NOT NULL AND DoesUserHavePermissionToSystem( RequestUserGUID, 'CREATE_GROUP' ) = 0  OR
-       RequestUserGUID IS NOT NULL AND GetUsersHighestSystemPermission( RequestUserGUID ) & SystemPermission <> SystemPermission THEN
-        SET ErrorCode = -100;
+    IF RequestUserGuid IS NOT NULL AND DoesUserHavePermissionToSystem( RequestUserGuid, 'CREATE_GROUP' ) = 0  OR
+       RequestUserGuid IS NOT NULL AND GetUsersHighestSystemPermission( RequestUserGuid ) & SystemPermission <> SystemPermission THEN
+        SELECT -100;
     ELSE
     
         START TRANSACTION;
         
         INSERT INTO `Group`( GUID, SystemPermission, Name, DateCreated )
-             VALUES ( GUID, SystemPermission, Name, NOW() );
+             VALUES ( Guid, SystemPermission, Name, NOW() );
                             
         IF RequestUserGUID IS NOT NULL THEN
             INSERT INTO Group_User_Join ( GroupGUID, UserGUID, Permission, DateCreated )
-                 VALUES ( GUID, RequestUserGUID, 4294967295, NOW() );
+                 VALUES ( Guid, RequestUserGuid, 4294967295, NOW() );
         END IF;
 
-        SET ErrorCode = 1;
+        SELECT 1;
 
         COMMIT;
     
     END IF;
     
-
 END

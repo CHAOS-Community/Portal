@@ -24,6 +24,73 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.data", "6.data", "{85C2A4
 		sql\6.data\initial.sql = sql\6.data\initial.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.tables", "1.tables", "{A156E749-97F7-4525-8FBF-62F909198F1C}"
+	ProjectSection(SolutionItems) = preProject
+		sql\1.tables\1.clientsettings.sql = sql\1.tables\1.clientsettings.sql
+		sql\1.tables\1.group.sql = sql\1.tables\1.group.sql
+		sql\1.tables\1.log.sql = sql\1.tables\1.log.sql
+		sql\1.tables\1.module.sql = sql\1.tables\1.module.sql
+		sql\1.tables\1.permission.sql = sql\1.tables\1.permission.sql
+		sql\1.tables\1.session.sql = sql\1.tables\1.session.sql
+		sql\1.tables\1.subscription.sql = sql\1.tables\1.subscription.sql
+		sql\1.tables\1.tickettype.sql = sql\1.tables\1.tickettype.sql
+		sql\1.tables\1.user.sql = sql\1.tables\1.user.sql
+		sql\1.tables\2.groupuserjoin.sql = sql\1.tables\2.groupuserjoin.sql
+		sql\1.tables\2.indexsettings.sql = sql\1.tables\2.indexsettings.sql
+		sql\1.tables\2.subscriptionuserjoin.sql = sql\1.tables\2.subscriptionuserjoin.sql
+		sql\1.tables\2.ticket.sql = sql\1.tables\2.ticket.sql
+		sql\1.tables\2.usersettings.sql = sql\1.tables\2.usersettings.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.changes", "2.changes", "{5C25B6A3-648B-4240-909E-D83B62C63DA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.storedprocedures", "{0E959814-402F-4688-8C36-1A90AD0EF9B7}"
+	ProjectSection(SolutionItems) = preProject
+		sql\3.storedprocedures\1.clientsettingscreate.sql = sql\3.storedprocedures\1.clientsettingscreate.sql
+		sql\3.storedprocedures\1.clientsettingsget.sql = sql\3.storedprocedures\1.clientsettingsget.sql
+		sql\3.storedprocedures\1.clientsettingsset.sql = sql\3.storedprocedures\1.clientsettingsset.sql
+		sql\3.storedprocedures\1.DoesUserHavePermissionToGroup.sql = sql\3.storedprocedures\1.DoesUserHavePermissionToGroup.sql
+		sql\3.storedprocedures\1.doesuserhavepermissiontosubscription.sql = sql\3.storedprocedures\1.doesuserhavepermissiontosubscription.sql
+		sql\3.storedprocedures\1.doesuserhavepermissiontosystem.sql = sql\3.storedprocedures\1.doesuserhavepermissiontosystem.sql
+		sql\3.storedprocedures\1.getpermissionforaction.sql = sql\3.storedprocedures\1.getpermissionforaction.sql
+		sql\3.storedprocedures\1.getusershighestsystempermission.sql = sql\3.storedprocedures\1.getusershighestsystempermission.sql
+		sql\3.storedprocedures\1.groupassociatewithuser.sql = sql\3.storedprocedures\1.groupassociatewithuser.sql
+		sql\3.storedprocedures\1.groupcreate.sql = sql\3.storedprocedures\1.groupcreate.sql
+		sql\3.storedprocedures\1.groupdelete.sql = sql\3.storedprocedures\1.groupdelete.sql
+		sql\3.storedprocedures\1.groupget.sql = sql\3.storedprocedures\1.groupget.sql
+		sql\3.storedprocedures\1.groupupdate.sql = sql\3.storedprocedures\1.groupupdate.sql
+		sql\3.storedprocedures\1.indexsettingscreate.sql = sql\3.storedprocedures\1.indexsettingscreate.sql
+		sql\3.storedprocedures\1.indexsettingsget.sql = sql\3.storedprocedures\1.indexsettingsget.sql
+		sql\3.storedprocedures\1.logcreate.sql = sql\3.storedprocedures\1.logcreate.sql
+		sql\3.storedprocedures\1.modulecreate.sql = sql\3.storedprocedures\1.modulecreate.sql
+		sql\3.storedprocedures\1.moduleget.sql = sql\3.storedprocedures\1.moduleget.sql
+		sql\3.storedprocedures\1.permissioncreate.sql = sql\3.storedprocedures\1.permissioncreate.sql
+		sql\3.storedprocedures\1.sessioncreate.sql = sql\3.storedprocedures\1.sessioncreate.sql
+		sql\3.storedprocedures\1.sessiondelete.sql = sql\3.storedprocedures\1.sessiondelete.sql
+		sql\3.storedprocedures\1.sessionget.sql = sql\3.storedprocedures\1.sessionget.sql
+		sql\3.storedprocedures\1.sessionupdate.sql = sql\3.storedprocedures\1.sessionupdate.sql
+		sql\3.storedprocedures\1.subscriptioncreate.sql = sql\3.storedprocedures\1.subscriptioncreate.sql
+		sql\3.storedprocedures\1.subscriptiondelete.sql = sql\3.storedprocedures\1.subscriptiondelete.sql
+		sql\3.storedprocedures\1.subscriptioninfoget.sql = sql\3.storedprocedures\1.subscriptioninfoget.sql
+		sql\3.storedprocedures\1.subscriptionupdate.sql = sql\3.storedprocedures\1.subscriptionupdate.sql
+		sql\3.storedprocedures\1.ticketcreate.sql = sql\3.storedprocedures\1.ticketcreate.sql
+		sql\3.storedprocedures\1.ticketget.sql = sql\3.storedprocedures\1.ticketget.sql
+		sql\3.storedprocedures\1.ticketuse.sql = sql\3.storedprocedures\1.ticketuse.sql
+		sql\3.storedprocedures\1.usercreate.sql = sql\3.storedprocedures\1.usercreate.sql
+		sql\3.storedprocedures\1.userget.sql = sql\3.storedprocedures\1.userget.sql
+		sql\3.storedprocedures\1.userinfoget.sql = sql\3.storedprocedures\1.userinfoget.sql
+		sql\3.storedprocedures\1.usersettingsdelete.sql = sql\3.storedprocedures\1.usersettingsdelete.sql
+		sql\3.storedprocedures\1.usersettingsget.sql = sql\3.storedprocedures\1.usersettingsget.sql
+		sql\3.storedprocedures\1.usersettingsset.sql = sql\3.storedprocedures\1.usersettingsset.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.views", "4.views", "{E4EAC9FA-122E-4348-A53B-EBF0F1C78D2D}"
+	ProjectSection(SolutionItems) = preProject
+		sql\4.views\1.sessioninfo.sql = sql\4.views\1.sessioninfo.sql
+		sql\4.views\1.subscriptioninfo.sql = sql\4.views\1.subscriptioninfo.sql
+		sql\4.views\1.userinfo.sql = sql\4.views\1.userinfo.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Custom|Any CPU = Custom|Any CPU
@@ -91,5 +158,9 @@ Global
 		{925E226A-6DE4-4F78-87F3-31C584FD54CF} = {AAEE5485-10AA-436B-9C45-951C970F39D6}
 		{9D3A1974-1D8A-4A6E-96AD-3D4B211BF475} = {5D5BE303-0BFE-4753-9513-306C2FF47B05}
 		{85C2A4E7-9E94-42C4-8884-B795517F0C26} = {3F0A42E2-DAD0-4518-A76F-A7D3B7CA9D5E}
+		{A156E749-97F7-4525-8FBF-62F909198F1C} = {3F0A42E2-DAD0-4518-A76F-A7D3B7CA9D5E}
+		{5C25B6A3-648B-4240-909E-D83B62C63DA5} = {3F0A42E2-DAD0-4518-A76F-A7D3B7CA9D5E}
+		{0E959814-402F-4688-8C36-1A90AD0EF9B7} = {3F0A42E2-DAD0-4518-A76F-A7D3B7CA9D5E}
+		{E4EAC9FA-122E-4348-A53B-EBF0F1C78D2D} = {3F0A42E2-DAD0-4518-A76F-A7D3B7CA9D5E}
 	EndGlobalSection
 EndGlobal
