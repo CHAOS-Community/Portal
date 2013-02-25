@@ -1,21 +1,29 @@
 CREATE PROCEDURE `Session_Get`(
-    IN  SessionGUID BINARY(16),
-    IN  UserGUID    BINARY(16)
+	Guid BINARY(16),
+	UserGuid    BINARY(16)
 )
 BEGIN
     
     DELETE
-      FROM	Session
-     WHERE	TIMESTAMPDIFF( MINUTE, COALESCE( DateModified, DateCreated ), NOW() ) > 20;
+	FROM	
+		Session
+	WHERE	
+		TIMESTAMPDIFF( MINUTE, COALESCE( DateModified, DateCreated ), NOW() ) > 20;
                   
-    UPDATE  Session
-       SET  DateModified = NOW()
-     WHERE	( SessionGUID IS NULL OR Session.GUID     = SessionGUID ) AND
-				    ( UserGUID    IS NULL OR Session.UserGUID = UserGUID    );
+    UPDATE
+		Session
+	SET
+		DateModified = NOW()
+    WHERE
+			( Guid     IS NULL OR Session.GUID     = Guid )
+		AND ( UserGuid IS NULL OR Session.UserGUID = UserGuid );
                   
-    SELECT  *
-		  FROM	Session
-		 WHERE	( SessionGUID IS NULL OR Session.GUID     = SessionGUID ) AND
-				    ( UserGUID    IS NULL OR Session.UserGUID = UserGUID    );
+    SELECT  
+		*
+	FROM	
+		Session
+	WHERE	
+			( Guid     IS NULL OR Session.GUID     = Guid )
+		AND ( UserGuid IS NULL OR Session.UserGUID = UserGuid );
     
 END

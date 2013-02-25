@@ -23,7 +23,7 @@ namespace Chaos.Portal.Data
         uint GroupUpdate(Guid guid, Guid userGuid, string newName, uint? newSystemPermission);
         uint GroupDelete(Guid guid, Guid userGuid);
 
-        IEnumerable<ISession> SessionGet(Guid? guid, Guid? userGUID);
+        IEnumerable<Session> SessionGet(Guid? guid, Guid? userGuid);
         ISession SessionCreate(Guid userGuid);
         ISession SessionUpdate(Guid sessionGuid, Guid userGuid);
         uint SessionDelete(Guid sessionGuid, Guid userGuid);

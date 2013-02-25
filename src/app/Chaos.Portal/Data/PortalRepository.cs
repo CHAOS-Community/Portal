@@ -21,7 +21,8 @@ namespace Chaos.Portal.Data
         static PortalRepository()
         {
             // todo: add better error message when mapping is missing
-            ReaderExtensions.Mappings.Add( typeof(UserInfo), new UserInfoMapping());
+            ReaderExtensions.Mappings.Add(typeof(UserInfo), new UserInfoMapping());
+            ReaderExtensions.Mappings.Add(typeof(Session), new SessionMapping());
             ReaderExtensions.Mappings.Add(typeof(Group), new GroupMapping());
         }
 
@@ -124,15 +125,13 @@ namespace Chaos.Portal.Data
         #endregion
         #region Session
 
-        public IEnumerable<ISession> SessionGet(Guid? guid, Guid? userGUID)
+        public IEnumerable<Session> SessionGet(Guid? guid, Guid? userGuid)
         {
-//            using (var db = CreatePortalEntities())
-//            {
-//                return db.Session_Get(guid.HasValue ? guid.Value.ToByteArray() : null,
-//                                      userGUID.HasValue ? userGUID.Value.ToByteArray() : null).ToList().ToDto();
-            //            }
-
-            throw new NotImplementedException();
+            return Gateway.ExecuteQuery<Session>("Session_Get", new[]
+                {
+                    new MySqlParameter("Guid", guid.HasValue ? guid.Value.ToByteArray() : null), 
+                    new MySqlParameter("UserGuid", userGuid.HasValue ? userGuid.Value.ToByteArray() : null), 
+                });
         }
 
         public ISession SessionCreate(Guid userGuid)

@@ -126,6 +126,28 @@
             Assert.That(results, Is.Not.Empty);
         }
 
+        [Test]
+        public void SessionGet_GivenGuid_ReturnSession()
+        {
+            var session = Make_Session();
+
+            var results = PortalRepository.SessionGet(session.Guid, null);
+            
+            Assert.That(results, Is.Not.Empty);
+            var actual = results.First();
+            Assert.That(actual.Guid, Is.EqualTo(session.Guid));
+            Assert.That(actual.UserGuid, Is.EqualTo(session.UserGuid));
+        }
+
+        private Session Make_Session()
+        {
+            return new Session
+                {
+                    Guid         = new Guid("00000000-0000-0000-0000-000000000100"),
+                    UserGuid     = Make_UserInfoThatExist().Guid
+                };
+        }
+
         private Group Make_GroupThatExist()
         {
             return new Group

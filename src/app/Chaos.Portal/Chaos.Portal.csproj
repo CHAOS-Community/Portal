@@ -99,6 +99,7 @@
       <SubType>Designer</SubType>
     </None>
     <Compile Include="Data\Mappings\GroupMapping.cs" />
+    <Compile Include="Data\Mappings\SessionMapping.cs" />
     <Compile Include="Data\Mappings\UserInfoMapping.cs" />
     <Compile Include="Data\PortalRepository.cs" />
     <Compile Include="Exceptions\ActionMissingException.cs" />
