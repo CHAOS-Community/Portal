@@ -297,6 +297,30 @@
             Assert.That(actual, Is.EqualTo(1));
         }
 
+        [Test]
+        public void ModuleGet_ExistingModule_ReturnModule()
+        {
+            var module = Make_Module();
+
+            var actual = PortalRepository.ModuleGet(module.Name);
+
+            Assert.That(actual.ID, Is.EqualTo(module.ID));
+            Assert.That(actual.Name, Is.EqualTo(module.Name));
+            Assert.That(actual.Configuration, Is.EqualTo(module.Configuration));
+            Assert.That(actual.DateCreated, Is.EqualTo(module.DateCreated));
+        }
+
+        private Module Make_Module()
+        {
+            return new Module
+                {
+                    ID = 1,
+                    Name = "test module",
+                    Configuration = "test configuration",
+                    DateCreated = new DateTime(2000, 01, 01, 00, 00, 00)
+                };
+        }
+
         private UserSettings Make_UserSettings()
         {
             return new UserSettings

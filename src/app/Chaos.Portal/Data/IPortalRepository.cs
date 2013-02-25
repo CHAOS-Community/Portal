@@ -36,6 +36,6 @@ namespace Chaos.Portal.Data
 
         uint LogCreate(string name, Guid? sessionGuid, string level, double? duration, string message);
 
-        Dto.Standard.Module ModuleGet(string configurationName);
+        Dto.Standard.Module ModuleGet(string name);
     }
 }

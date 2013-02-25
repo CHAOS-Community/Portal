@@ -25,6 +25,7 @@ namespace Chaos.Portal.Data
             ReaderExtensions.Mappings.Add(typeof(UserSettings), new UserSettingsMapping());
             ReaderExtensions.Mappings.Add(typeof(UserInfo), new UserInfoMapping());
             ReaderExtensions.Mappings.Add(typeof(Session), new SessionMapping());
+            ReaderExtensions.Mappings.Add(typeof(Module), new ModuleMapping());
             ReaderExtensions.Mappings.Add(typeof(Group), new GroupMapping());
         }
 
@@ -304,14 +305,13 @@ namespace Chaos.Portal.Data
         #endregion
         #region Module
 
-        public Module ModuleGet(string configurationName)
+        public Module ModuleGet(string name)
         {
-//            using(var db = CreatePortalEntities())
-//            {
-//                return db.Module_Get(null, configurationName).ToDto().FirstOrDefault();
-//            }
-
-            throw new NotImplementedException();
+            return Gateway.ExecuteQuery<Module>("Module_Get", new[]
+                {
+                    new MySqlParameter("ID", null), 
+                    new MySqlParameter("Name", name) 
+                }).First();
         }
 
         #endregion

@@ -1,6 +1,6 @@
 CREATE PROCEDURE `Module_Get`(
-    IN  ID      INTEGER,
-    IN  Name    VARCHAR(255)
+	ID      INTEGER,
+    Name    VARCHAR(255)
 )
 BEGIN
 
