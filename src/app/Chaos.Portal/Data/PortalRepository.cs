@@ -181,7 +181,14 @@ namespace Chaos.Portal.Data
 
         public uint ClientSettingsSet(Guid guid, string name, string settings)
         {
-            throw new NotImplementedException("ClientSettingsSet not implemented");
+            var result = Gateway.ExecuteNonQuery("ClientSettings_Set", new[]
+                {
+                    new MySqlParameter("Guid", guid.ToByteArray()), 
+                    new MySqlParameter("Name", name), 
+                    new MySqlParameter("Settings", settings),
+                });
+
+            return (uint)result;
         }
 
         #endregion

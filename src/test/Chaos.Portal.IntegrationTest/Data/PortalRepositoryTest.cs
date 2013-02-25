@@ -183,6 +183,17 @@
             Assert.That(actual.Settings, Is.EqualTo(clientSettings.Settings));
         }
 
+        [Test]
+        public void ClientSettingsSet_CreateNewClientSettings_ReturnOne()
+        {
+            var clientSettings = Make_ClientSettingsThatExist();
+            var newGuid        = new Guid("00000000-0000-0000-0000-000000002000");
+
+            var actual = PortalRepository.ClientSettingsSet(newGuid, clientSettings.Name, clientSettings.Settings);
+
+            Assert.That(actual, Is.EqualTo(1));
+        }
+
         private ClientSettings Make_ClientSettingsThatExist()
         {
             return new ClientSettings
