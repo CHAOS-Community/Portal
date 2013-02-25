@@ -1,14 +1,16 @@
 CREATE PROCEDURE `Session_Delete`(
-    IN  SessionGUID  BINARY(16),
-    IN  UserGUID     BINARY(16)
+	Guid		BINARY(16),
+	UserGuid	BINARY(16)
 )
 BEGIN
 
     DELETE
-      FROM  Session
-     WHERE  Session.GUID     = SessionGUID AND
-            Session.UserGUID = UserGUID;
+	FROM  
+		Session
+	WHERE  
+			Session.GUID     = Guid
+        AND Session.UserGUID = UserGuid;
             
-    SELECT 1;
+    SELECT ROW_COUNT();
             
 END

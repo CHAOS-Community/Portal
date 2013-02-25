@@ -159,19 +159,15 @@ namespace Chaos.Portal.Data
             return SessionGet(guid, userGuid).First();
         }
 
-        public uint SessionDelete(Guid sessionGuid, Guid userGuid)
+        public uint SessionDelete(Guid guid, Guid userGuid)
         {
-//            using (var db = CreatePortalEntities())
-//            {
-//                var result = db.Session_Delete(guid.ToByteArray(), userGuid.ToByteArray()).FirstOrDefault();
-//
-//                if (!result.HasValue)
-//                    throw new UnhandledException("Session delete failed on the database and was rolled back");
-//
-//                return (uint) result.Value;
-            //            }
+            var result = Gateway.ExecuteNonQuery("Session_Delete", new[]
+                {
+                    new MySqlParameter("Guid", guid.ToByteArray()), 
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray())
+                });
 
-            throw new NotImplementedException();
+            return (uint)result;
         }
 
         #endregion

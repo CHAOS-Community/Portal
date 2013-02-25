@@ -160,6 +160,16 @@
             Assert.That(actual.DateModified, Is.Not.Null);
         }
 
+        [Test]
+        public void SessionDelete_Logout_ReturnOne()
+        {
+            var session = Make_Session();
+
+            var actual = PortalRepository.SessionDelete(session.Guid, session.UserGuid);
+
+            Assert.That(actual, Is.EqualTo(1));
+        }
+
         private Session Make_Session()
         {
             return new Session
