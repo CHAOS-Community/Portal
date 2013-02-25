@@ -147,26 +147,23 @@ namespace Chaos.Portal.Data
             return SessionGet(guid, null).First();
         }
 
-        public ISession SessionUpdate(Guid sessionGuid, Guid userGuid)
+        public ISession SessionUpdate(Guid guid, Guid userGuid)
         {
-//            using (var db = CreatePortalEntities())
-//            {
-//                var result = db.Session_Update(null, sessionGuid.ToByteArray(), userGuid.ToByteArray()).FirstOrDefault();
-//
-//                if(!result.HasValue)
-//                    throw new UnhandledException("Session update failed on the database and was rolled back");
-//
-//                return db.Session_Get(sessionGuid.ToByteArray(), userGuid.ToByteArray()).ToDto().First();
-            //            }
+            var result = Gateway.ExecuteNonQuery("Session_Update", new[]
+                {
+                    new MySqlParameter("UserGuid", null), 
+                    new MySqlParameter("WhereSessionGuid", guid.ToByteArray()), 
+                    new MySqlParameter("WhereUserGuid", userGuid.ToByteArray()) 
+                });
 
-            throw new NotImplementedException();
+            return SessionGet(guid, userGuid).First();
         }
 
         public uint SessionDelete(Guid sessionGuid, Guid userGuid)
         {
 //            using (var db = CreatePortalEntities())
 //            {
-//                var result = db.Session_Delete(sessionGuid.ToByteArray(), userGuid.ToByteArray()).FirstOrDefault();
+//                var result = db.Session_Delete(guid.ToByteArray(), userGuid.ToByteArray()).FirstOrDefault();
 //
 //                if (!result.HasValue)
 //                    throw new UnhandledException("Session delete failed on the database and was rolled back");
@@ -307,7 +304,7 @@ namespace Chaos.Portal.Data
         {
 //            using(var db = CreatePortalEntities())
 //            {
-//                var guid = sessionGuid.HasValue ? sessionGuid.Value.ToByteArray() : null;
+//                var guid = guid.HasValue ? guid.Value.ToByteArray() : null;
 //
 //                var result = db.Log_Create(name, loglevel, guid, duration, message).FirstOrDefault();
 //

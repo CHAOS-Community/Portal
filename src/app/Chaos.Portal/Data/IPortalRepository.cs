@@ -25,7 +25,7 @@ namespace Chaos.Portal.Data
 
         IEnumerable<Session> SessionGet(Guid? guid, Guid? userGuid);
         ISession SessionCreate(Guid userGuid);
-        ISession SessionUpdate(Guid sessionGuid, Guid userGuid);
+        ISession SessionUpdate(Guid guid, Guid userGuid);
         uint SessionDelete(Guid sessionGuid, Guid userGuid);
 
         IEnumerable<IClientSettings> ClientSettingsGet(Guid guid);

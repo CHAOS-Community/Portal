@@ -150,6 +150,16 @@
             Assert.That(actual.UserGuid, Is.EqualTo(session.UserGuid));
         }
 
+        [Test]
+        public void SessionUpdate_RenewSession_ReturnSessionWithUpdateDateModified()
+        {
+            var session = Make_Session();
+
+            var actual = PortalRepository.SessionUpdate(session.Guid, session.UserGuid);
+
+            Assert.That(actual.DateModified, Is.Not.Null);
+        }
+
         private Session Make_Session()
         {
             return new Session
