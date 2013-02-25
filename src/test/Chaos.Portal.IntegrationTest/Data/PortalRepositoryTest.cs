@@ -262,6 +262,41 @@
             Assert.That(actual.DateCreated, Is.EqualTo(userSettings.DateCreated));
         }
 
+        [Test]
+        public void UserSettingsSet_UpdateExistingUserSettings_ReturnOne()
+        {
+            var userSettings = Make_UserSettings();
+            var newSettings  = "new settings";
+
+            var actual = PortalRepository.UserSettingsSet(userSettings.ClientSettingGuid, userSettings.UserGuid, newSettings);
+
+            Assert.That(actual, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void UserSettingsDelete_ExistingUserSettings_ReturnOne()
+        {
+            var userSettings = Make_UserSettings();
+
+            var actual = PortalRepository.UserSettingsDelete(userSettings.ClientSettingGuid, userSettings.UserGuid);
+
+            Assert.That(actual, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void LogCreate_NewLogEntry_ReturnOne()
+        {
+            var name     = "log name";
+            var session  = Make_Session();
+            var logLevel = "INFO";
+            var duraion  = 13.37;
+            var message  = "log message";
+
+            var actual = PortalRepository.LogCreate(name, session.Guid, logLevel, duraion, message);
+
+            Assert.That(actual, Is.EqualTo(1));
+        }
+
         private UserSettings Make_UserSettings()
         {
             return new UserSettings

@@ -1,23 +1,25 @@
 CREATE PROCEDURE UserSettings_Set(
-    ClientSettingsGUID  BINARY(16),
-    UserGUID            BINARY(16),
+    ClientSettingsGuid  BINARY(16),
+    UserGuid            BINARY(16),
     Settings            TEXT
 )
 BEGIN
 
-    IF NOT EXISTS ( SELECT  ClientSettingsGUID 
+    IF NOT EXISTS ( SELECT  * 
                       FROM  UserSettings 
-                     WHERE  UserSettings.ClientSettingsGUID = ClientSettingsGUID AND 
-                            UserSettings.UserGUID           = UserGUID) THEN
+                     WHERE  UserSettings.ClientSettingsGUID = ClientSettingsGuid AND 
+                            UserSettings.UserGUID           = UserGuid) THEN
         INSERT INTO UserSettings (ClientSettingsGUID, UserGUID, Settings, DateCreated)
-             VALUES (ClientSettingsGUID, UserGUID, Settings, NOW());
+             VALUES (ClientSettingsGuid, UserGuid, Settings, NOW());
     ELSE
     
         UPDATE  UserSettings
            SET  UserSettings.Settings = Settings
-         WHERE  UserSettings.ClientSettingsGUID = ClientSettingsGUID AND
-                UserSettings.UserGUID           = UserGUID;
+         WHERE  UserSettings.ClientSettingsGUID = ClientSettingsGuid AND
+                UserSettings.UserGUID           = UserGuid;
     
     END IF;
+
+	SELECT ROW_COUNT();
 
 END

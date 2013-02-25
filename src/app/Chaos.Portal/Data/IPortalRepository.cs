@@ -31,10 +31,10 @@ namespace Chaos.Portal.Data
         uint ClientSettingsSet(Guid guid, string name, string settings);
 
         IEnumerable<UserSettings> UserSettingsGet(Guid clientGuid, Guid userGuid);
-        uint UserSettingsSet(Guid clientGuid, Guid userGuid, string settings);
-        uint UserSettingsDelete(Guid clientGuid, Guid userGuid);
+        uint UserSettingsSet(Guid guid, Guid userGuid, string settings);
+        uint UserSettingsDelete(Guid guid, Guid userGuid);
 
-        uint LogCreate(string name, Guid? sessionGuid, string loglevel, double? duration, string message);
+        uint LogCreate(string name, Guid? sessionGuid, string level, double? duration, string message);
 
         Dto.Standard.Module ModuleGet(string configurationName);
     }

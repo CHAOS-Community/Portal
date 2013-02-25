@@ -261,48 +261,44 @@ namespace Chaos.Portal.Data
                 });
         }
 
-        public uint UserSettingsSet(Guid clientGuid, Guid userGuid, string settings)
+        public uint UserSettingsSet(Guid guid, Guid userGuid, string settings)
         {
-//            using (var db = CreatePortalEntities())
-//            {
-//                db.UserSettings_Set(clientGuid.ToByteArray(), userGuid.ToByteArray(), settings);
-//
-//                return 1;
-            //            }
+            var result = Gateway.ExecuteNonQuery("UserSettings_Set", new[]
+                {
+                    new MySqlParameter("ClientSettingsGuid", guid.ToByteArray()), 
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
+                    new MySqlParameter("Settings", settings)
+                });
 
-            throw new NotImplementedException();
+            return (uint)result;
         }
 
-        public uint UserSettingsDelete(Guid clientGuid, Guid userGuid)
+        public uint UserSettingsDelete(Guid guid, Guid userGuid)
         {
-//            using (var db = CreatePortalEntities())
-//            {
-//                db.UserSettings_Delete(clientGuid.ToByteArray(), userGuid.ToByteArray());
-//
-//                return 1;
-            //            }
+            var result = Gateway.ExecuteNonQuery("UserSettings_Delete", new[]
+                {
+                    new MySqlParameter("ClientSettingsGuid", guid.ToByteArray()), 
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray()),
+                });
 
-            throw new NotImplementedException();
+            return (uint)result;
         }
 
         #endregion
         #region Log
 
-        public uint LogCreate(string name, Guid? sessionGuid, string loglevel, double? duration, string message)
+        public uint LogCreate(string name, Guid? sessionGuid, string level, double? duration, string message)
         {
-//            using(var db = CreatePortalEntities())
-//            {
-//                var guid = guid.HasValue ? guid.Value.ToByteArray() : null;
-//
-//                var result = db.Log_Create(name, loglevel, guid, duration, message).FirstOrDefault();
-//
-//                if (!result.HasValue)
-//                    throw new UnhandledException("Unhandled exception occured in Log_Create, and was rolled back");
-//
-//                return (uint) result.Value;
-            //            }
+            var result = Gateway.ExecuteNonQuery("Log_Create", new[]
+                {
+                    new MySqlParameter("Name",name), 
+                    new MySqlParameter("Level",level), 
+                    new MySqlParameter("SessionGuid",sessionGuid.HasValue ? sessionGuid.Value.ToByteArray() : null), 
+                    new MySqlParameter("Duration",duration), 
+                    new MySqlParameter("Message",message) 
+                });
 
-            throw new NotImplementedException();
+            return (uint)result;
         }
 
         #endregion
