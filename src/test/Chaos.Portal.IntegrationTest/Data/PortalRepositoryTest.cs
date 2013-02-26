@@ -37,6 +37,16 @@
         }
 
         [Test]
+        public void UserCreate_GivenEmailAndGuid_ReturnOne()
+        {
+            var user = Make_UserInfoThatExist();
+
+            var result = PortalRepository.UserCreate(new Guid("00000000-0000-0000-0000-000000000002"), user.Email);
+
+            Assert.That(result, Is.EqualTo(1));
+        }
+
+        [Test]
         public void UserInfoGet_ByGuidUserInfoExists_ReturnUserInfo()
         {
             var userThatExist = Make_UserInfoThatExist();

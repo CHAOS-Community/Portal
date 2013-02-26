@@ -11,6 +11,7 @@ namespace Chaos.Portal.Data
 
         UserInfo UserInfoGet(string email);
         IEnumerable<UserInfo> UserInfoGet(Guid? userGuid, Guid? sessionGuid, string email);
+        uint UserCreate(Guid guid, string email);
 
         IEnumerable<SubscriptionInfo> SubscriptionGet(Guid? guid, Guid? requestingUserGuid);
         SubscriptionInfo SubscriptionCreate(Guid? guid, string name, Guid requestingUserGuid);

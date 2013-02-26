@@ -56,6 +56,17 @@ namespace Chaos.Portal.Data
                 });
         }
 
+        public uint UserCreate(Guid guid, string email)
+        {
+            var result = Gateway.ExecuteNonQuery("User_Create", new[]
+                {
+                    new MySqlParameter("Guid", guid.ToByteArray()), 
+                    new MySqlParameter("Email", email)
+                });
+
+            return (uint)result;
+        }
+
         public UserInfo UserInfoGet(string email)
         {
             var user = UserInfoGet(null, null, email).FirstOrDefault();
