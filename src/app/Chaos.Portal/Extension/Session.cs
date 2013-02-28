@@ -38,11 +38,11 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Delete
 
-        public ScalarAResult Delete( ICallContext callContext )
+        public ScalarResult Delete( ICallContext callContext )
         {
             var result = PortalRepository.SessionDelete(callContext.Session.Guid, callContext.User.Guid);
 
-            return new ScalarAResult((int) result);
+            return new ScalarResult((int) result);
         }
 
         #endregion

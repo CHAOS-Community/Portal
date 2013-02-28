@@ -2,7 +2,7 @@ namespace Chaos.Portal.Data.Dto
 {
     using CHAOS.Serialization;
 
-    public class ScalarAResult : AResult
+    public class ScalarResult : AResult
 	{
 		#region Properties
 
@@ -12,12 +12,12 @@ namespace Chaos.Portal.Data.Dto
 		#endregion
 		#region Constructors
 
-		public ScalarAResult(int value)
+		public ScalarResult(int value)
 		{
 			Value = value;
 		}
 
-		public ScalarAResult()
+		public ScalarResult()
 		{
 		}
 

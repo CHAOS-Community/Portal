@@ -25,21 +25,21 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Set
 
-        public ScalarAResult Set( ICallContext callContext, Guid clientGUID, string settings )
+        public ScalarResult Set( ICallContext callContext, Guid clientGUID, string settings )
         {
             var result = PortalRepository.UserSettingsSet(clientGUID, callContext.User.Guid, settings);
 
-            return new ScalarAResult((int) result);
+            return new ScalarResult((int) result);
         }
 
         #endregion
         #region Delete
 
-        public ScalarAResult Delete( ICallContext callContext, Guid clientGUID )
+        public ScalarResult Delete( ICallContext callContext, Guid clientGUID )
         {
             var result = PortalRepository.UserSettingsDelete(clientGUID, callContext.User.Guid);
 
-            return new ScalarAResult((int) result);
+            return new ScalarResult((int) result);
         }
 
         #endregion

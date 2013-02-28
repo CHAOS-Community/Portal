@@ -84,7 +84,7 @@
     <Compile Include="Data\Dto\PortalError.cs" />
     <Compile Include="Data\Dto\AResult.cs" />
     <Compile Include="Data\Dto\ResultExtensionMethods.cs" />
-    <Compile Include="Data\Dto\ScalarAResult.cs" />
+    <Compile Include="Data\Dto\ScalarResult.cs" />
     <Compile Include="Data\Dto\Session.cs" />
     <None Include="App.config.sample">
       <SubType>Designer</SubType>
@@ -145,6 +145,7 @@
     <Compile Include="Indexing\View\IView.cs" />
     <Compile Include="Indexing\View\IViewData.cs" />
     <Compile Include="Indexing\View\IViewManager.cs" />
+    <Compile Include="Indexing\View\SearchView.cs" />
     <Compile Include="Indexing\View\ViewManager.cs" />
     <Compile Include="Logging\Database\DatabaseLoggerFactory.cs" />
     <Compile Include="Logging\DirectLogger.cs" />
@@ -192,9 +193,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Dto\Standard\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -6,6 +6,11 @@ namespace Chaos.Portal.Response.Specification
 {
     public class XmlResponse : IResponseSpecification
     {
+        #region Initlization
+
+
+
+        #endregion
         #region Business Logic
 
         public Stream GetStream(IPortalResponse response)

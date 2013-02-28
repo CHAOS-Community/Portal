@@ -31,21 +31,21 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Delete
 
-        public ScalarAResult Delete(ICallContext callContext, Guid guid)
+        public ScalarResult Delete(ICallContext callContext, Guid guid)
         {
             var result = (int) PortalRepository.SubscriptionDelete(guid, callContext.User.Guid);
 
-            return new ScalarAResult(result);
+            return new ScalarResult(result);
         }
 
         #endregion
         #region Update
 
-        public ScalarAResult Update(ICallContext callContext, Guid guid, string newName)
+        public ScalarResult Update(ICallContext callContext, Guid guid, string newName)
         {
             var result = PortalRepository.SubscriptionUpdate(guid, newName, callContext.User.Guid);
 
-            return new ScalarAResult( (int) result );
+            return new ScalarResult( (int) result );
         }
 
         #endregion

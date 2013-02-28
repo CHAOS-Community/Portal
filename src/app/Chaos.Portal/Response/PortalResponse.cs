@@ -69,8 +69,8 @@ namespace Chaos.Portal.Response
                 Result.TotalCount  = pagedResult.FoundCount;
 		    }
             else if (stream != null) Stream = stream;
-            else if (uinteger != null) Result.Results.Add(new ScalarAResult((int)uinteger.Value));
-            else if (integer != null) Result.Results.Add(new ScalarAResult(integer.Value));
+            else if (uinteger != null) Result.Results.Add(new ScalarResult((int)uinteger.Value));
+            else if (integer != null) Result.Results.Add(new ScalarResult(integer.Value));
             else 
 		        throw new UnsupportedExtensionReturnTypeException(
 		            "Return type is not supported: " +

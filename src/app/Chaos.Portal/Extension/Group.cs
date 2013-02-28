@@ -34,25 +34,25 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Delete
 
-        public ScalarAResult Delete( ICallContext callContext, Guid guid )
+        public ScalarResult Delete( ICallContext callContext, Guid guid )
         {
             if(callContext.IsAnonymousUser) throw new InsufficientPermissionsException( "Anonymous users cannot delete groups" );
 
             var result = PortalRepository.GroupDelete(guid, callContext.User.Guid);
 
-            return new ScalarAResult((int) result);
+            return new ScalarResult((int) result);
         }
 
         #endregion
         #region Update
 
-        public ScalarAResult Update( ICallContext callContext, Guid guid, string newName, uint? newSystemPermission )
+        public ScalarResult Update( ICallContext callContext, Guid guid, string newName, uint? newSystemPermission )
         {
             if(callContext.IsAnonymousUser) throw new InsufficientPermissionsException( "Anonymous users cannot Update groups" );
 
             var result = PortalRepository.GroupUpdate(guid, callContext.User.Guid, newName, newSystemPermission);
 
-            return new ScalarAResult((int) result);
+            return new ScalarResult((int) result);
         }
 
         #endregion
