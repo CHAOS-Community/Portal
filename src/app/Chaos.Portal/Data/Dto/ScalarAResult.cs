@@ -1,8 +1,8 @@
-﻿using CHAOS.Serialization;
-
-namespace Chaos.Portal.Data.Dto.Standard
+namespace Chaos.Portal.Data.Dto
 {
-	public class ScalarResult : Result
+    using CHAOS.Serialization;
+
+    public class ScalarAResult : AResult
 	{
 		#region Properties
 
@@ -12,12 +12,12 @@ namespace Chaos.Portal.Data.Dto.Standard
 		#endregion
 		#region Constructors
 
-		public ScalarResult(int value)
+		public ScalarAResult(int value)
 		{
 			Value = value;
 		}
 
-		public ScalarResult()
+		public ScalarAResult()
 		{
 		}
 

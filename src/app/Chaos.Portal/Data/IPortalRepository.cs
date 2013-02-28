@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Chaos.Portal.Data
 {
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
     public interface IPortalRepository
     {

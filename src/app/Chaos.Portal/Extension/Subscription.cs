@@ -4,7 +4,6 @@ namespace Chaos.Portal.Extension
     using System.Collections.Generic;
 
     using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Data.Dto.Standard;
 
     [PortalExtension(configurationName: "Portal")]
     public class Subscription : AExtension
@@ -16,7 +15,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
 
-        public IEnumerable<ISubscriptionInfo> Get( ICallContext callContext, Guid guid )
+        public IEnumerable<SubscriptionInfo> Get( ICallContext callContext, Guid guid )
         {
             return PortalRepository.SubscriptionGet(guid, callContext.User.Guid);
         }
@@ -24,7 +23,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Create
 
-        public ISubscriptionInfo Create( ICallContext callContext, string name )
+        public SubscriptionInfo Create( ICallContext callContext, string name )
         {
             return PortalRepository.SubscriptionCreate(new Guid(), name, callContext.User.Guid);
         }
@@ -32,21 +31,21 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Delete
 
-        public ScalarResult Delete(ICallContext callContext, Guid guid)
+        public ScalarAResult Delete(ICallContext callContext, Guid guid)
         {
             var result = (int) PortalRepository.SubscriptionDelete(guid, callContext.User.Guid);
 
-            return new ScalarResult(result);
+            return new ScalarAResult(result);
         }
 
         #endregion
         #region Update
 
-        public ScalarResult Update(ICallContext callContext, Guid guid, string newName)
+        public ScalarAResult Update(ICallContext callContext, Guid guid, string newName)
         {
             var result = PortalRepository.SubscriptionUpdate(guid, newName, callContext.User.Guid);
 
-            return new ScalarResult( (int) result );
+            return new ScalarAResult( (int) result );
         }
 
         #endregion

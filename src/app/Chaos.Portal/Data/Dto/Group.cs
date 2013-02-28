@@ -1,0 +1,25 @@
+namespace Chaos.Portal.Data.Dto
+{
+    using System;
+
+    using CHAOS.Serialization;
+
+    public class Group : AResult
+	{
+		#region Properties
+
+		[Serialize]
+		public Guid Guid { get; set; }
+
+		[Serialize]
+		public long? SystemPermission { get; set; }
+
+		[Serialize]
+		public string Name { get; set; }
+
+		[Serialize]
+		public DateTime DateCreated { get; set; }
+
+		#endregion 
+	}
+}

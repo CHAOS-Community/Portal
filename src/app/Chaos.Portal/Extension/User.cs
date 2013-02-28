@@ -12,7 +12,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
 
-        public IUserInfo Get( ICallContext callContext )
+        public UserInfo Get( ICallContext callContext )
         {
             return callContext.User;
         }

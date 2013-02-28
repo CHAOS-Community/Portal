@@ -19,10 +19,10 @@
     {
         #region Fields
 
-        private ISession                       _session;
-        private IUserInfo                      _user;
-        private IEnumerable<ISubscriptionInfo> _subscriptions;
-        private IEnumerable<IGroup>            _group;
+        private Session                       _session;
+        private UserInfo                      _user;
+        private IEnumerable<SubscriptionInfo> _subscriptions;
+        private IEnumerable<Group>            _group;
 		
 	    private const string SessionguidParameterName = "sessionGUID";
 
@@ -42,7 +42,7 @@
         /// <summary>
         /// Returns the current user, the user is cached and will not be updated during the callContexts life.
         /// </summary>
-        public IUserInfo User 
+        public UserInfo User 
         { 
             get
             {
@@ -60,7 +60,7 @@
 		/// <summary>
 		/// Get the current session
 		/// </summary>
-        public ISession Session
+        public Session Session
         {
             get
             {
@@ -73,7 +73,7 @@
 		/// <summary>
 		/// Get subscriptions associated with the current user
 		/// </summary>
-        public IEnumerable<ISubscriptionInfo> Subscriptions
+        public IEnumerable<SubscriptionInfo> Subscriptions
         {
             get 
             {
@@ -84,7 +84,7 @@
         /// <summary>
         /// returns the groups the current user is part of, the Groups are cached, changes in the database will not be pickup up during the callContext life.
         /// </summary>
-        public IEnumerable<IGroup> Groups
+        public IEnumerable<Group> Groups
         {
             get { return _group ?? (_group = Application.PortalRepository.GroupGet(null, null, User.Guid).ToList()); }
         }
@@ -135,7 +135,7 @@
 		/// Gets the current session from the database
 		/// </summary>
 		/// <returns>The current session from the database, or null if sessionGUID is not specified</returns>
-		public ISession GetSessionFromDatabase()
+		public Session GetSessionFromDatabase()
 		{
 			if( _session == null )
             {

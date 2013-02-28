@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Chaos.Portal.Cache;
-using Chaos.Portal.Data.Dto;
-using Chaos.Portal.Request;
-using Chaos.Portal.Response;
-
-namespace Chaos.Portal
+﻿namespace Chaos.Portal
 {
+    using System;
+    using System.Collections.Generic;
+
     using Chaos.Portal.Indexing.View;
+    using Chaos.Portal.Cache;
+    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Request;
+    using Chaos.Portal.Response;
 
     public interface ICallContext
     {
         IPortalApplication             Application { get; }
         IPortalRequest                 Request{ get; }
         IPortalResponse                Response { get; }
-        ISession                       Session { get; }
-        IEnumerable<ISubscriptionInfo> Subscriptions { get; }
-        IEnumerable<IGroup>            Groups { get; }
-        IUserInfo                      User { get; }
+        Session                       Session { get; }
+        IEnumerable<SubscriptionInfo> Subscriptions { get; }
+        IEnumerable<Group>            Groups { get; }
+        UserInfo                      User { get; }
         Guid                           AnonymousUserGuid { get; }
         bool                           IsAnonymousUser { get; }
         ICache                         Cache{ get; }
         IViewManager                   ViewManager { get; }
 	    
-		ISession GetSessionFromDatabase();
+		Session GetSessionFromDatabase();
     }
 }

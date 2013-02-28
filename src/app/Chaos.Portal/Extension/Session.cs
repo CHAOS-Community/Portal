@@ -1,7 +1,6 @@
 namespace Chaos.Portal.Extension
 {
     using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Data.Dto.Standard;
 
     [PortalExtension(configurationName : "Portal")]
     public class Session : AExtension
@@ -15,7 +14,7 @@ namespace Chaos.Portal.Extension
 
         #region Get
 
-        public ISession Get(ICallContext callContext)
+        public Data.Dto.Session Get(ICallContext callContext)
         {
             return callContext.Session;
         } 
@@ -23,7 +22,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Create
 
-        public ISession Create( ICallContext callContext )
+        public Data.Dto.Session Create( ICallContext callContext )
         {
             return PortalRepository.SessionCreate(callContext.AnonymousUserGuid);
         }
@@ -31,7 +30,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Update
 
-        public ISession Update( ICallContext callContext )
+        public Data.Dto.Session Update( ICallContext callContext )
         {
             return PortalRepository.SessionUpdate(callContext.Session.Guid, callContext.User.Guid);
         }
@@ -39,11 +38,11 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Delete
 
-        public ScalarResult Delete( ICallContext callContext )
+        public ScalarAResult Delete( ICallContext callContext )
         {
             var result = PortalRepository.SessionDelete(callContext.Session.Guid, callContext.User.Guid);
 
-            return new ScalarResult((int) result);
+            return new ScalarAResult((int) result);
         }
 
         #endregion

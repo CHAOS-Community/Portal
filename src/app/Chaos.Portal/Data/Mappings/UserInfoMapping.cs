@@ -5,7 +5,7 @@
 
     using CHAOS.Data;
 
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
     public class UserInfoMapping : IReaderMapping<UserInfo>
     {

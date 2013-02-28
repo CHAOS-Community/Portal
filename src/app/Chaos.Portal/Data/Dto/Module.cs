@@ -1,10 +1,11 @@
-﻿using System;
-using CHAOS.Serialization;
-using CHAOS.Serialization.XML;
-
-namespace Chaos.Portal.Data.Dto.Standard
+namespace Chaos.Portal.Data.Dto
 {
-	public class Module : Result
+    using System;
+
+    using CHAOS.Serialization;
+    using CHAOS.Serialization.XML;
+
+    public class Module : AResult
 	{
 		#region Properties
 

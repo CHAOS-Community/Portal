@@ -1,10 +1,11 @@
 ﻿using System;
 using CHAOS.Serialization;
 using CHAOS.Serialization.XML;
-using Chaos.Portal.Data.Dto.Standard;
 
 namespace Chaos.Portal.Response
 {
+    using Chaos.Portal.Data.Dto;
+
     public interface IPortalError
     {
         [SerializeXML(true)]

@@ -4,7 +4,6 @@ namespace Chaos.Portal.Extension
     using System.Collections.Generic;
 
     using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Exceptions;
 
     [PortalExtension(configurationName: "Portal")]
@@ -17,7 +16,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
         
-        public IEnumerable<IGroup> Get( ICallContext callContext)
+        public IEnumerable<Data.Dto.Group> Get( ICallContext callContext)
         {
             return callContext.Groups;
         }
@@ -25,7 +24,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Create
 
-        public IGroup Create( ICallContext callContext, string name, uint systemPermission )
+        public Data.Dto.Group Create( ICallContext callContext, string name, uint systemPermission )
         {
             if( callContext.IsAnonymousUser ) throw new InsufficientPermissionsException( "Anonymous users cannot create groups" );
 
@@ -35,25 +34,25 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Delete
 
-        public ScalarResult Delete( ICallContext callContext, Guid guid )
+        public ScalarAResult Delete( ICallContext callContext, Guid guid )
         {
             if(callContext.IsAnonymousUser) throw new InsufficientPermissionsException( "Anonymous users cannot delete groups" );
 
             var result = PortalRepository.GroupDelete(guid, callContext.User.Guid);
 
-            return new ScalarResult((int) result);
+            return new ScalarAResult((int) result);
         }
 
         #endregion
         #region Update
 
-        public ScalarResult Update( ICallContext callContext, Guid guid, string newName, uint? newSystemPermission )
+        public ScalarAResult Update( ICallContext callContext, Guid guid, string newName, uint? newSystemPermission )
         {
             if(callContext.IsAnonymousUser) throw new InsufficientPermissionsException( "Anonymous users cannot Update groups" );
 
             var result = PortalRepository.GroupUpdate(guid, callContext.User.Guid, newName, newSystemPermission);
 
-            return new ScalarResult((int) result);
+            return new ScalarAResult((int) result);
         }
 
         #endregion

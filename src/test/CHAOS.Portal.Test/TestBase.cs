@@ -5,7 +5,6 @@
     using Chaos.Portal.Cache;
     using Chaos.Portal.Data;
     using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Indexing.View;
     using Chaos.Portal.Logging;
@@ -59,9 +58,9 @@
         #endregion
         #region Make
 
-        protected Data.Dto.Standard.ClientSettings Make_ClientSettings()
+        protected Data.Dto.ClientSettings Make_ClientSettings()
         {
-            return new Data.Dto.Standard.ClientSettings
+            return new Data.Dto.ClientSettings
             {
                 Guid = new Guid("10000000-0000-0000-0000-000000000000"),
                 Name = "test client",
@@ -70,9 +69,9 @@
             };
         }
 
-        protected Data.Dto.Standard.Group Make_Group()
+        protected Data.Dto.Group Make_Group()
         {
-            return new Data.Dto.Standard.Group
+            return new Data.Dto.Group
                 {
                     Guid             = new Guid("01000000-0000-0000-0000-000000000010"),
                     Name             = "test group",
@@ -81,7 +80,7 @@
                 };
         }
 
-        protected IUserInfo Make_User()
+        protected UserInfo Make_User()
         {
             return new UserInfo
                 {
@@ -90,9 +89,9 @@
                 };
         }
 
-        protected Data.Dto.Standard.Session Make_Session()
+        protected Data.Dto.Session Make_Session()
         {
-            return new Data.Dto.Standard.Session
+            return new Data.Dto.Session
                 {
                     Guid        = new Guid("00001000-0000-0000-0000-000000010000"),
                     UserGuid    = Make_User().Guid,

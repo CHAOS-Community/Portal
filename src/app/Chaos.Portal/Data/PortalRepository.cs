@@ -7,7 +7,7 @@ namespace Chaos.Portal.Data
     using CHAOS.Data;
     using CHAOS.Data.MySql;
 
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Data.Mappings;
     using Chaos.Portal.Exceptions;
 

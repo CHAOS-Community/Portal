@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
 
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
     using NUnit.Framework;
 

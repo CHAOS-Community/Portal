@@ -8,7 +8,7 @@
 
     using Chaos.Deployment.UI.Console.Action.Database.Import;
     using Chaos.Portal.Data;
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Exceptions;
 
     using NUnit.Framework;
