@@ -24,7 +24,7 @@
         #region Query
 
         [Test]
-        public void Query_GetFirst_ReturnFirstGuidFromSolr()
+        public void Query_GetFirst_ReturnFirstIdFromSolr()
         {
             var solr = Make_SolrCore();
 
@@ -32,11 +32,11 @@
 
             var list = result.QueryResult.Results.ToList();
             Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(ResultOne, list[0].Guid);
+            Assert.AreEqual(ResultOne, list[0].Id);
         }
 
         [Test]
-        public void Query_GetPageIndexOne_ReturnGuidAtPageIndexOne()
+        public void Query_GetPageIndexOne_ReturnIdAtPageIndexOne()
         {
             var solr = Make_SolrCore();
 
@@ -44,7 +44,7 @@
 
             var list = result.QueryResult.Results.ToList();
             Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(ResultTwo, list[0].Guid);
+            Assert.AreEqual(ResultTwo, list[0].Id);
         }
 
         [Test]
@@ -56,8 +56,8 @@
 
             var list = result.QueryResult.Results.ToList();
             Assert.AreEqual(2, list.Count);
-            Assert.AreEqual(ResultOne, list[0].Guid);
-            Assert.AreEqual(ResultTwo, list[1].Guid);
+            Assert.AreEqual(ResultOne, list[0].Id);
+            Assert.AreEqual(ResultTwo, list[1].Id);
         }
 
         #endregion
@@ -76,7 +76,7 @@
 
             var result = solr.Query(new SolrQuery().WithQuery(expected.ToString()).WithPageSize(1));
             var list = result.QueryResult.Results.ToList();
-            Assert.AreEqual(expected, list[0].Guid);
+            Assert.AreEqual(expected, list[0].Id);
         }
 
         #endregion

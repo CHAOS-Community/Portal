@@ -122,6 +122,7 @@
     <Compile Include="Extension\User.cs" />
     <Compile Include="Extension\UserSettings.cs" />
     <Compile Include="Extension\View.cs" />
+    <Compile Include="Indexing\Solr\IdResult.cs" />
     <Compile Include="Indexing\Solr\Facet.cs" />
     <Compile Include="Indexing\Solr\FacetQueriesResult.cs" />
     <Compile Include="Indexing\Solr\IFacet.cs" />

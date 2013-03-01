@@ -1,21 +1,20 @@
 ﻿namespace Chaos.Portal.Indexing.Solr
 {
-    using System;
     using System.Linq;
     using System.Xml.Linq;
 
-    public class GuidResult : IIndexResult
+    public class IdResult : IIndexResult
     {
         #region Properties
 
-        public Guid Guid { get; private set; }
+        public string Id { get; private set; }
 
         #endregion
         #region Business Logic
 
         public IIndexResult Init(XElement element)
         {
-            this.Guid = new Guid(element.Elements("str").Where(node => node.Attribute("name").Value == "Guid").First().Value);
+            Id = element.Elements("str").Where(node => node.Attribute("name").Value == "Id").First().Value;
 
             return this;
         }

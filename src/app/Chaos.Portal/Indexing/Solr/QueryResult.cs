@@ -22,13 +22,13 @@
 
         public QueryResult(XElement element) : this(element.Elements("doc").Select(doc => (TReturnType)new TReturnType().Init(doc)))
         {
-            this.FoundCount = uint.Parse(element.Attribute("numFound").Value);
-            this.StartIndex = uint.Parse(element.Attribute("start").Value);
+            FoundCount = uint.Parse(element.Attribute("numFound").Value);
+            StartIndex = uint.Parse(element.Attribute("start").Value);
         }
 
         private QueryResult(IEnumerable<TReturnType> results)
         {
-            this.Results = results;
+            Results = results;
         }
 
         #endregion

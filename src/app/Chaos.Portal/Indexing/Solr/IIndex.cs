@@ -4,7 +4,7 @@ namespace Chaos.Portal.Indexing.Solr
 
     public interface IIndex
     {
-        Response<GuidResult> Query(IQuery query);
+        Response<IdResult> Query(IQuery query);
 
         void Index(IIndexable indexable);
 

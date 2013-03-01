@@ -29,11 +29,11 @@
         #endregion
         #region Business Logic
 
-        public Response<GuidResult> Query(IQuery query)
+        public Response<IdResult> Query(IQuery query)
         {
             using (var stream = _httpConnection.Get(Core + "/select", query.ToString()))
             {
-                var response = new Response<GuidResult>(stream);
+                var response = new Response<IdResult>(stream);
 
                 return response;
             }
