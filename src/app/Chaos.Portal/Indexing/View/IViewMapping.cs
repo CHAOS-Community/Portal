@@ -8,15 +8,17 @@ namespace Chaos.Portal.Indexing.View
     /// <summary>
     /// The View interface.
     /// </summary>
-    public interface IView
+    public interface IViewMapping
     {
         void Index(IEnumerable<object> objectsToIndex);
 
-        IEnumerable<IViewData> Query(IQuery query);
+        void Delete();
 
-        IView WithCache(ICache cache);
-        IView WithIndex(IIndex index);
-        IView WithPortalApplication(IPortalApplication portalApplication);
+        IEnumerable<IViewData> Query(IQuery query);
+        
+        IViewMapping WithCache(ICache cache);
+        IViewMapping WithIndex(IIndex index);
+        IViewMapping WithPortalApplication(IPortalApplication portalApplication);
 
         string Name { get; }
     }

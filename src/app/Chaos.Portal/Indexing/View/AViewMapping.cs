@@ -1,11 +1,12 @@
 ﻿namespace Chaos.Portal.Indexing.View
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using Chaos.Portal.Cache;
     using Chaos.Portal.Indexing.Solr;
 
-    public abstract class AView : IView
+    public abstract class AViewMapping : IViewMapping
     {
         #region Properties
 
@@ -16,26 +17,26 @@
         #endregion
         #region Initialization
 
-        protected AView()
+        protected AViewMapping()
         {
             Name = GetType().Name;
         }
 
-        public IView WithCache(ICache cache)
+        public IViewMapping WithCache(ICache cache)
         {
             _cache = cache;
 
             return this;
         }
 
-        public IView WithIndex(IIndex index)
+        public IViewMapping WithIndex(IIndex index)
         {
             _index = index;
 
             return this;
         }
 
-        public IView WithPortalApplication(IPortalApplication portalApplication)
+        public IViewMapping WithPortalApplication(IPortalApplication portalApplication)
         {
             _portalApplication = portalApplication;
 
@@ -61,10 +62,8 @@
         {
             var list = new List<IViewData>();
 
-            foreach (var obj in objectsToIndex)
+            foreach (var obj in objectsToIndex.Where(CanMap))
             {
-                if(!CanMap(obj)) continue;
-
                 var mapped   = Map(obj);
                 var didStore = _cache.Store(CreateKey(mapped.UniqueIdentifier.Value), mapped);
 
@@ -72,6 +71,11 @@
             }
             
             _index.Index(list);
+        }
+
+        public void Delete()
+        {
+            _index.Delete();
         }
 
         protected string CreateKey(string key)

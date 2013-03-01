@@ -20,7 +20,7 @@ namespace Chaos.Portal.Indexing.View
         /// <summary>
         /// The _loaded views.
         /// </summary>
-        private readonly IDictionary<string, IView> _loadedViews;
+        private readonly IDictionary<string, IViewMapping> _loadedViews;
         private readonly ICache                     _cache;
 
         #endregion
@@ -30,7 +30,7 @@ namespace Chaos.Portal.Indexing.View
         /// Initializes a new instance of the <see cref="ViewManager"/> class.
         /// </summary>
         /// <param name="dictionary">The dictionary.</param>
-        public ViewManager(IDictionary<string, IView> dictionary, ICache cache)
+        public ViewManager(IDictionary<string, IViewMapping> dictionary, ICache cache)
         {
             _loadedViews = dictionary;
             _cache       = cache;
@@ -39,7 +39,7 @@ namespace Chaos.Portal.Indexing.View
         #endregion
         #region Properties
 
-        public IEnumerable<IView> LoadedViews
+        public IEnumerable<IViewMapping> LoadedViews
         {
             get
             {
@@ -79,13 +79,13 @@ namespace Chaos.Portal.Indexing.View
             return _loadedViews[key].Query(query);
         }
 
-        public void AddView(string key, IView view)
+        public void AddView(string key, IViewMapping view)
         {
             if(key == null) throw new NullReferenceException("Cannot load a view with a null key");
             if(view == null) throw new NullReferenceException("Cannot load a null view");
-            if(this._loadedViews.ContainsKey(key)) throw new ArgumentException("Key already added", key);
+            if(_loadedViews.ContainsKey(key)) throw new ArgumentException("Key already added", key);
 
-            this._loadedViews.Add(key, view);
+            _loadedViews.Add(key, view);
         }
 
         #endregion

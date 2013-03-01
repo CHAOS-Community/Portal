@@ -142,8 +142,8 @@
     <Compile Include="Indexing\Solr\IIndexResult.cs" />
     <Compile Include="Indexing\Solr\IIndexResponse.cs" />
     <Compile Include="Indexing\Solr\SolrCore.cs" />
-    <Compile Include="Indexing\View\AView.cs" />
-    <Compile Include="Indexing\View\IView.cs" />
+    <Compile Include="Indexing\View\AViewMapping.cs" />
+    <Compile Include="Indexing\View\IViewMapping.cs" />
     <Compile Include="Indexing\View\IViewData.cs" />
     <Compile Include="Indexing\View\IViewManager.cs" />
     <Compile Include="Indexing\View\SearchView.cs" />
