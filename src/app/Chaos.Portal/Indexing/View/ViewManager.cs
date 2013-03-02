@@ -72,11 +72,11 @@ namespace Chaos.Portal.Indexing.View
                 view.Index(objects);
         }
 
-        public IEnumerable<IResult> Query(string key, IQuery query)
+        public IEnumerable<IResult> Query(string viewName, IQuery query)
         {
-            if (!_loadedViews.ContainsKey(key)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", key));
+            if (!_loadedViews.ContainsKey(viewName)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", viewName));
 
-            return _loadedViews[key].Query(query);
+            return _loadedViews[viewName].Query(query);
         }
 
         public void Delete()
@@ -87,13 +87,13 @@ namespace Chaos.Portal.Indexing.View
             }
         }
 
-        public void AddView(string key, IView view)
+        public void AddView(IView view)
         {
-            if(key == null) throw new NullReferenceException("Cannot load a view with a null key");
             if(view == null) throw new NullReferenceException("Cannot load a null view");
-            if(_loadedViews.ContainsKey(key)) throw new ArgumentException("Key already added", key);
+            if(string.IsNullOrEmpty(view.Name)) throw new ArgumentException("View.Name cannot be null");
+            if(_loadedViews.ContainsKey( view.Name )) throw new ArgumentException( "Key already added", view.Name );
 
-            _loadedViews.Add(key, view);
+            _loadedViews.Add( view.Name, view );
         }
 
         #endregion

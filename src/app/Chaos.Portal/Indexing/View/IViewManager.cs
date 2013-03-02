@@ -40,7 +40,7 @@ namespace Chaos.Portal.Indexing.View
         /// <summary>
         /// The query.
         /// </summary>
-        /// <param name="key">
+        /// <param name="viewName">
         /// The key.
         /// </param>
         /// <param name="query">
@@ -49,7 +49,7 @@ namespace Chaos.Portal.Indexing.View
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        IEnumerable<IResult> Query(string key, IQuery query);
+        IEnumerable<IResult> Query(string viewName, IQuery query);
 
         /// <summary>
         /// The add view.
@@ -60,7 +60,7 @@ namespace Chaos.Portal.Indexing.View
         /// <param name="view">
         /// The view.
         /// </param>
-        void AddView(string key, IView view);
+        void AddView(IView view);
 
         IEnumerable<IView> LoadedViews { get; }
 

@@ -12,14 +12,14 @@
 
         protected ICache _cache;
         protected IIndex _index;
-        protected IList<IViewMapping> _mappings; 
 
         #endregion
         #region Initialization
 
-        public AView()
+        protected AView(string name)
         {
-            _mappings = new List<IViewMapping>();
+            Name     = name;
+            Mappings = new List<IViewMapping>();
         }
 
         public IView WithCache(ICache cache)
@@ -51,7 +51,9 @@
         #endregion
         #region Properties
 
-        public IPortalApplication PortalApplication { get; protected set; }
+        protected IList<IViewMapping> Mappings { get; set; }
+
+        public IPortalApplication PortalApplication { get; set; }
 
         public string Name { get; private set; }
 
@@ -62,7 +64,7 @@
         {
             var list = new List<IViewData>();
             
-            foreach(var mapping in _mappings)
+            foreach(var mapping in Mappings)
             {
                 foreach(var obj in objectsToIndex.Where( mapping.CanMap ))
                 {
@@ -81,9 +83,17 @@
             _index.Delete();
         }
 
+        protected IEnumerable<IViewData> Query<TResult>( IQuery query ) where TResult : class, IViewData
+        {
+            var response = _index.Query( query );
+            var keys     = response.QueryResult.Results.Select( item => CreateKey( item.Id ) );
+
+            return _cache.Get<TResult>( keys );
+        }
+
         protected string CreateKey(string key)
         {
-            return string.Format("{0}_{1}", Name, key);
+            return string.Format( "{0}_{1}", Name, key.Replace( " ", "" ) );
         }
 
         #endregion

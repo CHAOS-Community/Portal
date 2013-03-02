@@ -29,11 +29,12 @@ namespace Chaos.Portal.Test.Indexing.View
         [SetUp]
         public void SetUp()
         {
-            this._couchbaseClient = new Mock<ICouchbaseClient>();
-            this._dictionary      = new Dictionary<string, IView>();
-            this._viewManager     = new ViewManager(this._dictionary, new Cache(this._couchbaseClient.Object));
-            this._view            = new Mock<IView>();
-            this._viewName        = "ViewName";
+            _couchbaseClient = new Mock<ICouchbaseClient>();
+            _dictionary      = new Dictionary<string, IView>();
+            _viewManager     = new ViewManager(this._dictionary, new Cache(this._couchbaseClient.Object));
+            _view            = new Mock<IView>();
+            _viewName        = "ViewName";
+            _view.SetupGet(p => p.Name).Returns(_viewName);
         }
 
         #endregion
@@ -42,29 +43,39 @@ namespace Chaos.Portal.Test.Indexing.View
         [Test]
         public void AddView_MockView_TheViewShouldBeStoredInTheDictionary()
         {
-            this._viewManager.AddView(this._viewName, this._view.Object);
+            _viewManager.AddView(_view.Object);
 
-            Assert.IsTrue(this._dictionary.ContainsKey(this._viewName));
+            Assert.IsTrue(_dictionary.ContainsKey(_viewName));
         }
 
         [Test, ExpectedException(typeof(System.NullReferenceException))]
         public void AddView_NullView_ThrowNullReferenceException()
         {
-            this._viewManager.AddView(this._viewName, null);
-        }
-
-        [Test, ExpectedException(typeof(NullReferenceException))]
-        public void AddView_NullKey_ThrowNullReferenceException()
-        {
-            this._viewManager.AddView(null, new Mock<IView>().Object);
+            this._viewManager.AddView(null);
         }
 
         [Test, ExpectedException(typeof(ArgumentException))]
         public void AddView_DuplicateView_ThrowException()
         {
-            this._viewManager.AddView(this._viewName, this._view.Object);
+            _viewManager.AddView(_view.Object);
 
-            this._viewManager.AddView(this._viewName, this._view.Object);
+            _viewManager.AddView(_view.Object);
+        }
+        
+        [Test, ExpectedException(typeof(ArgumentException))]
+        public void AddView_ViewNameIsNull_ThrowException()
+        {
+            _view.SetupGet(p => p.Name).Returns((string)null);
+
+            _viewManager.AddView(_view.Object);
+        }
+        
+        [Test, ExpectedException(typeof(ArgumentException))]
+        public void AddView_ViewNameEmptystring_ThrowException()
+        {
+            _view.SetupGet(p => p.Name).Returns(string.Empty);
+
+            _viewManager.AddView(_view.Object);
         }
 
         #endregion
@@ -74,22 +85,22 @@ namespace Chaos.Portal.Test.Indexing.View
         public void Index_OneObject_CallEachViewsIndexMethodWithTheObject()
         {
             var expected = new object();
-            this._viewManager.AddView(this._viewName, this._view.Object);
+            _viewManager.AddView(_view.Object);
 
-            this._viewManager.Index(expected);
+            _viewManager.Index(expected);
 
-            this._view.Verify(m => m.Index(new[]{expected}));
+            _view.Verify(m => m.Index(new[]{expected}));
         }
 
         [Test]
         public void Index_MultipleObjects_CallEachViewsIndexMethodWithTheObjects()
         {
             var expected = new[] { new object(), new object() };
-            this._viewManager.AddView(this._viewName, this._view.Object);
+            _viewManager.AddView(_view.Object);
 
-            this._viewManager.Index(expected);
+            _viewManager.Index(expected);
 
-            this._view.Verify(m => m.Index(expected));
+            _view.Verify(m => m.Index(expected));
         }
 
         #endregion
