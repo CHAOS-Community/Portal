@@ -5,7 +5,7 @@ namespace Chaos.Portal.Indexing.View
 
     using CHAOS.Serialization;
 
-    public class SearchView : IViewData
+    public class SearchViewData : IViewData
     {
         #region Properties
 

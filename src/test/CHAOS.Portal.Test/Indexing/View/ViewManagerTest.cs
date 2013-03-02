@@ -12,14 +12,16 @@ namespace Chaos.Portal.Test.Indexing.View
 
     using NUnit.Framework;
 
+    using IView = Chaos.Portal.Indexing.View.IView;
+
     [TestFixture]
     public class ViewManagerTest
     {
         #region Setup
 
         private ViewManager _viewManager;
-        private IDictionary<string, IViewMapping> _dictionary;
-        private Mock<IViewMapping> _view;
+        private IDictionary<string, IView> _dictionary;
+        private Mock<IView> _view;
         private string _viewName;
 
         private Mock<ICouchbaseClient> _couchbaseClient;
@@ -28,9 +30,9 @@ namespace Chaos.Portal.Test.Indexing.View
         public void SetUp()
         {
             this._couchbaseClient = new Mock<ICouchbaseClient>();
-            this._dictionary      = new Dictionary<string, IViewMapping>();
+            this._dictionary      = new Dictionary<string, IView>();
             this._viewManager     = new ViewManager(this._dictionary, new Cache(this._couchbaseClient.Object));
-            this._view            = new Mock<IViewMapping>();
+            this._view            = new Mock<IView>();
             this._viewName        = "ViewName";
         }
 
@@ -54,7 +56,7 @@ namespace Chaos.Portal.Test.Indexing.View
         [Test, ExpectedException(typeof(NullReferenceException))]
         public void AddView_NullKey_ThrowNullReferenceException()
         {
-            this._viewManager.AddView(null, new Mock<IViewMapping>().Object);
+            this._viewManager.AddView(null, new Mock<IView>().Object);
         }
 
         [Test, ExpectedException(typeof(ArgumentException))]
