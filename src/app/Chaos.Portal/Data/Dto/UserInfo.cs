@@ -15,8 +15,18 @@ namespace Chaos.Portal.Data.Dto
 
 		[Serialize]
 		public uint? SystemPermissions { get; set; }
-
-        public SystemPermissons SystemPermissonsEnum { get; set; }
+        
+        public SystemPermissons SystemPermissonsEnum
+        {
+            get
+            {
+                return (SystemPermissons)SystemPermissions;
+            }
+            set
+            {
+                SystemPermissions = (uint?)value;
+            }
+        }
 
 		[Serialize]
 		public string Email { get; set; }

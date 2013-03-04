@@ -59,6 +59,7 @@
     <Compile Include="Bindings\GuidParameterBindingTest.cs" />
     <Compile Include="Bindings\EnumerableOfGuidBindingTest.cs" />
     <Compile Include="Bindings\XDocumentBindingTest.cs" />
+    <Compile Include="Data\Dto\UserInfoTest.cs" />
     <Compile Include="ExtensionMock.cs" />
     <Compile Include="Extension\ClientSettingsTest.cs" />
     <Compile Include="Extension\GroupTest.cs" />
