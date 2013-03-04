@@ -46,9 +46,9 @@ namespace Chaos.Portal.Indexing.View
         public IEnumerable<KeyValuePair<string, string>> GetIndexableFields()
         {
             yield return UniqueIdentifier;
-            yield return new KeyValuePair<string, string>("Title", Title);
-            yield return new KeyValuePair<string, string>("Type", Type);
-            yield return new KeyValuePair<string, string>("Abstract", Abstract);
+            if(Title != null) yield return new KeyValuePair<string, string>( "Title", Title );
+            if(Type != null) yield return new KeyValuePair<string, string>( "Type", Type );
+            if(Abstract != null) yield return new KeyValuePair<string, string>( "Abstract", Abstract );
             yield return new KeyValuePair<string, string>("DateCreated", DateCreated.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
             // todo: refactor datetime tostring, create a helpermethod to convert a DateTime into the indexing format
         }
