@@ -2,6 +2,9 @@ namespace Chaos.Portal.Extension
 {
     using System;
 
+    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Exceptions;
+
     [PortalExtension( configurationName : "Portal" )]
     public class ClientSettings : AExtension
     {
@@ -22,6 +25,8 @@ namespace Chaos.Portal.Extension
 
         public uint Set( ICallContext callContext, Guid guid, string name, string settings )
         {
+            if(!callContext.User.HasPermission(SystemPermissons.Manage)) throw new InsufficientPermissionsException( "User does not have manage permissions" );
+
             return PortalRepository.ClientSettingsSet(guid, name, settings);
         }
 

@@ -85,7 +85,8 @@
             return new UserInfo
                 {
                     Guid = new Guid("00100000-0000-0000-0000-000000000100"),
-                    Email = "test@test.test"
+                    Email = "test@test.test",
+                    SystemPermissions = uint.MaxValue
                 };
         }
 

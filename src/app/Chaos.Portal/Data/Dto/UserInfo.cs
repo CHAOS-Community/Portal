@@ -38,6 +38,14 @@ namespace Chaos.Portal.Data.Dto
 		public DateTime? SessionDateModified { get; set; }
 
 		#endregion
-	}
+        #region Business Logic
+
+        public bool HasPermission(SystemPermissons permission)
+        {
+            return SystemPermissonsEnum.HasFlag(permission);
+        }
+
+        #endregion
+    }
 }
 
