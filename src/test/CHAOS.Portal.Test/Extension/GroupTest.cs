@@ -3,6 +3,8 @@
     using System;
     using System.Linq;
 
+    using Chaos.Portal.Exceptions;
+
     using Moq;
 
     using NUnit.Framework;
@@ -35,6 +37,18 @@
             var actual = extension.Create(CallContext.Object, expected.Name, (uint)expected.SystemPermission);
 
             Assert.That(actual, Is.EqualTo(expected));
+        }
+        
+        [Test, ExpectedException(typeof(InsufficientPermissionsException))]
+        public void Create_WithoutPermission_ThrowException()
+        {
+            var extension = Make_GroupExtension();
+            var expected  = Make_Group();
+            var user      = Make_User();
+            user.SystemPermissions = 0;
+            CallContext.SetupGet(p => p.User).Returns(user);
+
+            extension.Create(CallContext.Object, expected.Name, (uint)expected.SystemPermission);
         }
         
         [Test]

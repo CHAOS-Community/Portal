@@ -26,7 +26,7 @@ namespace Chaos.Portal.Extension
 
         public Data.Dto.Group Create( ICallContext callContext, string name, uint systemPermission )
         {
-            if( callContext.IsAnonymousUser ) throw new InsufficientPermissionsException( "Anonymous users cannot create groups" );
+            if(!callContext.User.HasPermission(SystemPermissons.CreateGroup) ) throw new InsufficientPermissionsException( "User does not have permission to create groups" );
 
             return PortalRepository.GroupCreate(new Guid(), name, callContext.User.Guid, systemPermission);
         }

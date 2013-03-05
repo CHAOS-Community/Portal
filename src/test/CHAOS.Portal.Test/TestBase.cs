@@ -86,7 +86,7 @@
                 {
                     Guid = new Guid("00100000-0000-0000-0000-000000000100"),
                     Email = "test@test.test",
-                    SystemPermissions = uint.MaxValue
+                    SystemPermissions = (uint?)SystemPermissons.All
                 };
         }
 
@@ -115,6 +115,11 @@
             return (Session)new Session().WithPortalApplication(PortalApplication.Object);
         }
 
-        #endregion
+        protected Subscription Make_SubscriptionExtension()
+        {
+            return (Subscription)new Subscription().WithPortalApplication( PortalApplication.Object );
+        }
+
+        #endregion  
     }
 }

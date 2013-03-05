@@ -4,6 +4,7 @@ namespace Chaos.Portal.Extension
     using System.Collections.Generic;
 
     using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Exceptions;
 
     [PortalExtension(configurationName: "Portal")]
     public class Subscription : AExtension
@@ -25,6 +26,8 @@ namespace Chaos.Portal.Extension
 
         public SubscriptionInfo Create( ICallContext callContext, string name )
         {
+            if(!callContext.User.HasPermission(SystemPermissons.CreateSubscription)) throw new InsufficientPermissionsException();
+
             return PortalRepository.SubscriptionCreate(new Guid(), name, callContext.User.Guid);
         }
 
