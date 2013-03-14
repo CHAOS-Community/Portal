@@ -4,6 +4,7 @@
     using System.Linq;
 
     using Chaos.Portal.Cache;
+    using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Indexing.Solr;
 
     public abstract class AView : IView
@@ -46,7 +47,7 @@
         #endregion
         #region Abstract
 
-        public abstract IEnumerable<IViewData> Query( IQuery query );
+        public abstract IPagedResult<IResult> Query( IQuery query );
 
         #endregion
         #region Properties

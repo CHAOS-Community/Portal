@@ -16,7 +16,7 @@ namespace Chaos.Portal.Extension
 
         #endregion
         
-        public IEnumerable<IResult> Get( ICallContext callContext, string view, IQuery query )
+        public IPagedResult<IResult> Get( ICallContext callContext, string view, IQuery query )
         {
             return callContext.ViewManager.Query(view, query);
         }

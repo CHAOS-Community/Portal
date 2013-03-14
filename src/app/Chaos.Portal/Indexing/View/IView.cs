@@ -3,6 +3,7 @@ namespace Chaos.Portal.Indexing.View
     using System.Collections.Generic;
 
     using Chaos.Portal.Cache;
+    using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Indexing.Solr;
 
     /// <summary>
@@ -14,7 +15,7 @@ namespace Chaos.Portal.Indexing.View
 
         void Delete();
 
-        IEnumerable<IViewData> Query(IQuery query);
+        IPagedResult<IResult> Query(IQuery query);
         
         IView WithCache(ICache cache);
         IView WithIndex(IIndex index);

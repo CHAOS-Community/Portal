@@ -3,8 +3,7 @@ namespace Chaos.Portal.Indexing.View
     using System.Collections.Generic;
 
     using Chaos.Portal.Data.Dto;
-
-    using IQuery = Chaos.Portal.Indexing.Solr.IQuery;
+    using Chaos.Portal.Indexing.Solr;
 
     /// <summary>
     /// The ViewManager interface.
@@ -49,7 +48,7 @@ namespace Chaos.Portal.Indexing.View
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        IEnumerable<IResult> Query(string viewName, IQuery query);
+        IPagedResult<IResult> Query(string viewName, IQuery query);
 
         /// <summary>
         /// The add view.

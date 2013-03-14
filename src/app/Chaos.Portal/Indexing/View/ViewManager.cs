@@ -72,7 +72,7 @@ namespace Chaos.Portal.Indexing.View
                 view.Index(objects);
         }
 
-        public IEnumerable<IResult> Query(string viewName, IQuery query)
+        public IPagedResult<IResult> Query(string viewName, IQuery query)
         {
             if (!_loadedViews.ContainsKey(viewName)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", viewName));
 
