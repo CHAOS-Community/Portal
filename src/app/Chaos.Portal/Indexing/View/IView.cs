@@ -11,7 +11,7 @@ namespace Chaos.Portal.Indexing.View
     /// </summary>
     public interface IView
     {
-        void Index(IEnumerable<object> objectsToIndex);
+        void Index( IEnumerable<object> objectsToIndex );
 
         void Delete();
 

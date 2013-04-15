@@ -11,28 +11,27 @@
     {
         #region Fields
 
-        protected ICache _cache;
-        protected IIndex _index;
+        protected ICache Cache;
+        protected IIndex Core;
 
         #endregion
         #region Initialization
 
         protected AView(string name)
         {
-            Name     = name;
-            Mappings = new List<IViewMapping>();
+            Name = name;
         }
 
         public IView WithCache(ICache cache)
         {
-            _cache = cache;
+            Cache = cache;
 
             return this;
         }
 
         public IView WithIndex(IIndex index)
         {
-            _index = index;
+            Core = index;
 
             return this;
         }
@@ -52,8 +51,6 @@
         #endregion
         #region Properties
 
-        protected IList<IViewMapping> Mappings { get; set; }
-
         public IPortalApplication PortalApplication { get; set; }
 
         public string Name { get; private set; }
@@ -61,35 +58,33 @@
         #endregion
         #region Business Logic
 
+        public abstract IList<IViewData> Index( object objectsToIndex );
+
         public void Index(IEnumerable<object> objectsToIndex)
         {
-            var list = new List<IViewData>();
-            
-            foreach(var mapping in Mappings)
+            foreach(var viewResults in objectsToIndex.Select(Index))
             {
-                foreach(var obj in objectsToIndex.Where( mapping.CanMap ))
+                foreach(var viewResult in viewResults)
                 {
-                    var mapped   = mapping.Map( obj );
-                    var didStore = _cache.Store(CreateKey(mapped.UniqueIdentifier.Value), mapped);
-
-                    if (didStore) list.Add(mapped);
+                    var key = CreateKey( viewResult.UniqueIdentifier.Value );
+                    Cache.Store( key, viewResult );
                 }
+
+                Core.Index( viewResults.Select( item => item ) );
             }
-            
-            _index.Index(list);
         }
 
         public void Delete()
         {
-            _index.Delete();
+            Core.Delete();
         }
 
         protected IEnumerable<IViewData> Query<TResult>( IQuery query ) where TResult : class, IViewData
         {
-            var response = _index.Query( query );
+            var response = Core.Query( query );
             var keys     = response.QueryResult.Results.Select( item => CreateKey( item.Id ) );
 
-            return _cache.Get<TResult>( keys );
+            return Cache.Get<TResult>( keys );
         }
 
         protected string CreateKey(string key)

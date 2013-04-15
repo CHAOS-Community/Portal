@@ -21,7 +21,7 @@ namespace Chaos.Portal.Indexing.View
         /// The _loaded views.
         /// </summary>
         private readonly IDictionary<string, IView> _loadedViews;
-        private readonly ICache                     _cache;
+        private readonly ICache                     Cache;
 
         #endregion
         #region Initialization
@@ -33,7 +33,7 @@ namespace Chaos.Portal.Indexing.View
         public ViewManager(IDictionary<string, IView> dictionary, ICache cache)
         {
             _loadedViews = dictionary;
-            _cache       = cache;
+            Cache       = cache;
         }
 
         #endregion
@@ -68,7 +68,7 @@ namespace Chaos.Portal.Indexing.View
         {
             var objects = obj as List<object> ?? obj.ToList();
 
-            foreach (var view in _loadedViews.Values)
+            foreach(var view in _loadedViews.Values)
                 view.Index(objects);
         }
 
