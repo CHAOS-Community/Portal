@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3D78618A-8343-4966-9006-5C01EAD11386}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Chaos.Portal.Core</RootNamespace>
+    <AssemblyName>Chaos.Portal.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CHAOS">
+      <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.6.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\IPortalRepository.cs" />
+    <Compile Include="Data\Mappings\ClientSettingsMapping.cs" />
+    <Compile Include="Data\Mappings\GroupMapping.cs" />
+    <Compile Include="Data\Mappings\ModuleMapping.cs" />
+    <Compile Include="Data\Mappings\SessionMapping.cs" />
+    <Compile Include="Data\Mappings\SubscriptionInfoMapping.cs" />
+    <Compile Include="Data\Mappings\UserInfoMapping.cs" />
+    <Compile Include="Data\Mappings\UserSettingsMapping.cs" />
+    <Compile Include="Data\Model\AResult.cs" />
+    <Compile Include="Data\Model\ClientSettings.cs" />
+    <Compile Include="Data\Model\Group.cs" />
+    <Compile Include="Data\Model\IPagedResult.cs" />
+    <Compile Include="Data\Model\IResult.cs" />
+    <Compile Include="Data\Model\Module.cs" />
+    <Compile Include="Data\Model\ResultExtensionMethods.cs" />
+    <Compile Include="Data\Model\ScalarResult.cs" />
+    <Compile Include="Data\Model\Session.cs" />
+    <Compile Include="Data\Model\SubscriptionInfo.cs" />
+    <Compile Include="Data\Model\SubscriptionPermission.cs" />
+    <Compile Include="Data\Model\SystemPermissions.cs" />
+    <Compile Include="Data\Model\User.cs" />
+    <Compile Include="Data\Model\UserInfo.cs" />
+    <Compile Include="Data\Model\UserSettings.cs" />
+    <Compile Include="Data\PortalRepository.cs" />
+    <Compile Include="Data\TicketType.cs" />
+    <Compile Include="Exceptions\ActionMissingException.cs" />
+    <Compile Include="Exceptions\AssemblyNotLoadedException.cs" />
+    <Compile Include="Exceptions\ExtensionMissingException.cs" />
+    <Compile Include="Exceptions\InsufficientPermissionsException.cs" />
+    <Compile Include="Exceptions\ModuleConfigurationMissingException.cs" />
+    <Compile Include="Exceptions\ModuleNotLoadedException.cs" />
+    <Compile Include="Exceptions\ParameterBindingMissingException.cs" />
+    <Compile Include="Exceptions\SessionDoesNotExistException.cs" />
+    <Compile Include="Exceptions\UnhandledException.cs" />
+    <Compile Include="Exceptions\UnsupportedExtensionReturnTypeException.cs" />
+    <Compile Include="Exceptions\ViewNotLoadedException.cs" />
+    <Compile Include="Exceptions\WrongProtocolVersionException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

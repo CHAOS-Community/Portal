@@ -2,10 +2,11 @@
 using System.Reflection;
 using CHAOS.Extensions;
 using CHAOS.Serialization.Standard.String;
-using Chaos.Portal.Exceptions;
 
 namespace Chaos.Portal.Bindings.Standard
 {
+    using Chaos.Portal.Core.Exceptions;
+
     public class DateTimeParameterBinding : IParameterBinding
     {
         public object Bind( ICallContext callContext, ParameterInfo parameterInfo )

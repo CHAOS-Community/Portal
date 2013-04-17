@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
 
+    using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Indexing.View;
     using Chaos.Portal.Cache;
-    using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;
 

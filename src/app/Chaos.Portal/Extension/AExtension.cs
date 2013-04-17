@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using Chaos.Portal.Data;
-using Chaos.Portal.Exceptions;
+using Chaos.Portal.Core.Data;
 using Chaos.Portal.Response;
 
 namespace Chaos.Portal.Extension
 {
+    using Chaos.Portal.Core.Exceptions;
+
     public abstract class AExtension : IExtension
     {
         #region Properties

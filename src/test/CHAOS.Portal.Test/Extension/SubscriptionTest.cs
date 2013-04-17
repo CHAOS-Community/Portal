@@ -1,6 +1,6 @@
 ﻿namespace Chaos.Portal.Test.Extension
 {
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core.Exceptions;
 
     using NUnit.Framework;
 

@@ -3,7 +3,7 @@ namespace Chaos.Portal.Extension
     using System;
     using System.Collections.Generic;
 
-    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Core.Data.Model;
 
     [PortalExtension(configurationName : "Portal")]
     public class UserSettings : AExtension
@@ -17,7 +17,7 @@ namespace Chaos.Portal.Extension
 
         #region Get
 
-        public IEnumerable<Data.Dto.UserSettings> Get( ICallContext callContext, Guid clientGUID )
+        public IEnumerable<Core.Data.Model.UserSettings> Get( ICallContext callContext, Guid clientGUID )
         {
             return PortalRepository.UserSettingsGet(clientGUID, callContext.User.Guid);
         }

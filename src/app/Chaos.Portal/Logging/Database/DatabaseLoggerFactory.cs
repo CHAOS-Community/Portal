@@ -1,4 +1,4 @@
-﻿using Chaos.Portal.Data;
+﻿using Chaos.Portal.Core.Data;
 
 namespace Chaos.Portal.Logging.Database
 {
