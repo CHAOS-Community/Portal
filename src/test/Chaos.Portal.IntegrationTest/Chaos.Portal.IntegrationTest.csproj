@@ -70,6 +70,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\app\Chaos.Portal.Core\Chaos.Portal.Core.csproj">
+      <Project>{3d78618a-8343-4966-9006-5c01ead11386}</Project>
+      <Name>Chaos.Portal.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\app\Chaos.Portal\Chaos.Portal.csproj">
       <Project>{9d3a1974-1d8a-4a6e-96ad-3d4b211bf475}</Project>
       <Name>Chaos.Portal</Name>

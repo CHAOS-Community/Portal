@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Reflection;
 using CHAOS.Extensions;
-using Chaos.Portal.Exceptions;
 
 namespace Chaos.Portal.Bindings.Standard
 {
+    using Chaos.Portal.Core.Exceptions;
+
     public class ConvertableParameterBinding<T> : IParameterBinding where T : IConvertible
     {
         public object Bind( ICallContext callContext, ParameterInfo parameterInfo )

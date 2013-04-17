@@ -5,7 +5,7 @@ namespace Chaos.Portal.Bindings.Standard
 {
     using CHAOS.Extensions;
 
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core.Exceptions;
 
     public class GuidParameterBinding : IParameterBinding
     {

@@ -5,8 +5,8 @@ namespace Chaos.Portal.Indexing.View
     using System.Linq;
 
     using Chaos.Portal.Cache;
-    using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core.Exceptions;
+    using Chaos.Portal.Core.Data.Model;
 
     using IQuery = Chaos.Portal.Indexing.Solr.IQuery;
 

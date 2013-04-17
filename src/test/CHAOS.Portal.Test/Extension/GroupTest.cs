@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
 
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core.Exceptions;
 
     using Moq;
 

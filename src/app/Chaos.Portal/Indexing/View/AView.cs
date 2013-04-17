@@ -4,7 +4,7 @@
     using System.Linq;
 
     using Chaos.Portal.Cache;
-    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Indexing.Solr;
 
     public abstract class AView : IView

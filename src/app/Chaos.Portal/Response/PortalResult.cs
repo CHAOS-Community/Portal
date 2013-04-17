@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using CHAOS.Serialization;
-using Chaos.Portal.Data.Dto;
 
 namespace Chaos.Portal.Response
 {
+    using Chaos.Portal.Core.Data.Model;
+
     [Serialize("PortalResult")]
     public class PortalResult : IPortalResult
     {

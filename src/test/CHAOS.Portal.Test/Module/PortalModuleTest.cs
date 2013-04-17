@@ -1,6 +1,6 @@
 ﻿namespace Chaos.Portal.Test.Module
 {
-    using Chaos.Portal.Data;
+    using Chaos.Portal.Core.Data;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Module;
 

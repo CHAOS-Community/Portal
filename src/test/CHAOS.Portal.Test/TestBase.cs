@@ -3,8 +3,8 @@
     using System;
 
     using Chaos.Portal.Cache;
-    using Chaos.Portal.Data;
-    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Core.Data;
+    using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Indexing.View;
     using Chaos.Portal.Logging;
@@ -58,20 +58,20 @@
         #endregion
         #region Make
 
-        protected Portal.Data.Dto.ClientSettings Make_ClientSettings()
+        protected Core.Data.Model.ClientSettings Make_ClientSettings()
         {
-            return new Portal.Data.Dto.ClientSettings
+            return new Core.Data.Model.ClientSettings
             {
-                Guid = new Guid("10000000-0000-0000-0000-000000000000"),
-                Name = "test client",
-                Settings = "some settings",
+                Guid        = new Guid("10000000-0000-0000-0000-000000000000"),
+                Name        = "test client",
+                Settings    = "some settings",
                 DateCreated = new DateTime(2000, 01, 01, 00, 00, 00)
             };
         }
 
-        protected Portal.Data.Dto.Group Make_Group()
+        protected Core.Data.Model.Group Make_Group()
         {
-            return new Portal.Data.Dto.Group
+            return new Core.Data.Model.Group
                 {
                     Guid             = new Guid("01000000-0000-0000-0000-000000000010"),
                     Name             = "test group",
@@ -90,9 +90,9 @@
                 };
         }
 
-        protected Portal.Data.Dto.Session Make_Session()
+        protected Core.Data.Model.Session Make_Session()
         {
-            return new Portal.Data.Dto.Session
+            return new Core.Data.Model.Session
                 {
                     Guid        = new Guid("00001000-0000-0000-0000-000000010000"),
                     UserGuid    = Make_User().Guid,

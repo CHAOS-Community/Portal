@@ -1,6 +1,6 @@
 ﻿namespace Chaos.Portal.Test.Data.Dto
 {
-    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Core.Data.Model;
 
     using NUnit.Framework;
 

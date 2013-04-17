@@ -4,7 +4,7 @@ using CHAOS.Serialization.XML;
 
 namespace Chaos.Portal.Response
 {
-    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Response.Dto;
 
     public interface IPortalError
     {
