@@ -146,7 +146,6 @@
     <Compile Include="Indexing\View\IView.cs" />
     <Compile Include="Indexing\View\IViewData.cs" />
     <Compile Include="Indexing\View\IViewManager.cs" />
-    <Compile Include="Indexing\View\IViewMapping.cs" />
     <Compile Include="Indexing\View\ViewManager.cs" />
     <Compile Include="Logging\Database\DatabaseLoggerFactory.cs" />
     <Compile Include="Logging\DirectLogger.cs" />
