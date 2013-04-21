@@ -26,6 +26,7 @@
 		
 		<inputassemblies>
       <include name="..\src\app\Chaos.Portal\bin\Release\Chaos.Portal.dll" />	
+      <include name="..\src\app\Chaos.Portal.Core\bin\Release\Chaos.Portal.Core.dll" />
 		</inputassemblies>
 		
     </ilmerge>
