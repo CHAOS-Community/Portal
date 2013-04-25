@@ -47,6 +47,7 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Attachment.cs" />
     <Compile Include="SubscriptionPermission.cs" />
     <Compile Include="PagedResult.cs" />
     <Compile Include="ExtensionError.cs" />

@@ -5,6 +5,7 @@
         XML,
         JSON,
         JSONP,
+        ATTACHMENT,
         UNKNOWN
     }
 }

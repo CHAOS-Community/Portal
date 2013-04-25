@@ -197,6 +197,8 @@ namespace CHAOS.Portal.Core.Standard
                     return new MemoryStream( Encoding.UTF8.GetBytes( SerializerFactory.Get<JSON>().Serialize(PortalResponse.PortalResult, false).Value ) );
                 case ReturnFormat.JSONP:
                     return new MemoryStream( Encoding.UTF8.GetBytes( SerializerFactory.Get<JSON>().Serialize(PortalResponse.PortalResult, false).GetAsJSONP(PortalRequest.Parameters["callback"] ) ) );
+                case ReturnFormat.ATTACHMENT:
+                    return PortalResponse.Attachment.Stream;
                 default:
                     throw new NotImplementedException("Format is unknown");
             }
