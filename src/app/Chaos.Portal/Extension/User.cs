@@ -1,6 +1,6 @@
 namespace Chaos.Portal.Extension
 {
-    using Chaos.Portal.Core.Data.Model;
+    using Core.Data.Model;
 
     [PortalExtension(configurationName : "Portal")]
     public class User : AExtension
@@ -18,7 +18,13 @@ namespace Chaos.Portal.Extension
         }
 
         #endregion
+		#region Get
 
-        
+		public UserInfo GetCurrent(ICallContext callContext)
+		{
+			return callContext.User;
+		}
+
+		#endregion
     }
 }
