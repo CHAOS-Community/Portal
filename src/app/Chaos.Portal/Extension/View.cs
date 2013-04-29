@@ -16,14 +16,14 @@ namespace Chaos.Portal.Extension
 
         #endregion
         
-        public IPagedResult<IResult> Get( ICallContext callContext, string view, IQuery query )
+        public IPagedResult<IResult> Get(string view, IQuery query )
         {
-            return callContext.ViewManager.Query(view, query);
+            return ViewManager.Query(view, query);
         }
         
-        public IEnumerable<IResult> List(ICallContext callContext)
+        public IEnumerable<IResult> List()
         {
-            return callContext.ViewManager.LoadedViews.Select(loadedView => new ViewListItem{Name = loadedView.Name});
+            return ViewManager.LoadedViews.Select(loadedView => new ViewListItem{Name = loadedView.Name});
         }
     }
 

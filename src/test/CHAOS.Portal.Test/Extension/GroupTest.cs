@@ -1,6 +1,7 @@
 ﻿namespace Chaos.Portal.Test.Extension
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Chaos.Portal.Core.Exceptions;
@@ -17,9 +18,9 @@
         {
             var extension = Make_GroupExtension();
             var expected  = Make_Group();
-            CallContext.SetupGet(p => p.Groups).Returns(new[] { expected });
+            PortalRepository.Setup(m => m.GroupGet(null, null, It.IsAny<Guid?>())).Returns(new[] { expected });
 
-            var result = extension.Get(CallContext.Object).ToList();
+            var result = extension.Get().ToList();
 
             Assert.That(result, Is.Not.Empty);
             Assert.That(result[0], Is.EqualTo(expected));
@@ -31,10 +32,9 @@
             var extension = Make_GroupExtension();
             var expected  = Make_Group();
             var user      = Make_User();
-            CallContext.SetupGet(p => p.User).Returns(user);
             PortalRepository.Setup(m => m.GroupCreate(It.IsAny<Guid>(), expected.Name, user.Guid, (uint)expected.SystemPermission)).Returns(expected);
 
-            var actual = extension.Create(CallContext.Object, expected.Name, (uint)expected.SystemPermission);
+            var actual = extension.Create(expected.Name, (uint)expected.SystemPermission);
 
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -46,9 +46,9 @@
             var expected  = Make_Group();
             var user      = Make_User();
             user.SystemPermissions = 0;
-            CallContext.SetupGet(p => p.User).Returns(user);
+            PortalRepository.Setup(m => m.UserInfoGet(null, It.IsAny<Guid?>(), null)).Returns(new[] { user });
 
-            extension.Create(CallContext.Object, expected.Name, (uint)expected.SystemPermission);
+            extension.Create(expected.Name, (uint)expected.SystemPermission);
         }
         
         [Test]
@@ -57,10 +57,9 @@
             var extension = Make_GroupExtension();
             var group     = Make_Group();
             var user      = Make_User();
-            CallContext.SetupGet(p => p.User).Returns(user);
             PortalRepository.Setup(m => m.GroupDelete(group.Guid, user.Guid)).Returns(1);
 
-            var actual = extension.Delete(CallContext.Object, group.Guid);
+            var actual = extension.Delete(group.Guid);
 
             Assert.That(actual.Value, Is.EqualTo(1));
         }
@@ -71,10 +70,9 @@
             var extension = Make_GroupExtension();
             var group     = Make_Group();
             var user      = Make_User();
-            CallContext.SetupGet(p => p.User).Returns(user);
             PortalRepository.Setup(m => m.GroupUpdate(group.Guid, user.Guid, group.Name, (uint?)group.SystemPermission)).Returns(1);
 
-            var actual = extension.Update(CallContext.Object, group.Guid, group.Name, (uint?)group.SystemPermission);
+            var actual = extension.Update(group.Guid, group.Name, (uint?)group.SystemPermission);
 
             Assert.That(actual.Value, Is.EqualTo(1));
         }

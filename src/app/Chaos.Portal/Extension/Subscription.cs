@@ -16,27 +16,27 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
 
-        public IEnumerable<SubscriptionInfo> Get( ICallContext callContext, Guid guid )
+        public IEnumerable<SubscriptionInfo> Get( Guid guid )
         {
-            return PortalRepository.SubscriptionGet(guid, callContext.User.Guid);
+            return PortalRepository.SubscriptionGet(guid, User.Guid);
         }
 
         #endregion
         #region Create
 
-        public SubscriptionInfo Create( ICallContext callContext, string name )
+        public SubscriptionInfo Create( string name )
         {
-            if(!callContext.User.HasPermission(SystemPermissons.CreateSubscription)) throw new InsufficientPermissionsException();
+            if(!User.HasPermission(SystemPermissons.CreateSubscription)) throw new InsufficientPermissionsException();
 
-            return PortalRepository.SubscriptionCreate(new Guid(), name, callContext.User.Guid);
+            return PortalRepository.SubscriptionCreate(new Guid(), name, User.Guid);
         }
 
         #endregion
         #region Delete
 
-        public ScalarResult Delete(ICallContext callContext, Guid guid)
+        public ScalarResult Delete(Guid guid)
         {
-            var result = (int) PortalRepository.SubscriptionDelete(guid, callContext.User.Guid);
+            var result = (int) PortalRepository.SubscriptionDelete(guid, User.Guid);
 
             return new ScalarResult(result);
         }
@@ -44,9 +44,9 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Update
 
-        public ScalarResult Update(ICallContext callContext, Guid guid, string newName)
+        public ScalarResult Update(Guid guid, string newName)
         {
-            var result = PortalRepository.SubscriptionUpdate(guid, newName, callContext.User.Guid);
+            var result = PortalRepository.SubscriptionUpdate(guid, newName, User.Guid);
 
             return new ScalarResult( (int) result );
         }

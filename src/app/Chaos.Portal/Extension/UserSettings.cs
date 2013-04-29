@@ -17,17 +17,17 @@ namespace Chaos.Portal.Extension
 
         #region Get
 
-        public IEnumerable<Core.Data.Model.UserSettings> Get( ICallContext callContext, Guid clientGUID )
+        public IEnumerable<Core.Data.Model.UserSettings> Get(Guid clientGUID )
         {
-            return PortalRepository.UserSettingsGet(clientGUID, callContext.User.Guid);
+            return PortalRepository.UserSettingsGet(clientGUID, User.Guid);
         }
 
         #endregion
         #region Set
 
-        public ScalarResult Set( ICallContext callContext, Guid clientGUID, string settings )
+        public ScalarResult Set(Guid clientGUID, string settings )
         {
-            var result = PortalRepository.UserSettingsSet(clientGUID, callContext.User.Guid, settings);
+            var result = PortalRepository.UserSettingsSet(clientGUID, User.Guid, settings);
 
             return new ScalarResult((int) result);
         }
@@ -35,9 +35,9 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Delete
 
-        public ScalarResult Delete( ICallContext callContext, Guid clientGUID )
+        public ScalarResult Delete(Guid clientGUID )
         {
-            var result = PortalRepository.UserSettingsDelete(clientGUID, callContext.User.Guid);
+            var result = PortalRepository.UserSettingsDelete(clientGUID, User.Guid);
 
             return new ScalarResult((int) result);
         }

@@ -14,33 +14,33 @@ namespace Chaos.Portal.Extension
 
         #region Get
 
-        public Core.Data.Model.Session Get(ICallContext callContext)
+        public Core.Data.Model.Session Get()
         {
-            return callContext.Session;
+            return Session;
         } 
 
         #endregion
         #region Create
 
-        public Core.Data.Model.Session Create( ICallContext callContext )
+        public Core.Data.Model.Session Create()
         {
-            return PortalRepository.SessionCreate(callContext.AnonymousUserGuid);
+            return PortalRepository.SessionCreate(AnonymousUserGuid);
         }
 
         #endregion
         #region Update
 
-        public Core.Data.Model.Session Update( ICallContext callContext )
+        public Core.Data.Model.Session Update()
         {
-            return PortalRepository.SessionUpdate(callContext.Session.Guid, callContext.User.Guid);
+            return PortalRepository.SessionUpdate(Session.Guid, User.Guid);
         }
 
         #endregion
         #region Delete
 
-        public ScalarResult Delete( ICallContext callContext )
+        public ScalarResult Delete()
         {
-            var result = PortalRepository.SessionDelete(callContext.Session.Guid, callContext.User.Guid);
+            var result = PortalRepository.SessionDelete(Session.Guid, User.Guid);
 
             return new ScalarResult((int) result);
         }

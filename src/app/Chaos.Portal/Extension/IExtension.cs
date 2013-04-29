@@ -2,12 +2,15 @@
 
 namespace Chaos.Portal.Extension
 {
+    using Chaos.Portal.Request;
+
     public interface IExtension
     {
         IExtension WithPortalApplication(IPortalApplication portalApplication);
         IExtension WithPortalResponse(IPortalResponse response);
+        IExtension WithPortalRequest(IPortalRequest request);
 
-        IPortalResponse CallAction(ICallContext callContext);
+        IPortalResponse CallAction(IPortalRequest request);
 
         IPortalApplication PortalApplication { get; set; }
     }

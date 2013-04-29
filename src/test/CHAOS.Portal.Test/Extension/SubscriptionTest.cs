@@ -1,6 +1,10 @@
 ﻿namespace Chaos.Portal.Test.Extension
 {
+    using System;
+
     using Chaos.Portal.Core.Exceptions;
+
+    using Moq;
 
     using NUnit.Framework;
 
@@ -11,11 +15,11 @@
         public void Create_WithoutPermission_ThrowException()
         {
             var extension = Make_SubscriptionExtension();
-            var user = Make_User();
+            var user      = Make_User();
             user.SystemPermissions = 0;
-            CallContext.SetupGet(p => p.User).Returns(user);
+            PortalRepository.Setup(m => m.UserInfoGet(null, It.IsAny<Guid?>(), null)).Returns(new[] { user });
             
-            extension.Create(CallContext.Object, "not allowed");
+            extension.Create("not allowed");
         }
     }
 }

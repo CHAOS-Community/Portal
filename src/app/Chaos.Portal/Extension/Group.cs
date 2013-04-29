@@ -16,29 +16,29 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
         
-        public IEnumerable<Core.Data.Model.Group> Get( ICallContext callContext)
+        public IEnumerable<Core.Data.Model.Group> Get()
         {
-            return callContext.Groups;
+            return Groups;
         }
 
         #endregion
         #region Create
 
-        public Core.Data.Model.Group Create( ICallContext callContext, string name, uint systemPermission )
+        public Core.Data.Model.Group Create(string name, uint systemPermission )
         {
-            if(!callContext.User.HasPermission(SystemPermissons.CreateGroup) ) throw new InsufficientPermissionsException( "User does not have permission to create groups" );
+            if(!User.HasPermission(SystemPermissons.CreateGroup) ) throw new InsufficientPermissionsException( "User does not have permission to create groups" );
 
-            return PortalRepository.GroupCreate(new Guid(), name, callContext.User.Guid, systemPermission);
+            return PortalRepository.GroupCreate(new Guid(), name, User.Guid, systemPermission);
         }
 
         #endregion
         #region Delete
 
-        public ScalarResult Delete( ICallContext callContext, Guid guid )
+        public ScalarResult Delete(Guid guid )
         {
-            if(callContext.IsAnonymousUser) throw new InsufficientPermissionsException( "Anonymous users cannot delete groups" );
+            if(IsAnonymousUser) throw new InsufficientPermissionsException( "Anonymous users cannot delete groups" );
 
-            var result = PortalRepository.GroupDelete(guid, callContext.User.Guid);
+            var result = PortalRepository.GroupDelete(guid, User.Guid);
 
             return new ScalarResult((int) result);
         }
@@ -46,11 +46,11 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Update
 
-        public ScalarResult Update( ICallContext callContext, Guid guid, string newName, uint? newSystemPermission )
+        public ScalarResult Update(Guid guid, string newName, uint? newSystemPermission )
         {
-            if(callContext.IsAnonymousUser) throw new InsufficientPermissionsException( "Anonymous users cannot Update groups" );
+            if(IsAnonymousUser) throw new InsufficientPermissionsException( "Anonymous users cannot Update groups" );
 
-            var result = PortalRepository.GroupUpdate(guid, callContext.User.Guid, newName, newSystemPermission);
+            var result = PortalRepository.GroupUpdate(guid, User.Guid, newName, newSystemPermission);
 
             return new ScalarResult((int) result);
         }

@@ -1,5 +1,9 @@
 ﻿namespace Chaos.Portal.Test.Extension
 {
+    using System;
+
+    using Moq;
+
     using NUnit.Framework;
 
     [TestFixture]
@@ -10,11 +14,10 @@
         {
             var extension = Make_SessionExtension();
             var expected  = Make_Session();
-            CallContext.SetupGet(p => p.Session).Returns(expected);
 
-            var actual = extension.Get(CallContext.Object);
+            var actual = extension.Get();
 
-            Assert.That(actual, Is.SameAs(expected));
+            Assert.That(actual.Guid, Is.EqualTo(expected.Guid));
         }
         
         [Test]
@@ -22,12 +25,11 @@
         {
             var extension = Make_SessionExtension();
             var expected  = Make_Session();
-            CallContext.SetupGet(p => p.AnonymousUserGuid).Returns(expected.Guid);
-            PortalRepository.Setup(m => m.SessionCreate(expected.Guid)).Returns(expected);
+            PortalRepository.Setup(m => m.SessionCreate(It.IsAny<Guid>())).Returns(expected);
 
-            var actual = extension.Create(CallContext.Object);
+            var actual = extension.Create();
 
-            Assert.That(actual, Is.SameAs(expected));
+            Assert.That(actual, Is.EqualTo(expected));
         }
         
         [Test]
@@ -36,13 +38,11 @@
             var extension = Make_SessionExtension();
             var expected  = Make_Session();
             var user      = Make_User();
-            CallContext.SetupGet(p => p.User).Returns(user);
-            CallContext.SetupGet(p => p.Session).Returns(expected);
             PortalRepository.Setup(m => m.SessionUpdate(expected.Guid, user.Guid)).Returns(expected);
 
-            var actual = extension.Update(CallContext.Object);
+            var actual = extension.Update();
 
-            Assert.That(actual, Is.SameAs(expected));
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -51,11 +51,9 @@
             var extension = Make_SessionExtension();
             var expected = Make_Session();
             var user = Make_User();
-            CallContext.SetupGet(p => p.User).Returns(user);
-            CallContext.SetupGet(p => p.Session).Returns(expected);
             PortalRepository.Setup(m => m.SessionDelete(expected.Guid, user.Guid)).Returns(1);
 
-            var actual = extension.Delete(CallContext.Object);
+            var actual = extension.Delete();
 
             Assert.That(actual.Value, Is.EqualTo(1));
         }

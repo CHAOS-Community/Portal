@@ -1,6 +1,10 @@
 ﻿namespace Chaos.Portal.Test.Extension
 {
+    using System;
+
     using Chaos.Portal.Core.Exceptions;
+
+    using Moq;
 
     using NUnit.Framework;
 
@@ -14,7 +18,7 @@
             var clientSettings = Make_ClientSettings();
             PortalRepository.Setup(m => m.ClientSettingsGet(clientSettings.Guid)).Returns(clientSettings);
 
-            var results = extension.Get(CallContext.Object, clientSettings.Guid);
+            var results = extension.Get(clientSettings.Guid);
 
             Assert.That(results, Is.SameAs(clientSettings));
         }
@@ -24,10 +28,9 @@
         {
             var extension      = Make_ClientSettingsExtension();
             var clientSettings = Make_ClientSettings();
-            CallContext.SetupGet( p => p.User ).Returns(Make_User());
             PortalRepository.Setup(m => m.ClientSettingsSet(clientSettings.Guid, clientSettings.Name, clientSettings.Settings)).Returns(1);
 
-            var results = extension.Set(CallContext.Object, clientSettings.Guid, clientSettings.Name, clientSettings.Settings);
+            var results = extension.Set(clientSettings.Guid, clientSettings.Name, clientSettings.Settings);
 
             Assert.That(results, Is.EqualTo(1));
         }
@@ -39,9 +42,9 @@
             var clientSettings = Make_ClientSettings();
             var user           = Make_User();
             user.SystemPermissions = 0;
-            CallContext.SetupGet(p => p.User).Returns(user);
+            PortalRepository.Setup(m => m.UserInfoGet(null, It.IsAny<Guid?>(), null)).Returns(new[] { user });
 
-            extension.Set(CallContext.Object, clientSettings.Guid, clientSettings.Name, clientSettings.Settings);
+            extension.Set(clientSettings.Guid, clientSettings.Name, clientSettings.Settings);
         }
     }
 }

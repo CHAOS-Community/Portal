@@ -15,7 +15,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
 
-        public Core.Data.Model.ClientSettings Get( ICallContext callContext, Guid guid )
+        public Core.Data.Model.ClientSettings Get( Guid guid )
         {
             return PortalRepository.ClientSettingsGet(guid);
         }
@@ -23,9 +23,9 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Set
 
-        public uint Set( ICallContext callContext, Guid guid, string name, string settings )
+        public uint Set( Guid guid, string name, string settings )
         {
-            if(!callContext.User.HasPermission(SystemPermissons.Manage)) throw new InsufficientPermissionsException( "User does not have manage permissions" );
+            if(!User.HasPermission(SystemPermissons.Manage)) throw new InsufficientPermissionsException( "User does not have manage permissions" );
 
             return PortalRepository.ClientSettingsSet(guid, name, settings);
         }

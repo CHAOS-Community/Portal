@@ -14,14 +14,14 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
 
-        public IEnumerable<UserInfo> Get( ICallContext callContext )
+        public IEnumerable<UserInfo> Get()
         {
 	        return PortalRepository.UserInfoGet(null, null, null);
         }
 
-		public UserInfo GetCurrent(ICallContext callContext)
+		public UserInfo GetCurrent()
 		{
-			return callContext.User;
+			return User;
 		}
 
 

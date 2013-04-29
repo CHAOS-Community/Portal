@@ -1,6 +1,7 @@
 ﻿namespace Chaos.Portal.Test
 {
     using System;
+    using System.Collections.Generic;
 
     using Chaos.Portal.Cache;
     using Chaos.Portal.Core.Data;
@@ -24,7 +25,6 @@
     {
         #region Properties
 
-        protected Mock<ICallContext>       CallContext { get; set; }
         protected Mock<IPortalApplication> PortalApplication { get; set; }
         protected Mock<ICache>             Cache { get; set; }
         protected Mock<IViewManager>       ViewManager { get; set; }
@@ -49,10 +49,12 @@
             Extension         = new Mock<IExtension>();
             PortalHeader      = new Mock<IPortalHeader>();
             ViewManager       = new Mock<IViewManager>();
-            CallContext       = new Mock<ICallContext>();
             PortalApplication = new Mock<IPortalApplication>();
 
             PortalApplication.SetupGet(p => p.PortalRepository).Returns(PortalRepository.Object);
+            PortalRepository.Setup(m => m.SessionGet(It.IsAny<Guid?>(), null)).Returns(new[] {Make_Session() });
+            PortalRepository.Setup(m => m.UserInfoGet(null, It.IsAny<Guid?>(), null)).Returns(new[] { Make_User() });
+            PortalRequest.SetupGet(p => p.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
         }
         
         #endregion
@@ -102,22 +104,30 @@
 
         protected ClientSettings Make_ClientSettingsExtension()
         {
-            return (ClientSettings)new ClientSettings().WithPortalApplication(PortalApplication.Object);
+            return (ClientSettings)new ClientSettings().WithPortalApplication(PortalApplication.Object)
+                                                       .WithPortalRequest(PortalRequest.Object)
+                                                       .WithPortalResponse(PortalResponse.Object);
         }
 
         protected Group Make_GroupExtension()
         {
-            return (Group)new Group().WithPortalApplication(PortalApplication.Object);
+            return (Group)new Group().WithPortalApplication(PortalApplication.Object)
+                                     .WithPortalRequest(PortalRequest.Object)
+                                     .WithPortalResponse(PortalResponse.Object);
         }
 
         protected Session Make_SessionExtension()
         {
-            return (Session)new Session().WithPortalApplication(PortalApplication.Object);
+            return (Session)new Session().WithPortalApplication(PortalApplication.Object)
+                                         .WithPortalRequest(PortalRequest.Object)
+                                         .WithPortalResponse(PortalResponse.Object);
         }
 
         protected Subscription Make_SubscriptionExtension()
         {
-            return (Subscription)new Subscription().WithPortalApplication( PortalApplication.Object );
+            return (Subscription)new Subscription().WithPortalApplication(PortalApplication.Object)
+                                                   .WithPortalRequest(PortalRequest.Object)
+                                                   .WithPortalResponse(PortalResponse.Object);
         }
 
         #endregion  

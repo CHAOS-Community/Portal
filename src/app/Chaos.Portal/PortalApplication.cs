@@ -108,11 +108,11 @@ namespace Chaos.Portal
             response.Header.ReturnFormat = request.ReturnFormat;
             response.Header.Callback     = request.Parameters.ContainsKey("callback") ? request.Parameters["callback"] : null;
             
-            var callContext = new CallContext(this, request, _loggingFactory.Create());
             var extension   = GetExtension(request.Extension);
+            extension.WithPortalRequest(request);
             extension.WithPortalResponse(response);
 
-            return extension.CallAction(callContext);
+            return extension.CallAction(request);
         }
 
         /// <summary>
