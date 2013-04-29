@@ -38,8 +38,6 @@
         /// <returns>The loaded the instance of the extension</returns>
         TExtension GetExtension<TExtension>() where TExtension : IExtension, new();
 
-        void AddExtension(string key, IExtension value);
-
         TResult GetModule<TResult>() where TResult : IModule;
 
         void AddModule(IModule module);

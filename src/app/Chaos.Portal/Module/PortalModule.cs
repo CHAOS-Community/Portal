@@ -1,40 +1,73 @@
 ﻿namespace Chaos.Portal.Module
 {
+    using System.Collections.Generic;
+    using System.Configuration;
+
+    using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Extension;
 
     public class PortalModule : IModule
     {
         #region Field
 
-        private const string CONFIGURATION_NAME = "Portal";
+        private IPortalApplication _portalApplication;
 
         #endregion
         #region Initialization
 
         public void Load(IPortalApplication portalApplication)
         {
-            Extensions = new IExtension[7];
-            Extensions[0] = new ClientSettings().WithPortalApplication(portalApplication);
-            Extensions[1] = new Group().WithPortalApplication(portalApplication);
-            Extensions[2] = new Session().WithPortalApplication(portalApplication);
-            Extensions[3] = new Subscription().WithPortalApplication(portalApplication);
-            Extensions[4] = new User().WithPortalApplication(portalApplication);
-            Extensions[5] = new UserSettings().WithPortalApplication(portalApplication);
-            Extensions[6] = new View().WithPortalApplication(portalApplication);
-
-            portalApplication.AddExtension("ClientSettings", Extensions[0]);
-            portalApplication.AddExtension("Group", Extensions[1]);
-            portalApplication.AddExtension("Session", Extensions[2]);
-            portalApplication.AddExtension("Subscription", Extensions[3]);
-            portalApplication.AddExtension("User", Extensions[4]);
-            portalApplication.AddExtension("UserSettings", Extensions[5]);
-            portalApplication.AddExtension("View", Extensions[6]);
+            _portalApplication = portalApplication;
         }
 
         #endregion
         #region Properties
 
-        public IExtension[] Extensions { get; private set; }
+
+        #endregion
+        #region Business Logic
+
+        public IEnumerable<string> GetExtensionNames()
+        {
+            yield return "ClientSettings";
+            yield return "Group";
+            yield return "Session";
+            yield return "Subscription";
+            yield return "User";
+            yield return "UserSettings";
+            yield return "View";
+
+        }
+
+        public IExtension GetExtension<TExtension>() where TExtension : IExtension
+        {
+            return GetExtension(typeof(TExtension).Name);
+        }
+
+        public IExtension GetExtension(string name)
+        {
+            if (_portalApplication == null) throw new ConfigurationErrorsException("Load not call on module");
+
+            switch(name)
+            {
+                case "ClientSettings":
+                    return new ClientSettings().WithPortalApplication(_portalApplication);
+                case "Group":
+                    return new Group().WithPortalApplication(_portalApplication);
+                case "Session":
+                    return new Session().WithPortalApplication(_portalApplication);
+                case "Subscription":
+                    return new Subscription().WithPortalApplication(_portalApplication);
+                case "User":
+                    return new User().WithPortalApplication(_portalApplication);
+                case "UserSettings":
+                    return new UserSettings().WithPortalApplication(_portalApplication);
+                case "View":
+                    return new View().WithPortalApplication(_portalApplication);
+                default:
+                    throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
+            }
+        }
 
         #endregion
     }

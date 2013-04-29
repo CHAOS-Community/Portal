@@ -32,22 +32,21 @@ namespace Chaos.Portal
         #region Properties
 
         public IDictionary<Type, IParameterBinding> Bindings { get; set; }
-        public IDictionary<string, IExtension>      LoadedExtensions { get; set; }
+        public IDictionary<string, IModule>         LoadedModules { get; set; }
         public ICache                               Cache { get; protected set; }
         public IViewManager                         ViewManager { get; protected set; }
         public ILog                                 Log { get; protected set; }
         public IPortalRepository                    PortalRepository { get; set; }
 
-        private IDictionary<string, IModule> LoadedModule { get; set; }
+        
 
         #endregion
         #region Constructors
 
         public PortalApplication( ICache cache, IViewManager viewManager, IPortalRepository portalRepository, ILogFactory loggingFactory )
         {
-            LoadedModule     = new Dictionary<string, IModule>();
+            LoadedModules     = new Dictionary<string, IModule>();
             Bindings         = new Dictionary<Type, IParameterBinding>();
-            LoadedExtensions = new Dictionary<string, IExtension>();
             Log              = new DirectLogger(loggingFactory).WithName("Portal Application");
             Cache            = cache;
             ViewManager      = viewManager;
@@ -106,26 +105,27 @@ namespace Chaos.Portal
         /// <returns>The loaded the instance of the extension</returns>
         public TExtension GetExtension<TExtension>() where TExtension : IExtension, new()
         {
-            var extensionName = LoadedExtensions.FirstOrDefault(ext => ext.Value is TExtension).Key;
+            // todo: optimize cross extension calls, this is relatively slow
+            var modules = LoadedModules.Values.Distinct().FirstOrDefault(item => item.GetExtension<TExtension>() != null);
 
-            return (TExtension)GetExtension(extensionName);
-        }
+            if (modules == null) throw new ExtensionMissingException(string.Format("Extension not found"));
 
-        public void AddExtension(string key, IExtension value)
-        {
-            LoadedExtensions.Add(key, value);
+            return (TExtension)modules.GetExtension<TExtension>();
         }
 
         public TResult GetModule<TResult>() where TResult : IModule
         {
-            return (TResult)LoadedModule[typeof(TResult).FullName];
+            return (TResult)LoadedModules[typeof(TResult).FullName];
         }
 
         public void AddModule(IModule module)
         {
             module.Load(this);
 
-            LoadedModule.Add(module.GetType().FullName, module);
+            foreach (var extensionName in module.GetExtensionNames())
+            {
+                LoadedModules.Add(extensionName, module);
+            }
         }
 
         /// <summary>
@@ -136,12 +136,12 @@ namespace Chaos.Portal
         /// <exception cref="ExtensionMissingException">Is thrown if the extension is not loaded</exception>
         public IExtension GetExtension(string extension)
         {
-            if(extension == null || !LoadedExtensions.ContainsKey( extension ))
+            if(extension == null || !LoadedModules.ContainsKey( extension ))
                 throw new ExtensionMissingException( string.Format( "Extension named '{0}' not found", extension ) );
-            
-            var type = LoadedExtensions[extension].GetType();
 
-            return (IExtension) Activator.CreateInstance(type);
+            var module = LoadedModules[extension];
+
+            return module.GetExtension(extension);
         }
 
         #endregion

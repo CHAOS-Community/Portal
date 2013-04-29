@@ -3,23 +3,20 @@
     using Chaos.Portal.Extension;
     using Chaos.Portal.Response;
 
-    public class ExtensionMock : IExtension
+    public class ExtensionMock : AExtension
     {
-        public IExtension WithPortalApplication(IPortalApplication portalApplication)
+        #region Overrides of AExtension
+
+        public override IExtension WithConfiguration(string configuration)
         {
             throw new System.NotImplementedException();
         }
 
-        public IExtension WithConfiguration(string configuration)
-        {
-            throw new System.NotImplementedException();
-        }
+        #endregion
 
-        public IPortalResponse CallAction(ICallContext callContext)
+        public int test()
         {
-            throw new System.NotImplementedException();
+            return 1;
         }
-
-        public IPortalApplication PortalApplication { get; set; }
     }
 }
