@@ -37,8 +37,8 @@
         public void GetExtension_ByType_ReturnAInstanceOfTheExtension()
         {
             var application = Make_PortalApplication();
-            var extension = new ExtensionMock();
-            var module = new Mock<IModule>();
+            var extension   = new ExtensionMock();
+            var module      = new Mock<IModule>();
             module.Setup(m => m.GetExtensionNames()).Returns(new[] { "ExtensionMock" });
             module.Setup(m => m.GetExtension<ExtensionMock>()).Returns(extension);
             application.AddModule(module.Object);

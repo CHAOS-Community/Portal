@@ -4,8 +4,6 @@ using CHAOS.Serialization.Standard;
 
 namespace Chaos.Portal.Response.Specification
 {
-    using Newtonsoft.Json;
-
     public class JsonResponse : IResponseSpecification
     {
         #region Business Logic
