@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+
 namespace Chaos.Portal.Extension
 {
-    using Chaos.Portal.Data.Dto;
+    using Core.Data.Model;
 
     [PortalExtension(configurationName : "Portal")]
     public class User : AExtension
@@ -12,13 +14,17 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
 
-        public UserInfo Get( ICallContext callContext )
+        public IEnumerable<UserInfo> Get( ICallContext callContext )
         {
-            return callContext.User;
+	        return PortalRepository.UserInfoGet(null, null, null);
         }
 
-        #endregion
+		public UserInfo GetCurrent(ICallContext callContext)
+		{
+			return callContext.User;
+		}
 
-        
+
+        #endregion
     }
 }

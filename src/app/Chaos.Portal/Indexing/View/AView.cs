@@ -1,11 +1,13 @@
 ﻿namespace Chaos.Portal.Indexing.View
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using Chaos.Portal.Cache;
-    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Indexing.Solr;
+    using Chaos.Portal.Response.Dto;
 
     public abstract class AView : IView
     {
@@ -62,11 +64,12 @@
 
         public void Index(IEnumerable<object> objectsToIndex)
         {
-            foreach(var viewResults in objectsToIndex.Select(Index))
+            foreach(var viewResults in objectsToIndex.Select(Index).Where(viewResults => viewResults != null))
             {
                 foreach(var viewResult in viewResults)
                 {
                     var key = CreateKey( viewResult.UniqueIdentifier.Value );
+                    
                     Cache.Store( key, viewResult );
                 }
 
@@ -79,12 +82,15 @@
             Core.Delete();
         }
 
-        protected IEnumerable<IViewData> Query<TResult>( IQuery query ) where TResult : class, IViewData
+        protected IPagedResult<IResult> Query<TResult>(IQuery query) where TResult : class, IResult
         {
-            var response = Core.Query( query );
-            var keys     = response.QueryResult.Results.Select( item => CreateKey( item.Id ) );
+            var response   = Core.Query( query );
+            var keys       = response.QueryResult.Results.Select( item => CreateKey( item.Id ) );
+            var startIndex = response.QueryResult.StartIndex;
+            var foundCount = response.QueryResult.FoundCount;
+            var results    = Cache.Get<TResult>(keys);
 
-            return Cache.Get<TResult>( keys );
+            return new PagedResult<TResult>(foundCount, startIndex, results);
         }
 
         protected string CreateKey(string key)

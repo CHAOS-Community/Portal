@@ -2,8 +2,8 @@ namespace Chaos.Portal.Extension
 {
     using System;
 
-    using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core.Exceptions;
+    using Chaos.Portal.Core.Data.Model;
 
     [PortalExtension( configurationName : "Portal" )]
     public class ClientSettings : AExtension
@@ -15,7 +15,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
 
-        public Data.Dto.ClientSettings Get( ICallContext callContext, Guid guid )
+        public Core.Data.Model.ClientSettings Get( ICallContext callContext, Guid guid )
         {
             return PortalRepository.ClientSettingsGet(guid);
         }

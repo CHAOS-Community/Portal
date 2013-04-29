@@ -3,8 +3,8 @@ namespace Chaos.Portal.Extension
     using System;
     using System.Collections.Generic;
 
-    using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Exceptions;
 
     [PortalExtension(configurationName: "Portal")]
     public class Group : AExtension
@@ -16,7 +16,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Get
         
-        public IEnumerable<Data.Dto.Group> Get( ICallContext callContext)
+        public IEnumerable<Core.Data.Model.Group> Get( ICallContext callContext)
         {
             return callContext.Groups;
         }
@@ -24,7 +24,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Create
 
-        public Data.Dto.Group Create( ICallContext callContext, string name, uint systemPermission )
+        public Core.Data.Model.Group Create( ICallContext callContext, string name, uint systemPermission )
         {
             if(!callContext.User.HasPermission(SystemPermissons.CreateGroup) ) throw new InsufficientPermissionsException( "User does not have permission to create groups" );
 

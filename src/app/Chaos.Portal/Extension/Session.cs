@@ -1,6 +1,6 @@
 namespace Chaos.Portal.Extension
 {
-    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Core.Data.Model;
 
     [PortalExtension(configurationName : "Portal")]
     public class Session : AExtension
@@ -14,7 +14,7 @@ namespace Chaos.Portal.Extension
 
         #region Get
 
-        public Data.Dto.Session Get(ICallContext callContext)
+        public Core.Data.Model.Session Get(ICallContext callContext)
         {
             return callContext.Session;
         } 
@@ -22,7 +22,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Create
 
-        public Data.Dto.Session Create( ICallContext callContext )
+        public Core.Data.Model.Session Create( ICallContext callContext )
         {
             return PortalRepository.SessionCreate(callContext.AnonymousUserGuid);
         }
@@ -30,7 +30,7 @@ namespace Chaos.Portal.Extension
         #endregion
         #region Update
 
-        public Data.Dto.Session Update( ICallContext callContext )
+        public Core.Data.Model.Session Update( ICallContext callContext )
         {
             return PortalRepository.SessionUpdate(callContext.Session.Guid, callContext.User.Guid);
         }

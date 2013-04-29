@@ -3,8 +3,8 @@ namespace Chaos.Portal.Extension
     using System;
     using System.Collections.Generic;
 
-    using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Exceptions;
 
     [PortalExtension(configurationName: "Portal")]
     public class Subscription : AExtension

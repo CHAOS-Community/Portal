@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using CHAOS.Serialization;
-using Chaos.Portal.Data.Dto;
-using Chaos.Portal.Exceptions;
 
 namespace Chaos.Portal.Response
 {
     using System;
+
+    using Chaos.Portal.Core.Exceptions;
+    using Chaos.Portal.Core.Data.Model;
 
     [Serialize("PortalResponse")]
     public class PortalResponse : IPortalResponse

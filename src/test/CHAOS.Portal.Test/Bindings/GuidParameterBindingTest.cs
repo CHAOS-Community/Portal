@@ -5,7 +5,7 @@
     using System.Linq;
 
     using Chaos.Portal.Bindings.Standard;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core.Exceptions;
 
     using Moq;
 
