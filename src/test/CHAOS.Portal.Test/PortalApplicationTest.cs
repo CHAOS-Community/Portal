@@ -6,6 +6,7 @@
     using Chaos.Portal.Extension;
     using Chaos.Portal.Module;
     using Chaos.Portal.Request;
+    using Chaos.Portal.Response;
 
     using Moq;
 
@@ -87,6 +88,23 @@
             var response = application.ProcessRequest(request);
 
             Assert.That(response.Header.ReturnFormat, Is.EqualTo(ReturnFormat.XML));
+        }
+
+        [Test]
+        public void ProcessRequest_SimpleRequest_CallWithResponseOnExtension()
+        {
+            var application = Make_PortalApplication();
+            var extension   = new Mock<IExtension>();
+            var module      = new Mock<IModule>();
+            var parameters  = new Dictionary<string, string> { { "format", "XML" } };
+            var request     = new PortalRequest("test", "test", parameters);
+            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
+            module.Setup(m => m.GetExtension("test")).Returns(extension.Object);
+            application.AddModule(module.Object);
+
+            application.ProcessRequest(request);
+
+            extension.Verify(m => m.WithPortalResponse(It.IsAny<IPortalResponse>()),Times.Exactly(1));
         }
     }
 }

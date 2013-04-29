@@ -11,9 +11,6 @@
     using Chaos.Portal.Indexing.View;
     using Chaos.Portal.Logging;
     using Chaos.Portal.Request;
-    using Chaos.Portal.Response;
-    using Chaos.Portal.Response.Specification;
-    
 
     public class CallContext : ICallContext
     {
@@ -27,14 +24,12 @@
 	    private const string SessionguidParameterName = "sessionGUID";
 
         private static readonly Guid _anonymousUserGuid;
-        private static readonly IDictionary<ReturnFormat, IResponseSpecification> ResponseSpecifications = new Dictionary<ReturnFormat, IResponseSpecification>(); 
 
         #endregion
         #region Properties
 
         public IPortalApplication Application { get; set; }
         public IPortalRequest     Request { get; set; }
-        public IPortalResponse    Response { get; set; }
         public ICache             Cache { get; set; }
         public IViewManager       ViewManager { get; set; }
         public ILog               Log { get; private set; }
@@ -107,25 +102,18 @@
 
         static CallContext()
         {
-            ResponseSpecifications.Add(ReturnFormat.XML, new XmlResponse());
-            ResponseSpecifications.Add(ReturnFormat.JSON, new JsonResponse());
-            ResponseSpecifications.Add(ReturnFormat.JSONP, new JsonpResponse());
-            ResponseSpecifications.Add(ReturnFormat.ATTACHMENT, new StreamResponse());
-
             _anonymousUserGuid = new Guid( ConfigurationManager.AppSettings["AnonymousUserGUID"] );
         }
 
-        public CallContext(IPortalApplication application, IPortalRequest request, IPortalResponse response, ILog log)
+        public CallContext(IPortalApplication application, IPortalRequest request, ILog log)
         {
             Application = application;
             Request     = request;
-            Response    = response.WithResponseSpecification(ResponseSpecifications[request.ReturnFormat]);
             Cache       = application.Cache;
             ViewManager = application.ViewManager;
             Log         = log;
             
-            response.Header.ReturnFormat = request.ReturnFormat;
-            response.Header.Callback     = request.Parameters.ContainsKey("callback") ? request.Parameters["callback"] : null;
+            
         }
 
         #endregion

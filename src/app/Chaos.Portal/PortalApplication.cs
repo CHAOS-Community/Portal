@@ -18,6 +18,7 @@ namespace Chaos.Portal
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;
     using Chaos.Portal.Response.Dto;
+    using Chaos.Portal.Response.Specification;
 
     /// <summary>
     /// The portal application.
@@ -27,6 +28,8 @@ namespace Chaos.Portal
         #region Fields
 
         private readonly ILogFactory _loggingFactory;
+
+        private static readonly IDictionary<ReturnFormat, IResponseSpecification> ResponseSpecifications = new Dictionary<ReturnFormat, IResponseSpecification>();
 
         #endregion
         #region Properties
@@ -42,6 +45,14 @@ namespace Chaos.Portal
 
         #endregion
         #region Constructors
+
+        static PortalApplication()
+        {
+            ResponseSpecifications.Add(ReturnFormat.XML, new XmlResponse());
+            ResponseSpecifications.Add(ReturnFormat.JSON, new JsonResponse());
+            ResponseSpecifications.Add(ReturnFormat.JSONP, new JsonpResponse());
+            ResponseSpecifications.Add(ReturnFormat.ATTACHMENT, new StreamResponse());
+        }
 
         public PortalApplication( ICache cache, IViewManager viewManager, IPortalRepository portalRepository, ILogFactory loggingFactory )
         {
@@ -92,10 +103,16 @@ namespace Chaos.Portal
         /// <returns>The response object</returns>
         public IPortalResponse ProcessRequest( IPortalRequest request )
         {
-            var response    = new PortalResponse(new PortalHeader(request.Stopwatch, System.Text.Encoding.UTF8), new PortalResult(), new PortalError() );
-            var callContext = new CallContext(this, request, response, _loggingFactory.Create());
+            var response = new PortalResponse(new PortalHeader(request.Stopwatch, System.Text.Encoding.UTF8), new PortalResult(), new PortalError() );
+            response.WithResponseSpecification(ResponseSpecifications[request.ReturnFormat]);
+            response.Header.ReturnFormat = request.ReturnFormat;
+            response.Header.Callback     = request.Parameters.ContainsKey("callback") ? request.Parameters["callback"] : null;
+            
+            var callContext = new CallContext(this, request, _loggingFactory.Create());
+            var extension   = GetExtension(request.Extension);
+            extension.WithPortalResponse(response);
 
-            return GetExtension(request.Extension).CallAction(callContext);
+            return extension.CallAction(callContext);
         }
 
         /// <summary>

@@ -11,6 +11,7 @@ namespace Chaos.Portal.Extension
     {
         #region Properties
 
+        protected IPortalResponse Response { get; set; }
         protected IPortalRepository  PortalRepository { get { return PortalApplication.PortalRepository; } }
         protected IDictionary<string, MethodInfo> MethodInfos { get; set; }
 
@@ -33,6 +34,13 @@ namespace Chaos.Portal.Extension
             return this;
         }
 
+        public IExtension WithPortalResponse(IPortalResponse response)
+        {
+            Response = response;
+
+            return this;
+        }
+
         #endregion
         #region Business Logic
 
@@ -52,16 +60,16 @@ namespace Chaos.Portal.Extension
             {
                 var result = method.Invoke(this, parameters);
 
-                callContext.Response.WriteToResponse(result);
+                Response.WriteToResponse(result);
             }
             catch (TargetInvocationException e)
             {
-                callContext.Response.Error.SetException(e.InnerException);
+                Response.Error.SetException(e.InnerException);
                 
                 PortalApplication.Log.Fatal("ProcessRequest() - Unhandeled exception occured during", e.InnerException);
             }
 
-            return callContext.Response;
+            return Response;
         }
 
         private object[] BindParameters(IDictionary<string, string> inputParameters, ICollection<ParameterInfo> parameters)
