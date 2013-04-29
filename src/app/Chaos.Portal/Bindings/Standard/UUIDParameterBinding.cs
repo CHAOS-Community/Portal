@@ -5,12 +5,14 @@ using CHAOS;
 
 namespace Chaos.Portal.Bindings.Standard
 {
+    using System.Collections.Generic;
+
     public class UUIDParameterBinding : IParameterBinding
     {
-        public object Bind( ICallContext callContext, ParameterInfo parameterInfo )
+        public object Bind(IDictionary<string, string> parameters, ParameterInfo parameterInfo)
         {
-            if( callContext.Request.Parameters.ContainsKey( parameterInfo.Name ) && !string.IsNullOrEmpty( callContext.Request.Parameters[ parameterInfo.Name ] ) )
-                return new UUID( StringToByteArray( callContext.Request.Parameters[ parameterInfo.Name ] ) );
+            if (parameters.ContainsKey(parameterInfo.Name) && !string.IsNullOrEmpty(parameters[parameterInfo.Name]))
+                return new UUID(StringToByteArray(parameters[parameterInfo.Name]));
 
             return null;
         }

@@ -4,14 +4,16 @@ using CHAOS.Extensions;
 
 namespace Chaos.Portal.Bindings.Standard
 {
+    using System.Collections.Generic;
+
     using Chaos.Portal.Core.Exceptions;
 
     public class ConvertableParameterBinding<T> : IParameterBinding where T : IConvertible
     {
-        public object Bind( ICallContext callContext, ParameterInfo parameterInfo )
+        public object Bind(IDictionary<string, string> parameters, ParameterInfo parameterInfo)
         {
-            if( callContext.Request.Parameters.ContainsKey( parameterInfo.Name ) && !string.IsNullOrEmpty( callContext.Request.Parameters[ parameterInfo.Name ] ) )
-                return Convert.ChangeType( callContext.Request.Parameters[ parameterInfo.Name ], typeof(T) );
+            if (parameters.ContainsKey(parameterInfo.Name) && !string.IsNullOrEmpty(parameters[parameterInfo.Name]))
+                return Convert.ChangeType(parameters[parameterInfo.Name], typeof(T));
 
             if (parameterInfo.ParameterType.IsNullable()) return null;
             if (parameterInfo.HasDefaultValue) return parameterInfo.DefaultValue;

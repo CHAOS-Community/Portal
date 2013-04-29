@@ -19,13 +19,12 @@
         public void Bind_GivenValidXml_ReturnAXDocumentContainingTheXml()
         {
             XDocumentAction action = delegate(XDocument xml) { };
-            var callContext        = new Mock<ICallContext>();
             var binding            = new XDocumentBinding();
             var xmlInput           = "<xml>sample</xml>";
             var parameterInfo      = action.Method.GetParameters().First();
-            callContext.SetupGet(p => p.Request.Parameters).Returns(new Dictionary<string, string>() { { "xml", xmlInput } });
+            var parameters         = new Dictionary<string, string>() { { "xml", xmlInput } };
 
-            var result = binding.Bind(callContext.Object, parameterInfo);
+            var result = binding.Bind(parameters, parameterInfo);
 
             Assert.AreEqual(xmlInput, result.ToString());
         } 

@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bindings\IParameterBinding.cs" />
-    <Compile Include="Bindings\Standard\CallContextParameterBinding.cs" />
     <Compile Include="Bindings\Standard\ConvertableParameterBinding.cs" />
     <Compile Include="Bindings\Standard\IEnumerableOfGuidBinding.cs" />
     <Compile Include="Bindings\Standard\XDocumentBinding.cs" />

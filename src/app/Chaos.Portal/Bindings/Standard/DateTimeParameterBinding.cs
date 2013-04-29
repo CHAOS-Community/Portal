@@ -5,14 +5,16 @@ using CHAOS.Serialization.Standard.String;
 
 namespace Chaos.Portal.Bindings.Standard
 {
+    using System.Collections.Generic;
+
     using Chaos.Portal.Core.Exceptions;
 
     public class DateTimeParameterBinding : IParameterBinding
     {
-        public object Bind( ICallContext callContext, ParameterInfo parameterInfo )
+        public object Bind(IDictionary<string, string> parameters, ParameterInfo parameterInfo)
         {
-            if( callContext.Request.Parameters.ContainsKey( parameterInfo.Name ) && !string.IsNullOrEmpty( callContext.Request.Parameters[ parameterInfo.Name ] ) )
-                return new StringSerializer().Deserialize<DateTime>( callContext.Request.Parameters[ parameterInfo.Name ], true );
+            if( parameters.ContainsKey( parameterInfo.Name ) && !string.IsNullOrEmpty( parameters[ parameterInfo.Name ] ) )
+                return new StringSerializer().Deserialize<DateTime>( parameters[ parameterInfo.Name ], true );
 
             if( parameterInfo.ParameterType.IsNullable() )
                 return null;

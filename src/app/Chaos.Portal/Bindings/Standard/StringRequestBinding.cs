@@ -2,14 +2,13 @@
 
 namespace Chaos.Portal.Bindings.Standard
 {
+    using System.Collections.Generic;
+
     public class StringParameterBinding : IParameterBinding
     {
-        public object Bind( ICallContext callContext, ParameterInfo parameterInfo )
+        public object Bind(IDictionary<string, string> parameters, ParameterInfo parameterInfo)
         {
-            if( callContext.Request.Parameters.ContainsKey( parameterInfo.Name ) )
-                return callContext.Request.Parameters[ parameterInfo.Name ];
-
-            return null;
+            return parameters.ContainsKey(parameterInfo.Name) ? parameters[parameterInfo.Name] : null;
         }
     }
 }

@@ -2,8 +2,10 @@
 
 namespace Chaos.Portal.Bindings
 {
+    using System.Collections.Generic;
+
     public interface IParameterBinding
     {
-        object Bind( ICallContext callContext, ParameterInfo parameterInfo );
+        object Bind(IDictionary<string, string> parameters, ParameterInfo parameterInfo);
     }
 }

@@ -1,14 +1,15 @@
 ﻿namespace Chaos.Portal.Bindings.Standard
 {
+    using System.Collections.Generic;
     using System.Reflection;
     using System.Xml.Linq;
 
     public class XDocumentBinding : IParameterBinding
     {
-        public object Bind( ICallContext callContext, ParameterInfo parameterInfo )
+        public object Bind(IDictionary<string, string> parameters, ParameterInfo parameterInfo)
         {
-            if (callContext.Request.Parameters.ContainsKey(parameterInfo.Name) && !string.IsNullOrEmpty(callContext.Request.Parameters[parameterInfo.Name]))
-                return XDocument.Parse(callContext.Request.Parameters[parameterInfo.Name]);
+            if (parameters.ContainsKey(parameterInfo.Name) && !string.IsNullOrEmpty(parameters[parameterInfo.Name]))
+                return XDocument.Parse(parameters[parameterInfo.Name]);
 
             return null;
         }

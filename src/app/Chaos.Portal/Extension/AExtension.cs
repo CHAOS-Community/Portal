@@ -37,7 +37,7 @@ namespace Chaos.Portal.Extension
         #region Business Logic
 
         /// <summary>
-        /// Calls an action on the extension with the parameters based on the settings specified in the callContext
+        /// Calls an action on the extension with the parameters based on the settings specified in the inputParameters
         /// </summary>
         /// <param name="callContext"></param>
         public virtual IPortalResponse CallAction(ICallContext callContext)
@@ -46,7 +46,7 @@ namespace Chaos.Portal.Extension
                 MethodInfos.Add(callContext.Request.Action, GetType().GetMethod(callContext.Request.Action));
 
             var method     = MethodInfos[callContext.Request.Action];
-            var parameters = BindParameters(callContext, method.GetParameters());
+            var parameters = BindParameters(callContext.Request.Parameters, method.GetParameters());
             
             try
             {
@@ -64,16 +64,16 @@ namespace Chaos.Portal.Extension
             return callContext.Response;
         }
 
-        private static object[] BindParameters(ICallContext callContext, ICollection<ParameterInfo> parameters)
+        private object[] BindParameters(IDictionary<string, string> inputParameters, ICollection<ParameterInfo> parameters)
         {
             var boundParameters = new object[parameters.Count];
 
             foreach (var parameterInfo in parameters)
             {
-                if (!callContext.Application.Bindings.ContainsKey(parameterInfo.ParameterType))
+                if (!PortalApplication.Bindings.ContainsKey(parameterInfo.ParameterType))
                     throw new ParameterBindingMissingException(string.Format("There is no binding for the type:{0}", parameterInfo.ParameterType.FullName));
 
-                boundParameters[parameterInfo.Position] = callContext.Application.Bindings[parameterInfo.ParameterType].Bind(callContext, parameterInfo);
+                boundParameters[parameterInfo.Position] = PortalApplication.Bindings[parameterInfo.ParameterType].Bind(inputParameters, parameterInfo);
             }
 
             return boundParameters;

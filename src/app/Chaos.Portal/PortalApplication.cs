@@ -8,9 +8,8 @@ namespace Chaos.Portal
     using Chaos.Portal.Bindings;
     using Chaos.Portal.Bindings.Standard;
     using Chaos.Portal.Cache;
-    using Chaos.Portal.Data;
-    using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core.Data;
+    using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Indexing.Solr;
     using Chaos.Portal.Indexing.View;
@@ -18,6 +17,7 @@ namespace Chaos.Portal
     using Chaos.Portal.Module;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;
+    using Chaos.Portal.Response.Dto;
 
     /// <summary>
     /// The portal application.
@@ -56,8 +56,6 @@ namespace Chaos.Portal
             
             // Load bindings
             Bindings.Add( typeof(string), new StringParameterBinding() );
-            Bindings.Add( typeof(ICallContext), new CallContextParameterBinding() );
-            Bindings.Add( typeof(CallContext), new CallContextParameterBinding() );
             Bindings.Add( typeof(long), new ConvertableParameterBinding<long>() );
             Bindings.Add( typeof(int), new ConvertableParameterBinding<int>() );
             Bindings.Add( typeof(short), new ConvertableParameterBinding<short>() );
