@@ -9,6 +9,7 @@ namespace Chaos.Portal
     using Chaos.Portal.Bindings.Standard;
     using Chaos.Portal.Cache;
     using Chaos.Portal.Data;
+    using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Exceptions;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Indexing.Solr;
@@ -91,10 +92,10 @@ namespace Chaos.Portal
         /// Process a request to portal. Any underlying extensions or modules will be called based on the callContext parameter
         /// </summary>
         /// <param name="request">contains information about what extension and action to call</param>
-        /// <param name="response">the object that contains the response</param>
         /// <returns>The response object</returns>
-        public IPortalResponse ProcessRequest( IPortalRequest request, IPortalResponse response )
+        public IPortalResponse ProcessRequest( IPortalRequest request )
         {
+            var response    = new PortalResponse(new PortalHeader(request.Stopwatch, System.Text.Encoding.UTF8), new PortalResult(), new PortalError() );
             var callContext = new CallContext(this, request, response, _loggingFactory.Create());
 
             return GetExtension(request.Extension).CallAction(callContext);
@@ -105,7 +106,7 @@ namespace Chaos.Portal
         /// </summary>
         /// <typeparam name="TExtension">The type of extension to get</typeparam>
         /// <returns>The loaded the instance of the extension</returns>
-        public TExtension GetExtension<TExtension>() where TExtension : IExtension
+        public TExtension GetExtension<TExtension>() where TExtension : IExtension, new()
         {
             var extensionName = LoadedExtensions.FirstOrDefault(ext => ext.Value is TExtension).Key;
 
@@ -135,12 +136,14 @@ namespace Chaos.Portal
         /// <param name="extension">The key associated with the extension.</param>
         /// <returns>The instance of<see cref="IExtension"/>.</returns>
         /// <exception cref="ExtensionMissingException">Is thrown if the extension is not loaded</exception>
-        private IExtension GetExtension(string extension)
+        public IExtension GetExtension(string extension)
         {
             if(extension == null || !LoadedExtensions.ContainsKey( extension ))
                 throw new ExtensionMissingException( string.Format( "Extension named '{0}' not found", extension ) );
+            
+            var type = LoadedExtensions[extension].GetType();
 
-            return LoadedExtensions[extension];
+            return (IExtension) Activator.CreateInstance(type);
         }
 
         #endregion

@@ -35,7 +35,35 @@
 
             var result = portalApplication.GetExtension<ExtensionMock>();
 
-            Assert.AreEqual(extensionObject, result);
+            Assert.That(result, Is.Not.Null);
+            Assert.IsInstanceOf<ExtensionMock>(result);
+        }
+
+        [Test]
+        public void GetExtension_ByString_ReturnAInstanceOfTheExtension()
+        {
+            var portalApplication = Make_PortalApplication();
+            var extensionName     = "test";
+            var extensionObject   = new ExtensionMock();
+            portalApplication.LoadedExtensions.Add(extensionName, extensionObject);
+
+            var result = portalApplication.GetExtension(extensionName);
+
+            Assert.IsInstanceOf<ExtensionMock>(result);
+        }
+
+        [Test]
+        public void GetExtension_ByTypeCalledTwice_ReturnDifferentInsances()
+        {
+            var portalApplication = Make_PortalApplication();
+            var extensionName = "test";
+            var extensionObject = new ExtensionMock();
+            portalApplication.LoadedExtensions.Add(extensionName, extensionObject);
+
+            var result1 = portalApplication.GetExtension<ExtensionMock>();
+            var result2 = portalApplication.GetExtension<ExtensionMock>();
+
+            Assert.AreNotEqual(result1, result2);
         }
 
         [Test]

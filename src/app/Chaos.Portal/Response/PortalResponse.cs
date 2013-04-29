@@ -83,5 +83,14 @@ namespace Chaos.Portal.Response
         }
 
 		#endregion
-	}
+
+        #region Implementation of IDisposable
+
+        public void Dispose()
+        {
+            if(Stream != null) Stream.Dispose();
+        }
+
+        #endregion
+    }
 }

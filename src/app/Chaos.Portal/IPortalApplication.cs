@@ -29,14 +29,14 @@
         /// <param name="request">contains information about what extension and action to call</param>
         /// <param name="response">the object that contains the response</param>
         /// <returns>The response object</returns>
-        IPortalResponse ProcessRequest( IPortalRequest request, IPortalResponse response );
+        IPortalResponse ProcessRequest( IPortalRequest request );
 
         /// <summary>
         /// Return the loaded instance of the requested extension
         /// </summary>
         /// <typeparam name="TExtension">The type of extension to get</typeparam>
         /// <returns>The loaded the instance of the extension</returns>
-        TExtension GetExtension<TExtension>() where TExtension : IExtension;
+        TExtension GetExtension<TExtension>() where TExtension : IExtension, new();
 
         void AddExtension(string key, IExtension value);
 

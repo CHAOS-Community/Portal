@@ -2,7 +2,9 @@ using System.IO;
 
 namespace Chaos.Portal.Response
 {
-    public interface IPortalResponse
+    using System;
+
+    public interface IPortalResponse : IDisposable
     {
         IPortalError Error { get; set; }
         IPortalHeader Header { get; set; }
