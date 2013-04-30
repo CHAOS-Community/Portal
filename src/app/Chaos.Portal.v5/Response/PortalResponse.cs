@@ -18,6 +18,8 @@
         #region Fields
 
         private static readonly IDictionary<ReturnFormat, IResponseSpecification> ResponseSpecifications = new Dictionary<ReturnFormat, IResponseSpecification>();
+        
+        private readonly string _moduleName;
 
         #endregion
         #region Initialization
@@ -30,13 +32,14 @@
             ResponseSpecifications.Add(ReturnFormat.ATTACHMENT, new StreamResponse());
         }
 
-        public PortalResponse(IPortalRequest request)
+        public PortalResponse(IPortalRequest request, string moduleName = "Portal")
         {
             WithResponseSpecification(ResponseSpecifications[request.ReturnFormat]);
             ReturnFormat = request.ReturnFormat;
-            Callback = request.Parameters.ContainsKey("callback") ? request.Parameters["callback"] : null;
-            Request = request;
-            Encoding = Encoding.UTF8;
+            Callback     = request.Parameters.ContainsKey("callback") ? request.Parameters["callback"] : null;
+            Request      = request;
+            Encoding     = Encoding.UTF8;
+            _moduleName  = moduleName;
         }
 
         public IPortalResponse WithResponseSpecification(IResponseSpecification responseSpecification)
@@ -63,18 +66,18 @@
         {
             if (obj == null) throw new NullReferenceException("Returned object is null");
 
-            var result = obj as IResult;
-            var results = obj as IEnumerable<IResult>;
+            var result      = obj as IResult;
+            var results     = obj as IEnumerable<IResult>;
             var pagedResult = obj as IPagedResult<IResult>;
-            var uinteger = obj as uint?;
-            var integer = obj as int?;
-            var stream = obj as Stream;
-            var exception = obj as Exception;
+            var uinteger    = obj as uint?;
+            var integer     = obj as int?;
+            var stream      = obj as Stream;
+            var exception   = obj as Exception;
 
             if (result != null)
             {
                 var response = new PortalResult(Request.Stopwatch);
-                response.GetModule("Portal").AddResult(result);
+                response.GetModule(_moduleName).AddResult(result);
 
                 Output = response;
             }
@@ -83,7 +86,7 @@
             {
                 var response = new PortalResult(Request.Stopwatch);
 
-                foreach (var item in results) response.GetModule("Portal").AddResult(item);
+                foreach (var item in results) response.GetModule(_moduleName).AddResult(item);
             
                 Output = response;
             }
@@ -92,9 +95,9 @@
             {
                 var response = new PortalResult(Request.Stopwatch);
 
-                foreach (var item in pagedResult.Results) response.GetModule("Portal").AddResult(item);
+                foreach (var item in pagedResult.Results) response.GetModule(_moduleName).AddResult(item);
 
-                response.GetModule("Portal").TotalCount = pagedResult.FoundCount;
+                response.GetModule(_moduleName).TotalCount = pagedResult.FoundCount;
             
                 Output = response;
             }
@@ -106,7 +109,7 @@
             if (uinteger != null)
             {
                 var response = new PortalResult(Request.Stopwatch);
-                response.GetModule("Portal").AddResult(new ScalarResult((int)uinteger.Value));
+                response.GetModule(_moduleName).AddResult(new ScalarResult((int)uinteger.Value));
 
                 Output = response;
             }
@@ -114,7 +117,7 @@
             if (integer != null)
             {
                 var response = new PortalResult(Request.Stopwatch);
-                response.GetModule("Portal").AddResult(new ScalarResult(integer.Value));
+                response.GetModule(_moduleName).AddResult(new ScalarResult(integer.Value));
             
                 Output = response;
             }
@@ -122,7 +125,7 @@
             {
                 var response = new PortalResult(Request.Stopwatch);
 
-                response.GetModule("Portal").AddResult(new ExtensionError(exception, Request.Stopwatch));
+                response.GetModule(_moduleName).AddResult(new ExtensionError(exception, Request.Stopwatch));
 
                 Output = response;
             }
