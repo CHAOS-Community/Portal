@@ -17,7 +17,6 @@ namespace Chaos.Portal
     using Chaos.Portal.Module;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;
-    using Chaos.Portal.Response.Dto;
     using Chaos.Portal.Response.Specification;
 
     /// <summary>
@@ -103,12 +102,8 @@ namespace Chaos.Portal
         /// <returns>The response object</returns>
         public IPortalResponse ProcessRequest( IPortalRequest request )
         {
-            var response = new PortalResponse(new PortalHeader(request.Stopwatch, System.Text.Encoding.UTF8), new PortalResult(), new PortalError() );
-            response.WithResponseSpecification(ResponseSpecifications[request.ReturnFormat]);
-            response.Header.ReturnFormat = request.ReturnFormat;
-            response.Header.Callback     = request.Parameters.ContainsKey("callback") ? request.Parameters["callback"] : null;
-            
-            var extension   = GetExtension(request.Extension);
+            var response  = new PortalResponse(request);
+            var extension = GetExtension(request.Extension);
             extension.WithPortalRequest(request);
             extension.WithPortalResponse(response);
 

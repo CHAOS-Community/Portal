@@ -1,6 +1,7 @@
 ﻿namespace Chaos.Portal.Test
 {
     using System.Collections.Generic;
+    using System.IO;
 
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Extension;
@@ -87,8 +88,66 @@
 
             var response = application.ProcessRequest(request);
 
-            Assert.That(response.Header.ReturnFormat, Is.EqualTo(ReturnFormat.XML));
+            Assert.That(response.ReturnFormat, Is.EqualTo(ReturnFormat.XML));
         }
+
+        [Test]
+        public void ProcessRequest_RequestWithReturnFormatXml_GetResponseStream()
+        {
+            var application = Make_PortalApplication();
+            var extension = new ExtensionMock();
+            var module = new Mock<IModule>();
+            var parameters = new Dictionary<string, string> { { "format", "XML" } };
+            var request = new PortalRequest("test", "test", parameters);
+            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
+            module.Setup(m => m.GetExtension("test")).Returns(extension);
+            application.AddModule(module.Object);
+            request.Stopwatch.Reset();
+            
+            var response = application.ProcessRequest(request);
+
+            using (var stream = new StreamReader(response.GetResponseStream()))
+            {
+                Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Result><Count>1</Count><TotalCount>1</TotalCount><Results><Result FullName=\"Chaos.Portal.Core.Data.Model.ScalarResult\"><Value>1</Value></Result></Results></Result><Error /></PortalResponse>"));
+            }
+        }
+
+        [Test, ExpectedException(typeof(ActionMissingException))]
+        public void ProcessRequest_ActionDoesntExist_ThrowActionMissingException()
+        {
+            var application = Make_PortalApplication();
+            var extension = new ExtensionMock();
+            var module = new Mock<IModule>();
+            var parameters = new Dictionary<string, string> { { "format", "XML" } };
+            var request = new PortalRequest("test", "error", parameters);
+            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
+            module.Setup(m => m.GetExtension("test")).Returns(extension);
+            application.AddModule(module.Object);
+            request.Stopwatch.Reset();
+
+            application.ProcessRequest(request);
+        }
+
+//        [Test]
+//        public void ProcessRequest_ExtensionThrowsAnException_ReturnResponseWithError()
+//        {
+//            var application = Make_PortalApplication();
+//            var extension = new ExtensionMock();
+//            var module = new Mock<IModule>();
+//            var parameters = new Dictionary<string, string> { { "format", "XML" } };
+//            var request = new PortalRequest("test", "test", parameters);
+//            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
+//            module.Setup(m => m.GetExtension("error")).Returns(extension);
+//            application.AddModule(module.Object);
+//            request.Stopwatch.Reset();
+//
+//            var response = application.ProcessRequest(request);
+//
+//            using (var stream = new StreamReader(response.GetResponseStream()))
+//            {
+//                Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Result><Count>1</Count><TotalCount>1</TotalCount><Results><Result FullName=\"Chaos.Portal.Core.Data.Model.ScalarResult\"><Value>1</Value></Result></Results></Result><Error /></PortalResponse>"));
+//            }
+//        }
 
         [Test]
         public void ProcessRequest_SimpleRequest_CallWithResponseOnExtension()

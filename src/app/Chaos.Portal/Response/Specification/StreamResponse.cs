@@ -8,7 +8,7 @@ namespace Chaos.Portal.Response.Specification
 
         public Stream GetStream(IPortalResponse response)
         {
-            return response.Stream;
+            return (Stream) response.Output;
         }
 
         #endregion

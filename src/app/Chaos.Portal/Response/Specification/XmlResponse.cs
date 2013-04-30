@@ -15,12 +15,14 @@ namespace Chaos.Portal.Response.Specification
 
         public Stream GetStream(IPortalResponse response)
         {
-            var xdoc = SerializerFactory.Get<XDocument>().Serialize(response, false);
-            xdoc.Declaration = new XDeclaration("1.0", response.Header.Encoding.HeaderName, "yes");
+            var xdoc = SerializerFactory.Get<XDocument>().Serialize(response.Output, false);
+            xdoc.Declaration = new XDeclaration("1.0", response.Encoding.HeaderName, "yes");
 
             var stream = new MemoryStream();
 
-            xdoc.Save(stream);
+            xdoc.Save(stream, SaveOptions.DisableFormatting);
+
+            stream.Position = 0;
 
             return stream;
         }

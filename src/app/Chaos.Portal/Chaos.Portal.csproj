@@ -116,7 +116,9 @@
     <Compile Include="Module\PortalModule.cs" />
     <Compile Include="Response\Dto\PagedResult.cs" />
     <Compile Include="Response\Dto\PortalError.cs" />
-    <Compile Include="Response\PortalResult.cs" />
+    <Compile Include="Response\Dto\PortalHeader.cs" />
+    <Compile Include="Response\Dto\PortalResponse.cs" />
+    <Compile Include="Response\Dto\PortalResult.cs" />
     <Compile Include="Extension\AExtension.cs" />
     <Compile Include="Extension\PortalExtensionAttribute.cs" />
     <Compile Include="Extension\IExtension.cs" />
@@ -131,7 +133,6 @@
     <Compile Include="Request\PortalRequest.cs" />
     <Compile Include="Response\IPortalResult.cs" />
     <Compile Include="Response\IResponseSpecification.cs" />
-    <Compile Include="Response\PortalHeader.cs" />
     <Compile Include="Response\Specification\JsonpResponse.cs" />
     <Compile Include="Response\Specification\StreamResponse.cs" />
     <Compile Include="Response\Specification\JsonResponse.cs" />

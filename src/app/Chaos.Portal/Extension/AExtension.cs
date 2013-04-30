@@ -174,7 +174,10 @@
             if(!MethodInfos.ContainsKey(Request.Action))
                 MethodInfos.Add(Request.Action, GetType().GetMethod(Request.Action));
 
-            var method     = MethodInfos[Request.Action];
+            var method = MethodInfos[Request.Action];
+
+            if (method == null) throw new ActionMissingException(string.Format("No action ({0}) in extenion ({1})", Request.Extension, Request.Action));
+
             var parameters = BindParameters(Request.Parameters, method.GetParameters());
             
             try
@@ -185,7 +188,7 @@
             }
             catch (TargetInvocationException e)
             {
-                Response.Error.SetException(e.InnerException);
+                Response.WriteToResponse(e.InnerException);
                 
                 PortalApplication.Log.Fatal("ProcessRequest() - Unhandeled exception occured during", e.InnerException);
             }

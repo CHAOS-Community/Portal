@@ -10,9 +10,9 @@ namespace Chaos.Portal.Response.Specification
 
         public Stream GetStream(IPortalResponse response)
         {
-            var callback = response.Header.Callback ?? "portal_callback";
+            var callback = response.Callback ?? "portal_callback";
 
-            return new MemoryStream(response.Header.Encoding.GetBytes(SerializerFactory.Get<JSON>().Serialize(response, false).GetAsJSONP(callback)));
+            return new MemoryStream(response.Encoding.GetBytes(SerializerFactory.Get<JSON>().Serialize(response, false).GetAsJSONP(callback)));
         }
 
         #endregion
