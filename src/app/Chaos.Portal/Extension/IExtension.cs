@@ -2,6 +2,7 @@
 
 namespace Chaos.Portal.Extension
 {
+    using Chaos.Portal.Core.Response;
     using Chaos.Portal.Request;
 
     public interface IExtension

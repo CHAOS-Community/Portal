@@ -1,4 +1,4 @@
-﻿namespace Chaos.Portal
+﻿namespace Chaos.Portal.Core
 {
     public enum ReturnFormat
     {

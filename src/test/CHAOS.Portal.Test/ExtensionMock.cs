@@ -3,7 +3,6 @@
     using System;
 
     using Chaos.Portal.Extension;
-    using Chaos.Portal.Response;
 
     public class ExtensionMock : AExtension
     {

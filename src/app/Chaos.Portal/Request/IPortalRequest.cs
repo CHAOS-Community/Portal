@@ -3,6 +3,8 @@ using System.Diagnostics;
 
 namespace Chaos.Portal.Request
 {
+    using Chaos.Portal.Core;
+
     public interface IPortalRequest
     {
         string                     Extension { get; }

@@ -36,7 +36,6 @@ namespace Chaos.Portal.Core.Data.Model
 			Name          = name;
 			Configuration = configuration;
 			DateCreated   = dateCreated;
-            Fullname      = "CHAOS.Portal.DTO.Standard.Module";
 		}
 
 		#endregion

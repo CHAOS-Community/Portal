@@ -1,9 +1,10 @@
-﻿using System.IO;
-using CHAOS.Serialization.JSON;
-using CHAOS.Serialization.Standard;
-
-namespace Chaos.Portal.Response.Specification
+﻿namespace Chaos.Portal.Core.Response.Specification
 {
+    using System.IO;
+
+    using CHAOS.Serialization.JSON;
+    using CHAOS.Serialization.Standard;
+
     public class JsonpResponse : IResponseSpecification
     {
         #region Business Logic

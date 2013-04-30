@@ -2,6 +2,8 @@
 {
     using CHAOS.Serialization;
 
+    using Chaos.Portal.Core.Response;
+
     [Serialize("PortalResponse")]
     public class PortalResponse
     {

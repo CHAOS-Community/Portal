@@ -5,6 +5,8 @@ namespace Chaos.Portal.Response.Dto
     using CHAOS.Serialization;
     using CHAOS.Serialization.XML;
 
+    using Chaos.Portal.Core.Response;
+
     public class PortalError : IPortalError
     {
         #region Properties
@@ -19,7 +21,7 @@ namespace Chaos.Portal.Response.Dto
         public string Stacktrace { get; private set; }
 
         [Serialize("InnerException")]
-        public PortalError InnerException { get; private set; }
+        public IPortalError InnerException { get; private set; }
 
 		public System.Exception Exception { get; set; }
 

@@ -6,6 +6,7 @@
     using Chaos.Portal.Bindings;
     using Chaos.Portal.Cache;
     using Chaos.Portal.Core.Data;
+    using Chaos.Portal.Core.Response;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Indexing.View;
     using Chaos.Portal.Logging;

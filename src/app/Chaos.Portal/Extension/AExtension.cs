@@ -10,6 +10,7 @@
     using Chaos.Portal.Core.Data;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
+    using Chaos.Portal.Core.Response;
     using Chaos.Portal.Indexing.View;
     using Chaos.Portal.Logging;
     using Chaos.Portal.Request;

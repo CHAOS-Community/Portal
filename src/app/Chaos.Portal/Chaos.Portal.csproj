@@ -123,7 +123,6 @@
     <Compile Include="Extension\PortalExtensionAttribute.cs" />
     <Compile Include="Extension\IExtension.cs" />
     <Compile Include="IPortalAction.cs" />
-    <Compile Include="Response\IPortalResponse.cs" />
     <Compile Include="Logging\ALog.cs" />
     <Compile Include="Logging\Database\DatabaseLogger.cs" />
     <Compile Include="Logging\ILog.cs" />
@@ -131,17 +130,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\IPortalRequest.cs" />
     <Compile Include="Request\PortalRequest.cs" />
-    <Compile Include="Response\IPortalResult.cs" />
-    <Compile Include="Response\IResponseSpecification.cs" />
-    <Compile Include="Response\Specification\JsonpResponse.cs" />
-    <Compile Include="Response\Specification\StreamResponse.cs" />
-    <Compile Include="Response\Specification\JsonResponse.cs" />
-    <Compile Include="Response\Specification\XmlResponse.cs" />
-    <Compile Include="ReturnFormat.cs" />
     <Compile Include="Request\FileStream.cs" />
     <Compile Include="IPortalApplication.cs" />
-    <Compile Include="Response\IPortalError.cs" />
-    <Compile Include="Response\IPortalHeader.cs" />
     <Compile Include="PortalApplication.cs" />
     <Compile Include="Response\PortalResponse.cs" />
   </ItemGroup>

@@ -3,7 +3,9 @@
     using System.Collections.Generic;
     using System.IO;
 
+    using Chaos.Portal.Core;
     using Chaos.Portal.Core.Exceptions;
+    using Chaos.Portal.Core.Response;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Module;
     using Chaos.Portal.Request;

@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using CHAOS.Serialization;
 
 namespace Chaos.Portal.Response
 {
     using System;
     using System.Text;
 
+    using Chaos.Portal.Core;
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Response;
+    using Chaos.Portal.Core.Response.Specification;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response.Dto;
-    using Chaos.Portal.Response.Specification;
 
     public class PortalResponse : IPortalResponse
     {
@@ -132,7 +133,6 @@ namespace Chaos.Portal.Response
         }
 
 		#endregion
-
         #region Implementation of IDisposable
 
         public void Dispose()

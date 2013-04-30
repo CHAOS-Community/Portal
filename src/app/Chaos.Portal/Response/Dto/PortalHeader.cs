@@ -5,6 +5,8 @@ namespace Chaos.Portal.Response.Dto
 
     using CHAOS.Serialization;
 
+    using Chaos.Portal.Core.Response;
+
     public class PortalHeader : IPortalHeader
     {
         #region Fields

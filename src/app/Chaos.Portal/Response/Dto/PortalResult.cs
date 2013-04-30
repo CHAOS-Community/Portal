@@ -5,6 +5,7 @@ namespace Chaos.Portal.Response.Dto
     using CHAOS.Serialization;
 
     using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Response;
 
     [Serialize("PortalResult")]
     public class PortalResult : IPortalResult

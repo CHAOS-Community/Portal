@@ -8,8 +8,11 @@ namespace Chaos.Portal
     using Chaos.Portal.Bindings;
     using Chaos.Portal.Bindings.Standard;
     using Chaos.Portal.Cache;
+    using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data;
     using Chaos.Portal.Core.Exceptions;
+    using Chaos.Portal.Core.Response;
+    using Chaos.Portal.Core.Response.Specification;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Indexing.Solr;
     using Chaos.Portal.Indexing.View;
@@ -17,7 +20,6 @@ namespace Chaos.Portal
     using Chaos.Portal.Module;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response;
-    using Chaos.Portal.Response.Specification;
 
     /// <summary>
     /// The portal application.
