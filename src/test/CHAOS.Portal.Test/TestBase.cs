@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     using Chaos.Portal.Cache;
     using Chaos.Portal.Core.Data;
@@ -30,6 +31,7 @@
         protected Mock<IViewManager>       ViewManager { get; set; }
         protected Mock<IPortalRepository>  PortalRepository { get; set; }
         protected Mock<ILogFactory>        LoggingFactory { get; set; }
+        protected Mock<ILog>               Log { get; set; }
         protected Mock<IPortalRequest>     PortalRequest { get; set; }
         protected Mock<IPortalResponse>    PortalResponse { get; set; }
         protected Mock<IPortalHeader>      PortalHeader { get; set; }
@@ -50,11 +52,17 @@
             PortalHeader      = new Mock<IPortalHeader>();
             ViewManager       = new Mock<IViewManager>();
             PortalApplication = new Mock<IPortalApplication>();
+            Log               = new Mock<ILog>();
 
             PortalApplication.SetupGet(p => p.PortalRepository).Returns(PortalRepository.Object);
             PortalRepository.Setup(m => m.SessionGet(It.IsAny<Guid?>(), null)).Returns(new[] {Make_Session() });
             PortalRepository.Setup(m => m.UserInfoGet(null, It.IsAny<Guid?>(), null)).Returns(new[] { Make_User() });
             PortalRequest.SetupGet(p => p.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
+            LoggingFactory.Setup(m => m.Create()).Returns(Log.Object);
+            Log.Setup(m => m.WithLoglevel(It.IsAny<LogLevel>())).Returns(Log.Object);
+            Log.Setup(m => m.WithName(It.IsAny<string>())).Returns(Log.Object);
+            Log.Setup(m => m.WithSessionGuid(It.IsAny<Guid>())).Returns(Log.Object);
+            Log.Setup(m => m.WithStopwatch(It.IsAny<Stopwatch>())).Returns(Log.Object);
         }
         
         #endregion
@@ -130,6 +138,11 @@
                                                    .WithPortalResponse(PortalResponse.Object);
         }
 
-        #endregion  
+        protected PortalApplication Make_PortalApplication()
+        {
+            return new PortalApplication( Cache.Object, ViewManager.Object, PortalRepository.Object, LoggingFactory.Object );
+        }
+
+        #endregion
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace Chaos.Portal.Test
 {
+    using System;
+
     using Chaos.Portal.Extension;
     using Chaos.Portal.Response;
 
@@ -17,6 +19,11 @@
         public int test()
         {
             return 1;
+        }
+
+        public int error()
+        {
+            throw new ArgumentOutOfRangeException("Derived exceptions should also be written to output");
         }
     }
 }

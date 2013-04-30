@@ -16,11 +16,6 @@
     [TestFixture]
     public class PortalApplicationTest : TestBase
     {
-        private PortalApplication Make_PortalApplication()
-        {
-            return new PortalApplication( Cache.Object, ViewManager.Object, PortalRepository.Object, LoggingFactory.Object );
-        }
-
         [Test]
         public void Constructor_WithMockObjects_AllPropertiesInitialized()
         {
@@ -119,7 +114,7 @@
             var extension = new ExtensionMock();
             var module = new Mock<IModule>();
             var parameters = new Dictionary<string, string> { { "format", "XML" } };
-            var request = new PortalRequest("test", "error", parameters);
+            var request = new PortalRequest("test", "missing", parameters);
             module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
             module.Setup(m => m.GetExtension("test")).Returns(extension);
             application.AddModule(module.Object);
@@ -128,26 +123,28 @@
             application.ProcessRequest(request);
         }
 
-//        [Test]
-//        public void ProcessRequest_ExtensionThrowsAnException_ReturnResponseWithError()
-//        {
-//            var application = Make_PortalApplication();
-//            var extension = new ExtensionMock();
-//            var module = new Mock<IModule>();
-//            var parameters = new Dictionary<string, string> { { "format", "XML" } };
-//            var request = new PortalRequest("test", "test", parameters);
-//            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
-//            module.Setup(m => m.GetExtension("error")).Returns(extension);
-//            application.AddModule(module.Object);
-//            request.Stopwatch.Reset();
-//
-//            var response = application.ProcessRequest(request);
-//
-//            using (var stream = new StreamReader(response.GetResponseStream()))
-//            {
-//                Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Result><Count>1</Count><TotalCount>1</TotalCount><Results><Result FullName=\"Chaos.Portal.Core.Data.Model.ScalarResult\"><Value>1</Value></Result></Results></Result><Error /></PortalResponse>"));
-//            }
-//        }
+        [Test]
+        public void ProcessRequest_ExtensionThrowsAnException_ReturnResponseWithError()
+        {
+            var application = Make_PortalApplication();
+            var extension = new ExtensionMock();
+            var module = new Mock<IModule>();
+            var parameters = new Dictionary<string, string> { { "format", "XML" } };
+            var request = new PortalRequest("test", "error", parameters);
+            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
+            module.Setup(m => m.GetExtension("test")).Returns(extension);
+            application.AddModule(module.Object);
+            request.Stopwatch.Reset();
+            extension.WithPortalApplication(application);
+
+            var response = application.ProcessRequest(request);
+
+            using (var stream = new StreamReader(response.GetResponseStream()))
+            {
+                var readToEnd = stream.ReadToEnd();
+                Assert.That(readToEnd, Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Result><Count>0</Count><TotalCount>0</TotalCount><Results /></Result><Error Fullname=\"System.ArgumentOutOfRangeException\"><Message>Specified argument was out of the range of valid values.\r\nParameter name: Derived exceptions should also be written to output</Message></Error></PortalResponse>"));
+            }
+        }
 
         [Test]
         public void ProcessRequest_SimpleRequest_CallWithResponseOnExtension()
