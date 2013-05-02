@@ -14,7 +14,7 @@
       <arg value="/t:Rebuild" />
     </msbuild>
 
-    <ilmerge outputfile="Chaos.Portal.dll"
+    <ilmerge outputfile="Chaos.Portal.v6.dll"
              targetkind="dll"
              logfile="ilmerge.log"
              targetplatform="v4"
@@ -25,13 +25,13 @@
 		</librarypath>
 		
 		<inputassemblies>
-      <include name="..\src\app\Chaos.Portal\bin\Release\Chaos.Portal.dll" />	
       <include name="..\src\app\Chaos.Portal.Core\bin\Release\Chaos.Portal.Core.dll" />
+      <include name="..\src\app\Chaos.Portal.v6\bin\Release\Chaos.Portal.v6.dll" />
 		</inputassemblies>
 		
     </ilmerge>
 
-    <ilmerge outputfile="Chaos.Portal.Core.dll"
+    <ilmerge outputfile="Chaos.Portal.v5.dll"
              targetkind="dll"
              logfile="ilmerge.log"
              targetplatform="v4"
@@ -43,6 +43,7 @@
 
       <inputassemblies>
         <include name="..\src\app\Chaos.Portal.Core\bin\Release\Chaos.Portal.Core.dll" />
+        <include name="..\src\app\Chaos.Portal.v5\bin\Release\Chaos.Portal.v5.dll" />
       </inputassemblies>
 
     </ilmerge>
@@ -51,12 +52,23 @@
       <formatter type="Plain" />
       <test assemblyname="..\src\test\Chaos.Portal.Test\bin\Release\Chaos.Portal.Test.dll">
         <references>
-          <include name="Chaos.Portal.dll"/>
+          <include name="..\src\app\Chaos.Portal.Core\bin\Release\Chaos.Portal.Core.dll" />
           <include name="..\lib\*.dll"/>
         </references>
       </test>
     </nunit2>
-    
+
+    <nunit2>
+      <formatter type="Plain" />
+      <test assemblyname="..\src\test\Chaos.Portal.Protocol.Tests\bin\Release\Chaos.Portal.Protocol.Tests.dll">
+        <references>
+          <include name="Chaos.Portal.v5.dll"/>
+          <include name="Chaos.Portal.v6.dll"/>
+          <include name="..\lib\*.dll"/>
+        </references>
+      </test>
+    </nunit2>
+
   </target>
   
 </project>

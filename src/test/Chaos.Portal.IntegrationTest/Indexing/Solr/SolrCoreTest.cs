@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Chaos.Portal.Indexing.Solr;
+    using Chaos.Portal.Core.Indexing.Solr;
 
     using Moq;
 

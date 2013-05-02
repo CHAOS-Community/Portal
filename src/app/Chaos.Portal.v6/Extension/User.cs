@@ -4,7 +4,7 @@ namespace Chaos.Portal.v6.Extension
     using System.Linq;
 
     using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Extension;
+    using Chaos.Portal.Core.Extension;
 
     public class User : AExtension
     {

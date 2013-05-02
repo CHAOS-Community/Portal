@@ -3,8 +3,8 @@ namespace Chaos.Portal.Test.Indexing.View
     using System;
     using System.Collections.Generic;
 
-    using Chaos.Portal.Cache.Couchbase;
-    using Chaos.Portal.Indexing.View;
+    using Chaos.Portal.Core.Cache.Couchbase;
+    using Chaos.Portal.Core.Indexing.View;
 
     using Couchbase;
 
@@ -12,7 +12,7 @@ namespace Chaos.Portal.Test.Indexing.View
 
     using NUnit.Framework;
 
-    using IView = Chaos.Portal.Indexing.View.IView;
+    using IView = Chaos.Portal.Core.Indexing.View.IView;
 
     [TestFixture]
     public class ViewManagerTest

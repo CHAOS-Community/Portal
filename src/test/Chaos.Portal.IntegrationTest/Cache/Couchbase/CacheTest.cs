@@ -3,11 +3,10 @@
     using System;
     using System.Linq;
 
+    using Chaos.Portal.Core.Cache.Couchbase;
     using Chaos.Portal.Core.Data.Model;
 
     using NUnit.Framework;
-
-    using Chaos.Portal.Cache.Couchbase;
 
     using global::Couchbase;
 

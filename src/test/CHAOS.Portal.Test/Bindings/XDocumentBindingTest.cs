@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Xml.Linq;
 
-    using Chaos.Portal.Bindings.Standard;
+    using Chaos.Portal.Core.Bindings.Standard;
 
     using Moq;
 

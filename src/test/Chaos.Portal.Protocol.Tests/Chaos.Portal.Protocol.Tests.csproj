@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="v5\Extension\ClientSettingsTest.cs" />
     <Compile Include="v5\Extension\GroupTest.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="v5\TestBase.cs" />
     <Compile Include="v6\Extension\UserTest.cs" />
     <Compile Include="v6\Module\PortalModuleTest.cs" />
+    <Compile Include="v6\PortalApplicationTest.cs" />
     <Compile Include="v6\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>

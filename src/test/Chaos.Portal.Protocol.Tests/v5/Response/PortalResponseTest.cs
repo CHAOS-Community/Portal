@@ -4,8 +4,8 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
     using System.IO;
 
     using Chaos.Portal.Core.Exceptions;
-    using Chaos.Portal.Request;
-    using Chaos.Portal.Response.Dto;
+    using Chaos.Portal.Core.Request;
+    using Chaos.Portal.Core.Response.Dto;
 
     using NUnit.Framework;
 

@@ -4,15 +4,17 @@
     using System.Collections.Generic;
     using System.Diagnostics;
 
-    using Chaos.Portal.Cache;
+    using Chaos.Portal.Core;
+    using Chaos.Portal.Core.Cache;
     using Chaos.Portal.Core.Data;
     using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Extension;
+    using Chaos.Portal.Core.Indexing.View;
+    using Chaos.Portal.Core.Logging;
+    using Chaos.Portal.Core.Request;
     using Chaos.Portal.Core.Response;
-    using Chaos.Portal.Extension;
-    using Chaos.Portal.Indexing.View;
-    using Chaos.Portal.Logging;
-    using Chaos.Portal.Request;
     using Chaos.Portal.v5.Extension;
+    using Chaos.Portal.v6;
 
     using Moq;
 

@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    using Chaos.Portal.Bindings.Standard;
+    using Chaos.Portal.Core.Bindings.Standard;
     using Chaos.Portal.Core.Exceptions;
 
     using NUnit.Framework;

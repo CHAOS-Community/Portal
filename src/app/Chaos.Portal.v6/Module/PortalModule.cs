@@ -3,10 +3,10 @@ namespace Chaos.Portal.v6.Module
     using System.Collections.Generic;
     using System.Configuration;
 
+    using Chaos.Portal.Core;
     using Chaos.Portal.Core.Exceptions;
-    using Chaos.Portal.Extension;
-    using Chaos.Portal.Module;
-
+    using Chaos.Portal.Core.Extension;
+    using Chaos.Portal.Core.Module;
     using Chaos.Portal.v6.Extension;
 
     public class PortalModule : IModule

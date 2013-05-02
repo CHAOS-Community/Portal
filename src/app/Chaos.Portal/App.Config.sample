@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <connectionStrings>
-    <add name="PortalEntities" 
-         connectionString="metadata=res://*/Data.EF.Portal.csdl|res://*/Data.EF.Portal.ssdl|res://*/Data.EF.Portal.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;user id=;password=;server=;persist security info=True;database=&quot;" 
-         providerName="System.Data.EntityClient" />
-  </connectionStrings>
-</configuration>

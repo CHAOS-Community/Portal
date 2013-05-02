@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Chaos.Portal.Bindings.Standard;
+    using Chaos.Portal.Core.Bindings.Standard;
 
     using NUnit.Framework;
 

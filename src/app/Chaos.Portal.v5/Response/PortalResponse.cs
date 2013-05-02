@@ -8,9 +8,9 @@
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
+    using Chaos.Portal.Core.Request;
     using Chaos.Portal.Core.Response;
     using Chaos.Portal.Core.Response.Specification;
-    using Chaos.Portal.Request;
     using Chaos.Portal.v5.Response.Dto;
 
     public class PortalResponse : IPortalResponse

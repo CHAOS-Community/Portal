@@ -5,7 +5,7 @@
     using System.Text;
     using System.Xml.Linq;
 
-    using Chaos.Portal.Indexing.Solr;
+    using Chaos.Portal.Core.Indexing.Solr;
 
     using Moq;
 

@@ -6,8 +6,8 @@ namespace Chaos.Portal.v5.Extension
     using CHAOS.Serialization;
 
     using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Extension;
-    using Chaos.Portal.Indexing.Solr;
+    using Chaos.Portal.Core.Extension;
+    using Chaos.Portal.Core.Indexing.Solr;
 
     public class View : AExtension
     {

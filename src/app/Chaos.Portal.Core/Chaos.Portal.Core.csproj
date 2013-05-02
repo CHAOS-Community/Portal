@@ -33,17 +33,41 @@
     <Reference Include="CHAOS">
       <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
     </Reference>
+    <Reference Include="Couchbase">
+      <HintPath>..\..\..\lib\Couchbase.dll</HintPath>
+    </Reference>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\..\..\lib\Enyim.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Hammock">
+      <HintPath>..\..\..\lib\Hammock.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.6.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bindings\IParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\ConvertableParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\DateTimeParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\GuidParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\IEnumerableOfGuidBinding.cs" />
+    <Compile Include="Bindings\Standard\QueryParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\StringRequestBinding.cs" />
+    <Compile Include="Bindings\Standard\UUIDParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\XDocumentBinding.cs" />
+    <Compile Include="Cache\Couchbase\Cache.cs" />
+    <Compile Include="Cache\ICache.cs" />
     <Compile Include="Data\IPortalRepository.cs" />
     <Compile Include="Data\Mappings\ClientSettingsMapping.cs" />
     <Compile Include="Data\Mappings\GroupMapping.cs" />
@@ -81,7 +105,51 @@
     <Compile Include="Exceptions\UnsupportedExtensionReturnTypeException.cs" />
     <Compile Include="Exceptions\ViewNotLoadedException.cs" />
     <Compile Include="Exceptions\WrongProtocolVersionException.cs" />
+    <Compile Include="Extension\AExtension.cs" />
+    <Compile Include="Extension\IExtension.cs" />
+    <Compile Include="Indexing\Solr\Facet.cs" />
+    <Compile Include="Indexing\Solr\FacetFieldsResult.cs" />
+    <Compile Include="Indexing\Solr\FacetQueriesResult.cs" />
+    <Compile Include="Indexing\Solr\FacetResult.cs" />
+    <Compile Include="Indexing\Solr\GuidResult.cs" />
+    <Compile Include="Indexing\Solr\Header.cs" />
+    <Compile Include="Indexing\Solr\IdResult.cs" />
+    <Compile Include="Indexing\Solr\IFacet.cs" />
+    <Compile Include="Indexing\Solr\IFacetFieldsResult.cs" />
+    <Compile Include="Indexing\Solr\IFacetQueriesResult.cs" />
+    <Compile Include="Indexing\Solr\IFacetsResult.cs" />
+    <Compile Include="Indexing\Solr\IIndex.cs" />
+    <Compile Include="Indexing\Solr\IIndexable.cs" />
+    <Compile Include="Indexing\Solr\IIndexResponse.cs" />
+    <Compile Include="Indexing\Solr\IIndexResult.cs" />
+    <Compile Include="Indexing\Solr\IQuery.cs" />
+    <Compile Include="Indexing\Solr\QueryResult.cs" />
+    <Compile Include="Indexing\Solr\Response.cs" />
+    <Compile Include="Indexing\Solr\SolrCore.cs" />
+    <Compile Include="Indexing\Solr\SolrQuery.cs" />
+    <Compile Include="Indexing\View\AView.cs" />
+    <Compile Include="Indexing\View\IView.cs" />
+    <Compile Include="Indexing\View\IViewData.cs" />
+    <Compile Include="Indexing\View\IViewManager.cs" />
+    <Compile Include="Indexing\View\ViewManager.cs" />
+    <Compile Include="IPortalApplication.cs" />
+    <Compile Include="Logging\ALog.cs" />
+    <Compile Include="Logging\Database\DatabaseLogger.cs" />
+    <Compile Include="Logging\Database\DatabaseLoggerFactory.cs" />
+    <Compile Include="Logging\DirectLogger.cs" />
+    <Compile Include="Logging\ILog.cs" />
+    <Compile Include="Logging\ILogFactory.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Module\IModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\FileStream.cs" />
+    <Compile Include="Request\IPortalRequest.cs" />
+    <Compile Include="Request\PortalRequest.cs" />
+    <Compile Include="Response\Dto\PagedResult.cs" />
+    <Compile Include="Response\Dto\PortalError.cs" />
+    <Compile Include="Response\Dto\PortalHeader.cs" />
+    <Compile Include="Response\Dto\PortalResponse.cs" />
+    <Compile Include="Response\Dto\PortalResult.cs" />
     <Compile Include="Response\IPortalError.cs" />
     <Compile Include="Response\IPortalHeader.cs" />
     <Compile Include="Response\IPortalResponse.cs" />
