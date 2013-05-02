@@ -1,7 +1,5 @@
 namespace Chaos.Portal.v5.Extension
 {
-    using System.Collections.Generic;
-
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Extension;
 
@@ -9,16 +7,10 @@ namespace Chaos.Portal.v5.Extension
     {
         #region Get
 
-        public IEnumerable<UserInfo> Get()
+        public UserInfo Get()
         {
-	        return PortalRepository.UserInfoGet(null, null, null);
+            return User;
         }
-
-		public UserInfo GetCurrent()
-		{
-			return User;
-		}
-
 
         #endregion
     }

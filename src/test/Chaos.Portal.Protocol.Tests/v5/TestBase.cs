@@ -144,6 +144,11 @@
             return new PortalApplication( Cache.Object, ViewManager.Object, PortalRepository.Object, LoggingFactory.Object );
         }
 
+        protected Portal.v5.Extension.User Make_UserExtension()
+        {
+            return (Portal.v5.Extension.User)new Portal.v5.Extension.User().WithPortalApplication(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
+        }
+
         #endregion
     }
 }

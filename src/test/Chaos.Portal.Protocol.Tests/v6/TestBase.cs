@@ -144,11 +144,11 @@
             return new PortalApplication( Cache.Object, ViewManager.Object, PortalRepository.Object, LoggingFactory.Object );
         }
 
-        #endregion
+        protected Portal.v6.Extension.User Make_UserExtension()
+        {
+            return (Portal.v6.Extension.User)new Portal.v6.Extension.User().WithPortalApplication(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
+        }
 
-	    protected Portal.v6.Extension.User Make_UserExtension()
-	    {
-		    return (Portal.v6.Extension.User) new Portal.v6.Extension.User().WithPortalApplication(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
-	    }
+        #endregion
     }
 }

@@ -14,6 +14,16 @@ namespace Chaos.Portal.Protocol.Tests.v6.Extension
 	public class UserTest : TestBase
 	{
 		[Test]
+		public void GetCurrent_ReturnCurrentUser()
+		{
+			var user = Make_UserExtension();
+
+			var result = user.GetCurrent();
+
+            Assert.That(result.Guid, Is.EqualTo(Make_User().Guid));
+		}
+
+		[Test]
 		public void Get_HasAdminSystemPermission_ReturnAllUsers()
 		{
 			var user  = Make_UserExtension();

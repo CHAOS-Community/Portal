@@ -6,10 +6,8 @@ namespace Chaos.Portal.v6.Module
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Module;
-    using Chaos.Portal.v5;
-    using Chaos.Portal.v5.Extension;
 
-    using User = Chaos.Portal.v6.Extension.User;
+    using Chaos.Portal.v6.Extension;
 
     public class PortalModule : IModule
     {
@@ -56,19 +54,19 @@ namespace Chaos.Portal.v6.Module
             switch(name)
             {
                 case "ClientSettings":
-                    return new ClientSettings().WithPortalApplication(_portalApplication);
+                    return new v5.Extension.ClientSettings().WithPortalApplication(_portalApplication);
                 case "Group":
-                    return new Group().WithPortalApplication(_portalApplication);
+                    return new v5.Extension.Group().WithPortalApplication(_portalApplication);
                 case "Session":
-                    return new Session().WithPortalApplication(_portalApplication);
+                    return new v5.Extension.Session().WithPortalApplication(_portalApplication);
                 case "Subscription":
-                    return new Subscription().WithPortalApplication(_portalApplication);
+                    return new v5.Extension.Subscription().WithPortalApplication(_portalApplication);
                 case "User":
                     return new User().WithPortalApplication(_portalApplication);
                 case "UserSettings":
-                    return new UserSettings().WithPortalApplication(_portalApplication);
+                    return new v5.Extension.UserSettings().WithPortalApplication(_portalApplication);
                 case "View":
-                    return new View().WithPortalApplication(_portalApplication);
+                    return new v5.Extension.View().WithPortalApplication(_portalApplication);
                 default:
                     throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
             }
