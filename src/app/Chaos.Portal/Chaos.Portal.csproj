@@ -79,7 +79,6 @@
     <Compile Include="Extension\Group.cs" />
     <Compile Include="Extension\Session.cs" />
     <Compile Include="Extension\Subscription.cs" />
-    <Compile Include="Extension\User.cs" />
     <Compile Include="Extension\UserSettings.cs" />
     <Compile Include="Extension\View.cs" />
     <Compile Include="Indexing\Solr\IdResult.cs" />
@@ -111,7 +110,6 @@
     <Compile Include="Logging\DirectLogger.cs" />
     <Compile Include="Logging\ILogFactory.cs" />
     <Compile Include="Module\IModule.cs" />
-    <Compile Include="Module\PortalModule.cs" />
     <Compile Include="Response\Dto\PagedResult.cs" />
     <Compile Include="Response\Dto\PortalError.cs" />
     <Compile Include="Response\Dto\PortalHeader.cs" />

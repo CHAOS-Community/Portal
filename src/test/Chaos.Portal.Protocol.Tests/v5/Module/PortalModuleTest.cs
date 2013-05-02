@@ -1,4 +1,4 @@
-namespace Chaos.Portal.v5.Tests.Module
+namespace Chaos.Portal.Protocol.Tests.v5.Module
 {
     using Chaos.Portal.Core.Data;
     using Chaos.Portal.Extension;
@@ -67,7 +67,7 @@ namespace Chaos.Portal.v5.Tests.Module
 
             var clientSettingsExtension = module.GetExtension("User");
 
-            Assert.That(clientSettingsExtension, Is.InstanceOf<v5.Extension.User>());
+            Assert.That(clientSettingsExtension, Is.InstanceOf<Portal.v5.Extension.User>());
             Assert.That(clientSettingsExtension.PortalApplication, Is.EqualTo(application.Object));
         }
     }

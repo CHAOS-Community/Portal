@@ -12,7 +12,6 @@
     using Chaos.Portal.Indexing.View;
     using Chaos.Portal.Logging;
     using Chaos.Portal.Request;
-    using Chaos.Portal.Response;
 
     using Moq;
 
@@ -145,10 +144,5 @@
         }
 
         #endregion
-
-	    protected Portal.Extension.User Make_UserExtension()
-	    {
-		    return (Portal.Extension.User) new Portal.Extension.User().WithPortalApplication(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
-	    }
     }
 }

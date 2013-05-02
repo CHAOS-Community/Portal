@@ -1,11 +1,12 @@
-﻿namespace Chaos.Portal.Test.Module
+namespace Chaos.Portal.Protocol.Tests.v6.Module
 {
     using System.Configuration;
     using System.Linq;
 
     using Chaos.Portal.Core.Data;
     using Chaos.Portal.Extension;
-    using Chaos.Portal.Module;
+    using Chaos.Portal.v6.Extension;
+    using Chaos.Portal.v6.Module;
 
     using Moq;
 

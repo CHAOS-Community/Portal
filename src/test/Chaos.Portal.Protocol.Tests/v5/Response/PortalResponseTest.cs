@@ -1,9 +1,8 @@
-﻿namespace Chaos.Portal.v5.Tests.Response
+namespace Chaos.Portal.Protocol.Tests.v5.Response
 {
     using System;
     using System.IO;
 
-    using Chaos.Portal.Core;
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Request;
     using Chaos.Portal.Response.Dto;
@@ -17,7 +16,7 @@
         public void GetResponseStream_GivenSimpleIntegerResult_ReturnsXmlContainingScalarResult()
         {
             var request  = new PortalRequest();
-            var response = new v5.Response.PortalResponse(request);
+            var response = new Portal.v5.Response.PortalResponse(request);
             request.Stopwatch.Reset();
 
             response.WriteToResponse(1234);
@@ -32,7 +31,7 @@
         public void GetResponseStream_GivenSimpleUnsigndIntegerResult_ReturnsXmlContainingScalarResult()
         {
             var request = new PortalRequest();
-            var response = new v5.Response.PortalResponse(request);
+            var response = new Portal.v5.Response.PortalResponse(request);
             request.Stopwatch.Reset();
 
             response.WriteToResponse(1234u);
@@ -47,7 +46,7 @@
         public void GetResponseStream_GivenAComplexDto_ReturnsAsXml()
         {
             var request = new PortalRequest();
-            var response = new v5.Response.PortalResponse(request);
+            var response = new Portal.v5.Response.PortalResponse(request);
             request.Stopwatch.Reset();
 
             response.WriteToResponse(new Core.Data.Model.Module{ ID = 4321});
@@ -62,7 +61,7 @@
         public void GetResponseStream_GivenAListOfComplexDtos_ReturnsAsXml()
         {
             var request = new PortalRequest();
-            var response = new v5.Response.PortalResponse(request);
+            var response = new Portal.v5.Response.PortalResponse(request);
             var modules = new[] { new Core.Data.Model.Module { ID = 4321 }, new Core.Data.Model.Module { ID = 1234 }};
             request.Stopwatch.Reset();
             
@@ -78,7 +77,7 @@
         public void GetResponseStream_GivenAPagedListOfComplexDtos_ReturnsAsXml()
         {
             var request = new PortalRequest();
-            var response = new v5.Response.PortalResponse(request);
+            var response = new Portal.v5.Response.PortalResponse(request);
             var modules = new PagedResult<Core.Data.Model.Module>(2, 2, new[] { new Core.Data.Model.Module { ID = 4321 }, new Core.Data.Model.Module { ID = 1234 } });
             request.Stopwatch.Reset();
 
@@ -94,7 +93,7 @@
         public void GetResponseStream_GivenAnException_ReturnsAsErrorXml()
         {
             var request = new PortalRequest();
-            var response = new v5.Response.PortalResponse(request);
+            var response = new Portal.v5.Response.PortalResponse(request);
             request.Stopwatch.Reset();
 
             response.WriteToResponse(new ArgumentException());
@@ -110,7 +109,7 @@
         public void GetResponseStream_GivenAnUnsupportedResult_ReturnsAsErrorXml()
         {
             var request = new PortalRequest();
-            var response = new v5.Response.PortalResponse(request);
+            var response = new Portal.v5.Response.PortalResponse(request);
             request.Stopwatch.Reset();
 
             response.WriteToResponse(new object());
@@ -122,7 +121,7 @@
             var request = new PortalRequest();
             request.Parameters.Add("format", "attachment");
 
-            using (var response = new v5.Response.PortalResponse(request))
+            using (var response = new Portal.v5.Response.PortalResponse(request))
             {
                 request.Stopwatch.Reset();
 

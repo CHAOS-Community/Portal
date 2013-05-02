@@ -1,4 +1,4 @@
-﻿namespace Chaos.Portal.Test.Extension
+﻿namespace Chaos.Portal.Protocol.Tests.v5.Extension
 {
     using System;
 

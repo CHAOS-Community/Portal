@@ -31,16 +31,29 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extension\User.cs" />
+    <Compile Include="Module\PortalModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Chaos.Portal.Core\Chaos.Portal.Core.csproj">
+      <Project>{3D78618A-8343-4966-9006-5C01EAD11386}</Project>
+      <Name>Chaos.Portal.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chaos.Portal.v5\Chaos.Portal.v5.csproj">
+      <Project>{07692354-27f8-485b-8180-30c0e83da41e}</Project>
+      <Name>Chaos.Portal.v5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chaos.Portal\Chaos.Portal.csproj">
+      <Project>{9D3A1974-1D8A-4A6E-96AD-3D4B211BF475}</Project>
+      <Name>Chaos.Portal</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
