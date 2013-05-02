@@ -5,14 +5,8 @@ namespace Chaos.Portal.Extension
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Data.Model;
 
-    [PortalExtension( configurationName : "Portal" )]
     public class ClientSettings : AExtension
     {
-        #region Initialization
-
-        public override IExtension WithConfiguration( string configuration ) { return this; }
-
-        #endregion
         #region Get
 
         public Core.Data.Model.ClientSettings Get( Guid guid )

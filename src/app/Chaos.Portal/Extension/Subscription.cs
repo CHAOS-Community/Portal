@@ -6,14 +6,8 @@ namespace Chaos.Portal.Extension
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
 
-    [PortalExtension(configurationName: "Portal")]
     public class Subscription : AExtension
     {
-        #region Initialization
-
-        public override IExtension WithConfiguration(string configuration) { return this; }
-
-        #endregion
         #region Get
 
         public IEnumerable<SubscriptionInfo> Get( Guid guid )

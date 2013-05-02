@@ -2,14 +2,8 @@ namespace Chaos.Portal.Extension
 {
     using Chaos.Portal.Core.Data.Model;
 
-    [PortalExtension(configurationName : "Portal")]
     public class Session : AExtension
     {
-        #region Initialization
-
-        public override IExtension WithConfiguration(string configuration) { return this; }
-
-        #endregion
         #region Business Logic
 
         #region Get

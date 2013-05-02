@@ -6,14 +6,8 @@ namespace Chaos.Portal.Extension
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
 
-    [PortalExtension(configurationName: "Portal")]
     public class Group : AExtension
     {
-        #region Initialization
-
-        public override IExtension WithConfiguration(string configuration) { return this; }
-
-        #endregion
         #region Get
         
         public IEnumerable<Core.Data.Model.Group> Get()
@@ -28,7 +22,7 @@ namespace Chaos.Portal.Extension
         {
             if(!User.HasPermission(SystemPermissons.CreateGroup) ) throw new InsufficientPermissionsException( "User does not have permission to create groups" );
 
-            return PortalRepository.GroupCreate(new Guid(), name, User.Guid, systemPermission);
+            return PortalRepository.GroupCreate(Guid.NewGuid(), name, User.Guid, systemPermission);
         }
 
         #endregion

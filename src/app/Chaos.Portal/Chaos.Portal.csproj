@@ -120,7 +120,6 @@
     <Compile Include="Response\Dto\PortalResponse.cs" />
     <Compile Include="Response\Dto\PortalResult.cs" />
     <Compile Include="Extension\AExtension.cs" />
-    <Compile Include="Extension\PortalExtensionAttribute.cs" />
     <Compile Include="Extension\IExtension.cs" />
     <Compile Include="IPortalAction.cs" />
     <Compile Include="Logging\ALog.cs" />

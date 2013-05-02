@@ -14,7 +14,6 @@
     using Chaos.Portal.Indexing.View;
     using Chaos.Portal.Logging;
     using Chaos.Portal.Request;
-    using Chaos.Portal.Response;
 
     public abstract class AExtension : IExtension
     {
@@ -43,8 +42,6 @@
         {
             MethodInfos = new Dictionary<string, MethodInfo>();
         }
-
-        public abstract IExtension WithConfiguration(string configuration);
 
         public IExtension WithPortalApplication(IPortalApplication portalApplication)
         {

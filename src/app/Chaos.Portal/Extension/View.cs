@@ -10,12 +10,6 @@ namespace Chaos.Portal.Extension
 
     public class View : AExtension
     {
-        #region Initialization
-
-        public override IExtension WithConfiguration( string configuration ) { return this; }
-
-        #endregion
-        
         public IPagedResult<IResult> Get(string view, IQuery query )
         {
             return ViewManager.Query(view, query);
