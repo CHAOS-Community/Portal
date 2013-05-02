@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Chaos.Portal.Extension
 {
@@ -10,7 +11,12 @@ namespace Chaos.Portal.Extension
 
         public IEnumerable<UserInfo> Get()
         {
-	        return PortalRepository.UserInfoGet(null, null, null);
+			if (User.SystemPermissonsEnum.HasFlag(SystemPermissons.UserManager))
+				return PortalRepository.UserInfoGet(null, null, null);
+
+	        var result = PortalRepository.UserInfoGetWithGroupPermission(User.Guid);
+
+	        return result.Any() ? result : new[] {User};
         }
 
 		public UserInfo GetCurrent()

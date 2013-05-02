@@ -40,9 +40,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\Couchbase.dll</HintPath>
     </Reference>
-    <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\app\Chaos.Portal\bin\Debug\Enyim.Caching.dll</HintPath>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\..\..\lib\Enyim.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\..\..\tools\Moq.4.0.10827\NET40\Moq.dll</HintPath>
@@ -66,6 +65,7 @@
     <Compile Include="Extension\GroupTest.cs" />
     <Compile Include="Extension\SessionTest.cs" />
     <Compile Include="Extension\SubscriptionTest.cs" />
+    <Compile Include="Extension\UserTest.cs" />
     <Compile Include="Indexing\Solr\SolrCoreTest.cs" />
     <Compile Include="Indexing\Solr\TestBase.cs" />
     <Compile Include="Indexing\View\ViewManagerTest.cs" />

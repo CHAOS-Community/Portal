@@ -9,6 +9,7 @@ namespace Chaos.Portal.Core.Data.Model
         CreateGroup        = 1 << 0,
         CreateSubscription = 1 << 1,
         Manage             = 1 << 2,
-        All                = CreateGroup | CreateSubscription | Manage
+        UserManager        = 1 << 3,
+        All                = uint.MaxValue
     }
 }
