@@ -56,7 +56,15 @@ namespace Chaos.Portal.Core.Data
                 });
         }
 
-        public uint UserCreate(Guid guid, string email)
+	    public IEnumerable<UserInfo> UserInfoGetWithGroupPermission(Guid userGuid)
+	    {
+			return Gateway.ExecuteQuery<UserInfo>("UserInfo_GetWithGroupPermission", new[]
+                {
+                    new MySqlParameter("Guid", userGuid.ToByteArray())
+                });
+	    }
+
+	    public uint UserCreate(Guid guid, string email)
         {
             var result = Gateway.ExecuteNonQuery("User_Create", new[]
                 {

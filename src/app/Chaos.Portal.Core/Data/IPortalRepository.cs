@@ -11,6 +11,7 @@
 
         UserInfo UserInfoGet(string email);
         IEnumerable<UserInfo> UserInfoGet(Guid? userGuid, Guid? sessionGuid, string email);
+		IEnumerable<UserInfo> UserInfoGetWithGroupPermission(Guid userGuid);
         uint UserCreate(Guid guid, string email);
 
         IEnumerable<SubscriptionInfo> SubscriptionGet(Guid? guid, Guid? requestingUserGuid);
@@ -38,5 +39,6 @@
         uint LogCreate(string name, Guid? sessionGuid, string level, double? duration, string message);
 
         Module ModuleGet(string name);
+	    
     }
 }

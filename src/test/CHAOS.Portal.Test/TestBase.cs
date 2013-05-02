@@ -57,7 +57,7 @@
 
             PortalApplication.SetupGet(p => p.PortalRepository).Returns(PortalRepository.Object);
             PortalRepository.Setup(m => m.SessionGet(It.IsAny<Guid?>(), null)).Returns(new[] {Make_Session() });
-            PortalRepository.Setup(m => m.UserInfoGet(null, It.IsAny<Guid?>(), null)).Returns(new[] { Make_User() });
+            PortalRepository.Setup(m => m.UserInfoGet(null, It.Is<Guid?>(item => item.HasValue), null)).Returns(new[] { Make_User() });
             PortalRequest.SetupGet(p => p.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
             LoggingFactory.Setup(m => m.Create()).Returns(Log.Object);
             Log.Setup(m => m.WithLoglevel(It.IsAny<LogLevel>())).Returns(Log.Object);
@@ -145,5 +145,10 @@
         }
 
         #endregion
+
+	    protected Portal.Extension.User Make_UserExtension()
+	    {
+		    return (Portal.Extension.User) new Portal.Extension.User().WithPortalApplication(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
+	    }
     }
 }

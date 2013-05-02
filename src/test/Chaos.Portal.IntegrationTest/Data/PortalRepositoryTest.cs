@@ -70,6 +70,16 @@
             Assert.That(actual.Email, Is.EqualTo(userThatExist.Email));
         }
 
+        [Test]
+		public void UserInfoGetWithGroupPermission_GiveUserWithPermissionToGroup_ReturnAListOfUsers()
+        {
+            var userThatExist = Make_UserInfoThatExist();
+
+            var actual = PortalRepository.UserInfoGetWithGroupPermission(userThatExist.Guid);
+
+            Assert.That(actual.Count(), Is.EqualTo(2));
+        }
+
         [Test, ExpectedException(typeof(ArgumentException))]
         public void UserInfoGet_ByEmailGiveUserTheDoesntExist_ThrowArgumentException()
         {
