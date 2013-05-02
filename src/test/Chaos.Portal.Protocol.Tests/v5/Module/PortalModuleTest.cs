@@ -2,6 +2,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Module
 {
     using Chaos.Portal.Core.Data;
     using Chaos.Portal.Extension;
+    using Chaos.Portal.v5.Extension;
     using Chaos.Portal.v5.Module;
 
     using Moq;

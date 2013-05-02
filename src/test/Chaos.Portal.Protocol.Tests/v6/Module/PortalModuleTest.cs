@@ -5,12 +5,15 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
 
     using Chaos.Portal.Core.Data;
     using Chaos.Portal.Extension;
-    using Chaos.Portal.v6.Extension;
+    using Chaos.Portal.v5;
+    using Chaos.Portal.v5.Extension;
     using Chaos.Portal.v6.Module;
 
     using Moq;
 
     using NUnit.Framework;
+
+    using User = Chaos.Portal.v6.Extension.User;
 
     [TestFixture]
     public class PortalModuleTest

@@ -6,6 +6,7 @@
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Extension;
     using Chaos.Portal.Module;
+    using Chaos.Portal.v5.Extension;
 
     using User = Chaos.Portal.v5.Extension.User;
 

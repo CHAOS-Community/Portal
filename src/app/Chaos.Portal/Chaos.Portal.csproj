@@ -75,12 +75,6 @@
     <None Include="App.config.sample">
       <SubType>Designer</SubType>
     </None>
-    <Compile Include="Extension\ClientSettings.cs" />
-    <Compile Include="Extension\Group.cs" />
-    <Compile Include="Extension\Session.cs" />
-    <Compile Include="Extension\Subscription.cs" />
-    <Compile Include="Extension\UserSettings.cs" />
-    <Compile Include="Extension\View.cs" />
     <Compile Include="Indexing\Solr\IdResult.cs" />
     <Compile Include="Indexing\Solr\Facet.cs" />
     <Compile Include="Indexing\Solr\FacetQueriesResult.cs" />

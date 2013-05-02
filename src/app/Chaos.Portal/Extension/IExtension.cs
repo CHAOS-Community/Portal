@@ -1,6 +1,4 @@
-﻿using Chaos.Portal.Response;
-
-namespace Chaos.Portal.Extension
+﻿namespace Chaos.Portal.Extension
 {
     using Chaos.Portal.Core.Response;
     using Chaos.Portal.Request;

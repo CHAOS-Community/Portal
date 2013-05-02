@@ -1,9 +1,10 @@
-namespace Chaos.Portal.Extension
+namespace Chaos.Portal.v5.Extension
 {
     using System;
 
-    using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Exceptions;
+    using Chaos.Portal.Extension;
 
     public class ClientSettings : AExtension
     {

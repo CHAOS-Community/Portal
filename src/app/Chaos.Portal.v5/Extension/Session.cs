@@ -1,6 +1,7 @@
-namespace Chaos.Portal.Extension
+namespace Chaos.Portal.v5.Extension
 {
     using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Extension;
 
     public class Session : AExtension
     {

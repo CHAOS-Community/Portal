@@ -12,14 +12,15 @@
     using Chaos.Portal.Indexing.View;
     using Chaos.Portal.Logging;
     using Chaos.Portal.Request;
+    using Chaos.Portal.v5.Extension;
 
     using Moq;
 
     using NUnit.Framework;
 
-    using ClientSettings = Chaos.Portal.Extension.ClientSettings;
-    using Group = Chaos.Portal.Extension.Group;
-    using Session = Chaos.Portal.Extension.Session;
+    using ClientSettings = Chaos.Portal.v5.Extension.ClientSettings;
+    using Group = Chaos.Portal.v5.Extension.Group;
+    using Session = Chaos.Portal.v5.Extension.Session;
 
     [TestFixture]
     public class TestBase

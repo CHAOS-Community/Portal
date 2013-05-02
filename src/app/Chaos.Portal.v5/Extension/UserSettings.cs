@@ -1,9 +1,10 @@
-namespace Chaos.Portal.Extension
+namespace Chaos.Portal.v5.Extension
 {
     using System;
     using System.Collections.Generic;
 
     using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Extension;
 
     public class UserSettings : AExtension
     {
