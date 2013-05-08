@@ -104,5 +104,41 @@ namespace Chaos.Portal.Protocol.Tests.v6.Extension
 
 			user.Create(null, "name@domain.com");
 		}
+
+		[Test]
+		public void Update_WithAdminSystemPermission_UpdateUser()
+		{
+			var user = Make_UserExtension();
+			var currentUser = Make_User();
+			var updatedUser = Make_User();
+
+			PortalRepository.Setup(p => p.UserUpdate(It.IsAny<Guid>(), It.IsAny<string>(), It.Is<uint?>(v => v.HasValue))).Returns(1);
+
+			PortalRepository.Setup(m => m.UserInfoGet(null, It.Is<Guid?>(item => item.HasValue), null)).Returns(new[] { currentUser }); //Return the current user for permission check
+			PortalRepository.Setup(p => p.UserInfoGet(It.Is<Guid?>(i => i.HasValue), null, null)).Returns(new[] { updatedUser }); //Return the updated user
+			PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
+
+			var result = user.Update(updatedUser.Guid, updatedUser.Email, updatedUser.SystemPermissions);
+
+			Assert.That(result, Is.EqualTo(updatedUser));
+		}
+
+		[Test]
+		public void Delete_WithAdminSystemPermission_DeleteUser()
+		{
+			var user = Make_UserExtension();
+			var currentUser = Make_User();
+			var deleteUserGuid = Guid.NewGuid();
+
+			PortalRepository.Setup(p => p.UserDelete(deleteUserGuid)).Returns(1);
+
+			PortalRepository.Setup(m => m.UserInfoGet(null, It.Is<Guid?>(item => item.HasValue), null)).Returns(new[] { currentUser }); //Return the current user for permission check
+			PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
+
+			var result = user.Delete(deleteUserGuid);
+
+			Assert.That(result, Is.Not.Null);
+			Assert.That(result.Value, Is.EqualTo(1));
+		}
 	}
 }

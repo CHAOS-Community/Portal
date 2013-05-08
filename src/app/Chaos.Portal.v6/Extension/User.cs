@@ -30,9 +30,15 @@ namespace Chaos.Portal.v6.Extension
 		#endregion
 		#region Update
 
-		public UserInfo Update(Guid guid, string email, SystemPermissons? permissons)
+		public UserInfo Update(Guid guid, string email, uint? permissons)
 		{
-			throw new NotImplementedException();
+			if(!User.HasPermission(SystemPermissons.UserManager) && (guid != User.Guid || permissons.HasValue))
+				throw new InsufficientPermissionsException();
+
+			if(PortalRepository.UserUpdate(guid, email, permissons) <= 0)
+				throw new Exception("Failed to update user");
+
+			return PortalRepository.UserInfoGet(guid, null, null).First();
 		}
 
 		#endregion
@@ -40,7 +46,15 @@ namespace Chaos.Portal.v6.Extension
 
 		public ScalarResult Delete(Guid guid)
 		{
-			throw new NotImplementedException();
+			if (!User.HasPermission(SystemPermissons.UserManager))
+				throw new InsufficientPermissionsException();
+
+			var result = new ScalarResult((int) PortalRepository.UserDelete(guid));
+
+			if(result.Value <= 0)
+				throw new Exception("Failed to delete user");
+
+			return result;
 		}
 
 		#endregion
