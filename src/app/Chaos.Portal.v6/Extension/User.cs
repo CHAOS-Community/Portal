@@ -1,3 +1,6 @@
+using System;
+using Chaos.Portal.Core.Exceptions;
+
 namespace Chaos.Portal.v6.Extension
 {
     using System.Collections.Generic;
@@ -16,9 +19,52 @@ namespace Chaos.Portal.v6.Extension
         }
 
         #endregion
-        #region Get
+	
+		#region Create
 
-        public IEnumerable<UserInfo> Get()
+		public UserInfo Create(Guid? guid, string email)
+		{
+			if (!Request.User.HasPermission(SystemPermissons.UserManager)) throw new InsufficientPermissionsException();
+
+			if (!guid.HasValue)
+				guid = Guid.NewGuid();
+
+			if(PortalRepository.UserCreate(guid.Value, email) <= 0)
+				throw new Exception("Failed to create user");
+			
+			return PortalRepository.UserInfoGet(guid, null, null).First();
+		}
+
+		#endregion
+		#region Update
+
+		public UserInfo Update(Guid guid, string email, uint? permissons)
+		{
+            if(!Request.User.HasPermission(SystemPermissons.UserManager) && (guid != Request.User.Guid || permissons.HasValue)) throw new InsufficientPermissionsException();
+            if(PortalRepository.UserUpdate(guid, email, permissons) <= 0)throw new Exception("Failed to update user");
+
+			return PortalRepository.UserInfoGet(guid, null, null).First();
+		}
+
+		#endregion
+		#region Delete
+
+		public ScalarResult Delete(Guid guid)
+		{
+            if (!Request.User.HasPermission(SystemPermissons.UserManager)) throw new InsufficientPermissionsException();
+
+			var result = new ScalarResult((int) PortalRepository.UserDelete(guid));
+
+			if(result.Value <= 0)
+				throw new Exception("Failed to delete user");
+
+			return result;
+		}
+
+		#endregion
+		#region Get
+
+		public IEnumerable<UserInfo> Get()
         {
             if (Request.User.SystemPermissonsEnum.HasFlag(SystemPermissons.UserManager))
 				return PortalRepository.UserInfoGet(null, null, null);
@@ -32,7 +78,6 @@ namespace Chaos.Portal.v6.Extension
 		{
             return Request.User;
 		}
-
 
         #endregion
     }

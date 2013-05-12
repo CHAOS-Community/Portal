@@ -13,6 +13,8 @@
         IEnumerable<UserInfo> UserInfoGet(Guid? userGuid, Guid? sessionGuid, string email);
 		IEnumerable<UserInfo> UserInfoGetWithGroupPermission(Guid userGuid);
         uint UserCreate(Guid guid, string email);
+        uint UserDelete(Guid guid);
+        uint UserUpdate(Guid guid, string email, uint? SystemPermission);
 
         IEnumerable<SubscriptionInfo> SubscriptionGet(Guid? guid, Guid? requestingUserGuid);
         SubscriptionInfo SubscriptionCreate(Guid? guid, string name, Guid requestingUserGuid);

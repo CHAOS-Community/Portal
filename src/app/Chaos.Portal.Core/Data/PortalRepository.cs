@@ -75,7 +75,17 @@ namespace Chaos.Portal.Core.Data
             return (uint)result;
         }
 
-        public UserInfo UserInfoGet(string email)
+	    public uint UserDelete(Guid guid)
+	    {
+		    throw new NotImplementedException();
+	    }
+
+	    public uint UserUpdate(Guid guid, string email, uint? SystemPermission)
+	    {
+		    throw new NotImplementedException();
+	    }
+
+	    public UserInfo UserInfoGet(string email)
         {
             var user = UserInfoGet(null, null, email).FirstOrDefault();
             
