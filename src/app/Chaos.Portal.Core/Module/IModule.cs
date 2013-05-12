@@ -6,9 +6,9 @@ namespace Chaos.Portal.Core.Module
 
     public interface IModule
     {
-        IEnumerable<string> GetExtensionNames();
-        IExtension GetExtension(string name);
-        IExtension GetExtension<TExtension>() where TExtension : IExtension;
+        IEnumerable<string> GetExtensionNames(Protocol version);
+        IExtension GetExtension(Protocol version, string name);
+        IExtension GetExtension<TExtension>(Protocol version) where TExtension : IExtension;
 
         void Load(IPortalApplication portalApplication);
     }

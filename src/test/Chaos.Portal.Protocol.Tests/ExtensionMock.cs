@@ -2,10 +2,15 @@ namespace Chaos.Portal.Protocol.Tests
 {
     using System;
 
+    using Chaos.Portal.Core;
     using Chaos.Portal.Core.Extension;
 
     public class ExtensionMock : AExtension
     {
+        public ExtensionMock(IPortalApplication portalApplication): base(portalApplication)
+        {
+        }
+
         public int test()
         {
             return 1;
@@ -13,7 +18,7 @@ namespace Chaos.Portal.Protocol.Tests
 
         public int error()
         {
-            throw new ArgumentOutOfRangeException("Derived exceptions should also be written to output");
+            throw new ArgumentException();
         }
     }
 }

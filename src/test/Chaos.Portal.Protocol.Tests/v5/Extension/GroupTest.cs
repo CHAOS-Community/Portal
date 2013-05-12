@@ -17,7 +17,7 @@
         {
             var extension = Make_GroupExtension();
             var expected  = Make_Group();
-            PortalRepository.Setup(m => m.GroupGet(null, null, It.IsAny<Guid?>())).Returns(new[] { expected });
+            PortalRequest.SetupGet(p => p.Groups).Returns(new[] { expected });
 
             var result = extension.Get().ToList();
 
@@ -45,7 +45,7 @@
             var expected  = Make_Group();
             var user      = Make_User();
             user.SystemPermissions = 0;
-            PortalRepository.Setup(m => m.UserInfoGet(null, It.IsAny<Guid?>(), null)).Returns(new[] { user });
+            PortalRequest.SetupGet(p => p.User).Returns(user);
 
             extension.Create(expected.Name, (uint)expected.SystemPermission);
         }

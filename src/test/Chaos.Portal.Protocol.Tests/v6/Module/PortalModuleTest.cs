@@ -5,9 +5,10 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
 
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data;
+    using Chaos.Portal.Core.Module;
+    using Chaos.Portal.Module;
     using Chaos.Portal.v5;
     using Chaos.Portal.v5.Extension;
-    using Chaos.Portal.v6.Module;
 
     using Moq;
 
@@ -28,9 +29,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var clientSettingsExtension = module.GetExtension("ClientSettings");
+            var clientSettingsExtension = (ClientSettings) module.GetExtension(Protocol.V6, "ClientSettings");
 
-            Assert.That(clientSettingsExtension, Is.InstanceOf<ClientSettings>());
             Assert.That(clientSettingsExtension.PortalApplication, Is.EqualTo(application.Object));
         }
 
@@ -43,9 +43,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = module.GetExtension("Group");
+            var groupExtension = (Group) module.GetExtension(Protocol.V6, "Group");
 
-            Assert.That(groupExtension, Is.InstanceOf<Group>());
             Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
         }
 
@@ -58,9 +57,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = module.GetExtension("Session");
+            var groupExtension = (Session) module.GetExtension(Protocol.V6, "Session");
 
-            Assert.That(groupExtension, Is.InstanceOf<Session>());
             Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
         }
 
@@ -73,9 +71,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = module.GetExtension("Subscription");
+            var groupExtension = (Subscription) module.GetExtension(Protocol.V6, "Subscription");
 
-            Assert.That(groupExtension, Is.InstanceOf<Subscription>());
             Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
         }
 
@@ -88,9 +85,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = module.GetExtension("User");
+            var groupExtension = (User) module.GetExtension(Protocol.V6, "User");
 
-            Assert.That(groupExtension, Is.InstanceOf<User>());
             Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
         }
 
@@ -103,9 +99,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = module.GetExtension("UserSettings");
+            var groupExtension = (UserSettings) module.GetExtension(Protocol.V6, "UserSettings");
 
-            Assert.That(groupExtension, Is.InstanceOf<UserSettings>());
             Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
         }
 
@@ -118,9 +113,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = module.GetExtension("View");
+            var groupExtension = (View) module.GetExtension(Protocol.V6, "View");
 
-            Assert.That(groupExtension, Is.InstanceOf<View>());
             Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
         }
 
@@ -132,7 +126,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             var repository = new Mock<IPortalRepository>();
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
 
-            module.GetExtension("View");
+            module.GetExtension(Protocol.V6, "View");
         }
 
         [Test]
@@ -140,7 +134,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
         {
             var module = new PortalModule();
 
-            var names = module.GetExtensionNames().ToList();
+            var names = module.GetExtensionNames(Protocol.V6).ToList();
 
             Assert.That(names[0], Is.EqualTo("ClientSettings"));
             Assert.That(names[1], Is.EqualTo("Group"));

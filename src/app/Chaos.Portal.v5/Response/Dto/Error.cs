@@ -17,11 +17,8 @@ namespace Chaos.Portal.v5.Response.Dto
         [Serialize("Message")]
         public string Message { get; private set; }
 
-        [SerializeXML(false, true)]
-        [Serialize("Stacktrace")]
         public string Stacktrace { get; private set; }
 
-        [Serialize("InnerException")]
         public Error InnerException { get; private set; }
 
         public System.Exception Exception { get; set; }

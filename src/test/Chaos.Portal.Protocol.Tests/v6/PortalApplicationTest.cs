@@ -34,13 +34,13 @@
         public void GetExtension_ByType_ReturnAInstanceOfTheExtension()
         {
             var application = Make_PortalApplication();
-            var extension   = new ExtensionMock();
+            var extension   = new ExtensionMock(application);
             var module      = new Mock<IModule>();
-            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "ExtensionMock" });
-            module.Setup(m => m.GetExtension<ExtensionMock>()).Returns(extension);
+            module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "ExtensionMock" });
+            module.Setup(m => m.GetExtension<ExtensionMock>(Protocol.V6)).Returns(extension);
             application.AddModule(module.Object);
 
-            var result = application.GetExtension<ExtensionMock>();
+            var result = application.GetExtension<ExtensionMock>(Protocol.V6);
 
             Assert.That(result, Is.Not.Null);
             Assert.IsInstanceOf<ExtensionMock>(result);
@@ -52,7 +52,7 @@
         {
             var portalApplication = Make_PortalApplication();
 
-            portalApplication.GetExtension<ExtensionMock>();
+            portalApplication.GetExtension<ExtensionMock>(Protocol.V6);
         }
 
         [Test]
@@ -61,8 +61,8 @@
             var module      = new Mock<IModule>();
             var extension   = new Mock<IExtension>();
             var application = Make_PortalApplication();
-            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
-            module.Setup(m => m.GetExtension("test")).Returns(extension.Object);
+            module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "test" });
+            module.Setup(m => m.GetExtension(Protocol.V6, "test")).Returns(extension.Object);
 
             application.AddModule(module.Object);
 
@@ -74,12 +74,11 @@
         public void ProcessRequest_RequestWithReturnFormatXml_ReturnResponseHasReturnFormatXml()
         {
             var application = Make_PortalApplication();
-            var extension   = new ExtensionMock();
+            var extension   = new ExtensionMock(application);
             var module      = new Mock<IModule>();
-            var parameters  = new Dictionary<string, string> { { "format", "XML" } };
-            var request     = new PortalRequest("test", "test", parameters);
-            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
-            module.Setup(m => m.GetExtension("test")).Returns(extension);
+            var request     = Make_TestRequest();
+            module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "test" });
+            module.Setup(m => m.GetExtension(Protocol.V6, "test")).Returns(extension);
             application.AddModule(module.Object);
 
             var response = application.ProcessRequest(request);
@@ -91,12 +90,11 @@
         public void ProcessRequest_RequestWithReturnFormatXml_GetResponseStream()
         {
             var application = Make_PortalApplication();
-            var extension = new ExtensionMock();
-            var module = new Mock<IModule>();
-            var parameters = new Dictionary<string, string> { { "format", "XML" } };
-            var request = new PortalRequest("test", "test", parameters);
-            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
-            module.Setup(m => m.GetExtension("test")).Returns(extension);
+            var extension   = new ExtensionMock(application);
+            var module      = new Mock<IModule>();
+            var request     = Make_TestRequest();
+            module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "test" });
+            module.Setup(m => m.GetExtension(Protocol.V6, "test")).Returns(extension);
             application.AddModule(module.Object);
             request.Stopwatch.Reset();
             
@@ -112,12 +110,12 @@
         public void ProcessRequest_ActionDoesntExist_ThrowActionMissingException()
         {
             var application = Make_PortalApplication();
-            var extension = new ExtensionMock();
-            var module = new Mock<IModule>();
-            var parameters = new Dictionary<string, string> { { "format", "XML" } };
-            var request = new PortalRequest("test", "missing", parameters);
-            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
-            module.Setup(m => m.GetExtension("test")).Returns(extension);
+            var extension   = new ExtensionMock(application);
+            var module      = new Mock<IModule>();
+            var parameters  = new Dictionary<string, string> { { "format", "XML" } };
+            var request     = new PortalRequest(Protocol.V6, "test", "missing", parameters);
+            module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "test" });
+            module.Setup(m => m.GetExtension(Protocol.V6, "test")).Returns(extension);
             application.AddModule(module.Object);
             request.Stopwatch.Reset();
 
@@ -128,22 +126,21 @@
         public void ProcessRequest_ExtensionThrowsAnException_ReturnResponseWithError()
         {
             var application = Make_PortalApplication();
-            var extension = new ExtensionMock();
-            var module = new Mock<IModule>();
-            var parameters = new Dictionary<string, string> { { "format", "XML" } };
-            var request = new PortalRequest("test", "error", parameters);
-            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
-            module.Setup(m => m.GetExtension("test")).Returns(extension);
+            var extension   = new ExtensionMock(application);
+            var module      = new Mock<IModule>();
+            var parameters  = new Dictionary<string, string> { { "format", "XML" } };
+            var request     = new PortalRequest(Protocol.V6, "test", "error", parameters);
+            module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "test" });
+            module.Setup(m => m.GetExtension(Protocol.V6, "test")).Returns(extension);
             application.AddModule(module.Object);
             request.Stopwatch.Reset();
-            extension.WithPortalApplication(application);
 
             var response = application.ProcessRequest(request);
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
                 var readToEnd = stream.ReadToEnd();
-                Assert.That(readToEnd, Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Result><Count>0</Count><TotalCount>0</TotalCount><Results /></Result><Error Fullname=\"System.ArgumentOutOfRangeException\"><Message>Specified argument was out of the range of valid values.\r\nParameter name: Derived exceptions should also be written to output</Message></Error></PortalResponse>"));
+                Assert.That(readToEnd, Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Result><Count>0</Count><TotalCount>0</TotalCount><Results /></Result><Error Fullname=\"System.ArgumentException\"><Message>Value does not fall within the expected range.</Message></Error></PortalResponse>"));
             }
         }
 
@@ -153,10 +150,9 @@
             var application = Make_PortalApplication();
             var extension   = new Mock<IExtension>();
             var module      = new Mock<IModule>();
-            var parameters  = new Dictionary<string, string> { { "format", "XML" } };
-            var request     = new PortalRequest("test", "test", parameters);
-            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
-            module.Setup(m => m.GetExtension("test")).Returns(extension.Object);
+            var request     = Make_TestRequest();
+            module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "test" });
+            module.Setup(m => m.GetExtension(Protocol.V6, "test")).Returns(extension.Object);
             application.AddModule(module.Object);
 
             application.ProcessRequest(request);
@@ -168,12 +164,11 @@
         public void ProcessRequest_SimpleRequest_CallWithRequestOnExtension()
         {
             var application = Make_PortalApplication();
-            var extension = new Mock<IExtension>();
-            var module = new Mock<IModule>();
-            var parameters = new Dictionary<string, string> { { "format", "XML" } };
-            var request = new PortalRequest("test", "test", parameters);
-            module.Setup(m => m.GetExtensionNames()).Returns(new[] { "test" });
-            module.Setup(m => m.GetExtension("test")).Returns(extension.Object);
+            var extension   = new Mock<IExtension>();
+            var module      = new Mock<IModule>();
+            var request     = Make_TestRequest();
+            module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "test" });
+            module.Setup(m => m.GetExtension(Protocol.V6, "test")).Returns(extension.Object);
             application.AddModule(module.Object);
 
             application.ProcessRequest(request);

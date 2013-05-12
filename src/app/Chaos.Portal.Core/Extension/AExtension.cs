@@ -19,35 +19,17 @@ namespace Chaos.Portal.Core.Extension
     {
         #region Fields
 
-        private Core.Data.Model.Session _session;
-        private UserInfo _user;
-        private IEnumerable<SubscriptionInfo> _subscriptions;
-        private IEnumerable<Core.Data.Model.Group> _group;
 
-        private const string SessionguidParameterName = "sessionGUID";
-
-        private static readonly Guid _anonymousUserGuid;
 
         public IPortalRequest Request { get; private set; }
 
         #endregion
         #region Initialization
 
-        static AExtension()
-        {
-            _anonymousUserGuid = new Guid(ConfigurationManager.AppSettings["AnonymousUserGUID"]);
-        }
-
-        protected AExtension()
-        {
-            MethodInfos = new Dictionary<string, MethodInfo>();
-        }
-
-        public IExtension WithPortalApplication(IPortalApplication portalApplication)
+        protected AExtension(IPortalApplication portalApplication)
         {
             PortalApplication = portalApplication;
-            
-            return this;
+            MethodInfos       = new Dictionary<string, MethodInfo>();
         }
 
         public IExtension WithPortalResponse(IPortalResponse response)
@@ -68,8 +50,8 @@ namespace Chaos.Portal.Core.Extension
         #region Properties
 
         protected ILog Log { get; private set; }
-        protected ICache Cache { get; set; }
-        protected IViewManager ViewManager { get; set; }
+        protected ICache Cache { get { return PortalApplication.Cache; } }
+        protected IViewManager ViewManager { get { return PortalApplication.ViewManager; } }
         protected IPortalResponse Response { get; set; }
         protected IPortalRepository PortalRepository { get { return PortalApplication.PortalRepository; } }
         protected IDictionary<string, MethodInfo> MethodInfos { get; set; }
@@ -79,85 +61,7 @@ namespace Chaos.Portal.Core.Extension
         /// <summary>
         /// Returns the current user, the user is cached and will not be updated during the callContexts life.
         /// </summary>
-        public UserInfo User
-        {
-            get
-            {
-                if (_user == null)
-                {
-                    _user = PortalRepository.UserInfoGet(null, Session.Guid, null).FirstOrDefault();
-
-                    if (_user == null) throw new SessionDoesNotExistException("No user associted with session");
-                }
-
-                return _user;
-            }
-        }
-
-        /// <summary>
-        /// Get the current session
-        /// </summary>
-        public Core.Data.Model.Session Session
-        {
-            get
-            {
-                if (GetSessionFromDatabase() == null) throw new SessionDoesNotExistException("SessionGUID is invalid or has expired");
-
-                return _session;
-            }
-        }
-
-        /// <summary>
-        /// Get subscriptions associated with the current user
-        /// </summary>
-        public IEnumerable<Core.Data.Model.SubscriptionInfo> Subscriptions
-        {
-            get
-            {
-                return _subscriptions ?? (_subscriptions = PortalRepository.SubscriptionGet(null, User.Guid));
-            }
-        }
-
-        /// <summary>
-        /// returns the groups the current user is part of, the Groups are cached, changes in the database will not be pickup up during the callContext life.
-        /// </summary>
-        public IEnumerable<Core.Data.Model.Group> Groups
-        {
-            get { return _group ?? (_group = PortalRepository.GroupGet(null, null, User.Guid).ToList()); }
-        }
-
-        /// <summary>
-        /// Get the UUID of the anonymous user
-        /// </summary>
-        public Guid AnonymousUserGuid { get { return _anonymousUserGuid; } }
-
-        /// <summary>
-        /// True if current user is anonymous
-        /// </summary>
-        public bool IsAnonymousUser
-        {
-            get { return GetSessionFromDatabase() == null || AnonymousUserGuid.ToString() == Session.UserGuid.ToString(); }
-        }
-
-        /// <summary>
-        /// Gets the current session from the database
-        /// </summary>
-        /// <returns>The current session from the database, or null if sessionGUID is not specified</returns>
-        public Core.Data.Model.Session GetSessionFromDatabase()
-        {
-            if (_session == null)
-            {
-                if (Request == null) return null;
-                if (Request.Parameters == null) return null;
-                if (!Request.Parameters.ContainsKey(SessionguidParameterName)) return null;
-
-                _session = PortalRepository.SessionGet(new Guid(Request.Parameters[SessionguidParameterName]), null).FirstOrDefault();
-
-                if (_session == null) return null;
-            }
-
-            return _session;
-        }
+        
 
         #endregion
         #region Business Logic
