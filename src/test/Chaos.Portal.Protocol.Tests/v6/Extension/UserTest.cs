@@ -1,11 +1,10 @@
-using Chaos.Portal.Core.Exceptions;
-
 namespace Chaos.Portal.Protocol.Tests.v6.Extension
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
+	using Core.Exceptions;
     using Core.Data.Model;
 
     using Moq;

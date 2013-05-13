@@ -3,12 +3,12 @@ namespace Chaos.Portal.v5.Extension
     using System;
     using System.Collections.Generic;
 
-    using Chaos.Portal.Core;
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Exceptions;
-    using Chaos.Portal.Core.Extension;
+    using Core.Data.Model;
+    using Core.Exceptions;
+    using Core.Extension;
+    using Core;
 
-    public class Group : AExtension
+	public class Group : AExtension
     {
         #region Initialization
 
@@ -59,5 +59,5 @@ namespace Chaos.Portal.v5.Extension
         }
 
         #endregion
-    }
+	}
 }

@@ -154,6 +154,11 @@
             return new PortalRequest(Protocol.V6, "test", "test", parameters);
         }
 
+		protected Portal.v6.Extension.Group Make_v6GroupExtension()
+		{
+			return (Portal.v6.Extension.Group)new Portal.v6.Extension.Group(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
+		}
+
         #endregion
     }
 }
