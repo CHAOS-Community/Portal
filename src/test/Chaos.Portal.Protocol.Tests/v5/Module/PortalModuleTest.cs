@@ -2,8 +2,8 @@ namespace Chaos.Portal.Protocol.Tests.v5.Module
 {
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data;
+    using Chaos.Portal.Module;
     using Chaos.Portal.v5.Extension;
-    using Chaos.Portal.v5.Module;
 
     using Moq;
 
@@ -21,9 +21,8 @@ namespace Chaos.Portal.Protocol.Tests.v5.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var clientSettingsExtension = module.GetExtension("ClientSettings");
+            var clientSettingsExtension = (ClientSettings)module.GetExtension(Protocol.V5, "ClientSettings");
 
-            Assert.That(clientSettingsExtension, Is.InstanceOf<ClientSettings>());
             Assert.That(clientSettingsExtension.PortalApplication, Is.EqualTo(application.Object));
         }
 
@@ -36,9 +35,8 @@ namespace Chaos.Portal.Protocol.Tests.v5.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var clientSettingsExtension = module.GetExtension("Group");
+            var clientSettingsExtension = (Group)module.GetExtension(Protocol.V5, "Group");
 
-            Assert.That(clientSettingsExtension, Is.InstanceOf<Group>());
             Assert.That(clientSettingsExtension.PortalApplication, Is.EqualTo(application.Object));
         }
 
@@ -51,9 +49,8 @@ namespace Chaos.Portal.Protocol.Tests.v5.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var clientSettingsExtension = module.GetExtension("Subscription");
+            var clientSettingsExtension = (Subscription)module.GetExtension(Protocol.V5, "Subscription");
 
-            Assert.That(clientSettingsExtension, Is.InstanceOf<Subscription>());
             Assert.That(clientSettingsExtension.PortalApplication, Is.EqualTo(application.Object));
         }
 
@@ -66,9 +63,8 @@ namespace Chaos.Portal.Protocol.Tests.v5.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var clientSettingsExtension = module.GetExtension("User");
+            var clientSettingsExtension = (Portal.v5.Extension.User) module.GetExtension(Protocol.V5, "User");
 
-            Assert.That(clientSettingsExtension, Is.InstanceOf<Portal.v5.Extension.User>());
             Assert.That(clientSettingsExtension.PortalApplication, Is.EqualTo(application.Object));
         }
     }

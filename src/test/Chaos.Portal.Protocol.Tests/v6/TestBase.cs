@@ -14,7 +14,6 @@
     using Chaos.Portal.Core.Request;
     using Chaos.Portal.Core.Response;
     using Chaos.Portal.v5.Extension;
-    using Chaos.Portal.v6;
 
     using Moq;
 
@@ -58,8 +57,8 @@
             Log               = new Mock<ILog>();
 
             PortalApplication.SetupGet(p => p.PortalRepository).Returns(PortalRepository.Object);
-            PortalRepository.Setup(m => m.SessionGet(It.IsAny<Guid?>(), null)).Returns(new[] {Make_Session() });
-            PortalRepository.Setup(m => m.UserInfoGet(null, It.Is<Guid?>(item => item.HasValue), null)).Returns(new[] { Make_User() });
+            PortalRequest.SetupGet(p => p.User).Returns(Make_User);
+            PortalRequest.SetupGet(p => p.Session).Returns(Make_Session);
             PortalRequest.SetupGet(p => p.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
             LoggingFactory.Setup(m => m.Create()).Returns(Log.Object);
             Log.Setup(m => m.WithLoglevel(It.IsAny<LogLevel>())).Returns(Log.Object);
@@ -115,30 +114,26 @@
 
         protected ClientSettings Make_ClientSettingsExtension()
         {
-            return (ClientSettings)new ClientSettings().WithPortalApplication(PortalApplication.Object)
-                                                       .WithPortalRequest(PortalRequest.Object)
-                                                       .WithPortalResponse(PortalResponse.Object);
+            return (ClientSettings)new ClientSettings(PortalApplication.Object).WithPortalRequest(PortalRequest.Object)
+                                                                               .WithPortalResponse(PortalResponse.Object);
         }
 
         protected Group Make_GroupExtension()
         {
-            return (Group)new Group().WithPortalApplication(PortalApplication.Object)
-                                     .WithPortalRequest(PortalRequest.Object)
-                                     .WithPortalResponse(PortalResponse.Object);
+            return (Group)new Group(PortalApplication.Object).WithPortalRequest(PortalRequest.Object)
+                                                             .WithPortalResponse(PortalResponse.Object);
         }
 
         protected Session Make_SessionExtension()
         {
-            return (Session)new Session().WithPortalApplication(PortalApplication.Object)
-                                         .WithPortalRequest(PortalRequest.Object)
-                                         .WithPortalResponse(PortalResponse.Object);
+            return (Session)new Session(PortalApplication.Object).WithPortalRequest(PortalRequest.Object)
+                                                                 .WithPortalResponse(PortalResponse.Object);
         }
 
         protected Subscription Make_SubscriptionExtension()
         {
-            return (Subscription)new Subscription().WithPortalApplication(PortalApplication.Object)
-                                                   .WithPortalRequest(PortalRequest.Object)
-                                                   .WithPortalResponse(PortalResponse.Object);
+            return (Subscription)new Subscription(PortalApplication.Object).WithPortalRequest(PortalRequest.Object)
+                                                                           .WithPortalResponse(PortalResponse.Object);
         }
 
         protected PortalApplication Make_PortalApplication()
@@ -148,12 +143,20 @@
 
         protected Portal.v6.Extension.User Make_UserExtension()
         {
-            return (Portal.v6.Extension.User)new Portal.v6.Extension.User().WithPortalApplication(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
+            return (Portal.v6.Extension.User)new Portal.v6.Extension.User(PortalApplication.Object).WithPortalRequest(PortalRequest.Object)
+                                                                                                   .WithPortalResponse(PortalResponse.Object);
+        }
+
+        protected static PortalRequest Make_TestRequest()
+        {
+            var parameters = new Dictionary<string, string> { { "format", "XML" } };
+
+            return new PortalRequest(Protocol.V6, "test", "test", parameters);
         }
 
 		protected Portal.v6.Extension.Group Make_v6GroupExtension()
 		{
-			return (Portal.v6.Extension.Group)new Portal.v6.Extension.Group().WithPortalApplication(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
+			return (Portal.v6.Extension.Group)new Portal.v6.Extension.Group(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
 		}
 
         #endregion

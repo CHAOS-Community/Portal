@@ -39,13 +39,11 @@
     <Reference Include="Chaos.Deployment.UI.Console">
       <HintPath>..\..\..\tools\chaos.deployment\Chaos.Deployment.UI.Console.exe</HintPath>
     </Reference>
-    <Reference Include="Couchbase, Version=1.2.0.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Chaos.Portal.Test\bin\Debug\Couchbase.dll</HintPath>
+    <Reference Include="Couchbase">
+      <HintPath>..\..\..\lib\Couchbase.dll</HintPath>
     </Reference>
-    <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Chaos.Portal.Test\bin\Debug\Enyim.Caching.dll</HintPath>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\..\..\lib\Enyim.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\..\..\tools\Moq.4.0.10827\NET40\Moq.dll</HintPath>
@@ -85,7 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config.sample" />
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="integraion_tests_base_data.sql">

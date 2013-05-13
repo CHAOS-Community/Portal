@@ -9,14 +9,23 @@ namespace Chaos.Portal.v6.Extension
     using Core.Data.Model;
     using Core.Extension;
 
+    using Core;
+
     public class User : AExtension
-	{
+    {
+        #region Initialization
+
+        public User(IPortalApplication portalApplication): base(portalApplication)
+        {
+        }
+
+        #endregion
+	
 		#region Create
 
 		public UserInfo Create(Guid? guid, string email)
 		{
-			if (!User.HasPermission(SystemPermissons.UserManager))
-				throw new InsufficientPermissionsException();
+			if (!Request.User.HasPermission(SystemPermissons.UserManager)) throw new InsufficientPermissionsException();
 
 			if (!guid.HasValue)
 				guid = Guid.NewGuid();
@@ -32,11 +41,8 @@ namespace Chaos.Portal.v6.Extension
 
 		public UserInfo Update(Guid guid, string email, uint? permissons)
 		{
-			if(!User.HasPermission(SystemPermissons.UserManager) && (guid != User.Guid || permissons.HasValue))
-				throw new InsufficientPermissionsException();
-
-			if(PortalRepository.UserUpdate(guid, email, permissons) <= 0)
-				throw new Exception("Failed to update user");
+            if(!Request.User.HasPermission(SystemPermissons.UserManager) && (guid != Request.User.Guid || permissons.HasValue)) throw new InsufficientPermissionsException();
+            if(PortalRepository.UserUpdate(guid, email, permissons) <= 0)throw new Exception("Failed to update user");
 
 			return PortalRepository.UserInfoGet(guid, null, null).First();
 		}
@@ -46,8 +52,7 @@ namespace Chaos.Portal.v6.Extension
 
 		public ScalarResult Delete(Guid guid)
 		{
-			if (!User.HasPermission(SystemPermissons.UserManager))
-				throw new InsufficientPermissionsException();
+            if (!Request.User.HasPermission(SystemPermissons.UserManager)) throw new InsufficientPermissionsException();
 
 			var result = new ScalarResult((int) PortalRepository.UserDelete(guid));
 
@@ -65,17 +70,17 @@ namespace Chaos.Portal.v6.Extension
 			if(includeGroups)
 				throw new NotImplementedException();
 
-			if (User.HasPermission(SystemPermissons.UserManager))
+			if (Request.User.HasPermission(SystemPermissons.UserManager))
 				return PortalRepository.UserInfoGet(null, null, null);
 
-	        var result = PortalRepository.UserInfoGetWithGroupPermission(User.Guid);
+            var result = PortalRepository.UserInfoGetWithGroupPermission(Request.User.Guid);
 
-	        return result.Any() ? result : new[] {User};
+            return result.Any() ? result : new[] { Request.User };
         }
 
 		public UserInfo GetCurrent()
 		{
-			return User;
+            return Request.User;
 		}
 
         #endregion

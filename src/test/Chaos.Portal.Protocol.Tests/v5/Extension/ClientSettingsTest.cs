@@ -42,7 +42,7 @@
             var clientSettings = Make_ClientSettings();
             var user           = Make_User();
             user.SystemPermissions = 0;
-            PortalRepository.Setup(m => m.UserInfoGet(null, It.IsAny<Guid?>(), null)).Returns(new[] { user });
+            PortalRequest.SetupGet(p => p.User).Returns(user);
 
             extension.Set(clientSettings.Guid, clientSettings.Name, clientSettings.Settings);
         }

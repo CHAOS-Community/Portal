@@ -1,10 +1,6 @@
 ﻿namespace Chaos.Portal.Protocol.Tests.v5.Extension
 {
-    using System;
-
     using Chaos.Portal.Core.Exceptions;
-
-    using Moq;
 
     using NUnit.Framework;
 
@@ -17,7 +13,7 @@
             var extension = Make_SubscriptionExtension();
             var user      = Make_User();
             user.SystemPermissions = 0;
-            PortalRepository.Setup(m => m.UserInfoGet(null, It.IsAny<Guid?>(), null)).Returns(new[] { user });
+            PortalRequest.SetupGet(p => p.User).Returns(user);
             
             extension.Create("not allowed");
         }

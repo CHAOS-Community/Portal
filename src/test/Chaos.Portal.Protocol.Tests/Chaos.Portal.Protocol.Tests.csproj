@@ -54,6 +54,7 @@
     <Compile Include="v5\Extension\SubscriptionTest.cs" />
     <Compile Include="v5\Extension\UserTest.cs" />
     <Compile Include="v5\Module\PortalModuleTest.cs" />
+    <Compile Include="v5\PortalApplicationTest.cs" />
     <Compile Include="v5\Response\PortalResponseTest.cs" />
     <Compile Include="v5\TestBase.cs" />
     <Compile Include="v6\Extension\GroupTest.cs" />
@@ -62,6 +63,10 @@
     <Compile Include="v6\PortalApplicationTest.cs" />
     <Compile Include="v6\TestBase.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\app\Chaos.Portal.Core\Chaos.Portal.Core.csproj">
       <Project>{3d78618a-8343-4966-9006-5c01ead11386}</Project>
@@ -79,9 +84,6 @@
       <Project>{9d3a1974-1d8a-4a6e-96ad-3d4b211bf475}</Project>
       <Name>Chaos.Portal</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

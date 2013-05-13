@@ -14,24 +14,7 @@
       <arg value="/t:Rebuild" />
     </msbuild>
 
-    <ilmerge outputfile="Chaos.Portal.v6.dll"
-             targetkind="dll"
-             logfile="ilmerge.log"
-             targetplatform="v4"
-             targetplatformdirectory="C:\Windows\Microsoft.NET\Framework64\v4.0.30319">
-		
-		<librarypath>
-			<include name="..\lib\" />
-		</librarypath>
-		
-		<inputassemblies>
-      <include name="..\src\app\Chaos.Portal.Core\bin\Release\Chaos.Portal.Core.dll" />
-      <include name="..\src\app\Chaos.Portal.v6\bin\Release\Chaos.Portal.v6.dll" />
-		</inputassemblies>
-		
-    </ilmerge>
-
-    <ilmerge outputfile="Chaos.Portal.v5.dll"
+   <ilmerge outputfile="Chaos.Portal.dll"
              targetkind="dll"
              logfile="ilmerge.log"
              targetplatform="v4"
@@ -42,8 +25,10 @@
       </librarypath>
 
       <inputassemblies>
+        <include name="..\src\app\Chaos.Portal\bin\Release\Chaos.Portal.dll" />
         <include name="..\src\app\Chaos.Portal.Core\bin\Release\Chaos.Portal.Core.dll" />
         <include name="..\src\app\Chaos.Portal.v5\bin\Release\Chaos.Portal.v5.dll" />
+        <include name="..\src\app\Chaos.Portal.v6\bin\Release\Chaos.Portal.v6.dll" />
       </inputassemblies>
 
     </ilmerge>

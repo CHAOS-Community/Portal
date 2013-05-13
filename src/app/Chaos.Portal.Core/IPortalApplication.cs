@@ -35,9 +35,9 @@ namespace Chaos.Portal.Core
         /// </summary>
         /// <typeparam name="TExtension">The type of extension to get</typeparam>
         /// <returns>The loaded the instance of the extension</returns>
-        TExtension GetExtension<TExtension>() where TExtension : IExtension, new();
+        TExtension GetExtension<TExtension>(Protocol version) where TExtension : IExtension;
 
-        TResult GetModule<TResult>() where TResult : IModule;
+        TResult GetModule<TResult>(Protocol version) where TResult : IModule;
 
         void AddModule(IModule module);
     }

@@ -43,7 +43,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Extension
 			var user        = Make_UserExtension();
 			var currentUser = Make_User();
 			currentUser.SystemPermissonsEnum = SystemPermissons.None;
-			PortalRepository.Setup(m => m.UserInfoGet(null, It.Is<Guid?>(item => item.HasValue), null)).Returns(new[] { currentUser });
+            PortalRequest.SetupGet(p => p.User).Returns(currentUser);
 			PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
 
 			var results = user.Get();
@@ -60,9 +60,9 @@ namespace Chaos.Portal.Protocol.Tests.v6.Extension
 			var users = new[] { Make_User(), Make_User() };
 			var currentUser = Make_User();
 			currentUser.SystemPermissonsEnum = SystemPermissons.None;
-			PortalRepository.Setup(m => m.UserInfoGetWithGroupPermission(currentUser.Guid)).Returns(users);
-			PortalRepository.Setup(m => m.UserInfoGet(null, It.Is<Guid?>(item => item.HasValue), null)).Returns(new[] { currentUser });
-			PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
+            PortalRequest.SetupGet(p => p.User).Returns(currentUser);
+            PortalRepository.Setup(m => m.UserInfoGetWithGroupPermission(currentUser.Guid)).Returns(users);
+            PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
 
 			var results = user.Get();
 
@@ -76,12 +76,9 @@ namespace Chaos.Portal.Protocol.Tests.v6.Extension
 			var user = Make_UserExtension();
 			var currentUser = Make_User();
 			var newUser = Make_User();
-
-			PortalRepository.Setup(p => p.UserCreate(It.IsAny<Guid>(), newUser.Email)).Returns(1);
-
-			PortalRepository.Setup(m => m.UserInfoGet(null, It.Is<Guid?>(item => item.HasValue), null)).Returns(new[] { currentUser }); //Return the current user for permission check
+            PortalRequest.SetupGet(p => p.User).Returns(currentUser);
+            PortalRepository.Setup(p => p.UserCreate(It.IsAny<Guid>(), newUser.Email)).Returns(1);
 			PortalRepository.Setup(p => p.UserInfoGet(It.Is<Guid?>(i => i.HasValue), null, null)).Returns(new[] {newUser}); //Return the created user
-			
 			PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
 
 			var result = user.Create(null, newUser.Email);
@@ -96,10 +93,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Extension
 			var user = Make_UserExtension();
 			var currentUser = Make_User();
 			currentUser.SystemPermissonsEnum = SystemPermissons.None;
-
-			PortalRepository.Setup(m => m.UserInfoGet(null, It.Is<Guid?>(item => item.HasValue), null)).Returns(new[] { currentUser }); //Return the current user for permission check
-
-			PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
+            PortalRequest.SetupGet(p => p.User).Returns(currentUser);
+            PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
 
 			user.Create(null, "name@domain.com");
 		}
@@ -110,11 +105,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Extension
 			var user = Make_UserExtension();
 			var currentUser = Make_User();
 			var updatedUser = Make_User();
-
-			PortalRepository.Setup(p => p.UserUpdate(It.IsAny<Guid>(), It.IsAny<string>(), It.Is<uint?>(v => v.HasValue))).Returns(1);
-
-			PortalRepository.Setup(m => m.UserInfoGet(null, It.Is<Guid?>(item => item.HasValue), null)).Returns(new[] { currentUser }); //Return the current user for permission check
-			PortalRepository.Setup(p => p.UserInfoGet(It.Is<Guid?>(i => i.HasValue), null, null)).Returns(new[] { updatedUser }); //Return the updated user
+            PortalRepository.Setup(p => p.UserUpdate(It.IsAny<Guid>(), It.IsAny<string>(), It.Is<uint?>(v => v.HasValue))).Returns(1);
+            PortalRepository.Setup(p => p.UserInfoGet(It.Is<Guid?>(i => i.HasValue), null, null)).Returns(new[] { updatedUser }); //Return the updated user
 			PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
 
 			var result = user.Update(updatedUser.Guid, updatedUser.Email, updatedUser.SystemPermissions);
@@ -128,10 +120,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Extension
 			var user = Make_UserExtension();
 			var currentUser = Make_User();
 			var deleteUserGuid = Guid.NewGuid();
-
-			PortalRepository.Setup(p => p.UserDelete(deleteUserGuid)).Returns(1);
-
-			PortalRepository.Setup(m => m.UserInfoGet(null, It.Is<Guid?>(item => item.HasValue), null)).Returns(new[] { currentUser }); //Return the current user for permission check
+            PortalRequest.SetupGet(p => p.User).Returns(currentUser);
+            PortalRepository.Setup(p => p.UserDelete(deleteUserGuid)).Returns(1);
 			PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
 
 			var result = user.Delete(deleteUserGuid);

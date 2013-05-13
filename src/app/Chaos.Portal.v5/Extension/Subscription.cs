@@ -3,17 +3,25 @@ namespace Chaos.Portal.v5.Extension
     using System;
     using System.Collections.Generic;
 
+    using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Extension;
 
     public class Subscription : AExtension
     {
+        #region Initialization
+
+        public Subscription(IPortalApplication portalApplication): base(portalApplication)
+        {
+        }
+
+        #endregion
         #region Get
 
         public IEnumerable<SubscriptionInfo> Get( Guid guid )
         {
-            return PortalRepository.SubscriptionGet(guid, User.Guid);
+            return PortalRepository.SubscriptionGet(guid, Request.User.Guid);
         }
 
         #endregion
@@ -21,9 +29,9 @@ namespace Chaos.Portal.v5.Extension
 
         public SubscriptionInfo Create( string name )
         {
-            if(!User.HasPermission(SystemPermissons.CreateSubscription)) throw new InsufficientPermissionsException();
+            if(!Request.User.HasPermission(SystemPermissons.CreateSubscription)) throw new InsufficientPermissionsException();
 
-            return PortalRepository.SubscriptionCreate(new Guid(), name, User.Guid);
+            return PortalRepository.SubscriptionCreate(new Guid(), name, Request.User.Guid);
         }
 
         #endregion
@@ -31,7 +39,7 @@ namespace Chaos.Portal.v5.Extension
 
         public ScalarResult Delete(Guid guid)
         {
-            var result = (int) PortalRepository.SubscriptionDelete(guid, User.Guid);
+            var result = (int) PortalRepository.SubscriptionDelete(guid, Request.User.Guid);
 
             return new ScalarResult(result);
         }
@@ -41,7 +49,7 @@ namespace Chaos.Portal.v5.Extension
 
         public ScalarResult Update(Guid guid, string newName)
         {
-            var result = PortalRepository.SubscriptionUpdate(guid, newName, User.Guid);
+            var result = PortalRepository.SubscriptionUpdate(guid, newName, Request.User.Guid);
 
             return new ScalarResult( (int) result );
         }

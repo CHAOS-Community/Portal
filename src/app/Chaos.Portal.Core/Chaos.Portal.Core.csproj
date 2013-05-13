@@ -100,6 +100,7 @@
     <Compile Include="Exceptions\ModuleConfigurationMissingException.cs" />
     <Compile Include="Exceptions\ModuleNotLoadedException.cs" />
     <Compile Include="Exceptions\ParameterBindingMissingException.cs" />
+    <Compile Include="Exceptions\ProtocolVersionException.cs" />
     <Compile Include="Exceptions\SessionDoesNotExistException.cs" />
     <Compile Include="Exceptions\UnhandledException.cs" />
     <Compile Include="Exceptions\UnsupportedExtensionReturnTypeException.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Module\IModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protocol.cs" />
     <Compile Include="Request\FileStream.cs" />
     <Compile Include="Request\IPortalRequest.cs" />
     <Compile Include="Request\PortalRequest.cs" />

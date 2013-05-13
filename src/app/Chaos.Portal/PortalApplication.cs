@@ -1,4 +1,4 @@
-namespace Chaos.Portal.v6
+namespace Chaos.Portal
 {
     using System;
     using System.Collections.Generic;
@@ -18,8 +18,6 @@ namespace Chaos.Portal.v6
     using Chaos.Portal.Core.Module;
     using Chaos.Portal.Core.Request;
     using Chaos.Portal.Core.Response;
-    using Chaos.Portal.Core.Response.Specification;
-    using Chaos.Portal.v6.Response;
 
     /// <summary>
     /// The portal application.
@@ -29,8 +27,6 @@ namespace Chaos.Portal.v6
         #region Fields
 
         private readonly ILogFactory _loggingFactory;
-
-        private static readonly IDictionary<ReturnFormat, IResponseSpecification> ResponseSpecifications = new Dictionary<ReturnFormat, IResponseSpecification>();
 
         #endregion
         #region Properties
@@ -42,22 +38,12 @@ namespace Chaos.Portal.v6
         public ILog                                 Log { get; protected set; }
         public IPortalRepository                    PortalRepository { get; set; }
 
-        
-
         #endregion
         #region Constructors
 
-        static PortalApplication()
-        {
-            ResponseSpecifications.Add(ReturnFormat.XML, new XmlResponse());
-            ResponseSpecifications.Add(ReturnFormat.JSON, new JsonResponse());
-            ResponseSpecifications.Add(ReturnFormat.JSONP, new JsonpResponse());
-            ResponseSpecifications.Add(ReturnFormat.ATTACHMENT, new StreamResponse());
-        }
-
         public PortalApplication( ICache cache, IViewManager viewManager, IPortalRepository portalRepository, ILogFactory loggingFactory )
         {
-            LoadedModules     = new Dictionary<string, IModule>();
+            LoadedModules    = new Dictionary<string, IModule>();
             Bindings         = new Dictionary<Type, IParameterBinding>();
             Log              = new DirectLogger(loggingFactory).WithName("Portal Application");
             Cache            = cache;
@@ -104,12 +90,24 @@ namespace Chaos.Portal.v6
         /// <returns>The response object</returns>
         public IPortalResponse ProcessRequest( IPortalRequest request )
         {
-            var response  = new PortalResponse(request);
-            var extension = GetExtension(request.Extension);
+            var response  = CreatePortalResponse(request);
+            var extension = GetExtension(request.Version, request.Extension);
             extension.WithPortalRequest(request);
             extension.WithPortalResponse(response);
 
             return extension.CallAction(request);
+        }
+
+        private static IPortalResponse CreatePortalResponse(IPortalRequest request)
+        {
+            switch(request.Version)
+            {
+                case Protocol.V5:
+                    return new v5.Response.PortalResponse(request);
+                case Protocol.V6:
+                default:
+                    return new v6.Response.PortalResponse(request);
+            }
         }
 
         /// <summary>
@@ -117,45 +115,54 @@ namespace Chaos.Portal.v6
         /// </summary>
         /// <typeparam name="TExtension">The type of extension to get</typeparam>
         /// <returns>The loaded the instance of the extension</returns>
-        public TExtension GetExtension<TExtension>() where TExtension : IExtension, new()
+        public TExtension GetExtension<TExtension>(Protocol version) where TExtension : IExtension
         {
             // todo: optimize cross extension calls, this is relatively slow
-            var modules = LoadedModules.Values.Distinct().FirstOrDefault(item => item.GetExtension<TExtension>() != null);
+            var modules = LoadedModules.Values.Distinct().FirstOrDefault(item => item.GetExtension<TExtension>(version) != null);
 
             if (modules == null) throw new ExtensionMissingException(string.Format("Extension not found"));
 
-            return (TExtension)modules.GetExtension<TExtension>();
-        }
-
-        public TResult GetModule<TResult>() where TResult : IModule
-        {
-            return (TResult)LoadedModules[typeof(TResult).FullName];
-        }
-
-        public void AddModule(IModule module)
-        {
-            module.Load(this);
-
-            foreach (var extensionName in module.GetExtensionNames())
-            {
-                LoadedModules.Add(extensionName, module);
-            }
+            return (TExtension)modules.GetExtension<TExtension>(version);
         }
 
         /// <summary>
         /// The get extension.
         /// </summary>
+        /// <param name="version"> </param>
         /// <param name="extension">The key associated with the extension.</param>
         /// <returns>The instance of<see cref="IExtension"/>.</returns>
         /// <exception cref="ExtensionMissingException">Is thrown if the extension is not loaded</exception>
-        public IExtension GetExtension(string extension)
+        public IExtension GetExtension(Protocol version, string extension)
         {
-            if(extension == null || !LoadedModules.ContainsKey( extension ))
-                throw new ExtensionMissingException( string.Format( "Extension named '{0}' not found", extension ) );
+            if (extension == null || !LoadedModules.ContainsKey(extension))
+                throw new ExtensionMissingException(string.Format("Extension named '{0}' not found", extension));
 
             var module = LoadedModules[extension];
 
-            return module.GetExtension(extension);
+            return module.GetExtension(version, extension);
+        }
+
+        public TModule GetModule<TModule>(Protocol version) where TModule : IModule
+        {
+            return (TModule)LoadedModules[typeof(TModule).FullName];
+        }
+
+        // todo: rethink the module loading process, it's not logical
+        public void AddModule(IModule module)
+        {
+            module.Load(this);
+
+            foreach (var extensionName in module.GetExtensionNames(Protocol.V5))
+            {
+                if(!LoadedModules.ContainsKey(extensionName))
+                    LoadedModules.Add(extensionName, module);
+            }
+
+            foreach (var extensionName in module.GetExtensionNames(Protocol.V6))
+            {
+                if (!LoadedModules.ContainsKey(extensionName))
+                    LoadedModules.Add(extensionName, module);
+            }
         }
 
         #endregion

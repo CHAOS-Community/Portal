@@ -61,6 +61,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Module\PortalModule.cs" />
+    <Compile Include="PortalApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,10 +73,16 @@
       <Project>{3D78618A-8343-4966-9006-5C01EAD11386}</Project>
       <Name>Chaos.Portal.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Chaos.Portal.v5\Chaos.Portal.v5.csproj">
+      <Project>{07692354-27f8-485b-8180-30c0e83da41e}</Project>
+      <Name>Chaos.Portal.v5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chaos.Portal.v6\Chaos.Portal.v6.csproj">
+      <Project>{5e8e8764-cf64-4280-88ad-fb82e71f92d8}</Project>
+      <Name>Chaos.Portal.v6</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Module\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
