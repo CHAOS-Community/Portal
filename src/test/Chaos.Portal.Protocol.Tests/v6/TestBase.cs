@@ -151,6 +151,11 @@
             return (Portal.v6.Extension.User)new Portal.v6.Extension.User().WithPortalApplication(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
         }
 
+		protected Portal.v6.Extension.Group Make_v6GroupExtension()
+		{
+			return (Portal.v6.Extension.Group)new Portal.v6.Extension.Group().WithPortalApplication(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
+		}
+
         #endregion
     }
 }

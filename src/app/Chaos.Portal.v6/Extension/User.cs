@@ -6,8 +6,8 @@ namespace Chaos.Portal.v6.Extension
     using System.Collections.Generic;
     using System.Linq;
 
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Extension;
+    using Core.Data.Model;
+    using Core.Extension;
 
     public class User : AExtension
 	{
@@ -60,8 +60,11 @@ namespace Chaos.Portal.v6.Extension
 		#endregion
 		#region Get
 
-		public IEnumerable<UserInfo> Get()
+		public IEnumerable<UserInfo> Get(bool includeGroups = false)
         {
+			if(includeGroups)
+				throw new NotImplementedException();
+
 			if (User.HasPermission(SystemPermissons.UserManager))
 				return PortalRepository.UserInfoGet(null, null, null);
 
@@ -76,5 +79,5 @@ namespace Chaos.Portal.v6.Extension
 		}
 
         #endregion
-    }
+	}
 }

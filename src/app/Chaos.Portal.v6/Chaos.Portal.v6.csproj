@@ -37,6 +37,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extension\Group.cs" />
     <Compile Include="Extension\User.cs" />
     <Compile Include="Module\PortalModule.cs" />
     <Compile Include="PortalApplication.cs" />

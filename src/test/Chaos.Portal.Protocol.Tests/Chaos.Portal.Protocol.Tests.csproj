@@ -56,6 +56,7 @@
     <Compile Include="v5\Module\PortalModuleTest.cs" />
     <Compile Include="v5\Response\PortalResponseTest.cs" />
     <Compile Include="v5\TestBase.cs" />
+    <Compile Include="v6\Extension\GroupTest.cs" />
     <Compile Include="v6\Extension\UserTest.cs" />
     <Compile Include="v6\Module\PortalModuleTest.cs" />
     <Compile Include="v6\PortalApplicationTest.cs" />

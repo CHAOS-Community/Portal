@@ -56,7 +56,7 @@ namespace Chaos.Portal.v6.Module
                 case "ClientSettings":
                     return new v5.Extension.ClientSettings().WithPortalApplication(_portalApplication);
                 case "Group":
-                    return new v5.Extension.Group().WithPortalApplication(_portalApplication);
+                    return new Group().WithPortalApplication(_portalApplication);
                 case "Session":
                     return new v5.Extension.Session().WithPortalApplication(_portalApplication);
                 case "Subscription":
