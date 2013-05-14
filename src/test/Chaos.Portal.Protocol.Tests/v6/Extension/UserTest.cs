@@ -17,6 +17,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Extension
 		[Test]
 		public void GetCurrent_ReturnCurrentUser()
 		{
+
 			var user = Make_UserExtension();
 
 			var result = user.GetCurrent();

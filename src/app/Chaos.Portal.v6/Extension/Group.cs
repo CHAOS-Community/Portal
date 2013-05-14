@@ -20,9 +20,9 @@ namespace Chaos.Portal.v6.Extension
         #endregion
 		#region Get
 
-		public IEnumerable<Core.Data.Model.Group> Get(Guid? guid = null, bool includeUsers = false)
+		public IEnumerable<Core.Data.Model.Group> Get(Guid? guid = null, Guid? userGuid = null)
 		{
-			if (includeUsers)
+			if (userGuid.HasValue)
 				throw new NotImplementedException();
 
 			if (Request.User.HasPermission(SystemPermissons.UserManager))
@@ -38,7 +38,7 @@ namespace Chaos.Portal.v6.Extension
 		{
 			if (!Request.User.HasPermission(SystemPermissons.CreateGroup)) throw new InsufficientPermissionsException("User does not have permission to create groups");
 
-			return PortalRepository.GroupCreate(Guid.NewGuid(), name, Request.User.Guid, systemPermission);
+			return PortalRepository.GroupCreate(Guid.NewGuid(), name, Request.User.Guid, systemPermission); //TODO: Handle what permissions can be given
 		}
 
 		#endregion
@@ -60,7 +60,7 @@ namespace Chaos.Portal.v6.Extension
 		{
 			if (Request.IsAnonymousUser) throw new InsufficientPermissionsException("Anonymous users cannot Update groups");
 
-			var result = PortalRepository.GroupUpdate(guid, Request.User.Guid, newName, newSystemPermission);
+			var result = PortalRepository.GroupUpdate(guid, Request.User.Guid, newName, newSystemPermission);//TODO: Handle what permissions can be given
 
 			return new ScalarResult((int)result);
 		}
@@ -68,16 +68,24 @@ namespace Chaos.Portal.v6.Extension
 		#endregion
 		#region Add / Remove User
 
-		public ScalarResult AddUser(Guid guid, Guid userGuid)
+		public ScalarResult AddUser(Guid guid, Guid userGuid, uint permissions)
 		{
-			throw new NotImplementedException();
+			if (Request.IsAnonymousUser) throw new InsufficientPermissionsException("Anonymous users cannot add users to groups");
 
+			if(Request.User.HasPermission(SystemPermissons.UserManager))
+				return new ScalarResult((int) PortalRepository.GroupAddUser(guid, userGuid, permissions, null)); //TODO: Handle what permissions can be given
+
+			return new ScalarResult((int)PortalRepository.GroupAddUser(guid, userGuid, permissions, Request.User.Guid)); //TODO: Handle what permissions can be given
 		}
 
 		public ScalarResult RemoveUser(Guid guid, Guid userGuid)
 		{
-			throw new NotImplementedException();
+			if (Request.IsAnonymousUser) throw new InsufficientPermissionsException("Anonymous users cannot remover users from groups");
 
+			if (Request.User.HasPermission(SystemPermissons.UserManager))
+				return new ScalarResult((int)PortalRepository.GroupRemoveUser(guid, userGuid, null));
+
+			return new ScalarResult((int)PortalRepository.GroupRemoveUser(guid, userGuid, Request.User.Guid)); //TODO: Handle what permissions can be given
 		}
 
 		#endregion

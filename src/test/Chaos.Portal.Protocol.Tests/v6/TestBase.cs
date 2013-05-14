@@ -4,24 +4,19 @@
     using System.Collections.Generic;
     using System.Diagnostics;
 
-    using Chaos.Portal.Core;
-    using Chaos.Portal.Core.Cache;
-    using Chaos.Portal.Core.Data;
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Extension;
-    using Chaos.Portal.Core.Indexing.View;
-    using Chaos.Portal.Core.Logging;
-    using Chaos.Portal.Core.Request;
-    using Chaos.Portal.Core.Response;
-    using Chaos.Portal.v5.Extension;
+    using Core;
+    using Core.Cache;
+    using Core.Data;
+    using Core.Data.Model;
+    using Core.Extension;
+    using Core.Indexing.View;
+    using Core.Logging;
+    using Core.Request;
+    using Core.Response;
 
     using Moq;
 
     using NUnit.Framework;
-
-    using ClientSettings = Chaos.Portal.v5.Extension.ClientSettings;
-    using Group = Chaos.Portal.v5.Extension.Group;
-    using Session = Chaos.Portal.v5.Extension.Session;
 
     [TestFixture]
     public class TestBase
@@ -68,97 +63,68 @@
         }
         
         #endregion
-        #region Make
+		#region Make DTO's
 
-        protected Core.Data.Model.ClientSettings Make_ClientSettings()
-        {
-            return new Core.Data.Model.ClientSettings
-            {
-                Guid        = new Guid("10000000-0000-0000-0000-000000000000"),
-                Name        = "test client",
-                Settings    = "some settings",
-                DateCreated = new DateTime(2000, 01, 01, 00, 00, 00)
-            };
+		protected Group Make_Group()
+		{
+			return new Group
+			{
+				Guid = new Guid("01000000-0000-0000-0000-000000000010"),
+				Name = "test group",
+				SystemPermission = 255,
+				DateCreated = new DateTime(2000, 01, 01)
+			};
+		}
+
+		protected UserInfo Make_User()
+		{
+			return new UserInfo
+			{
+				Guid = new Guid("00100000-0000-0000-0000-000000000100"),
+				Email = "test@test.test",
+				SystemPermissions = (uint?)SystemPermissons.All
+			};
+		}
+
+		protected Session Make_Session()
+		{
+			return new Session
+			{
+				Guid = new Guid("00001000-0000-0000-0000-000000010000"),
+				UserGuid = Make_User().Guid,
+				DateCreated = new DateTime(2000, 01, 01)
+			};
+		}
+
+		#endregion
+		#region Make Core
+
+		protected PortalApplication Make_PortalApplication()
+		{
+			return new PortalApplication(Cache.Object, ViewManager.Object, PortalRepository.Object, LoggingFactory.Object);
+		}
+
+		protected static PortalRequest Make_TestRequest()
+		{
+			var parameters = new Dictionary<string, string> { { "format", "XML" } };
+
+            return new PortalRequest(Protocol.V6, "test", "test", parameters, null);
         }
 
-        protected Core.Data.Model.Group Make_Group()
-        {
-            return new Core.Data.Model.Group
-                {
-                    Guid             = new Guid("01000000-0000-0000-0000-000000000010"),
-                    Name             = "test group",
-                    SystemPermission = 255,
-                    DateCreated      = new DateTime(2000, 01, 01)
-                };
-        }
+        #endregion
+		#region Extensions
+        
+		protected Portal.v6.Extension.User Make_UserExtension()
+		{
+			return (Portal.v6.Extension.User)new Portal.v6.Extension.User(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
+		}
 
-        protected UserInfo Make_User()
-        {
-            return new UserInfo
-                {
-                    Guid = new Guid("00100000-0000-0000-0000-000000000100"),
-                    Email = "test@test.test",
-                    SystemPermissions = (uint?)SystemPermissons.All
-                };
-        }
 
-        protected Core.Data.Model.Session Make_Session()
-        {
-            return new Core.Data.Model.Session
-                {
-                    Guid        = new Guid("00001000-0000-0000-0000-000000010000"),
-                    UserGuid    = Make_User().Guid,
-                    DateCreated = new DateTime(2000, 01, 01)
-                };
-        }
-
-        protected ClientSettings Make_ClientSettingsExtension()
-        {
-            return (ClientSettings)new ClientSettings(PortalApplication.Object).WithPortalRequest(PortalRequest.Object)
-                                                                               .WithPortalResponse(PortalResponse.Object);
-        }
-
-        protected Group Make_GroupExtension()
-        {
-            return (Group)new Group(PortalApplication.Object).WithPortalRequest(PortalRequest.Object)
-                                                             .WithPortalResponse(PortalResponse.Object);
-        }
-
-        protected Session Make_SessionExtension()
-        {
-            return (Session)new Session(PortalApplication.Object).WithPortalRequest(PortalRequest.Object)
-                                                                 .WithPortalResponse(PortalResponse.Object);
-        }
-
-        protected Subscription Make_SubscriptionExtension()
-        {
-            return (Subscription)new Subscription(PortalApplication.Object).WithPortalRequest(PortalRequest.Object)
-                                                                           .WithPortalResponse(PortalResponse.Object);
-        }
-
-        protected PortalApplication Make_PortalApplication()
-        {
-            return new PortalApplication( Cache.Object, ViewManager.Object, PortalRepository.Object, LoggingFactory.Object );
-        }
-
-        protected Portal.v6.Extension.User Make_UserExtension()
-        {
-            return (Portal.v6.Extension.User)new Portal.v6.Extension.User(PortalApplication.Object).WithPortalRequest(PortalRequest.Object)
-                                                                                                   .WithPortalResponse(PortalResponse.Object);
-        }
-
-        protected static PortalRequest Make_TestRequest()
-        {
-            var parameters = new Dictionary<string, string> { { "format", "XML" } };
-
-            return new PortalRequest((Protocol)Protocol.V6, "test", "test", parameters, null);
-        }
-
-		protected Portal.v6.Extension.Group Make_v6GroupExtension()
+		protected Portal.v6.Extension.Group Make_GroupExtension()
 		{
 			return (Portal.v6.Extension.Group)new Portal.v6.Extension.Group(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
 		}
 
-        #endregion
+		#endregion
     }
 }
