@@ -4,6 +4,7 @@
     using System.IO;
 
     using Chaos.Portal.Core;
+    using Chaos.Portal.Core.Data;
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Extension;
     using Chaos.Portal.Core.Module;
@@ -113,7 +114,7 @@
             var extension   = new ExtensionMock(application);
             var module      = new Mock<IModule>();
             var parameters  = new Dictionary<string, string> { { "format", "XML" } };
-            var request     = new PortalRequest(Protocol.V6, "test", "missing", parameters);
+            var request     = new PortalRequest((Protocol)Protocol.V6, (string)"test", (string)"missing", parameters, null);
             module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "test" });
             module.Setup(m => m.GetExtension(Protocol.V6, "test")).Returns(extension);
             application.AddModule(module.Object);
@@ -129,7 +130,7 @@
             var extension   = new ExtensionMock(application);
             var module      = new Mock<IModule>();
             var parameters  = new Dictionary<string, string> { { "format", "XML" } };
-            var request     = new PortalRequest(Protocol.V6, "test", "error", parameters);
+            var request     = new PortalRequest((Protocol)Protocol.V6, (string)"test", (string)"error", parameters, null);
             module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "test" });
             module.Setup(m => m.GetExtension(Protocol.V6, "test")).Returns(extension);
             application.AddModule(module.Object);

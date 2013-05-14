@@ -1,4 +1,4 @@
-namespace Chaos.Portal.v5.Extension
+namespace Chaos.Portal.v6.Extension
 {
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data.Model;
@@ -17,31 +17,25 @@ namespace Chaos.Portal.v5.Extension
 
         #region Get
 
-        public Dto.Session Get()
+        public Core.Data.Model.Session Get()
         {
-            var session = Request.Session;
-
-            return new Dto.Session(session);
-        }
+            return Request.Session;
+        } 
 
         #endregion
         #region Create
 
-        public Dto.Session Create()
+        public Core.Data.Model.Session Create()
         {
-            var session = PortalRepository.SessionCreate(Request.AnonymousUserGuid);
-            
-            return new Dto.Session(session);
+            return PortalRepository.SessionCreate(Request.AnonymousUserGuid);
         }
 
         #endregion
         #region Update
 
-        public Dto.Session Update()
+        public Core.Data.Model.Session Update()
         {
-            var session = PortalRepository.SessionUpdate(Request.Session.Guid, Request.User.Guid);
-
-            return new Dto.Session(session);
+            return PortalRepository.SessionUpdate(Request.Session.Guid, Request.User.Guid);
         }
 
         #endregion

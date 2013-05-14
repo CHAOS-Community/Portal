@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extension\Group.cs" />
+    <Compile Include="Extension\Session.cs" />
     <Compile Include="Extension\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Response\PortalResponse.cs" />

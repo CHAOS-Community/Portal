@@ -151,7 +151,7 @@
         {
             var parameters = new Dictionary<string, string> { { "format", "XML" } };
 
-            return new PortalRequest(Protocol.V6, "test", "test", parameters);
+            return new PortalRequest((Protocol)Protocol.V6, "test", "test", parameters, null);
         }
 
 		protected Portal.v6.Extension.Group Make_v6GroupExtension()

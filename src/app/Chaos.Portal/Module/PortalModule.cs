@@ -83,7 +83,7 @@ namespace Chaos.Portal.Module
                     case "Group":
                         return new v5.Extension.Group(_portalApplication);
                     case "Session":
-                        return new v5.Extension.Session(_portalApplication);
+                        return new v6.Extension.Session(_portalApplication);
                     case "Subscription":
                         return new v5.Extension.Subscription(_portalApplication);
                     case "User":

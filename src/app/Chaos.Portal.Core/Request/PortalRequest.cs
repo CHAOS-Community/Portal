@@ -19,6 +19,8 @@ namespace Chaos.Portal.Core.Request
         private IEnumerable<SubscriptionInfo> _subscriptions;
         private IEnumerable<Core.Data.Model.Group> _group;
 
+        private IPortalRepository _portalRepository;
+
         private const string SessionguidParameterName = "sessionGUID";
 
         private static readonly Guid _anonymousUserGuid;
@@ -31,23 +33,24 @@ namespace Chaos.Portal.Core.Request
             _anonymousUserGuid = new Guid(ConfigurationManager.AppSettings["AnonymousUserGUID"]);
         }
 
-        public PortalRequest( Protocol version, string extension, string action, IDictionary<string,string> parameters, IEnumerable<FileStream> files )
+        public PortalRequest(Protocol version, string extension, string action, IDictionary<string, string> parameters, IPortalRepository portalRepository, IEnumerable<FileStream> files)
         {
             Stopwatch = new Stopwatch();
             Stopwatch.Start();
 
-            Version      = version;
-            Extension    = extension;
-            Action       = action;
-            Parameters   = parameters;
-			Files        = files;
+            Version          = version;
+            Extension        = extension;
+            Action           = action;
+            Parameters       = parameters;
+			Files            = files;
+            PortalRepository = portalRepository;
         }
 
-		public PortalRequest( Protocol version,string extension, string action, IDictionary<string,string> parameters ) : this( version, extension, action, parameters, new List<FileStream>() )
+		public PortalRequest(Protocol version, string extension, string action, IDictionary<string, string> parameters, IPortalRepository portalRepository) : this( version, extension, action, parameters, portalRepository, new List<FileStream>() )
         {
         }
 
-        public PortalRequest() : this( Protocol.Latest, null, null, new Dictionary<string, string>(), new List<FileStream>() )
+        public PortalRequest() : this( Protocol.Latest, null, null, new Dictionary<string, string>(), null, new List<FileStream>() )
         {
             
         }
@@ -60,7 +63,6 @@ namespace Chaos.Portal.Core.Request
         public string                     Action           { get; protected set; }
         public IDictionary<string,string> Parameters       { get; protected set; }
 		public IEnumerable<FileStream>    Files            { get; protected set; }
-        public IPortalRepository          PortalRepository { get; set; }
         public Stopwatch                  Stopwatch        { get; private set; }
         public ReturnFormat               ReturnFormat
         { 
@@ -68,6 +70,20 @@ namespace Chaos.Portal.Core.Request
             {
                 return Parameters.ContainsKey("format") ? (ReturnFormat)Enum.Parse(typeof(ReturnFormat), Parameters["format"].ToUpper()) : ReturnFormat.XML;
             } 
+        }
+
+        public IPortalRepository PortalRepository
+        {
+            get
+            {
+                if (_portalRepository == null) throw new UnhandledException("Database connection hasn't been initialized");
+
+                return _portalRepository;
+            }
+            set
+            {
+                _portalRepository = value;
+            }
         }
 
         public UserInfo User

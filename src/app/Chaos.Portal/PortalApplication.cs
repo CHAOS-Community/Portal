@@ -18,6 +18,7 @@ namespace Chaos.Portal
     using Chaos.Portal.Core.Module;
     using Chaos.Portal.Core.Request;
     using Chaos.Portal.Core.Response;
+    using Chaos.Portal.Module;
 
     /// <summary>
     /// The portal application.

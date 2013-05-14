@@ -9,7 +9,7 @@ namespace Chaos.Portal.Core.Logging
 		#region Fields
 
 		private const string LOG_FORMAT_STRING       = "{0,19} [{1}] {2}\n";
-		private const string EXCEPTION_FORMAT_STRING = "\tMessage: {0}\n\tStacktrace: {1}\n";
+        private const string EXCEPTION_FORMAT_STRING = "\tType: {0}\n\tMessage: {1}\n\tStacktrace: {2}\n";
 
 		#endregion
 		#region Properties
@@ -69,7 +69,7 @@ namespace Chaos.Portal.Core.Logging
 			LogBuilder.AppendFormat( LOG_FORMAT_STRING, DateTime.Now.ToString( "o" ), logLevel.ToString().ToUpper(), message );
 
 			for (; e != null; e = e.InnerException)
-				LogBuilder.AppendFormat( EXCEPTION_FORMAT_STRING, e.Message, e.InnerException );
+				LogBuilder.AppendFormat( EXCEPTION_FORMAT_STRING, e.GetType().Name, e.Message, e.StackTrace );
 		}
 
 		public void Debug( string message, Exception e = null )

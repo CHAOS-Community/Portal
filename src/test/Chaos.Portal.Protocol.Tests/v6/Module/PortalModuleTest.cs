@@ -57,9 +57,9 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = (Session) module.GetExtension(Protocol.V6, "Session");
+            var sessionExtension = (Chaos.Portal.v6.Extension.Session) module.GetExtension(Protocol.V6, "Session");
 
-            Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
+            Assert.That(sessionExtension.PortalApplication, Is.EqualTo(application.Object));
         }
 
         [Test]
