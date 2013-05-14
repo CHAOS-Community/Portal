@@ -125,6 +125,21 @@ namespace Chaos.Portal.Core.Data
             return GroupGet(guid, null, null).First();
         }
 
+		public uint GroupUpdate(Guid guid, Guid userGuid, string newName, uint? newSystemPermission)
+		{
+			var result = Gateway.ExecuteNonQuery("Group_Update", new[]
+                {
+                    new MySqlParameter("NewName", newName), 
+                    new MySqlParameter("NewSystemPermission", newSystemPermission), 
+                    new MySqlParameter("WhereGroupGuid", guid.ToByteArray()), 
+                    new MySqlParameter("RequestUserGuid", userGuid.ToByteArray()), 
+                });
+
+			if (result == -100) throw new InsufficientPermissionsException("User does not have permission to update group");
+
+			return (uint)result;
+		}
+
         public uint GroupDelete(Guid guid, Guid userGuid)
         {
             var result = Gateway.ExecuteNonQuery("Group_Delete", new[]
@@ -139,20 +154,20 @@ namespace Chaos.Portal.Core.Data
             return (uint)result;
         }
 
-        public uint GroupUpdate(Guid guid, Guid userGuid, string newName, uint? newSystemPermission)
-        {
-            var result = Gateway.ExecuteNonQuery("Group_Update", new[]
+	    public uint GroupAddUser(Guid guid, Guid userGuid, uint systemPermission, Guid? requestUserGuid)
+	    {
+			var result = Gateway.ExecuteNonQuery("Group_Update", new[]
                 {
-                    new MySqlParameter("NewName", newName), 
-                    new MySqlParameter("NewSystemPermission", newSystemPermission), 
-                    new MySqlParameter("WhereGroupGuid", guid.ToByteArray()), 
-                    new MySqlParameter("RequestUserGuid", userGuid.ToByteArray()), 
+                    new MySqlParameter("GroupGUID", guid.ToByteArray()), 
+                    new MySqlParameter("UserGUID", userGuid.ToByteArray()), 
+                    new MySqlParameter("Permission", systemPermission), 
+                    new MySqlParameter("RequestUserGUID", requestUserGuid.HasValue ? requestUserGuid.Value.ToByteArray() : null), 
                 });
 
-            if(result == -100) throw new InsufficientPermissionsException("User does not have permission to update group");
-//          
-            return (uint)result;
-        }
+			if (result == -100) throw new InsufficientPermissionsException("User does not have permission to add user to group");
+
+			return (uint)result;
+	    }
 
         #endregion
         #region Session
