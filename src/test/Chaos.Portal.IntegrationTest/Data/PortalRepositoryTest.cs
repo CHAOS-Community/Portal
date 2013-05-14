@@ -399,7 +399,7 @@
         {
             return new Group
                 {
-                    Guid             = new Guid("00000000-0000-0000-0000-000000000020"),
+                    Guid             = new Guid("00000000-0000-0000-0000-000000000030"),
                     Name             = "test group doesnt exist",
                     DateCreated      = new DateTime(2000,01,01,00,00,00),
                     SystemPermission = 255

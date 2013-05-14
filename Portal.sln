@@ -80,6 +80,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.sto
 		sql\3.storedprocedures\1.userdelete.sql = sql\3.storedprocedures\1.userdelete.sql
 		sql\3.storedprocedures\1.userget.sql = sql\3.storedprocedures\1.userget.sql
 		sql\3.storedprocedures\1.userinfoget.sql = sql\3.storedprocedures\1.userinfoget.sql
+		sql\3.storedprocedures\1.userinfogetwithgrouppermission.sql = sql\3.storedprocedures\1.userinfogetwithgrouppermission.sql
 		sql\3.storedprocedures\1.usersettingsdelete.sql = sql\3.storedprocedures\1.usersettingsdelete.sql
 		sql\3.storedprocedures\1.usersettingsget.sql = sql\3.storedprocedures\1.usersettingsget.sql
 		sql\3.storedprocedures\1.usersettingsset.sql = sql\3.storedprocedures\1.usersettingsset.sql
