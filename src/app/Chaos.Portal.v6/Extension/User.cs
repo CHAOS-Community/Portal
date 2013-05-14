@@ -65,13 +65,16 @@ namespace Chaos.Portal.v6.Extension
 		#endregion
 		#region Get
 
-		public IEnumerable<UserInfo> Get(bool includeGroups = false)
+		public IEnumerable<UserInfo> Get(Guid? guid = null, Guid? groupGuid = null)
         {
-			if(includeGroups)
+			if (groupGuid.HasValue)
 				throw new NotImplementedException();
 
 			if (Request.User.HasPermission(SystemPermissons.UserManager))
-				return PortalRepository.UserInfoGet(null, null, null);
+				return PortalRepository.UserInfoGet(guid, null, null);
+
+			if(guid.HasValue)
+				throw new NotImplementedException("Specifing UserGuid with out UserManager rights not implemented");
 
             var result = PortalRepository.UserInfoGetWithGroupPermission(Request.User.Guid);
 

@@ -17,7 +17,7 @@
 		[Test]
 		public void Get_HasAdminSystemPermission_ReturnAllGroups()
 		{
-			var group = Make_v6GroupExtension();
+			var group = Make_GroupExtension();
 			var groups = new[] { Make_Group(), Make_Group() };
 			PortalRepository.Setup(m => m.GroupGet(null, null, null)).Returns(groups);
 
@@ -30,7 +30,7 @@
 		[Test]
 		public void Get_WithoutAdminSystemPermission_ReturnCurrentUsersGroups()
 		{
-			var group = Make_v6GroupExtension();
+			var group = Make_GroupExtension();
 			var currentUser = Make_User();
 			var groups = new[] { Make_Group(), Make_Group() };
 
@@ -47,10 +47,22 @@
 			PortalRepository.Verify(m => m.GroupGet(null, null, null), Times.Never());
 		}
 
-		[Test]
-		public void Delete_WithAdminSystemPermission_DeleteGroup()
+		[Test, ExpectedException(typeof(InsufficientPermissionsException))]
+		public void Create_WithoutPermission_ThrowException()
 		{
-			var group = Make_v6GroupExtension();
+			var extension = Make_GroupExtension();
+			var expected = Make_Group();
+			var user = Make_User();
+			user.SystemPermissions = 0;
+			PortalRequest.SetupGet(p => p.User).Returns(user);
+
+			extension.Create(expected.Name, (uint)expected.SystemPermission);
+		}
+
+		[Test]
+		public void Delete_WithAdminSystemPermission_ReturnOne()
+		{
+			var group = Make_GroupExtension();
 			var currentUser = Make_User();
 			var groupGuid = Guid.NewGuid();
 
@@ -64,6 +76,19 @@
 			var result = group.Delete(groupGuid);
 
 			Assert.That(result.Value, Is.EqualTo(1));
+		}
+
+		[Test]
+		public void Update_AsAuthenticatedUser_ReturnOne()
+		{
+			var extension = Make_GroupExtension();
+			var group = Make_Group();
+			var user = Make_User();
+			PortalRepository.Setup(m => m.GroupUpdate(group.Guid, user.Guid, group.Name, (uint?)group.SystemPermission)).Returns(1);
+
+			var actual = extension.Update(group.Guid, group.Name, (uint?)group.SystemPermission);
+
+			Assert.That(actual.Value, Is.EqualTo(1));
 		}
 	}
 }

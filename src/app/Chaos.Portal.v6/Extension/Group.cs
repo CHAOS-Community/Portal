@@ -20,9 +20,9 @@ namespace Chaos.Portal.v6.Extension
         #endregion
 		#region Get
 
-		public IEnumerable<Core.Data.Model.Group> Get(Guid? guid = null, bool includeUsers = false)
+		public IEnumerable<Core.Data.Model.Group> Get(Guid? guid = null, Guid? userGuid = null)
 		{
-			if (includeUsers)
+			if (userGuid.HasValue)
 				throw new NotImplementedException();
 
 			if (Request.User.HasPermission(SystemPermissons.UserManager))
