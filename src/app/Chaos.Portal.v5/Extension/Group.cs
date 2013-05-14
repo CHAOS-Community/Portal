@@ -2,6 +2,7 @@ namespace Chaos.Portal.v5.Extension
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Core.Data.Model;
     using Core.Exceptions;
@@ -19,19 +20,21 @@ namespace Chaos.Portal.v5.Extension
         #endregion
         #region Get
         
-        public IEnumerable<Core.Data.Model.Group> Get()
+        public IEnumerable<Dto.Group> Get()
         {
-            return Request.Groups;
+            return Request.Groups.Select(group => new Dto.Group(group));
         }
 
         #endregion
         #region Create
 
-        public Core.Data.Model.Group Create(string name, uint systemPermission )
+        public Dto.Group Create(string name, uint systemPermission)
         {
             if(!Request.User.HasPermission(SystemPermissons.CreateGroup) ) throw new InsufficientPermissionsException( "User does not have permission to create groups" );
 
-            return PortalRepository.GroupCreate(Guid.NewGuid(), name, Request.User.Guid, systemPermission);
+            var group = PortalRepository.GroupCreate(Guid.NewGuid(), name, Request.User.Guid, systemPermission);
+
+            return new Dto.Group(group);
         }
 
         #endregion
