@@ -12,7 +12,7 @@ namespace Chaos.Portal.Core.Data.Model
 		public Guid Guid { get; set; }
 
 		[Serialize]
-		public long? SystemPermission { get; set; }
+		public uint? SystemPermission { get; set; }
 
 		[Serialize]
 		public string Name { get; set; }

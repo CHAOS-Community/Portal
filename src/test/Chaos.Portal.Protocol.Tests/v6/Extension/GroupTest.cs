@@ -47,13 +47,28 @@
 			PortalRepository.Verify(m => m.GroupGet(null, null, null), Times.Never());
 		}
 
+		[Test]
+		public void Create_WithPermission_ReturnUser()
+		{
+			var extension = Make_GroupExtension();
+			var expected = Make_Group();
+			var user = Make_User();
+			user.SystemPermissonsEnum = SystemPermissons.All;
+			PortalRequest.SetupGet(p => p.User).Returns(user);
+			PortalRepository.Setup(p => p.GroupCreate(It.IsAny<Guid>(), expected.Name, user.Guid, expected.SystemPermission.Value)).Returns(expected);
+
+			var result = extension.Create(expected.Name, (uint)expected.SystemPermission);
+
+			Assert.That(result, Is.EqualTo(expected));
+		}
+
 		[Test, ExpectedException(typeof(InsufficientPermissionsException))]
 		public void Create_WithoutPermission_ThrowException()
 		{
 			var extension = Make_GroupExtension();
 			var expected = Make_Group();
 			var user = Make_User();
-			user.SystemPermissions = 0;
+			user.SystemPermissonsEnum = SystemPermissons.None;
 			PortalRequest.SetupGet(p => p.User).Returns(user);
 
 			extension.Create(expected.Name, (uint)expected.SystemPermission);
