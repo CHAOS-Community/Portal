@@ -99,9 +99,83 @@
 			var extension = Make_GroupExtension();
 			var group = Make_Group();
 			var user = Make_User();
-			PortalRepository.Setup(m => m.GroupUpdate(group.Guid, user.Guid, group.Name, (uint?)group.SystemPermission)).Returns(1);
+			PortalRepository.Setup(m => m.GroupUpdate(group.Guid, user.Guid, group.Name, group.SystemPermission)).Returns(1);
 
-			var actual = extension.Update(group.Guid, group.Name, (uint?)group.SystemPermission);
+			var actual = extension.Update(group.Guid, group.Name, group.SystemPermission);
+
+			Assert.That(actual.Value, Is.EqualTo(1));
+		}
+
+		[Test]
+		public void AddUser_WithAdminSystemPermissio_ReturnOne()
+		{
+			var extension = Make_GroupExtension();
+			var currentUser = Make_User();
+			var group = Make_Group();
+			var user = Make_User();
+			var permission = 0u;
+
+			currentUser.SystemPermissonsEnum = SystemPermissons.All;
+
+			PortalRequest.SetupGet(p => p.User).Returns(currentUser);
+			PortalRepository.Setup(m => m.GroupAddUser(group.Guid, user.Guid, permission, null)).Returns(1);
+
+			var actual = extension.AddUser(group.Guid, user.Guid, permission);
+
+			Assert.That(actual.Value, Is.EqualTo(1));
+		}
+
+		[Test]
+		public void AddUser_WithoutAdminSystemPermissio_ReturnOne()
+		{
+			var extension = Make_GroupExtension();
+			var currentUser = Make_User();
+			var group = Make_Group();
+			var user = Make_User();
+			var permission = 0u;
+
+			currentUser.SystemPermissonsEnum = SystemPermissons.None;
+
+			PortalRequest.SetupGet(p => p.User).Returns(currentUser);
+			PortalRepository.Setup(m => m.GroupAddUser(group.Guid, user.Guid, permission, currentUser.Guid)).Returns(1);
+
+			var actual = extension.AddUser(group.Guid, user.Guid, permission);
+
+			Assert.That(actual.Value, Is.EqualTo(1));
+		}
+
+		[Test]
+		public void RemoveUser_WithAdminSystemPermissio_ReturnOne()
+		{
+			var extension = Make_GroupExtension();
+			var currentUser = Make_User();
+			var group = Make_Group();
+			var user = Make_User();
+
+			currentUser.SystemPermissonsEnum = SystemPermissons.All;
+
+			PortalRequest.SetupGet(p => p.User).Returns(currentUser);
+			PortalRepository.Setup(m => m.GroupRemoveUser(group.Guid, user.Guid, null)).Returns(1);
+
+			var actual = extension.RemoveUser(group.Guid, user.Guid);
+
+			Assert.That(actual.Value, Is.EqualTo(1));
+		}
+
+		[Test]
+		public void RemoveUser_WithoutAdminSystemPermissio_ReturnOne()
+		{
+			var extension = Make_GroupExtension();
+			var currentUser = Make_User();
+			var group = Make_Group();
+			var user = Make_User();
+
+			currentUser.SystemPermissonsEnum = SystemPermissons.None;
+
+			PortalRequest.SetupGet(p => p.User).Returns(currentUser);
+			PortalRepository.Setup(m => m.GroupRemoveUser(group.Guid, user.Guid, currentUser.Guid)).Returns(1);
+
+			var actual = extension.RemoveUser(group.Guid, user.Guid);
 
 			Assert.That(actual.Value, Is.EqualTo(1));
 		}

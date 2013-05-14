@@ -156,7 +156,7 @@ namespace Chaos.Portal.Core.Data
 
 	    public uint GroupAddUser(Guid guid, Guid userGuid, uint systemPermission, Guid? requestUserGuid)
 	    {
-			var result = Gateway.ExecuteNonQuery("Group_Update", new[]
+			var result = Gateway.ExecuteNonQuery("Group_AssociateWithUser", new[]
                 {
                     new MySqlParameter("GroupGUID", guid.ToByteArray()), 
                     new MySqlParameter("UserGUID", userGuid.ToByteArray()), 
@@ -169,7 +169,21 @@ namespace Chaos.Portal.Core.Data
 			return (uint)result;
 	    }
 
-        #endregion
+	    public uint GroupRemoveUser(Guid guid, Guid userGuid, Guid? requestUserGuid)
+	    {
+			var result = Gateway.ExecuteNonQuery("Group_RemoveUser", new[]
+                {
+                    new MySqlParameter("GroupGUID", guid.ToByteArray()), 
+                    new MySqlParameter("UserGUID", userGuid.ToByteArray()), 
+                    new MySqlParameter("RequestUserGUID", requestUserGuid.HasValue ? requestUserGuid.Value.ToByteArray() : null), 
+                });
+
+			if (result == -100) throw new InsufficientPermissionsException("User does not have permission to remove user from group");
+
+			return (uint)result;
+	    }
+
+	    #endregion
         #region Session
 
         public IEnumerable<Session> SessionGet(Guid? guid, Guid? userGuid)

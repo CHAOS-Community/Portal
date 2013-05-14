@@ -18,6 +18,7 @@ INSERT INTO Permission(TableIdentifier,Permission,Name,Description) VALUES('Grou
 INSERT INTO Permission(TableIdentifier,Permission,Name,Description) VALUES('Group', '4', 'GET', 'Permission to Get Group');
 INSERT INTO Permission(TableIdentifier,Permission,Name,Description) VALUES('Group', '8', 'ADD_USER', 'Permission to Add a User to the group');
 INSERT INTO Permission(TableIdentifier,Permission,Name,Description) VALUES('Group', '16', 'LIST_USER', 'Permission to list users in the group');
+INSERT INTO Permission(TableIdentifier,Permission,Name,Description) VALUES('Group', '32', 'REMOVE_USER', 'Permission to remove user from the group');
 INSERT INTO Permission(TableIdentifier,Permission,Name,Description) VALUES('Subscription', '1', 'CREATE_USER', 'Permission to Create new users');
 INSERT INTO Permission(TableIdentifier,Permission,Name,Description) VALUES('Subscription', '2', 'GET', 'Permission to Get Subscription');
 INSERT INTO Permission(TableIdentifier,Permission,Name,Description) VALUES('Subscription', '4', 'DELETE', 'Permission to Delete Subscription');

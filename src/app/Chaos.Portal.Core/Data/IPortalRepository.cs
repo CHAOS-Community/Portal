@@ -26,6 +26,7 @@
         uint GroupUpdate(Guid guid, Guid userGuid, string newName, uint? newSystemPermission);
         uint GroupDelete(Guid guid, Guid userGuid);
 	    uint GroupAddUser(Guid guid, Guid userGuid, uint systemPermission, Guid? requestUserGuid);
+	    uint GroupRemoveUser(Guid guid, Guid userGuid, Guid? requestUserGuid);
 
         IEnumerable<Session> SessionGet(Guid? guid, Guid? userGuid);
         Session SessionCreate(Guid userGuid);

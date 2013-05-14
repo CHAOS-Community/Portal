@@ -70,7 +70,7 @@ namespace Chaos.Portal.v6.Extension
 
 		public ScalarResult AddUser(Guid guid, Guid userGuid, uint permissions)
 		{
-			if (Request.IsAnonymousUser) throw new InsufficientPermissionsException("Anonymous users cannot Update groups");
+			if (Request.IsAnonymousUser) throw new InsufficientPermissionsException("Anonymous users cannot add users to groups");
 
 			if(Request.User.HasPermission(SystemPermissons.UserManager))
 				return new ScalarResult((int) PortalRepository.GroupAddUser(guid, userGuid, permissions, null)); //TODO: Handle what permissions can be given
@@ -80,8 +80,12 @@ namespace Chaos.Portal.v6.Extension
 
 		public ScalarResult RemoveUser(Guid guid, Guid userGuid)
 		{
-			throw new NotImplementedException();
+			if (Request.IsAnonymousUser) throw new InsufficientPermissionsException("Anonymous users cannot remover users from groups");
 
+			if (Request.User.HasPermission(SystemPermissons.UserManager))
+				return new ScalarResult((int)PortalRepository.GroupRemoveUser(guid, userGuid, null));
+
+			return new ScalarResult((int)PortalRepository.GroupRemoveUser(guid, userGuid, Request.User.Guid)); //TODO: Handle what permissions can be given
 		}
 
 		#endregion
