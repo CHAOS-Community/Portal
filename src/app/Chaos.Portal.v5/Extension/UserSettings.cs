@@ -2,6 +2,7 @@ namespace Chaos.Portal.v5.Extension
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data.Model;
@@ -20,9 +21,10 @@ namespace Chaos.Portal.v5.Extension
 
         #region Get
 
-        public IEnumerable<Core.Data.Model.UserSettings> Get(Guid clientGUID )
+        public IEnumerable<Dto.UserSettings> Get(Guid clientGUID )
         {
-            return PortalRepository.UserSettingsGet(clientGUID, Request.User.Guid);
+            var userSettings = PortalRepository.UserSettingsGet(clientGUID, Request.User.Guid);
+            return userSettings.Select(item => new Dto.UserSettings(item));
         }
 
         #endregion

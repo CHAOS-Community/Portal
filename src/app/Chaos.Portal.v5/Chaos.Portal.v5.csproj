@@ -44,6 +44,7 @@
     <Compile Include="Dto\Session.cs" />
     <Compile Include="Dto\SubscriptionInfo.cs" />
     <Compile Include="Dto\UserInfo.cs" />
+    <Compile Include="Dto\UserSettings.cs" />
     <Compile Include="Extension\ClientSettings.cs" />
     <Compile Include="Extension\Group.cs" />
     <Compile Include="Extension\Session.cs" />
