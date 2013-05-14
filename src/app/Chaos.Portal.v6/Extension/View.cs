@@ -3,6 +3,8 @@ namespace Chaos.Portal.v6.Extension
     using System.Collections.Generic;
     using System.Linq;
 
+    using CHAOS.Serialization;
+
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Extension;

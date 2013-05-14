@@ -22,7 +22,7 @@
             var result = extension.Get().ToList();
 
             Assert.That(result, Is.Not.Empty);
-            Assert.That(result[0], Is.EqualTo(expected));
+            Assert.That(result[0].GUID, Is.EqualTo(expected.Guid));
         }
 
         [Test]
@@ -35,7 +35,7 @@
 
             var actual = extension.Create(expected.Name, (uint)expected.SystemPermission);
 
-            Assert.That(actual, Is.EqualTo(expected));
+            Assert.That(actual.GUID, Is.EqualTo(expected.Guid));
         }
         
         [Test, ExpectedException(typeof(InsufficientPermissionsException))]

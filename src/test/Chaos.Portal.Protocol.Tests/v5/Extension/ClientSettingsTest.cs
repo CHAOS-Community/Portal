@@ -1,10 +1,6 @@
 ﻿namespace Chaos.Portal.Protocol.Tests.v5.Extension
 {
-    using System;
-
     using Chaos.Portal.Core.Exceptions;
-
-    using Moq;
 
     using NUnit.Framework;
 
@@ -20,7 +16,7 @@
 
             var results = extension.Get(clientSettings.Guid);
 
-            Assert.That(results, Is.SameAs(clientSettings));
+            Assert.That(results.GUID, Is.EqualTo(clientSettings.Guid));
         }
 
         [Test]

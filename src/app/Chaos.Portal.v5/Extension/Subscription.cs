@@ -2,6 +2,7 @@ namespace Chaos.Portal.v5.Extension
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data.Model;
@@ -19,19 +20,23 @@ namespace Chaos.Portal.v5.Extension
         #endregion
         #region Get
 
-        public IEnumerable<SubscriptionInfo> Get( Guid guid )
+        public IEnumerable<Dto.SubscriptionInfo> Get( Guid guid )
         {
-            return PortalRepository.SubscriptionGet(guid, Request.User.Guid);
+            var subscriptionInfos = PortalRepository.SubscriptionGet(guid, Request.User.Guid);
+
+            return subscriptionInfos.Select(subscriptionInfo => new Dto.SubscriptionInfo(subscriptionInfo));
         }
 
         #endregion
         #region Create
 
-        public SubscriptionInfo Create( string name )
+        public Dto.SubscriptionInfo Create( string name )
         {
             if(!Request.User.HasPermission(SystemPermissons.CreateSubscription)) throw new InsufficientPermissionsException();
 
-            return PortalRepository.SubscriptionCreate(new Guid(), name, Request.User.Guid);
+            var subscriptionInfo = PortalRepository.SubscriptionCreate(new Guid(), name, Request.User.Guid);
+
+            return new Dto.SubscriptionInfo(subscriptionInfo);
         }
 
         #endregion
