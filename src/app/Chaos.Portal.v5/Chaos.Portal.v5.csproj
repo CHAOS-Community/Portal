@@ -39,6 +39,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\ClientSettings.cs" />
     <Compile Include="Dto\Session.cs" />
     <Compile Include="Dto\UserInfo.cs" />
     <Compile Include="Extension\ClientSettings.cs" />

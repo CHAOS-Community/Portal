@@ -1,4 +1,4 @@
-namespace Chaos.Portal.v5.Extension
+namespace Chaos.Portal.v6.Extension
 {
     using System;
 
@@ -18,11 +18,9 @@ namespace Chaos.Portal.v5.Extension
         #endregion
         #region Get
 
-        public Dto.ClientSettings Get(Guid guid)
+        public Core.Data.Model.ClientSettings Get( Guid guid )
         {
-            var clientSettings = PortalRepository.ClientSettingsGet(guid);
-
-            return new Dto.ClientSettings(clientSettings);
+            return PortalRepository.ClientSettingsGet(guid);
         }
 
         #endregion
