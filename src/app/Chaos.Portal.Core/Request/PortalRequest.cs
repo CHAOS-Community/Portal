@@ -76,7 +76,7 @@ namespace Chaos.Portal.Core.Request
             {
                 if (_user == null)
                 {
-                    _user = PortalRepository.UserInfoGet(null, Session.Guid, null).FirstOrDefault();
+                    _user = PortalRepository.UserInfoGet(null, Session.Guid, null, null).FirstOrDefault();
 
                     if (_user == null) throw new SessionDoesNotExistException("No user associted with session");
                 }

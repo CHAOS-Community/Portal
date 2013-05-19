@@ -10,7 +10,7 @@
         IPortalRepository WithConfiguration(string connectionString);
 
         UserInfo UserInfoGet(string email);
-        IEnumerable<UserInfo> UserInfoGet(Guid? userGuid, Guid? sessionGuid, string email);
+        IEnumerable<UserInfo> UserInfoGet(Guid? userGuid, Guid? sessionGuid, string email, Guid? groupGuid);
 		IEnumerable<UserInfo> UserInfoGetWithGroupPermission(Guid userGuid);
         uint UserCreate(Guid guid, string email);
         uint UserDelete(Guid guid);

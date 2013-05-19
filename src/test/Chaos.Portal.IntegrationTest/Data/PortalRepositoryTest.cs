@@ -51,7 +51,7 @@
         {
             var userThatExist = Make_UserInfoThatExist();
 
-            var results = PortalRepository.UserInfoGet(userThatExist.Guid, null, null);
+            var results = PortalRepository.UserInfoGet(userThatExist.Guid, null, null, null);
 
             Assert.That(results, Is.Not.Empty);
             var actual = results.First();

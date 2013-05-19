@@ -33,7 +33,7 @@ namespace Chaos.Portal.v6.Extension
 			if(PortalRepository.UserCreate(guid.Value, email) <= 0)
 				throw new Exception("Failed to create user");
 			
-			return PortalRepository.UserInfoGet(guid, null, null).First();
+			return PortalRepository.UserInfoGet(guid, null, null, null).First();
 		}
 
 		#endregion
@@ -44,7 +44,7 @@ namespace Chaos.Portal.v6.Extension
             if(!Request.User.HasPermission(SystemPermissons.UserManager) && (guid != Request.User.Guid || permissons.HasValue)) throw new InsufficientPermissionsException();
             if(PortalRepository.UserUpdate(guid, email, permissons) <= 0)throw new Exception("Failed to update user");
 
-			return PortalRepository.UserInfoGet(guid, null, null).First();
+			return PortalRepository.UserInfoGet(guid, null, null, null).First();
 		}
 
 		#endregion
@@ -67,14 +67,14 @@ namespace Chaos.Portal.v6.Extension
 
 		public IEnumerable<UserInfo> Get(Guid? guid = null, Guid? groupGuid = null)
         {
-			if (groupGuid.HasValue)
-				throw new NotImplementedException();
-
 			if (Request.User.HasPermission(SystemPermissons.UserManager))
-				return PortalRepository.UserInfoGet(guid, null, null);
+				return PortalRepository.UserInfoGet(guid, null, null, groupGuid);
 
 			if(guid.HasValue)
-				throw new NotImplementedException("Specifing UserGuid with out UserManager rights not implemented");
+				throw new NotImplementedException("Specifing guid without UserManager rights not implemented");
+
+			if (groupGuid.HasValue)
+				throw new NotImplementedException("Specifing groupGuid without UserManager rights not implemented");
 
             var result = PortalRepository.UserInfoGetWithGroupPermission(Request.User.Guid);
 
