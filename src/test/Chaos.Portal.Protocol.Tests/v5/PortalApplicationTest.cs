@@ -4,6 +4,7 @@
     using System.IO;
 
     using Chaos.Portal.Core;
+    using Chaos.Portal.Core.Data;
     using Chaos.Portal.Core.Module;
     using Chaos.Portal.Core.Request;
 
@@ -20,7 +21,7 @@
             var application = Make_PortalApplication();
             var module      = new Mock<IModule>();
             var parameters  = new Dictionary<string, string> { { "format", "XML" } };
-            var request     = new PortalRequest(Protocol.V5, "test", "error", parameters);
+            var request     = new PortalRequest((Protocol)Protocol.V5, (string)"test", (string)"error", parameters, null);
             var extension   = new ExtensionMock(application);
             module.Setup(m => m.GetExtensionNames(Protocol.V5)).Returns(new[] { "test" });
             module.Setup(m => m.GetExtension(Protocol.V5, "test")).Returns(extension);

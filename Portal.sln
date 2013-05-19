@@ -58,7 +58,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.sto
 		sql\3.storedprocedures\1.groupcreate.sql = sql\3.storedprocedures\1.groupcreate.sql
 		sql\3.storedprocedures\1.groupdelete.sql = sql\3.storedprocedures\1.groupdelete.sql
 		sql\3.storedprocedures\1.groupget.sql = sql\3.storedprocedures\1.groupget.sql
-		sql\3.storedprocedures\1.GroupRemoveUser.sql = sql\3.storedprocedures\1.GroupRemoveUser.sql
 		sql\3.storedprocedures\1.groupupdate.sql = sql\3.storedprocedures\1.groupupdate.sql
 		sql\3.storedprocedures\1.indexsettingscreate.sql = sql\3.storedprocedures\1.indexsettingscreate.sql
 		sql\3.storedprocedures\1.indexsettingsget.sql = sql\3.storedprocedures\1.indexsettingsget.sql

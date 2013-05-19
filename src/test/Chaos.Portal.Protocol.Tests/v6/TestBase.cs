@@ -108,16 +108,17 @@
 		{
 			var parameters = new Dictionary<string, string> { { "format", "XML" } };
 
-			return new PortalRequest(Protocol.V6, "test", "test", parameters);
-		}
+            return new PortalRequest(Protocol.V6, "test", "test", parameters, null);
+        }
 
         #endregion
 		#region Extensions
-
+        
 		protected Portal.v6.Extension.User Make_UserExtension()
 		{
 			return (Portal.v6.Extension.User)new Portal.v6.Extension.User(PortalApplication.Object).WithPortalRequest(PortalRequest.Object).WithPortalResponse(PortalResponse.Object);
 		}
+
 
 		protected Portal.v6.Extension.Group Make_GroupExtension()
 		{

@@ -1,7 +1,6 @@
 namespace Chaos.Portal.v5.Extension
 {
     using Chaos.Portal.Core;
-    using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Extension;
 
     public class User : AExtension
@@ -15,9 +14,9 @@ namespace Chaos.Portal.v5.Extension
         #endregion
         #region Get
 
-        public UserInfo Get()
+        public Dto.UserInfo Get()
         {
-            return Request.User;
+            return new Dto.UserInfo(Request.User);
         }
 
         #endregion

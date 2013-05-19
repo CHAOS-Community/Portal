@@ -29,7 +29,8 @@
 
             var actual = extension.Create();
 
-            Assert.That(actual, Is.EqualTo(expected));
+            Assert.That(actual.Guid, Is.EqualTo(expected.Guid));
+            Assert.That(actual.UserGuid, Is.EqualTo(expected.UserGuid));
         }
         
         [Test]
@@ -42,7 +43,8 @@
 
             var actual = extension.Update();
 
-            Assert.That(actual, Is.EqualTo(expected));
+            Assert.That(actual.Guid, Is.EqualTo(expected.Guid));
+            Assert.That(actual.UserGuid, Is.EqualTo(expected.UserGuid));
         }
 
         [Test]

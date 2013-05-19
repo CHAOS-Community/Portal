@@ -5,16 +5,12 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
 
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data;
-    using Chaos.Portal.Core.Module;
     using Chaos.Portal.Module;
-    using Chaos.Portal.v5;
-    using Chaos.Portal.v5.Extension;
 
     using Moq;
 
     using NUnit.Framework;
 
-    using User = Chaos.Portal.v6.Extension.User;
 
     [TestFixture]
     public class PortalModuleTest
@@ -29,7 +25,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var clientSettingsExtension = (ClientSettings) module.GetExtension(Protocol.V6, "ClientSettings");
+            var clientSettingsExtension = (Portal.v6.Extension.ClientSettings) module.GetExtension(Protocol.V6, "ClientSettings");
 
             Assert.That(clientSettingsExtension.PortalApplication, Is.EqualTo(application.Object));
         }
@@ -43,7 +39,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = (Group) module.GetExtension(Protocol.V6, "Group");
+            var groupExtension = (Portal.v6.Extension.Group)module.GetExtension(Protocol.V6, "Group");
 
             Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
         }
@@ -57,9 +53,9 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = (Session) module.GetExtension(Protocol.V6, "Session");
+            var sessionExtension = (Portal.v6.Extension.Session) module.GetExtension(Protocol.V6, "Session");
 
-            Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
+            Assert.That(sessionExtension.PortalApplication, Is.EqualTo(application.Object));
         }
 
         [Test]
@@ -71,7 +67,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = (Subscription) module.GetExtension(Protocol.V6, "Subscription");
+            var groupExtension = (Portal.v6.Extension.Subscription)module.GetExtension(Protocol.V6, "Subscription");
 
             Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
         }
@@ -85,7 +81,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = (User) module.GetExtension(Protocol.V6, "User");
+            var groupExtension = (Portal.v6.Extension.User)module.GetExtension(Protocol.V6, "User");
 
             Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
         }
@@ -99,7 +95,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = (UserSettings) module.GetExtension(Protocol.V6, "UserSettings");
+            var groupExtension = (Portal.v6.Extension.UserSettings)module.GetExtension(Protocol.V6, "UserSettings");
 
             Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
         }
@@ -113,7 +109,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = (View) module.GetExtension(Protocol.V6, "View");
+            var groupExtension = (Portal.v6.Extension.View)module.GetExtension(Protocol.V6, "View");
 
             Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
         }

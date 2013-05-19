@@ -79,19 +79,19 @@ namespace Chaos.Portal.Module
                 switch (name)
                 {
                     case "ClientSettings":
-                        return new v5.Extension.ClientSettings(_portalApplication);
+                        return new v6.Extension.ClientSettings(_portalApplication);
                     case "Group":
-                        return new v5.Extension.Group(_portalApplication);
+                        return new v6.Extension.Group(_portalApplication);
                     case "Session":
-                        return new v5.Extension.Session(_portalApplication);
+                        return new v6.Extension.Session(_portalApplication);
                     case "Subscription":
-                        return new v5.Extension.Subscription(_portalApplication);
+                        return new v6.Extension.Subscription(_portalApplication);
                     case "User":
                         return new v6.Extension.User(_portalApplication);
                     case "UserSettings":
-                        return new v5.Extension.UserSettings(_portalApplication);
+                        return new v6.Extension.UserSettings(_portalApplication);
                     case "View":
-                        return new v5.Extension.View(_portalApplication);
+                        return new v6.Extension.View(_portalApplication);
                     default:
                         throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
                 }
