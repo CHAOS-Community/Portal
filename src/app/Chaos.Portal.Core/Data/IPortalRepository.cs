@@ -21,7 +21,7 @@
         uint SubscriptionUpdate(Guid guid, string newName, Guid requestionUserGuid);
         uint SubscriptionDelete(Guid guid, Guid requestingUserGuid);
 
-        IEnumerable<Group> GroupGet(Guid? guid, string name, Guid? requestedUserGuid);
+        IEnumerable<Group> GroupGet(Guid? guid, string name, Guid? requestingUserGuid, Guid? userGuid);
         Group GroupCreate(Guid? guid, string name, Guid requestedUserGuid, uint systemPermission);
         uint GroupUpdate(Guid guid, Guid userGuid, string newName, uint? newSystemPermission);
         uint GroupDelete(Guid guid, Guid userGuid);

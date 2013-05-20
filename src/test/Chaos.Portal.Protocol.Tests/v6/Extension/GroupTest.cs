@@ -19,7 +19,7 @@
 		{
 			var group = Make_GroupExtension();
 			var groups = new[] { Make_Group(), Make_Group() };
-			PortalRepository.Setup(m => m.GroupGet(null, null, null)).Returns(groups);
+			PortalRepository.Setup(m => m.GroupGet(null, null, null, null)).Returns(groups);
 
 			var results = group.Get();
 
@@ -44,7 +44,22 @@
 
 			Assert.That(results.Count(), Is.EqualTo(2));
 			Assert.That(results.First(), Is.EqualTo(groups.First()));
-			PortalRepository.Verify(m => m.GroupGet(null, null, null), Times.Never());
+			PortalRepository.Verify(m => m.GroupGet(null, null, null, null), Times.Never());
+		}
+
+		[Test]
+		public void Get_HasAdminSystemPermissionAndUserGuid_ReturnUsersGroups()
+		{
+			var group = Make_GroupExtension();
+			var groups = new[] { Make_Group(), Make_Group() };
+			var userGuid = Guid.NewGuid();
+
+			PortalRepository.Setup(m => m.GroupGet(null, null, null, userGuid)).Returns(groups);
+
+			var results = group.Get(null, userGuid);
+
+			Assert.That(results.Count(), Is.EqualTo(2));
+			Assert.That(results, Is.EqualTo(groups));
 		}
 
 		[Test]

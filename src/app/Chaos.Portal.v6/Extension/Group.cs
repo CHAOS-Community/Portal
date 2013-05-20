@@ -22,11 +22,11 @@ namespace Chaos.Portal.v6.Extension
 
 		public IEnumerable<Core.Data.Model.Group> Get(Guid? guid = null, Guid? userGuid = null)
 		{
-			if (userGuid.HasValue)
-				throw new NotImplementedException();
-
 			if (Request.User.HasPermission(SystemPermissons.UserManager))
-				return PortalRepository.GroupGet(guid, null, null);
+				return PortalRepository.GroupGet(guid, null, null, userGuid);
+
+			if (userGuid.HasValue)
+				throw new NotImplementedException("Specifying UserGuid without UserManager permission not implemented");
 
 			return Request.Groups;
 		}

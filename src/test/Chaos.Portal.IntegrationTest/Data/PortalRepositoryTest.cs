@@ -91,7 +91,7 @@
         {
             var groupThatExist = Make_GroupThatExist();
 
-            var results = PortalRepository.GroupGet(groupThatExist.Guid, null, null);
+            var results = PortalRepository.GroupGet(groupThatExist.Guid, null, null, null);
 
             Assert.That(results, Is.Not.Empty);
             var actual = results.First();
@@ -144,7 +144,7 @@
             var actual = PortalRepository.GroupUpdate(group.Guid, user.Guid, newName, null);
 
             Assert.That(actual, Is.EqualTo(1));
-            var results = PortalRepository.GroupGet(group.Guid, newName, user.Guid);
+            var results = PortalRepository.GroupGet(group.Guid, newName, user.Guid, null);
             Assert.That(results, Is.Not.Empty);
         }
 

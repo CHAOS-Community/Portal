@@ -98,17 +98,18 @@ namespace Chaos.Portal.Core.Data
         #endregion
         #region Group
 
-        public IEnumerable<Group> GroupGet( Guid? guid, string name, Guid? requestedUserGuid)
+		public IEnumerable<Group> GroupGet(Guid? guid, string name, Guid? requestingUserGuid, Guid? userGuid)
         {
             return Gateway.ExecuteQuery<Group>("Group_Get", new[]
                 {
                     new MySqlParameter("Guid", guid.HasValue ? guid.Value.ToByteArray() : null), 
                     new MySqlParameter("Name", name), 
-                    new MySqlParameter("RequestUserGuid", requestedUserGuid.HasValue ? requestedUserGuid.Value.ToByteArray() : null), 
+                    new MySqlParameter("RequestingUserGuid", requestingUserGuid.HasValue ? requestingUserGuid.Value.ToByteArray() : null), 
+                    new MySqlParameter("UserGuid", userGuid.HasValue ? userGuid.Value.ToByteArray() : null), 
                 });
         }
 
-        public Group GroupCreate(Guid? guid, string name, Guid requestedUserGuid, uint systemPermission )
+	    public Group GroupCreate(Guid? guid, string name, Guid requestedUserGuid, uint systemPermission )
         {
             guid = guid ?? Guid.NewGuid();
 
@@ -123,7 +124,7 @@ namespace Chaos.Portal.Core.Data
             if (result == -100) throw new InsufficientPermissionsException("User has insufficient permissions to create groups");
             if (result == -200) throw new UnhandledException("Group_Create had an unhandled exception and was rolled back");
 
-            return GroupGet(guid, null, null).First();
+            return GroupGet(guid, null, null, null).First();
         }
 
 		public uint GroupUpdate(Guid guid, Guid userGuid, string newName, uint? newSystemPermission)

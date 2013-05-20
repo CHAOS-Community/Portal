@@ -130,7 +130,7 @@ namespace Chaos.Portal.Core.Request
         /// </summary>
         public IEnumerable<Core.Data.Model.Group> Groups
         {
-            get { return _group ?? (_group = PortalRepository.GroupGet(null, null, User.Guid).ToList()); }
+            get { return _group ?? (_group = PortalRepository.GroupGet(null, null, User.Guid, null).ToList()); }
         }
 
         /// <summary>
