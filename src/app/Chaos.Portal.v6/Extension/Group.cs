@@ -89,5 +89,16 @@ namespace Chaos.Portal.v6.Extension
 		}
 
 		#endregion
+		#region Update User Permissions
+
+		public ScalarResult UpdateUserPermissions(Guid guid, Guid userGuid, uint permissions)
+		{
+			if (Request.User.HasPermission(SystemPermissons.UserManager))
+				return new ScalarResult((int) PortalRepository.GroupUpdateUserPermissions(guid, userGuid, permissions, null));
+
+			return new ScalarResult((int) PortalRepository.GroupUpdateUserPermissions(guid, userGuid, permissions, Request.User.Guid)); //TODO: Handle what permissions can be given
+		}
+
+		#endregion
 	}
 }

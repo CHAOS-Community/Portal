@@ -27,6 +27,7 @@
         uint GroupDelete(Guid guid, Guid userGuid);
 	    uint GroupAddUser(Guid guid, Guid userGuid, uint systemPermission, Guid? requestUserGuid);
 	    uint GroupRemoveUser(Guid guid, Guid userGuid, Guid? requestUserGuid);
+		uint GroupUpdateUserPermissions(Guid guid, Guid userGuid, uint permissions, Guid? requestingUserGuid);
 
         IEnumerable<Session> SessionGet(Guid? guid, Guid? userGuid);
         Session SessionCreate(Guid userGuid);
@@ -43,6 +44,5 @@
         uint LogCreate(string name, Guid? sessionGuid, string level, double? duration, string message);
 
         Module ModuleGet(string name);
-	    
     }
 }

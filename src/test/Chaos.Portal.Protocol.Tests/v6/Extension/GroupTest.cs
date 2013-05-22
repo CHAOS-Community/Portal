@@ -194,5 +194,43 @@
 
 			Assert.That(actual.Value, Is.EqualTo(1));
 		}
+
+		[Test]
+		public void UpdateUserPermissions_WithUserManagerPermission_UpdateUser()
+		{
+			var currentUser = Make_User();
+			var user = Make_User();
+			var group = Make_Group();
+			var newPermission = 32u;
+
+			currentUser.SystemPermissonsEnum = SystemPermissons.UserManager;
+
+			PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
+			PortalRequest.SetupGet(p => p.User).Returns(currentUser);
+			PortalRepository.Setup(p => p.GroupUpdateUserPermissions(group.Guid, user.Guid, newPermission, null)).Returns(1);
+
+			var actual = Make_GroupExtension().UpdateUserPermissions(group.Guid, user.Guid, newPermission);
+
+			Assert.That(actual.Value, Is.EqualTo(1));
+		}
+
+		[Test]
+		public void UpdateUserPermissions_WithoutUserManagerPermission_UpdateUser()
+		{
+			var currentUser = Make_User();
+			var user = Make_User();
+			var group = Make_Group();
+			var newPermission = 32u;
+
+			currentUser.SystemPermissonsEnum = SystemPermissons.None;
+
+			PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
+			PortalRequest.SetupGet(p => p.User).Returns(currentUser);
+			PortalRepository.Setup(p => p.GroupUpdateUserPermissions(group.Guid, user.Guid, newPermission, currentUser.Guid)).Returns(1);
+
+			var actual = Make_GroupExtension().UpdateUserPermissions(group.Guid, user.Guid, newPermission);
+
+			Assert.That(actual.Value, Is.EqualTo(1));
+		}
 	}
 }

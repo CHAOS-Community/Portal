@@ -177,7 +177,22 @@ namespace Chaos.Portal.Core.Data
                 {
                     new MySqlParameter("GroupGUID", guid.ToByteArray()), 
                     new MySqlParameter("UserGUID", userGuid.ToByteArray()), 
-                    new MySqlParameter("RequestUserGUID", requestUserGuid.HasValue ? requestUserGuid.Value.ToByteArray() : null), 
+                    new MySqlParameter("RequestUserGUID", requestUserGuid.HasValue ? requestUserGuid.Value.ToByteArray() : null)
+                });
+
+			if (result == -100) throw new InsufficientPermissionsException("User does not have permission to remove user from group");
+
+			return (uint)result;
+	    }
+
+		public uint GroupUpdateUserPermissions(Guid guid, Guid userGuid, uint permissions, Guid? requestingUserGuid)
+	    {
+			var result = Gateway.ExecuteNonQuery("Group_UpdateUserPermissions", new[]
+                {
+                    new MySqlParameter("GroupGUID", guid.ToByteArray()), 
+                    new MySqlParameter("UserGUID", userGuid.ToByteArray()), 
+                    new MySqlParameter("Permissions", permissions), 
+					new MySqlParameter("RequestingUserGUID", requestingUserGuid.HasValue ? requestingUserGuid.Value.ToByteArray() : null)
                 });
 
 			if (result == -100) throw new InsufficientPermissionsException("User does not have permission to remove user from group");
