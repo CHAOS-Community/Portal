@@ -6,6 +6,8 @@ namespace Chaos.Portal.Core.Indexing.Solr
 
     using CHAOS.Net;
 
+    using Chaos.Portal.Core.Indexing.Solr.Response;
+
     public class SolrCore : IIndex
     {
         #region Fields

@@ -1,14 +1,10 @@
 namespace Chaos.Portal.Core.Extension
 {
-    using System;
     using System.Collections.Generic;
-    using System.Configuration;
-    using System.Linq;
     using System.Reflection;
 
     using Chaos.Portal.Core.Cache;
     using Chaos.Portal.Core.Data;
-    using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Indexing.View;
     using Chaos.Portal.Core.Logging;

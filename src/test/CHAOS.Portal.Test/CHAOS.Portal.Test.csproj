@@ -58,6 +58,7 @@
     <Compile Include="Bindings\EnumerableOfGuidBindingTest.cs" />
     <Compile Include="Bindings\XDocumentBindingTest.cs" />
     <Compile Include="Data\Dto\UserInfoTest.cs" />
+    <Compile Include="Indexing\Solr\ResponseTest.cs" />
     <Compile Include="Indexing\Solr\SolrCoreTest.cs" />
     <Compile Include="Indexing\Solr\TestBase.cs" />
     <Compile Include="Indexing\View\ViewManagerTest.cs" />

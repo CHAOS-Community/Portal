@@ -2,6 +2,8 @@ namespace Chaos.Portal.Core.Indexing.Solr
 {
     using System.Collections.Generic;
 
+    using Chaos.Portal.Core.Indexing.Solr.Response;
+
     public interface IIndex
     {
         Response<IdResult> Query(IQuery query);

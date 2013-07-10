@@ -1,4 +1,4 @@
-namespace Chaos.Portal.Core.Indexing.Solr
+namespace Chaos.Portal.Core.Indexing.Solr.Response
 {
     using System;
     using System.Linq;
