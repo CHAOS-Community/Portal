@@ -8,6 +8,7 @@ namespace Chaos.Portal.v6.Extension
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Extension;
+    using Chaos.Portal.Core.Indexing;
     using Chaos.Portal.Core.Indexing.Solr;
 
     public class View : AExtension

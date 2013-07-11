@@ -12,6 +12,7 @@ namespace Chaos.Portal
     using Chaos.Portal.Core.Data;
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Extension;
+    using Chaos.Portal.Core.Indexing;
     using Chaos.Portal.Core.Indexing.Solr;
     using Chaos.Portal.Core.Indexing.View;
     using Chaos.Portal.Core.Logging;

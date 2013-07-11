@@ -6,6 +6,7 @@
     using System.Xml.Linq;
 
     using Chaos.Portal.Core.Indexing.Solr;
+    using Chaos.Portal.Core.Indexing.Solr.Request;
 
     using Moq;
 
@@ -27,15 +28,15 @@
         [Test]
         public void Query_GivenValidQuery_ReturnASolrResponse()
         {
-            var core = this.Make_SolrCore();
-            var query = new SolrQuery();
+            var core   = Make_SolrCore();
+            var query  = new SolrQuery();
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(this.SolrResponseSampleWithoutFacet));
-            this.HttpConnection.Setup(m => m.Get("testcore/select", It.IsAny<string>())).Returns(stream);
+            HttpConnection.Setup(m => m.Get("testcore/select", It.IsAny<string>())).Returns(stream);
 
             var result = core.Query(query);
 
             Assert.IsNotNull(result);
-            this.HttpConnection.Verify(m => m.Get("testcore/select", It.IsAny<string>()));
+            HttpConnection.Verify(m => m.Get("testcore/select", It.IsAny<string>()));
         }
 
         #endregion

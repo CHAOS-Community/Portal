@@ -4,6 +4,7 @@ namespace Chaos.Portal.Core.Bindings.Standard
     using System.Reflection;
 
     using Chaos.Portal.Core.Indexing.Solr;
+    using Chaos.Portal.Core.Indexing.Solr.Request;
 
     public class QueryParameterBinding : IParameterBinding
     {

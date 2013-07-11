@@ -1,8 +1,10 @@
-namespace Chaos.Portal.Core.Indexing.Solr
+namespace Chaos.Portal.Core.Indexing.Solr.Request
 {
     public class SolrQuery : IQuery
     {
         private string _facet;
+
+        private string _groupField;
 
         #region Properties
 
@@ -22,6 +24,7 @@ namespace Chaos.Portal.Core.Indexing.Solr
                     _facet = _facet.Replace("AND", "&");
                     _facet = _facet.Replace("+", "");
                     _facet = _facet.Replace(" ", "");
+                    _facet = "&" + _facet;
                 }
 
             }
@@ -34,20 +37,23 @@ namespace Chaos.Portal.Core.Indexing.Solr
         {
             get
             {
-                return string.Format("q={0}&sort={1}&start={2}&rows={3}&facet={4}&{5}", Query, Sort ?? "", PageIndex * PageSize, PageSize, (!string.IsNullOrEmpty(Facet)).ToString().ToLower(), Facet);
+                return string.Format("q={0}&sort={1}&start={2}&rows={3}&facet={4}{5}{6}", string.IsNullOrEmpty(Query) ? "*:*" : Query, Sort ?? "", PageIndex * PageSize, PageSize, (!string.IsNullOrEmpty(Facet)).ToString().ToLower(), Facet, Group != null ? Group.ToString() : "");
             }
         }
+
+        public IQueryGroupSettings Group { get; set; }
 
         #endregion
         #region Construction
 
-        public SolrQuery(string query, string facet, string sort, uint pageIndex, uint pageSize)
+        public SolrQuery(string query, string facet, string sort, uint pageIndex, uint pageSize) : this()
         {
             Init(query, facet, sort, pageIndex, pageSize);
         }
 
         public SolrQuery()
         {
+            Group = new SolrGroup();
         }
 
         #endregion
