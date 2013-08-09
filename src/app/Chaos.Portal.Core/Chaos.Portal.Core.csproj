@@ -152,11 +152,13 @@
     <Compile Include="Request\FileStream.cs" />
     <Compile Include="Request\IPortalRequest.cs" />
     <Compile Include="Request\PortalRequest.cs" />
+    <Compile Include="Response\Dto\GroupedResult.cs" />
     <Compile Include="Response\Dto\PagedResult.cs" />
     <Compile Include="Response\Dto\PortalError.cs" />
     <Compile Include="Response\Dto\PortalHeader.cs" />
     <Compile Include="Response\Dto\PortalResponse.cs" />
     <Compile Include="Response\Dto\PortalResult.cs" />
+    <Compile Include="Response\Dto\ResultGroup.cs" />
     <Compile Include="Response\IPortalError.cs" />
     <Compile Include="Response\IPortalHeader.cs" />
     <Compile Include="Response\IPortalResponse.cs" />
