@@ -6,7 +6,8 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Request;
-    using Chaos.Portal.Core.Response.Dto;
+    using Chaos.Portal.Core.Response;
+    using Chaos.Portal.Core.Response.Dto.v1;
 
     using NUnit.Framework;
 
@@ -17,7 +18,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
         public void GetResponseStream_GivenSimpleIntegerResult_ReturnsXmlContainingScalarResult()
         {
             var request  = new PortalRequest();
-            var response = new Portal.v5.Response.PortalResponse(request);
+            var response = new PortalResponse(request);
             request.Stopwatch.Reset();
 
             response.WriteToOutput(1234);
@@ -32,7 +33,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
         public void GetResponseStream_GivenSimpleUnsigndIntegerResult_ReturnsXmlContainingScalarResult()
         {
             var request = new PortalRequest();
-            var response = new Portal.v5.Response.PortalResponse(request);
+            var response = new PortalResponse(request);
             request.Stopwatch.Reset();
 
             response.WriteToOutput(1234u);
@@ -47,7 +48,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
         public void GetResponseStream_GivenAComplexDto_ReturnsAsXml()
         {
             var request = new PortalRequest();
-            var response = new Portal.v5.Response.PortalResponse(request);
+            var response = new PortalResponse(request);
             request.Stopwatch.Reset();
 
             response.WriteToOutput(new Core.Data.Model.Module{ ID = 4321});
@@ -62,7 +63,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
         public void GetResponseStream_GivenAListOfComplexDtos_ReturnsAsXml()
         {
             var request = new PortalRequest();
-            var response = new Portal.v5.Response.PortalResponse(request);
+            var response = new PortalResponse(request);
             var modules = new[] { new Core.Data.Model.Module { ID = 4321 }, new Core.Data.Model.Module { ID = 1234 }};
             request.Stopwatch.Reset();
             
@@ -78,7 +79,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
         public void GetResponseStream_GivenAPagedListOfComplexDtos_ReturnsAsXml()
         {
             var request = new PortalRequest();
-            var response = new Portal.v5.Response.PortalResponse(request);
+            var response = new PortalResponse(request);
             var modules = new Core.Data.Model.PagedResult<Core.Data.Model.Module>(2, 2, new[] { new Core.Data.Model.Module { ID = 4321 }, new Core.Data.Model.Module { ID = 1234 } });
             request.Stopwatch.Reset();
 
@@ -94,7 +95,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
         public void GetResponseStream_GivenAnException_ReturnsAsErrorXml()
         {
             var request = new PortalRequest();
-            var response = new Portal.v5.Response.PortalResponse(request);
+            var response = new PortalResponse(request);
             request.Stopwatch.Reset();
 
             response.WriteToOutput(new ArgumentException());
@@ -110,7 +111,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
         public void GetResponseStream_GivenAnUnsupportedResult_ReturnsAsErrorXml()
         {
             var request = new PortalRequest();
-            var response = new Portal.v5.Response.PortalResponse(request);
+            var response = new PortalResponse(request);
             request.Stopwatch.Reset();
 
             response.WriteToOutput(new object());
@@ -122,7 +123,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
             var request = new PortalRequest();
             request.Parameters.Add("format", "attachment");
 
-            using (var response = new Portal.v5.Response.PortalResponse(request))
+            using (var response = new PortalResponse(request))
             {
                 request.Stopwatch.Reset();
 

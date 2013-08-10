@@ -94,6 +94,7 @@
             var extension   = new ExtensionMock(application);
             var module      = new Mock<IModule>();
             var request     = Make_TestRequest();
+            request.Parameters["format"] = "XML2";
             module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "test" });
             module.Setup(m => m.GetExtension(Protocol.V6, "test")).Returns(extension);
             application.AddModule(module.Object);
@@ -129,7 +130,7 @@
             var application = Make_PortalApplication();
             var extension   = new ExtensionMock(application);
             var module      = new Mock<IModule>();
-            var parameters  = new Dictionary<string, string> { { "format", "XML" } };
+            var parameters  = new Dictionary<string, string> { { "format", "XML2" } };
             var request     = new PortalRequest((Protocol)Protocol.V6, (string)"test", (string)"error", parameters, null);
             module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "test" });
             module.Setup(m => m.GetExtension(Protocol.V6, "test")).Returns(extension);

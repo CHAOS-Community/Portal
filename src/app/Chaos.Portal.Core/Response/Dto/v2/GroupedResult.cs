@@ -1,4 +1,4 @@
-﻿namespace Chaos.Portal.Core.Response.Dto
+namespace Chaos.Portal.Core.Response.Dto.v2
 {
     using System.Collections.Generic;
 

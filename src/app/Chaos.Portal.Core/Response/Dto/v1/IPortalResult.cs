@@ -1,4 +1,4 @@
-﻿namespace Chaos.Portal.v5.Response.Dto
+namespace Chaos.Portal.Core.Response.Dto.v1
 {
     using CHAOS.Serialization;
     using CHAOS.Serialization.XML;

@@ -19,6 +19,7 @@ namespace Chaos.Portal
     using Chaos.Portal.Core.Module;
     using Chaos.Portal.Core.Request;
     using Chaos.Portal.Core.Response;
+    using Chaos.Portal.Core.Response.Dto.v1;
     using Chaos.Portal.Module;
 
     /// <summary>
@@ -92,7 +93,7 @@ namespace Chaos.Portal
         /// <returns>The response object</returns>
         public IPortalResponse ProcessRequest( IPortalRequest request )
         {
-            var response  = CreatePortalResponse(request);
+            var response  = new PortalResponse(request);
             var extension = GetExtension(request.Version, request.Extension);
             extension.WithPortalRequest(request);
             extension.WithPortalResponse(response);
@@ -100,17 +101,17 @@ namespace Chaos.Portal
             return extension.CallAction(request);
         }
 
-        private static IPortalResponse CreatePortalResponse(IPortalRequest request)
-        {
-            switch(request.Version)
-            {
-                case Protocol.V5:
-                    return new v5.Response.PortalResponse(request);
-                case Protocol.V6:
-                default:
-                    return new v6.Response.PortalResponse(request);
-            }
-        }
+//        private static IPortalResponse CreatePortalResponse(IPortalRequest request)
+//        {
+//            switch(request.Version)
+//            {
+//                case Protocol.V5:
+//                    return new PortalResponse(request);
+//                case Protocol.V6:
+//                default:
+//                    return new v6.Response.PortalResponse(request);
+//            }
+//        }
 
         /// <summary>
         /// Return the loaded instance of the requested extension

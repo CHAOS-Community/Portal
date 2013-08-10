@@ -6,6 +6,12 @@
         JSON,
         JSONP,
         ATTACHMENT,
-        UNKNOWN
+        UNKNOWN,
+
+        XML2,
+
+        JSON2,
+
+        JSONP2
     }
 }

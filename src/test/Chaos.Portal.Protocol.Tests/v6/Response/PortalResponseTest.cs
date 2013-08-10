@@ -4,9 +4,11 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
 
     using CHAOS.Serialization;
 
+    using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Request;
+    using Chaos.Portal.Core.Response;
 
     using NUnit.Framework;
 
@@ -17,7 +19,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
         public void GetResponseStream_GivenSimpleIntegerResult_ReturnsXmlContainingScalarResult()
         {
             var request  = new PortalRequest();
-            var response = new Portal.v6.Response.PortalResponse(request);
+            var response = new PortalResponse(request){ReturnFormat = ReturnFormat.XML2};
             var grouped = new Portal.Core.Data.Model.GroupedResult<ResultMock>(new[] { new ResultGroup<ResultMock>(2, 0, new[] { new ResultMock(), new ResultMock() }) });
             request.Stopwatch.Reset();
 
@@ -33,7 +35,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
         public void GetResponseStream_GivenAnUnsupportedResult_ReturnsAsErrorXml()
         {
             var request = new PortalRequest();
-            var response = new Portal.v6.Response.PortalResponse(request);
+            var response = new PortalResponse(request);
             request.Stopwatch.Reset();
 
             response.WriteToOutput(new object());
@@ -45,7 +47,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
             var request = new PortalRequest();
             request.Parameters.Add("format", "attachment");
 
-            using (var response = new Portal.v6.Response.PortalResponse(request))
+            using (var response = new PortalResponse(request))
             {
                 request.Stopwatch.Reset();
 

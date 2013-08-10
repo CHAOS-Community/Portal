@@ -11,10 +11,10 @@ namespace Chaos.Portal.v6.Response
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Request;
     using Chaos.Portal.Core.Response;
-    using Chaos.Portal.Core.Response.Dto;
+    using Chaos.Portal.Core.Response.Dto.v2;
     using Chaos.Portal.Core.Response.Specification;
 
-    public class PortalResponse : IPortalResponse
+    public class PortalResponse2 : IPortalResponse
     {
         #region Fields
 
@@ -23,7 +23,7 @@ namespace Chaos.Portal.v6.Response
         #endregion
         #region Initialization
 
-        static PortalResponse()
+        static PortalResponse2()
         {
             ResponseSpecifications.Add(ReturnFormat.XML, new XmlResponse());
             ResponseSpecifications.Add(ReturnFormat.JSON, new JsonResponse());
@@ -31,7 +31,7 @@ namespace Chaos.Portal.v6.Response
             ResponseSpecifications.Add(ReturnFormat.ATTACHMENT, new StreamResponse());
         }
 
-        public PortalResponse(IPortalRequest request)
+        public PortalResponse2(IPortalRequest request)
         {
             WithResponseSpecification(ResponseSpecifications[request.ReturnFormat]);
             ReturnFormat = request.ReturnFormat;
@@ -62,76 +62,7 @@ namespace Chaos.Portal.v6.Response
 
 		public void WriteToOutput( object obj )
         {
-            if(obj == null) throw new NullReferenceException("Returned object is null");
-
-            var result        = obj as IResult;
-            var results       = obj as IEnumerable<IResult>;
-            var pagedResult   = obj as IPagedResult<IResult>;
-            var groupedResult = obj as IGroupedResult<IResult>;
-            var uinteger      = obj as uint?;
-            var integer       = obj as int?;
-            var stream        = obj as Stream;
-            var exception     = obj as Exception;
-
-		    if( result != null )
-		    {
-                var portalResult = new Core.Response.Dto.PagedResult<IResult>(1, 0, new[] { result });
-                var response     = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
-
-		        Output = response;
-		    }
-            else
-            if( results != null )
-            {
-                var lst          = results.ToList();
-                var portalResult = new Core.Response.Dto.PagedResult<IResult>((uint)lst.Count, 0, lst);
-                var response    = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
-
-                Output = response;
-            }
-		    else
-            if( pagedResult != null )
-            {
-                var portalResult = new Core.Response.Dto.PagedResult<IResult>(pagedResult.FoundCount, pagedResult.StartIndex, pagedResult.Results);
-                var response     = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
-
-                Output = response;
-		    }
-            else
-            if (groupedResult != null)
-            {
-                var resultGroups = groupedResult.Groups.Select(item => new Core.Response.Dto.ResultGroup<IResult>(item.FoundCount, item.StartIndex, item.Results){Value = item.Value}).ToList();
-                var portalResult = new Core.Response.Dto.GroupedResult<IResult>(){Groups = resultGroups};
-                var response     = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
-
-                Output = response;
-		    }
-            else if (stream != null)
-            {
-                Output = stream;
-            }
-            else if (uinteger != null)
-            {
-                var portalResult = new Core.Response.Dto.PagedResult<IResult>(1, 0, new[] { new ScalarResult((int)uinteger.Value) });
-                var response     = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
-
-                Output = response;
-            }
-            else if (integer != null)
-            {
-                var portalResult = new Core.Response.Dto.PagedResult<IResult>(1, 0, new[] { new ScalarResult(integer.Value) });
-                var response     = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
-
-                Output = response;
-            }
-            else if(exception != null)
-            {
-                var response = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), new PortalResult(), new PortalError());
-                response.Error.SetException(exception);
-
-                Output = response;
-            }
-            else throw new UnsupportedExtensionReturnTypeException("Return type is not supported: " + obj.GetType().FullName);
+            
 	    }
 
         public Stream GetResponseStream()

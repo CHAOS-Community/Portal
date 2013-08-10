@@ -6,7 +6,6 @@ namespace Chaos.Portal.Core.Indexing.View
     using Chaos.Portal.Core.Cache;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Indexing.Solr;
-    using Chaos.Portal.Core.Response.Dto;
 
     public abstract class AView : IView
     {
