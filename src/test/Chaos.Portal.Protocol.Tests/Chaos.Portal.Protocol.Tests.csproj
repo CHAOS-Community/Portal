@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CHAOS, Version=1.0.4817.26687, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\..\..\tools\Moq.4.0.10827\NET40\Moq.dll</HintPath>
     </Reference>
@@ -61,6 +65,7 @@
     <Compile Include="v6\Extension\UserTest.cs" />
     <Compile Include="v6\Module\PortalModuleTest.cs" />
     <Compile Include="v6\PortalApplicationTest.cs" />
+    <Compile Include="v6\Response\PortalResponseTest.cs" />
     <Compile Include="v6\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>

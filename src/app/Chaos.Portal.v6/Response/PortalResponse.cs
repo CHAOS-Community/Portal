@@ -3,6 +3,7 @@ namespace Chaos.Portal.v6.Response
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Text;
 
     using Chaos.Portal.Core;
@@ -59,42 +60,49 @@ namespace Chaos.Portal.v6.Response
         #endregion
 		#region Business Logic
 
-		public void WriteToResponse( object obj )
+		public void WriteToOutput( object obj )
         {
             if(obj == null) throw new NullReferenceException("Returned object is null");
 
-            var result      = obj as IResult;
-            var results     = obj as IEnumerable<IResult>;
-            var pagedResult = obj as IPagedResult<IResult>;
-            var uinteger    = obj as uint?;
-            var integer     = obj as int?;
-            var stream      = obj as Stream;
-            var exception   = obj as Exception;
+            var result        = obj as IResult;
+            var results       = obj as IEnumerable<IResult>;
+            var pagedResult   = obj as IPagedResult<IResult>;
+            var groupedResult = obj as IGroupedResult<IResult>;
+            var uinteger      = obj as uint?;
+            var integer       = obj as int?;
+            var stream        = obj as Stream;
+            var exception     = obj as Exception;
 
 		    if( result != null )
 		    {
-		        var response = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), new PortalResult(), new PortalError());
-                response.Result.Results.Add(result);
+                var portalResult = new Core.Response.Dto.PagedResult<IResult>(1, 0, new[] { result });
+                var response     = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
 
 		        Output = response;
 		    }
             else
             if( results != null )
             {
-                var response = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), new PortalResult(), new PortalError());
-
-                foreach (var item in results) response.Result.Results.Add(item);
+                var lst          = results.ToList();
+                var portalResult = new Core.Response.Dto.PagedResult<IResult>((uint)lst.Count, 0, lst);
+                var response    = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
 
                 Output = response;
             }
 		    else
             if( pagedResult != null )
-		    {
-                var response = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), new PortalResult(), new PortalError());
-                
-                foreach (var item in pagedResult.Results) response.Result.Results.Add(item);
+            {
+                var portalResult = new Core.Response.Dto.PagedResult<IResult>(pagedResult.FoundCount, pagedResult.StartIndex, pagedResult.Results);
+                var response     = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
 
-                response.Result.TotalCount = pagedResult.FoundCount;
+                Output = response;
+		    }
+            else
+            if (groupedResult != null)
+            {
+                var resultGroups = groupedResult.Groups.Select(item => new Core.Response.Dto.ResultGroup<IResult>(item.FoundCount, item.StartIndex, item.Results){Value = item.Value}).ToList();
+                var portalResult = new Core.Response.Dto.GroupedResult<IResult>(){Groups = resultGroups};
+                var response     = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
 
                 Output = response;
 		    }
@@ -104,15 +112,15 @@ namespace Chaos.Portal.v6.Response
             }
             else if (uinteger != null)
             {
-                var response = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), new PortalResult(), new PortalError());
-                response.Result.Results.Add(new ScalarResult((int)uinteger.Value));
+                var portalResult = new Core.Response.Dto.PagedResult<IResult>(1, 0, new[] { new ScalarResult((int)uinteger.Value) });
+                var response     = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
 
                 Output = response;
             }
             else if (integer != null)
             {
-                var response = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), new PortalResult(), new PortalError());
-                response.Result.Results.Add(new ScalarResult(integer.Value));
+                var portalResult = new Core.Response.Dto.PagedResult<IResult>(1, 0, new[] { new ScalarResult(integer.Value) });
+                var response     = new Core.Response.Dto.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
 
                 Output = response;
             }

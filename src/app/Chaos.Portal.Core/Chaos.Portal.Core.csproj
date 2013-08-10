@@ -83,6 +83,7 @@
     <Compile Include="Data\Model\IResult.cs" />
     <Compile Include="Data\Model\Module.cs" />
     <Compile Include="Data\Model\ResultExtensionMethods.cs" />
+    <Compile Include="Data\Model\ResultGroup.cs" />
     <Compile Include="Data\Model\ScalarResult.cs" />
     <Compile Include="Data\Model\Session.cs" />
     <Compile Include="Data\Model\SubscriptionInfo.cs" />
@@ -152,6 +153,8 @@
     <Compile Include="Request\FileStream.cs" />
     <Compile Include="Request\IPortalRequest.cs" />
     <Compile Include="Request\PortalRequest.cs" />
+    <Compile Include="Data\Model\GroupedResult.cs" />
+    <Compile Include="Data\Model\PagedResult.cs" />
     <Compile Include="Response\Dto\GroupedResult.cs" />
     <Compile Include="Response\Dto\PagedResult.cs" />
     <Compile Include="Response\Dto\PortalError.cs" />

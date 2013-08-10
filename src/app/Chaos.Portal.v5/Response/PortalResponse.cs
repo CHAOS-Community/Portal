@@ -62,7 +62,7 @@
         #endregion
         #region Business Logic
 
-        public void WriteToResponse(object obj)
+        public void WriteToOutput(object obj)
         {
             if (obj == null) throw new NullReferenceException("Returned object is null");
 

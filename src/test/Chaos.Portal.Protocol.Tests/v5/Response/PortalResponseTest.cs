@@ -3,6 +3,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
     using System;
     using System.IO;
 
+    using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Request;
     using Chaos.Portal.Core.Response.Dto;
@@ -19,7 +20,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
             var response = new Portal.v5.Response.PortalResponse(request);
             request.Stopwatch.Reset();
 
-            response.WriteToResponse(1234);
+            response.WriteToOutput(1234);
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
@@ -34,7 +35,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
             var response = new Portal.v5.Response.PortalResponse(request);
             request.Stopwatch.Reset();
 
-            response.WriteToResponse(1234u);
+            response.WriteToOutput(1234u);
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
@@ -49,7 +50,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
             var response = new Portal.v5.Response.PortalResponse(request);
             request.Stopwatch.Reset();
 
-            response.WriteToResponse(new Core.Data.Model.Module{ ID = 4321});
+            response.WriteToOutput(new Core.Data.Model.Module{ ID = 4321});
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
@@ -65,7 +66,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
             var modules = new[] { new Core.Data.Model.Module { ID = 4321 }, new Core.Data.Model.Module { ID = 1234 }};
             request.Stopwatch.Reset();
             
-            response.WriteToResponse(modules);
+            response.WriteToOutput(modules);
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
@@ -78,10 +79,10 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
         {
             var request = new PortalRequest();
             var response = new Portal.v5.Response.PortalResponse(request);
-            var modules = new PagedResult<Core.Data.Model.Module>(2, 2, new[] { new Core.Data.Model.Module { ID = 4321 }, new Core.Data.Model.Module { ID = 1234 } });
+            var modules = new Core.Data.Model.PagedResult<Core.Data.Model.Module>(2, 2, new[] { new Core.Data.Model.Module { ID = 4321 }, new Core.Data.Model.Module { ID = 1234 } });
             request.Stopwatch.Reset();
 
-            response.WriteToResponse(modules);
+            response.WriteToOutput(modules);
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
@@ -96,7 +97,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
             var response = new Portal.v5.Response.PortalResponse(request);
             request.Stopwatch.Reset();
 
-            response.WriteToResponse(new ArgumentException());
+            response.WriteToOutput(new ArgumentException());
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
@@ -112,7 +113,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
             var response = new Portal.v5.Response.PortalResponse(request);
             request.Stopwatch.Reset();
 
-            response.WriteToResponse(new object());
+            response.WriteToOutput(new object());
         }
 
         [Test]
@@ -130,7 +131,7 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
 
                 writer.Write("OK!");
                 writer.Flush();
-                response.WriteToResponse(memoryStream);
+                response.WriteToOutput(memoryStream);
 
                 var stream = new StreamReader(response.GetResponseStream());
                 

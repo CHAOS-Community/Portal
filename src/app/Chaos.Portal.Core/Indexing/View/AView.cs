@@ -89,7 +89,7 @@ namespace Chaos.Portal.Core.Indexing.View
             var foundCount = response.QueryResult.FoundCount;
             var results    = Cache.Get<TResult>(keys);
 
-            return new PagedResult<TResult>(foundCount, startIndex, results);
+            return new Data.Model.PagedResult<TResult>(foundCount, startIndex, results);
         }
 
         protected string CreateKey(string key)

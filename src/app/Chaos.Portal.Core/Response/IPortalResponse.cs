@@ -7,7 +7,7 @@ namespace Chaos.Portal.Core.Response
     public interface IPortalResponse : IDisposable
     {
         IPortalResponse WithResponseSpecification(IResponseSpecification responseSpecification);
-        void WriteToResponse( object obj );
+        void WriteToOutput( object obj );
         Stream GetResponseStream();
         string Callback { get; set; }
         Encoding Encoding { get; set; }

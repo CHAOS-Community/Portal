@@ -82,11 +82,11 @@ namespace Chaos.Portal.Core.Extension
             {
                 var result = method.Invoke(this, parameters);
 
-                Response.WriteToResponse(result);
+                Response.WriteToOutput(result);
             }
             catch (TargetInvocationException e)
             {
-                Response.WriteToResponse(e.InnerException);
+                Response.WriteToOutput(e.InnerException);
                 
                 PortalApplication.Log.Fatal("ProcessRequest() - Unhandeled exception occured during", e.InnerException);
             }

@@ -1,26 +1,11 @@
-namespace Chaos.Portal.Core.Response.Dto
+namespace Chaos.Portal.Core.Data.Model
 {
     using System.Collections.Generic;
-    using System.Linq;
 
-    using CHAOS.Serialization;
-
-    using Chaos.Portal.Core.Data.Model;
-
-    public class PagedResult<TResultType> : IPagedResult<TResultType>, IPortalResult where TResultType : IResult
+    public class PagedResult<TResultType> : IPagedResult<TResultType> where TResultType: IResult
     {
         #region Properties
 
-        [Serialize]
-        public uint Count
-        {
-            get
-            {
-                return (uint)Results.Count();
-            }
-        }
-        
-        [Serialize("TotalCount")]
         public uint FoundCount
         {
             get;
@@ -33,8 +18,6 @@ namespace Chaos.Portal.Core.Response.Dto
             set;
         }
 
-        // TODO: refactor out the use of IEnumerable to an IList
-        [Serialize]
         public IEnumerable<TResultType> Results { get; set; }
 
         #endregion
