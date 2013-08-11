@@ -37,18 +37,11 @@ namespace Chaos.Portal.Core.Indexing.View
         void Index(IEnumerable<object> objects);
 
         /// <summary>
-        /// The query.
+        /// Retrieves a view by name
         /// </summary>
-        /// <param name="viewName">
-        /// The key.
-        /// </param>
-        /// <param name="query">
-        /// The query.
-        /// </param>
-        /// <returns>
-        /// The <see cref="IEnumerable"/>.
-        /// </returns>
-        IPagedResult<IResult> Query(string viewName, IQuery query);
+        /// <param name="viewName"></param>
+        /// <returns></returns>
+        IView GetView(string viewName);
 
         /// <summary>
         /// The add view.

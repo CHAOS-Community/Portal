@@ -5,6 +5,7 @@ namespace Chaos.Portal.Core.Indexing.View
     using Chaos.Portal.Core.Cache;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Indexing.Solr;
+    using Chaos.Portal.Core.Indexing.Solr.Response;
 
     /// <summary>
     /// The View interface.
@@ -15,6 +16,7 @@ namespace Chaos.Portal.Core.Indexing.View
 
         void Delete();
 
+        IGroupedResult<IResult> GroupedQuery(IQuery query);
         IPagedResult<IResult> Query(IQuery query);
         
         IView WithCache(ICache cache);

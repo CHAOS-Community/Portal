@@ -9,7 +9,6 @@ namespace Chaos.Portal.v5.Extension
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Extension;
     using Chaos.Portal.Core.Indexing;
-    using Chaos.Portal.Core.Indexing.Solr;
 
     public class View : AExtension
     {
@@ -22,7 +21,7 @@ namespace Chaos.Portal.v5.Extension
         #endregion
         public IPagedResult<IResult> Get(string view, IQuery query )
         {
-            return ViewManager.Query(view, query);
+            return ViewManager.GetView(view).Query(query);
         }
         
         public IEnumerable<IResult> List()

@@ -13,8 +13,6 @@ namespace Chaos.Portal.Core.Response
     using Chaos.Portal.Core.Response.Dto.v2;
     using Chaos.Portal.Core.Response.Specification;
 
-    using PortalResult = Chaos.Portal.Core.Response.Dto.v1.PortalResult;
-
     public class PortalResponse : IPortalResponse
     {
         #region Fields
@@ -67,6 +65,7 @@ namespace Chaos.Portal.Core.Response
         #endregion
         #region Business Logic
 
+        // TODO: refactor switch into a strategy pattern or similar
         public void WriteToOutput(object obj)
         {
             switch(ReturnFormat)
@@ -125,7 +124,7 @@ namespace Chaos.Portal.Core.Response
             if (groupedResult != null)
             {
                 var resultGroups = groupedResult.Groups.Select(item => new Dto.v2.ResultGroup<IResult>(item.FoundCount, item.StartIndex, item.Results){Value = item.Value}).ToList();
-                var portalResult = new Dto.v2.GroupedResult<IResult>(){Groups = resultGroups};
+                var portalResult = new Dto.v2.GroupedResult<IResult> {Groups = resultGroups};
                 var response     = new Dto.v2.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
 
                 Output = response;
@@ -168,14 +167,14 @@ namespace Chaos.Portal.Core.Response
 
             if(result != null)
             {
-                var response = new PortalResult(Request.Stopwatch);
+                var response = new Dto.v1.PortalResult(Request.Stopwatch);
                 response.GetModule(_moduleName).AddResult(result);
 
                 Output = response;
             }
             else if(results != null)
             {
-                var response = new PortalResult(Request.Stopwatch);
+                var response = new Dto.v1.PortalResult(Request.Stopwatch);
 
                 foreach(var item in results) response.GetModule(_moduleName).AddResult(item);
 
@@ -183,7 +182,7 @@ namespace Chaos.Portal.Core.Response
             }
             else if(pagedResult != null)
             {
-                var response = new PortalResult(Request.Stopwatch);
+                var response = new Dto.v1.PortalResult(Request.Stopwatch);
 
                 foreach(var item in pagedResult.Results) response.GetModule(_moduleName).AddResult(item);
 
@@ -197,21 +196,21 @@ namespace Chaos.Portal.Core.Response
             }
             else if(uinteger != null)
             {
-                var response = new PortalResult(Request.Stopwatch);
+                var response = new Dto.v1.PortalResult(Request.Stopwatch);
                 response.GetModule(_moduleName).AddResult(new ScalarResult((int)uinteger.Value));
 
                 Output = response;
             }
             else if(integer != null)
             {
-                var response = new PortalResult(Request.Stopwatch);
+                var response = new Dto.v1.PortalResult(Request.Stopwatch);
                 response.GetModule(_moduleName).AddResult(new ScalarResult(integer.Value));
 
                 Output = response;
             }
             else if(exception != null)
             {
-                var response = new PortalResult(Request.Stopwatch);
+                var response = new Dto.v1.PortalResult(Request.Stopwatch);
 
                 response.GetModule(_moduleName).AddResult(new ExtensionError(exception, Request.Stopwatch));
 

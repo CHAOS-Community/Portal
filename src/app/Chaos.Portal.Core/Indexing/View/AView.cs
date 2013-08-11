@@ -1,5 +1,6 @@
 namespace Chaos.Portal.Core.Indexing.View
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -46,7 +47,15 @@ namespace Chaos.Portal.Core.Indexing.View
         #endregion
         #region Abstract
 
-        public abstract IPagedResult<IResult> Query( IQuery query );
+        public virtual IGroupedResult<IResult> GroupedQuery(IQuery query)
+        {
+            throw new NotImplementedException("Grouping not implemented on this view");
+        }
+
+        public virtual IPagedResult<IResult> Query(IQuery query)
+        {
+            throw new NotImplementedException("Querying not implemented on this view");
+        }
 
         #endregion
         #region Properties

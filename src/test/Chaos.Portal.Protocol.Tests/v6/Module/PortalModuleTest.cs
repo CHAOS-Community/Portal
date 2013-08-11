@@ -109,7 +109,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Module
             application.SetupGet(p => p.PortalRepository).Returns(repository.Object);
             module.Load(application.Object);
 
-            var groupExtension = (Portal.v6.Extension.View)module.GetExtension(Protocol.V6, "View");
+            var groupExtension = (Portal.v5.Extension.View)module.GetExtension(Protocol.V6, "View");
 
             Assert.That(groupExtension.PortalApplication, Is.EqualTo(application.Object));
         }

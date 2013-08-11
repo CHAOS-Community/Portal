@@ -91,7 +91,7 @@ namespace Chaos.Portal.Module
                     case "UserSettings":
                         return new v6.Extension.UserSettings(_portalApplication);
                     case "View":
-                        return new v6.Extension.View(_portalApplication);
+                        return new v5.Extension.View(_portalApplication);
                     default:
                         throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
                 }
