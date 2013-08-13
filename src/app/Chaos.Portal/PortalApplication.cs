@@ -13,14 +13,11 @@ namespace Chaos.Portal
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Extension;
     using Chaos.Portal.Core.Indexing;
-    using Chaos.Portal.Core.Indexing.Solr;
     using Chaos.Portal.Core.Indexing.View;
     using Chaos.Portal.Core.Logging;
     using Chaos.Portal.Core.Module;
     using Chaos.Portal.Core.Request;
     using Chaos.Portal.Core.Response;
-    using Chaos.Portal.Core.Response.Dto.v1;
-    using Chaos.Portal.Module;
 
     /// <summary>
     /// The portal application.
@@ -145,9 +142,18 @@ namespace Chaos.Portal
             return module.GetExtension(version, extension);
         }
 
-        public TModule GetModule<TModule>(Protocol version) where TModule : IModule
+        public TModule GetModule<TModule>() where TModule : IModule
         {
-            return (TModule)LoadedModules[typeof(TModule).FullName];
+            var moduleType = typeof(TModule);
+            var moduleName = moduleType.FullName;
+
+            foreach(var loadedModule in LoadedModules.Values)
+            {
+                if(loadedModule.GetType().FullName == moduleName)
+                    return (TModule) loadedModule;
+            }
+
+            throw new ModuleNotLoadedException(string.Format("Module [{0}] is not loaded in Portal", moduleName));
         }
 
         // todo: rethink the module loading process, it's not logical

@@ -1,5 +1,6 @@
 namespace Chaos.Portal.Protocol.Tests.v6.Response
 {
+    using System.Collections.Generic;
     using System.IO;
 
     using CHAOS.Serialization;
@@ -7,6 +8,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
+    using Chaos.Portal.Core.Indexing.View;
     using Chaos.Portal.Core.Request;
     using Chaos.Portal.Core.Response;
 
@@ -16,11 +18,11 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
     public class PortalResponseTest
     {
         [Test]
-        public void GetResponseStream_GivenSimpleIntegerResult_ReturnsXmlContainingScalarResult()
+        public void GetResponseStream_GivenGroupedResult_ReturnsXmlContainingGroupedResult()
         {
             var request  = new PortalRequest();
             var response = new PortalResponse(request){ReturnFormat = ReturnFormat.XML2};
-            var grouped = new Portal.Core.Data.Model.GroupedResult<ResultMock>(new[] { new ResultGroup<ResultMock>(2, 0, new[] { new ResultMock(), new ResultMock() }) });
+            var grouped  = new GroupedResult<ResultMock>(new[] { new ResultGroup<ResultMock>(2, 0, new[] { new ResultMock(), new ResultMock() }) });
             request.Stopwatch.Reset();
 
             response.WriteToOutput(grouped);
@@ -28,6 +30,22 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
                 Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Result><Groups><ResultGroup><Count>2</Count><TotalCount>2</TotalCount><Results><ResultMock><Fullname>test</Fullname></ResultMock><ResultMock><Fullname>test</Fullname></ResultMock></Results></ResultGroup></Groups></Result><Error /></PortalResponse>"));
+            }
+        }
+
+        [Test]
+        public void GetResponseStream_GivenGroupedResultWithIViewData_ReturnsXmlContainingGroupedResult()
+        {
+            var request  = new PortalRequest();
+            var response = new PortalResponse(request){ReturnFormat = ReturnFormat.XML2};
+            var grouped  = new GroupedResult<IResult>(new[] { new ResultGroup<ViewDataResultMock>(2, 0, new[] { new ViewDataResultMock(), new ViewDataResultMock() }) });
+            request.Stopwatch.Reset();
+
+            response.WriteToOutput(grouped);
+
+            using (var stream = new StreamReader(response.GetResponseStream()))
+            {
+                Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Result><Groups><ResultGroup><Count>2</Count><TotalCount>2</TotalCount><Results><ViewDataResultMock><Fullname>test</Fullname></ViewDataResultMock><ViewDataResultMock><Fullname>test</Fullname></ViewDataResultMock></Results></ResultGroup></Groups></Result><Error /></PortalResponse>"));
             }
         }
 
@@ -63,6 +81,26 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
                 Assert.That(stream.ReadToEnd(), Is.EqualTo("OK!"));
             }
         }
+    }
+    public class ViewDataResultMock : IViewData
+    {
+        #region Implementation of IResult
+
+        [Serialize]
+        public string Fullname { get { return "test"; } }
+
+        #endregion
+
+        #region Implementation of IIndexable
+
+        public KeyValuePair<string, string> UniqueIdentifier { get; private set; }
+
+        public IEnumerable<KeyValuePair<string, string>> GetIndexableFields()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
     }
 
     public class ResultMock : IResult
