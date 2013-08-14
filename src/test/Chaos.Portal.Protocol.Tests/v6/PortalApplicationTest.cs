@@ -104,7 +104,7 @@
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
-                Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Result><Count>1</Count><TotalCount>1</TotalCount><Results><Result FullName=\"Chaos.Portal.Core.Data.Model.ScalarResult\"><Value>1</Value></Result></Results></Result><Error /></PortalResponse>"));
+                Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Body><Count>1</Count><TotalCount>1</TotalCount><Results><Result FullName=\"Chaos.Portal.Core.Data.Model.ScalarResult\"><Value>1</Value></Result></Results></Body><Error /></PortalResponse>"));
             }
         }
 
@@ -142,7 +142,7 @@
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
                 var readToEnd = stream.ReadToEnd();
-                Assert.That(readToEnd, Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Result><Count>0</Count><TotalCount>0</TotalCount><Results /></Result><Error Fullname=\"System.ArgumentException\"><Message>Value does not fall within the expected range.</Message></Error></PortalResponse>"));
+                Assert.That(readToEnd, Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Body><Count>0</Count><TotalCount>0</TotalCount><Results /></Body><Error Fullname=\"System.ArgumentException\"><Message>Value does not fall within the expected range.</Message></Error></PortalResponse>"));
             }
         }
 

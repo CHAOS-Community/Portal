@@ -29,7 +29,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
-                Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Result><Groups><ResultGroup><Count>2</Count><TotalCount>2</TotalCount><Results><ResultMock><Fullname>test</Fullname></ResultMock><ResultMock><Fullname>test</Fullname></ResultMock></Results></ResultGroup></Groups></Result><Error /></PortalResponse>"));
+                Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Body><Groups><ResultGroup><Count>2</Count><TotalCount>2</TotalCount><Results><ResultMock><Fullname>test</Fullname></ResultMock><ResultMock><Fullname>test</Fullname></ResultMock></Results></ResultGroup></Groups></Body><Error /></PortalResponse>"));
             }
         }
 
@@ -45,18 +45,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
-                Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Result><Groups><ResultGroup><Count>2</Count><TotalCount>2</TotalCount><Results><ViewDataResultMock><Fullname>test</Fullname></ViewDataResultMock><ViewDataResultMock><Fullname>test</Fullname></ViewDataResultMock></Results></ResultGroup></Groups></Result><Error /></PortalResponse>"));
+                Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Body><Groups><ResultGroup><Count>2</Count><TotalCount>2</TotalCount><Results><ViewDataResultMock><Fullname>test</Fullname></ViewDataResultMock><ViewDataResultMock><Fullname>test</Fullname></ViewDataResultMock></Results></ResultGroup></Groups></Body><Error /></PortalResponse>"));
             }
-        }
-
-        [Test, ExpectedException(typeof(UnsupportedExtensionReturnTypeException))]
-        public void GetResponseStream_GivenAnUnsupportedResult_ReturnsAsErrorXml()
-        {
-            var request = new PortalRequest();
-            var response = new PortalResponse(request);
-            request.Stopwatch.Reset();
-
-            response.WriteToOutput(new object());
         }
 
         [Test]

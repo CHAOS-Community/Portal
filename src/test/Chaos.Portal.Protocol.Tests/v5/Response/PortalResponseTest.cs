@@ -107,16 +107,6 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
             }
         }
 
-        [Test, ExpectedException(typeof(UnsupportedExtensionReturnTypeException))]
-        public void GetResponseStream_GivenAnUnsupportedResult_ReturnsAsErrorXml()
-        {
-            var request = new PortalRequest();
-            var response = new PortalResponse(request);
-            request.Stopwatch.Reset();
-
-            response.WriteToOutput(new object());
-        }
-
         [Test]
         public void GetResponseStream_GivenAStream_ReturnsAStream()
         {

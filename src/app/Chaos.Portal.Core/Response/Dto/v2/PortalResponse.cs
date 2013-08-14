@@ -10,7 +10,7 @@ namespace Chaos.Portal.Core.Response.Dto.v2
         [Serialize]
         public IPortalHeader Header{ get; set; }
         [Serialize]
-        public IPortalResult Result { get; set; }
+        public IPortalResult Body { get; set; }
         [Serialize]
         public IPortalError  Error { get; set; }
 
@@ -20,7 +20,7 @@ namespace Chaos.Portal.Core.Response.Dto.v2
         public PortalResponse(IPortalHeader header, IPortalResult result, IPortalError error)
         {
             Header = header;
-            Result = result;
+            Body   = result;
             Error  = error;
         }
 

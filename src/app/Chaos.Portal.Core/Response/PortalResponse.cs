@@ -143,14 +143,15 @@ namespace Chaos.Portal.Core.Response
 
                 Output = response;
             }
-            else if(exception != null)
+            else
             {
+                if (exception == null) exception = new UnsupportedExtensionReturnTypeException("Return type is not supported: " + obj.GetType().FullName);
+
                 var response = new Dto.v2.PortalResponse(new PortalHeader(Request.Stopwatch), new Dto.v2.PortalResult(), new PortalError());
                 response.Error.SetException(exception);
 
                 Output = response;
             }
-            else throw new UnsupportedExtensionReturnTypeException("Return type is not supported: " + obj.GetType().FullName);
         }
 
         private void WriteToObject1(object obj)
@@ -160,6 +161,7 @@ namespace Chaos.Portal.Core.Response
             var result = obj as IResult;
             var results = obj as IEnumerable<IResult>;
             var pagedResult = obj as IPagedResult<IResult>;
+            var groupedResult = obj as IGroupedResult<IResult>;
             var uinteger = obj as uint?;
             var integer = obj as int?;
             var stream = obj as Stream;
@@ -208,15 +210,16 @@ namespace Chaos.Portal.Core.Response
 
                 Output = response;
             }
-            else if(exception != null)
+            else
             {
+                if (exception == null) exception = new UnsupportedExtensionReturnTypeException("Return type is not supported: " + obj.GetType().FullName);
+                if (groupedResult != null) exception = new UnsupportedExtensionReturnTypeException("This Action is not available with the current Format");
                 var response = new Dto.v1.PortalResult(Request.Stopwatch);
 
                 response.GetModule(_moduleName).AddResult(new ExtensionError(exception, Request.Stopwatch));
 
                 Output = response;
             }
-            else throw new UnsupportedExtensionReturnTypeException("Return type is not supported: " + obj.GetType().FullName);
         }
 
         public Stream GetResponseStream()
