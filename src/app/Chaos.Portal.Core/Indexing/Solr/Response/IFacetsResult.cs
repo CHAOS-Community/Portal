@@ -5,6 +5,6 @@ namespace Chaos.Portal.Core.Indexing.Solr.Response
     public interface IFacetsResult
     {
         string Value { get; set; }
-        IEnumerable<IFacet> Facets { get; set; }
+        IList<IFacet> Facets { get; set; }
     }
 }

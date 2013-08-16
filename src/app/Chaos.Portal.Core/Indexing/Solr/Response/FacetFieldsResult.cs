@@ -9,15 +9,15 @@ namespace Chaos.Portal.Core.Indexing.Solr.Response
         #region Properties
 
         public string Value { get; set; }
-        public IEnumerable<IFacet> Facets { get; set; }
+        public IList<IFacet> Facets { get; set; }
 
         #endregion
         #region Constructors
 
         public FacetFieldsResult(XElement element)
         {
-            this.Value = element.Attribute("name").Value;
-            this.Facets = element.Elements("int").Select(item => new Facet("int", item.Attribute("name").Value, uint.Parse(item.Value))).ToList();
+            Value  = element.Attribute("name").Value;
+            Facets = element.Elements("int").Select(item => (IFacet) new Facet("int", item.Attribute("name").Value, uint.Parse(item.Value))).ToList();
         }
 
         #endregion
