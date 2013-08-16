@@ -161,6 +161,9 @@
     <Compile Include="Response\Dto\v1\IPortalResult.cs" />
     <Compile Include="Response\Dto\v1\ModuleResult.cs" />
     <Compile Include="Response\Dto\v1\PortalResult.cs" />
+    <Compile Include="Response\Dto\v2\Facet.cs" />
+    <Compile Include="Response\Dto\v2\FacetedResult.cs" />
+    <Compile Include="Response\Dto\v2\FieldFacet.cs" />
     <Compile Include="Response\Dto\v2\GroupedResult.cs" />
     <Compile Include="Response\Dto\v2\PagedResult.cs" />
     <Compile Include="Response\Dto\v2\PortalError.cs" />

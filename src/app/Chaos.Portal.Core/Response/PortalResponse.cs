@@ -92,6 +92,7 @@ namespace Chaos.Portal.Core.Response
             var results       = obj as IEnumerable<IResult>;
             var pagedResult   = obj as IPagedResult<IResult>;
             var groupedResult = obj as IGroupedResult<IResult>;
+            var facetedResult = obj as FacetedResult;
             var uinteger      = obj as uint?;
             var integer       = obj as int?;
             var exception     = obj as Exception;
@@ -140,6 +141,12 @@ namespace Chaos.Portal.Core.Response
             {
                 var portalResult = new Dto.v2.PagedResult<IResult>(1, 0, new[] { new ScalarResult(integer.Value) });
                 var response     = new Dto.v2.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
+
+                Output = response;
+            }
+            else if(facetedResult != null)
+            {
+                var response = new Dto.v2.PortalResponse(new PortalHeader(Request.Stopwatch), facetedResult, new PortalError());
 
                 Output = response;
             }
