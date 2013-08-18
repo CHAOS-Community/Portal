@@ -7,7 +7,6 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
 
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Indexing.View;
     using Chaos.Portal.Core.Request;
     using Chaos.Portal.Core.Response;
@@ -45,7 +44,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
 
             using (var stream = new StreamReader(response.GetResponseStream()))
             {
-                Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Body><Groups><ResultGroup><Count>2</Count><TotalCount>2</TotalCount><Results><ViewDataResultMock><Fullname>test</Fullname></ViewDataResultMock><ViewDataResultMock><Fullname>test</Fullname></ViewDataResultMock></Results></ResultGroup></Groups></Body><Error /></PortalResponse>"));
+                var readToEnd = stream.ReadToEnd();
+                Assert.That(readToEnd, Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResponse><Header><Duration>0</Duration></Header><Body><Groups><ResultGroup><Count>2</Count><TotalCount>2</TotalCount><Results><ViewDataResultMock><Fullname>test</Fullname></ViewDataResultMock><ViewDataResultMock><Fullname>test</Fullname></ViewDataResultMock></Results></ResultGroup></Groups></Body><Error /></PortalResponse>"));
             }
         }
 

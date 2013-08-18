@@ -1,8 +1,10 @@
-namespace Chaos.Portal.Core.Response.Dto.v2
+namespace Chaos.Portal.Core.Data.Model
 {
     using System.Collections.Generic;
 
     using CHAOS.Serialization;
+
+    using Chaos.Portal.Core.Response.Dto.v2;
 
     public class FieldFacet
     {

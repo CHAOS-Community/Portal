@@ -91,15 +91,15 @@ namespace Chaos.Portal.Core.Response
             var result        = obj as IResult;
             var results       = obj as IEnumerable<IResult>;
             var pagedResult   = obj as IPagedResult<IResult>;
+            var queryResult   = obj as QueryResult;
             var groupedResult = obj as IGroupedResult<IResult>;
-            var facetedResult = obj as FacetedResult;
             var uinteger      = obj as uint?;
             var integer       = obj as int?;
             var exception     = obj as Exception;
 
 		    if( result != null )
 		    {
-                var portalResult = new Dto.v2.PagedResult<IResult>(1, 0, new[] { result });
+                var portalResult = new Dto.v2.PagedResult(1, 0, new[] { result });
                 var response     = new Dto.v2.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
 
 		        Output = response;
@@ -108,7 +108,7 @@ namespace Chaos.Portal.Core.Response
             if( results != null )
             {
                 var lst          = results.ToList();
-                var portalResult = new Dto.v2.PagedResult<IResult>((uint)lst.Count, 0, lst);
+                var portalResult = new Dto.v2.PagedResult((uint)lst.Count, 0, lst);
                 var response     = new Dto.v2.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
 
                 Output = response;
@@ -116,37 +116,37 @@ namespace Chaos.Portal.Core.Response
 		    else
             if( pagedResult != null )
             {
-                var portalResult = new Dto.v2.PagedResult<IResult>(pagedResult.FoundCount, pagedResult.StartIndex, pagedResult.Results);
+                var portalResult = new Dto.v2.PagedResult(pagedResult.FoundCount, pagedResult.StartIndex, pagedResult.Results);
                 var response     = new Dto.v2.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
+
+                Output = response;
+		    }
+            else
+            if (queryResult != null)
+            {
+                var response = new Dto.v2.PortalResponse(new PortalHeader(Request.Stopwatch), queryResult, new PortalError());
 
                 Output = response;
 		    }
             else
             if (groupedResult != null)
             {
-                var resultGroups = groupedResult.Groups.Select(item => new Dto.v2.ResultGroup<IResult>(item.FoundCount, item.StartIndex, item.Results){Value = item.Value}).ToList();
-                var portalResult = new Dto.v2.GroupedResult<IResult> {Groups = resultGroups};
+                var portalResult = new QueryResult { Groups = groupedResult.Groups.ToList() };
                 var response     = new Dto.v2.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
 
                 Output = response;
 		    }
             else if (uinteger != null)
             {
-                var portalResult = new Dto.v2.PagedResult<IResult>(1, 0, new[] { new ScalarResult((int)uinteger.Value) });
+                var portalResult = new Dto.v2.PagedResult(1, 0, new[] { new ScalarResult((int)uinteger.Value) });
                 var response     = new Dto.v2.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
 
                 Output = response;
             }
             else if (integer != null)
             {
-                var portalResult = new Dto.v2.PagedResult<IResult>(1, 0, new[] { new ScalarResult(integer.Value) });
+                var portalResult = new Dto.v2.PagedResult(1, 0, new[] { new ScalarResult(integer.Value) });
                 var response     = new Dto.v2.PortalResponse(new PortalHeader(Request.Stopwatch), portalResult, new PortalError());
-
-                Output = response;
-            }
-            else if(facetedResult != null)
-            {
-                var response = new Dto.v2.PortalResponse(new PortalHeader(Request.Stopwatch), facetedResult, new PortalError());
 
                 Output = response;
             }

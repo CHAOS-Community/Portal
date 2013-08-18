@@ -1,14 +1,15 @@
 ﻿namespace Chaos.Portal.Test.Response
 {
     using System.IO;
+    using System.Linq;
     using System.Xml.Linq;
 
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data;
+    using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Indexing.Solr.Response;
     using Chaos.Portal.Core.Request;
-    using Chaos.Portal.Core.Response.Dto.v2;
 
     using Moq;
 
@@ -42,9 +43,12 @@
         public void WriteToOutput_GivenFacetResult_OutputStreamShouldIncludeTheFacetsInXML2()
         {
             var request      = new PortalRequest();
-            var response     = new PortalResponse(request){ReturnFormat = ReturnFormat.XML2};
+            var response     = new PortalResponse(request) { ReturnFormat = ReturnFormat.XML2 };
             var solrResponse = Make_SolrResponseWithFacets();
-            var faceted      = new FacetedResult(solrResponse.FacetResult);
+            var faceted      = new QueryResult
+                {
+                    FieldFacets = solrResponse.FacetResult.FacetFieldsResult.Select(item => new FieldFacet(item.Value, item.Facets.Select(facet => new Core.Data.Model.Facet(facet.Value, facet.Count)).ToList())).ToList()
+                };
             response.ReturnFormat = ReturnFormat.XML2;
             request.Stopwatch.Reset();
 
@@ -80,9 +84,9 @@
                                                                      + "</Facet>"
                                                                    + "</Facets>"
                                                                  + "</FieldFacet>"
-                                                               + "</FieldFacets>" 
-                                                             + "</Body>" 
-                                                             + "<Error />" 
+                                                               + "</FieldFacets>"
+                                                             + "</Body>"
+                                                             + "<Error />"
                                                            + "</PortalResponse>"));
             }
         }
@@ -104,22 +108,6 @@
                             + "<date name=\"DateCreated\">2013-04-24T01:32:02Z</date>"
                             + "<str name=\"_version_\">1439674271830900736</str>"
                           + "</doc>"
-                          + "<doc>"
-                            + "<str name=\"Id\">91</str>"
-                            + "<str name=\"UserId\">2777d6b0-423f-4ce2-91a1-317930861214</str>"
-                            + "<str name=\"NetworkId\">00000000-0000-0000-0000-000000000001</str>"
-                            + "<str name=\"QuestionText\">Jeg laver lige en test :)</str>"
-                            + "<date name=\"DateCreated\">2013-04-24T01:34:32Z</date>"
-                            + "<str name=\"_version_\">1439674271838240768</str>"
-                          + "</doc>"
-                          + "<doc>"
-                            + "<str name=\"Id\">99</str>"
-                            + "<str name=\"UserId\">e1e8e986-6f1b-4ef2-9ebf-01baa78a795d</str>"
-                            + "<str name=\"NetworkId\">00000000-0000-0000-0000-000000000001</str>"
-                            + "<str name=\"QuestionText\">What is the source of human morality?</str>"
-                            + "<date name=\"DateCreated\">2013-07-04T23:00:42Z</date>"
-                            + "<str name=\"_version_\">1439674271769034752</str>"
-                          + "</doc>"
                         + "</result>"
                         + "<lst name=\"facet_counts\">"
                           + "<lst name=\"facet_queries\">"
@@ -140,5 +128,14 @@
             var xml = XDocument.Parse(text);
             return new ResponseBase(xml.Root);
         }
+    }
+
+    class IndexSampleData : AResult
+    {
+        #region Properties
+
+        public string Id { get; set; }
+
+        #endregion
     }
 }

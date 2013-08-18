@@ -9,13 +9,14 @@ namespace Chaos.Portal.Core.Data.Model
         IEnumerable<TResult> Results { get; }
 
         string Value { get; }
-        uint FoundCount{get;}
-        uint StartIndex{get;}
+
+        uint FoundCount { get; }
+
+        uint StartIndex { get; }
     }
 
     [Serialize("ResultGroup")]
-    public class ResultGroup<TResult> : PagedResult<TResult>, IResultGroup<TResult>
-        where TResult : IResult
+    public class ResultGroup<TResult> : PagedResult<TResult>, IResultGroup<TResult> where TResult : IResult
     {
         #region Properties
 

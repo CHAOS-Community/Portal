@@ -7,6 +7,7 @@ namespace Chaos.Portal.Core.Indexing.View
     using Chaos.Portal.Core.Cache;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Indexing.Solr;
+    using Chaos.Portal.Core.Indexing.Solr.Response;
 
     public abstract class AView : IView
     {
@@ -50,6 +51,13 @@ namespace Chaos.Portal.Core.Indexing.View
         public virtual IGroupedResult<IResult> GroupedQuery(IQuery query)
         {
             throw new NotImplementedException("Grouping not implemented on this view");
+        }
+
+        public virtual FacetResult FacetedQuery(IQuery query)
+        {
+            var response = Core.Query(query);
+
+            return response.FacetResult;
         }
 
         public virtual IPagedResult<IResult> Query(IQuery query)

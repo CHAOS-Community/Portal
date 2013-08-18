@@ -17,6 +17,7 @@ namespace Chaos.Portal.Core.Indexing.View
         void Delete();
 
         IGroupedResult<IResult> GroupedQuery(IQuery query);
+        FacetResult FacetedQuery(IQuery query);
         IPagedResult<IResult> Query(IQuery query);
         
         IView WithCache(ICache cache);
@@ -24,5 +25,7 @@ namespace Chaos.Portal.Core.Indexing.View
         IView WithPortalApplication(IPortalApplication portalApplication);
 
         string Name { get; }
+
+        
     }
 }
