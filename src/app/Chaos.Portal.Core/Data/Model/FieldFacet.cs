@@ -4,8 +4,7 @@ namespace Chaos.Portal.Core.Data.Model
 
     using CHAOS.Serialization;
 
-    using Chaos.Portal.Core.Response.Dto.v2;
-
+    [Serialize("FieldFacet")]
     public class FieldFacet
     {
         #region Initialization

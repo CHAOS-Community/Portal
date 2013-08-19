@@ -20,7 +20,7 @@
         {
             var application = Make_PortalApplication();
             var module      = new Mock<IModule>();
-            var parameters  = new Dictionary<string, string> { { "format", "XML" } };
+            var parameters  = new Dictionary<string, string> { { "½ormat", "XML" } };
             var request     = new PortalRequest((Protocol)Protocol.V5, (string)"test", (string)"error", parameters, null);
             var extension   = new ExtensionMock(application);
             module.Setup(m => m.GetExtensionNames(Protocol.V5)).Returns(new[] { "test" });
