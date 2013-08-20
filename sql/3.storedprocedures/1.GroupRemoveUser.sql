@@ -7,7 +7,11 @@ CREATE PROCEDURE `Group_RemoveUser`(
 BEGIN
 
     IF RequestUserGUID IS NULL OR DoesUserHavePermissionToGroup( RequestUserGUID, GroupGUID, 'REMOVE_USER' ) = 1 THEN
-		DELETE FROM Group_User_Join AS guj WHERE guj.GroupGUID = GroupGUID AND guj.UserGUID = UserGUID LIMIT 1
+		
+	DELETE 
+	FROM Group_User_Join 
+	WHERE Group_User_Join.GroupGUID = GroupGUID AND Group_User_Join.UserGUID = UserGUID 
+	LIMIT 1;
              
         SET ErrorCode = 1;
     ELSE

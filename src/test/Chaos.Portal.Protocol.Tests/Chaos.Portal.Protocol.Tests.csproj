@@ -68,9 +68,6 @@
     <Compile Include="v6\Response\PortalResponseTest.cs" />
     <Compile Include="v6\TestBase.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\app\Chaos.Portal.Core\Chaos.Portal.Core.csproj">
