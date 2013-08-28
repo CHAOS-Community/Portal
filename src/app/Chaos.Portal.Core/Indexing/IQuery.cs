@@ -7,6 +7,7 @@ namespace Chaos.Portal.Core.Indexing
         string Query { get; set; }
         string Sort { get; set; }
         string Facet { get; set; }
+        string Filter { get; set; }
         uint PageIndex { get; set; }
         uint PageSize { get; set; }
         IQueryGroupSettings Group { get; set; }
@@ -16,7 +17,7 @@ namespace Chaos.Portal.Core.Indexing
         /// </summary>
         /// <param name="query"></param>
         /// <param name="sort"></param>
-        void Init(string query, string facet, string sort, uint pageIndex, uint pageSize);
+        void Init(string query, string facet, string sort, string filter, uint pageIndex, uint pageSize);
 
     }
 }

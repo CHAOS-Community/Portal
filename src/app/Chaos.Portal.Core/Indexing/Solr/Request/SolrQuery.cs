@@ -30,6 +30,8 @@ namespace Chaos.Portal.Core.Indexing.Solr.Request
             }
         }
 
+        public string Filter { get; set; }
+
         public uint PageIndex { get; set; }
         public uint PageSize { get; set; }
 
@@ -37,7 +39,7 @@ namespace Chaos.Portal.Core.Indexing.Solr.Request
         {
             get
             {
-                return string.Format("q={0}&sort={1}&start={2}&rows={3}&facet={4}{5}{6}", string.IsNullOrEmpty(Query) ? "*:*" : Query, Sort ?? "", PageIndex * PageSize, PageSize, (!string.IsNullOrEmpty(Facet)).ToString().ToLower(), Facet, Group != null ? Group.ToString() : "");
+                return string.Format("q={0}&sort={1}&start={2}&rows={3}&fq={4}&facet={5}{6}{7}", string.IsNullOrEmpty(Query) ? "*:*" : Query, Sort ?? "", PageIndex * PageSize, PageSize, Filter, (!string.IsNullOrEmpty(Facet)).ToString().ToLower(), Facet, Group != null ? Group.ToString() : "");
             }
         }
 
@@ -46,9 +48,9 @@ namespace Chaos.Portal.Core.Indexing.Solr.Request
         #endregion
         #region Construction
 
-        public SolrQuery(string query, string facet, string sort, uint pageIndex, uint pageSize) : this()
+        public SolrQuery(string query, string facet, string sort, string filter, uint pageIndex, uint pageSize) : this()
         {
-            Init(query, facet, sort, pageIndex, pageSize);
+            Init(query, facet, sort, filter, pageIndex, pageSize);
         }
 
         public SolrQuery()
@@ -59,13 +61,14 @@ namespace Chaos.Portal.Core.Indexing.Solr.Request
         #endregion
         #region Business Logic
 
-        public void Init(string query, string facet, string sort, uint pageIndex, uint pageSize)
+        public void Init(string query, string facet, string sort, string filter, uint pageIndex, uint pageSize)
         {
             WithQuery(query);
             Sort = sort;
             WithPageIndex(pageIndex);
             WithPageSize(pageSize);
             Facet = facet;
+            Filter = filter;
         }
 
         public SolrQuery WithQuery(string q)
