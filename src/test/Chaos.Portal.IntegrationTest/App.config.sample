@@ -12,7 +12,9 @@
   </couchbase>
 
   <appSettings>
-    <add key="SOLR_URL" value=""/>
+	<add key="SOLR_URL" value=""/>
+	<add key="AWSKey" value="MyKey"/>
+	<add key="AWSSecret" value="MySecret"/>
   </appSettings>
   
   <connectionStrings>
