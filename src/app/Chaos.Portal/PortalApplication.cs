@@ -54,7 +54,7 @@ namespace Chaos.Portal
             ViewManager      = viewManager;
             PortalRepository = portalRepository;
             _loggingFactory  = loggingFactory;
-			Email			 = new AWSEmailService("", "");
+			//Email			 = new AWSEmailService("", "");
             
             // Load bindings
             Bindings.Add( typeof(string), new StringParameterBinding() );
