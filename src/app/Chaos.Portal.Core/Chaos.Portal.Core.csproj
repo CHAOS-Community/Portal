@@ -112,6 +112,7 @@
     <Compile Include="Exceptions\WrongProtocolVersionException.cs" />
     <Compile Include="Extension\AExtension.cs" />
     <Compile Include="Extension\IExtension.cs" />
+    <Compile Include="EmailService\IEmailService.cs" />
     <Compile Include="Indexing\IQuery.cs" />
     <Compile Include="Indexing\IQueryGroupSettings.cs" />
     <Compile Include="Indexing\Solr\IIndex.cs" />

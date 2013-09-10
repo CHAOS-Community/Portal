@@ -1,3 +1,6 @@
+using Chaos.Portal.Core.EmailService;
+using Chaos.Portal.EmailService;
+
 namespace Chaos.Portal
 {
     using System;
@@ -31,12 +34,13 @@ namespace Chaos.Portal
         #endregion
         #region Properties
 
-        public IDictionary<Type, IParameterBinding> Bindings { get; set; }
+	    public IDictionary<Type, IParameterBinding> Bindings { get; set; }
         public IDictionary<string, IModule>         LoadedModules { get; set; }
         public ICache                               Cache { get; protected set; }
         public IViewManager                         ViewManager { get; protected set; }
         public ILog                                 Log { get; protected set; }
         public IPortalRepository                    PortalRepository { get; set; }
+		public IEmailService						Email { get; protected set; }
 
         #endregion
         #region Constructors
@@ -50,6 +54,7 @@ namespace Chaos.Portal
             ViewManager      = viewManager;
             PortalRepository = portalRepository;
             _loggingFactory  = loggingFactory;
+			Email			 = new AWSEmailService("", "");
             
             // Load bindings
             Bindings.Add( typeof(string), new StringParameterBinding() );
