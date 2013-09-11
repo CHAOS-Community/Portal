@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Cache;
-using System.Xml.Linq;
-using Amazon.SimpleEmail.Model;
-using Chaos.Portal.Core.EmailService;
-using Moq;
-using NUnit.Framework;
-
-namespace Chaos.Portal.Test.EmailService
+﻿namespace Chaos.Portal.Test.EmailService
 {
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Xml.Linq;
+	using Amazon.SimpleEmail.Model;
+	using Core.EmailService;
+	using Moq;
+	using NUnit.Framework;
+
 	[TestFixture]
 	public class AWSEmailServiceTest
 	{
@@ -34,9 +32,9 @@ namespace Chaos.Portal.Test.EmailService
 
 			Assert.That(request, Is.Not.Null);
 			Assert.That(request.Source, Is.EqualTo(from));
-			Assert.That(request.Destination.BccAddresses, Is.Not.Null);
-			Assert.That(request.Destination.BccAddresses.Count, Is.EqualTo(1));
-			Assert.That(request.Destination.BccAddresses.First(), Is.EqualTo(to));
+			Assert.That(request.Destination.ToAddresses, Is.Not.Null);
+			Assert.That(request.Destination.ToAddresses.Count, Is.EqualTo(1));
+			Assert.That(request.Destination.ToAddresses.First(), Is.EqualTo(to));
 			Assert.That(request.Message.Subject.Data, Is.EqualTo(subject));
 			Assert.That(request.Message.Body.Html.Data, Is.EqualTo(body));
 		}
@@ -57,15 +55,49 @@ namespace Chaos.Portal.Test.EmailService
 
 			IList<SendEmailRequest> request = new List<SendEmailRequest>();
 
+			senderMock.SetupGet(s => s.MaxRecipientPerBatch).Returns(50);
 			senderMock.Setup(s => s.Send(It.IsAny<SendEmailRequest>())).Callback<SendEmailRequest>(request.Add);
 
-			service.Send(from, tos, subject, body);
+			service.Send(from, tos, null, subject, body);
 
 			senderMock.Verify(s => s.Send(It.IsAny<SendEmailRequest>()), Times.Exactly(2));
 
 			Assert.That(request.Count, Is.EqualTo(2));
-			Assert.That(request.First().Destination.BccAddresses.Count, Is.EqualTo(50));
-			Assert.That(request.Skip(1).First().Destination.BccAddresses.Count, Is.EqualTo(1));
+			Assert.That(request.First().Destination.ToAddresses.Count, Is.EqualTo(50));
+			Assert.That(request.Skip(1).First().Destination.ToAddresses.Count, Is.EqualTo(1));
+		}
+
+		[Test]
+		public void Send_Given30TosAnd30Bccs_SendTwoBatches()
+		{
+			var senderMock = new Mock<IEmailSender>();
+			var service = new Portal.EmailService.EmailService(senderMock.Object);
+
+			var tos = new List<string>();
+			var bccs = new List<string>();
+			const string from = "from@test.com";
+			const string subject = "Test Email";
+			const string body = "<div>Hallo test</div>";
+
+			for (var i = 0; i < 30; i++)
+				tos.Add(string.Format("MyMail{0}@test.test", i));
+			for (var i = 0; i < 30; i++)
+				bccs.Add(string.Format("MyBccMail{0}@test.test", i));
+
+			IList<SendEmailRequest> request = new List<SendEmailRequest>();
+
+			senderMock.SetupGet(s => s.MaxRecipientPerBatch).Returns(50);
+			senderMock.Setup(s => s.Send(It.IsAny<SendEmailRequest>())).Callback<SendEmailRequest>(request.Add);
+
+			service.Send(from, tos, bccs, subject, body);
+
+			senderMock.Verify(s => s.Send(It.IsAny<SendEmailRequest>()), Times.Exactly(2));
+
+			Assert.That(request.Count, Is.EqualTo(2));
+			Assert.That(request.First().Destination.ToAddresses.Count, Is.EqualTo(30));
+			Assert.That(request.First().Destination.BccAddresses.Count, Is.EqualTo(20));
+			Assert.That(request.Skip(1).First().Destination.ToAddresses.Count, Is.EqualTo(0));
+			Assert.That(request.Skip(1).First().Destination.BccAddresses.Count, Is.EqualTo(10));
 		}
 
 		[Test]

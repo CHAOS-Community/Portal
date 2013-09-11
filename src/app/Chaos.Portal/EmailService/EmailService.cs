@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Xsl;
@@ -11,8 +11,6 @@ namespace Chaos.Portal.EmailService
 {
 	public class EmailService : IEmailService
 	{
-		private const uint MAX_RECIPIENTS = 50;
-
 		private readonly IEmailSender _sender;
 
 		public EmailService(IEmailSender sender)
@@ -24,35 +22,10 @@ namespace Chaos.Portal.EmailService
 
 		public void Send(string from, string to, string subject, string body)
 		{
-			Send(from, new List<string> { to }, subject, body);
+			Send(from, new List<string> { to }, null, subject, body);
 		}
 
-		public void SendTemplate(string from, string to, string subject, XElement bodyTemplate, XElement bodyData)
-		{
-			SendTemplate(from, new List<string> { to }, subject, bodyTemplate, bodyData);
-		}
-
-		public void SendTemplate(string from, IEnumerable<string> to, string subject, XElement bodyTemplate, XElement bodyData)
-		{
-			Send(from, to, subject, TransformXSLT(bodyTemplate, bodyData));
-		}
-
-		public void SendTemplate(string @from, string to, string subject, XElement bodyTemplate, IList<XElement> bodyDatas)
-		{
-			SendTemplate(from, new List<string> { to }, subject, bodyTemplate, bodyDatas);
-		}
-
-		public void SendTemplate(string @from, IEnumerable<string> to, string subject, XElement bodyTemplate, IList<XElement> bodyDatas)
-		{
-			var root = new XElement("Root");
-
-			foreach (var bodyData in bodyDatas)
-				root.Add(bodyData);
-
-			SendTemplate(from, to, subject, bodyTemplate, root);
-		}
-
-		public void Send(string from, IEnumerable<string> to, string subject, string body)
+		public void Send(string from, IEnumerable<string> to, IEnumerable<string> bcc, string subject, string body)
 		{
 			var bodyContent = new Content(body)
 			{
@@ -62,23 +35,73 @@ namespace Chaos.Portal.EmailService
 			var message = new Message(new Content(subject), new Body { Html = bodyContent });
 
 			var destinations = new List<Destination>();
-			var currentBatch = new List<string>();
+			var destination = new Destination();
 
-			foreach (var email in to)
+			if (to != null)
 			{
-				currentBatch.Add(email);
+				foreach (var email in to)
+				{
+					if(string.IsNullOrEmpty(email))
+						throw new ArgumentException("To Email can not be null or empty");
 
-				if (currentBatch.Count != MAX_RECIPIENTS) continue;
+					destination.ToAddresses.Add(email);
 
-				destinations.Add(new Destination { BccAddresses = currentBatch });
-				currentBatch = new List<string>();
+					if (destination.ToAddresses.Count != _sender.MaxRecipientPerBatch) continue;
+
+					destinations.Add(destination);
+					destination = new Destination();
+				}
 			}
 
-			if (currentBatch.Count != 0)
-				destinations.Add(new Destination { BccAddresses = currentBatch });
+			if (bcc != null)
+			{
+				foreach (var email in bcc)
+				{
+					if (string.IsNullOrEmpty(email))
+						throw new ArgumentException("Bbc Email can not be null or empty");
 
-			foreach (var destination in destinations)
-				_sender.Send(new SendEmailRequest(from, destination, message));
+					destination.BccAddresses.Add(email);
+
+					if (destination.ToAddresses.Count + destination.BccAddresses.Count != _sender.MaxRecipientPerBatch) continue;
+
+					destinations.Add(destination);
+					destination = new Destination();
+				}
+			}
+
+			if (destination.ToAddresses.Count + destination.BccAddresses.Count != 0)
+				destinations.Add(destination);
+
+			foreach (var d in destinations)
+				_sender.Send(new SendEmailRequest(from, d, message));
+		}
+
+		#endregion
+		#region SendTemplate
+
+		public void SendTemplate(string from, string to, string subject, XElement bodyTemplate, XElement bodyData)
+		{
+			SendTemplate(from, new List<string> { to }, null, subject, bodyTemplate, bodyData);
+		}
+
+		public void SendTemplate(string from, IEnumerable<string> to, IEnumerable<string> bcc, string subject, XElement bodyTemplate, XElement bodyData)
+		{
+			Send(from, to, bcc, subject, TransformXSLT(bodyTemplate, bodyData));
+		}
+
+		public void SendTemplate(string @from, string to, string subject, XElement bodyTemplate, IList<XElement> bodyDatas)
+		{
+			SendTemplate(from, new List<string> { to }, null, subject, bodyTemplate, bodyDatas);
+		}
+
+		public void SendTemplate(string @from, IEnumerable<string> to, IEnumerable<string> bcc, string subject, XElement bodyTemplate, IList<XElement> bodyDatas)
+		{
+			var root = new XElement("Root");
+
+			foreach (var bodyData in bodyDatas)
+				root.Add(bodyData);
+
+			SendTemplate(from, to, bcc, subject, bodyTemplate, root);
 		}
 
 		#endregion

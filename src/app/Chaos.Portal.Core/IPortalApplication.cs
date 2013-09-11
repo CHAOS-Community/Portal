@@ -19,7 +19,7 @@ namespace Chaos.Portal.Core
         ICache				Cache { get; }
         IPortalRepository	PortalRepository { get; }
         ILog				Log { get; }
-		IEmailService		Email { get; }
+		IEmailService		EmailService { get; }
 
         IDictionary<Type, IParameterBinding> Bindings { get; set; }
 

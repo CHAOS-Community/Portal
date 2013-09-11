@@ -8,6 +8,8 @@ namespace Chaos.Portal.EmailService
 	{
 		private readonly AmazonSimpleEmailServiceClient _client;
 
+		public uint MaxRecipientPerBatch { get { return 50; } }
+
 		public AWSEmailSender(string accessKey, string secretKey)
 		{
 			_client = new AmazonSimpleEmailServiceClient(accessKey, secretKey);

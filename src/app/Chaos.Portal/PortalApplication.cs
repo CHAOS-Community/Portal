@@ -31,6 +31,7 @@ namespace Chaos.Portal
         #region Fields
 
         private readonly ILogFactory _loggingFactory;
+	    private IEmailService _emailService;
 
         #endregion
         #region Properties
@@ -41,8 +42,26 @@ namespace Chaos.Portal
         public IViewManager                         ViewManager { get; protected set; }
         public ILog                                 Log { get; protected set; }
         public IPortalRepository                    PortalRepository { get; set; }
-		public IEmailService						Email { get; protected set; }
 
+		#region Email
+
+		public IEmailService EmailService
+		{
+			get
+			{
+				if (_emailService != null) return _emailService;
+
+				if (ConfigurationManager.AppSettings.GetValues("AWSKey") == null || ConfigurationManager.AppSettings.GetValues("AWSSecret") == null)
+					throw new Exception("AWSKey and AWSSecret not set in app config");
+
+				_emailService = new EmailService.EmailService(new AWSEmailSender(ConfigurationManager.AppSettings["AWSKey"],
+																				ConfigurationManager.AppSettings["AWSSecret"]));
+
+				return _emailService;
+			}
+		}
+		
+		#endregion
         #endregion
         #region Constructors
 
@@ -55,11 +74,6 @@ namespace Chaos.Portal
             ViewManager      = viewManager;
             PortalRepository = portalRepository;
             _loggingFactory  = loggingFactory;
-
-			if (ConfigurationManager.AppSettings.GetValues("AWSKey") == null || ConfigurationManager.AppSettings.GetValues("AWSSecret") == null)
-				throw new Exception("AWSKey and AWSSecret not set in app config");
-
-			Email			 = new EmailService.EmailService(new AWSEmailSender(ConfigurationManager.AppSettings["AWSKey"], ConfigurationManager.AppSettings["AWSSecret"]));
             
             // Load bindings
             Bindings.Add( typeof(string), new StringParameterBinding() );
