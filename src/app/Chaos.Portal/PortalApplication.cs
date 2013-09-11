@@ -59,7 +59,7 @@ namespace Chaos.Portal
 			if (ConfigurationManager.AppSettings.GetValues("AWSKey") == null || ConfigurationManager.AppSettings.GetValues("AWSSecret") == null)
 				throw new Exception("AWSKey and AWSSecret not set in app config");
 
-			Email			 = new AWSEmailService(ConfigurationManager.AppSettings["AWSKey"], ConfigurationManager.AppSettings["AWSSecret"]);
+			Email			 = new EmailService.EmailService(new AWSEmailSender(ConfigurationManager.AppSettings["AWSKey"], ConfigurationManager.AppSettings["AWSSecret"]));
             
             // Load bindings
             Bindings.Add( typeof(string), new StringParameterBinding() );
