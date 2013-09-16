@@ -79,16 +79,26 @@ namespace Chaos.Portal.Core.Indexing.View
 
         public void Index(IEnumerable<object> objectsToIndex)
         {
+            var results = GetIndexResults(objectsToIndex).ToList();
+
+            foreach (var result in results)
+            {
+                var key = CreateKey(result.UniqueIdentifier.Value);
+
+                Cache.Store(key, result);
+            }
+
+            Core.Index(results);
+        }
+
+        private IEnumerable<IIndexable> GetIndexResults(IEnumerable<object> objectsToIndex)
+        {
             foreach(var viewResults in objectsToIndex.Select(Index).Where(viewResults => viewResults != null))
             {
                 foreach(var viewResult in viewResults)
                 {
-                    var key = CreateKey( viewResult.UniqueIdentifier.Value );
-                    
-                    Cache.Store( key, viewResult );
+                    yield return viewResult;
                 }
-
-                Core.Index( viewResults.Select( item => item ) );
             }
         }
 
@@ -110,6 +120,9 @@ namespace Chaos.Portal.Core.Indexing.View
 
         protected string CreateKey(string key)
         {
+            if (string.IsNullOrEmpty(Name)) throw new NullReferenceException(string.Format("Name on {0} view is null", Name));
+            if (string.IsNullOrEmpty(key)) throw new NullReferenceException(string.Format("UniqueIdentifier on {0} view is null", Name));
+            
             return string.Format( "{0}_{1}", Name, key.Replace( " ", "" ) );
         }
 

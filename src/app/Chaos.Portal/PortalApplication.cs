@@ -5,6 +5,8 @@ namespace Chaos.Portal
     using System.Linq;
     using System.Xml.Linq;
 
+    using CHAOS;
+
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Bindings;
     using Chaos.Portal.Core.Bindings.Standard;
@@ -78,6 +80,7 @@ namespace Chaos.Portal
             Bindings.Add( typeof(IQuery), new QueryParameterBinding() );
             Bindings.Add( typeof(IEnumerable<Guid>), new EnumerableOfGuidParameterBinding());
             Bindings.Add( typeof(XDocument), new XDocumentBinding() );
+            Bindings.Add( typeof(UUID), new UUIDParameterBinding() );
         }
 
         #endregion
