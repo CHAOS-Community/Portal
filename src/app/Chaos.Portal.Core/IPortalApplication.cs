@@ -3,21 +3,23 @@ namespace Chaos.Portal.Core
     using System;
     using System.Collections.Generic;
 
-    using Chaos.Portal.Core.Bindings;
-    using Chaos.Portal.Core.Cache;
-    using Chaos.Portal.Core.Data;
-    using Chaos.Portal.Core.Extension;
-    using Chaos.Portal.Core.Indexing.View;
-    using Chaos.Portal.Core.Logging;
-    using Chaos.Portal.Core.Module;
-    using Chaos.Portal.Core.Request;
-    using Chaos.Portal.Core.Response;
+    using Bindings;
+    using Cache;
+    using Data;
+    using Extension;
+    using Indexing.View;
+    using Logging;
+    using Module;
+    using Request;
+    using Response;
+	using EmailService;
 
     public interface IPortalApplication
     {
-        ICache            Cache { get; }
-        IPortalRepository PortalRepository { get; }
-        ILog              Log { get; }
+        ICache				Cache { get; }
+        IPortalRepository	PortalRepository { get; }
+        ILog				Log { get; }
+		IEmailService		EmailService { get; }
 
         IDictionary<Type, IParameterBinding> Bindings { get; set; }
 

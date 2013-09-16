@@ -1,3 +1,7 @@
+using System.Configuration;
+using Chaos.Portal.Core.EmailService;
+using Chaos.Portal.EmailService;
+
 namespace Chaos.Portal
 {
     using System;
@@ -29,17 +33,37 @@ namespace Chaos.Portal
         #region Fields
 
         private readonly ILogFactory _loggingFactory;
+	    private IEmailService _emailService;
 
         #endregion
         #region Properties
 
-        public IDictionary<Type, IParameterBinding> Bindings { get; set; }
+	    public IDictionary<Type, IParameterBinding> Bindings { get; set; }
         public IDictionary<string, IModule>         LoadedModules { get; set; }
         public ICache                               Cache { get; protected set; }
         public IViewManager                         ViewManager { get; protected set; }
         public ILog                                 Log { get; protected set; }
         public IPortalRepository                    PortalRepository { get; set; }
 
+		#region Email
+
+		public IEmailService EmailService
+		{
+			get
+			{
+				if (_emailService != null) return _emailService;
+
+				if (ConfigurationManager.AppSettings.GetValues("AWSKey") == null || ConfigurationManager.AppSettings.GetValues("AWSSecret") == null)
+					throw new Exception("AWSKey and AWSSecret not set in app config");
+
+				_emailService = new EmailService.EmailService(new AWSEmailSender(ConfigurationManager.AppSettings["AWSKey"],
+																				ConfigurationManager.AppSettings["AWSSecret"]));
+
+				return _emailService;
+			}
+		}
+		
+		#endregion
         #endregion
         #region Constructors
 

@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK">
+      <HintPath>..\..\..\lib\AWSSDK.dll</HintPath>
+    </Reference>
     <Reference Include="CHAOS">
       <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
     </Reference>
@@ -97,6 +100,7 @@
     <Compile Include="Data\Model\UserSettings.cs" />
     <Compile Include="Data\PortalRepository.cs" />
     <Compile Include="Data\TicketType.cs" />
+    <Compile Include="EmailService\IEmailSender.cs" />
     <Compile Include="Exceptions\ActionMissingException.cs" />
     <Compile Include="Exceptions\AssemblyNotLoadedException.cs" />
     <Compile Include="Exceptions\ExtensionMissingException.cs" />
@@ -112,6 +116,7 @@
     <Compile Include="Exceptions\WrongProtocolVersionException.cs" />
     <Compile Include="Extension\AExtension.cs" />
     <Compile Include="Extension\IExtension.cs" />
+    <Compile Include="EmailService\IEmailService.cs" />
     <Compile Include="Indexing\IQuery.cs" />
     <Compile Include="Indexing\IQueryGroupSettings.cs" />
     <Compile Include="Indexing\Solr\IIndex.cs" />
