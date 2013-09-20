@@ -39,7 +39,7 @@ namespace Chaos.Portal.Core.Indexing.Solr.Request
         {
             get
             {
-                return string.Format("q={0}&sort={1}&start={2}&rows={3}&fq={4}&facet={5}{6}{7}", string.IsNullOrEmpty(Query) ? "*:*" : Query, Sort ?? "", PageIndex * PageSize, PageSize, Filter, (!string.IsNullOrEmpty(Facet)).ToString().ToLower(), Facet, Group != null ? Group.ToString() : "");
+                return string.Format("fl=Id,score&q={0}&sort={1}&start={2}&rows={3}&fq={4}&facet={5}{6}{7}", string.IsNullOrEmpty(Query) ? "*:*" : Query, Sort ?? "", PageIndex * PageSize, PageSize, Filter, (!string.IsNullOrEmpty(Facet)).ToString().ToLower(), Facet, Group != null ? Group.ToString() : "");
             }
         }
 
