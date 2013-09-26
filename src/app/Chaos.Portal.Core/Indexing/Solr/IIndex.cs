@@ -20,5 +20,10 @@ namespace Chaos.Portal.Core.Indexing.Solr
         /// Delete all documents in core
         /// </summary>
         void Delete();
+
+        /// <summary>
+        /// Delete documents in all views based on the query
+        /// </summary>
+        void Delete(string uniqueIdentifier);
     }
 }

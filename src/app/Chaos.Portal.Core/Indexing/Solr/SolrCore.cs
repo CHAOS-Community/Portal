@@ -87,8 +87,25 @@ namespace Chaos.Portal.Core.Indexing.Solr
 
             using (_httpConnection.Post(Core + "/update", XElement.Parse(deleteString)))
             {
-                
+
             }
+
+            Commit();
+        }
+
+        /// <summary>
+        /// Delete all documents in core
+        /// </summary>
+        public void Delete(string uniqueIdentifier)
+        {
+            var deleteString = string.Format("<delete><id>{0}</id></delete>", uniqueIdentifier);
+
+            using (_httpConnection.Post(Core + "/update", XElement.Parse(deleteString)))
+            {
+
+            }
+
+            Commit(true);
         }
 
         /// <summary>

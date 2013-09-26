@@ -17,5 +17,11 @@ namespace Chaos.Portal.Core.Cache
         T Get<T>(string key) where T : class;
 
         IEnumerable<T> Get<T>(IEnumerable<string> keys) where T : class;
+
+        /// <summary>
+        /// Removes a document from the cache
+        /// </summary>
+        /// <param name="key"></param>
+        void Remove(string key);
     }
 }

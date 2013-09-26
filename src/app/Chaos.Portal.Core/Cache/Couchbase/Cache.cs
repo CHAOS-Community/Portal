@@ -97,7 +97,15 @@ namespace Chaos.Portal.Core.Cache.Couchbase
         public T Get<T>(string key) where T : class
         {
             return Client.GetJson<T>(key);
+        }
 
+        /// <summary>
+        /// Removes a document from the cache
+        /// </summary>
+        /// <param name="key"></param>
+        public void Remove(string key)
+        {
+            Client.Remove(key);
         }
 
         /// <summary>

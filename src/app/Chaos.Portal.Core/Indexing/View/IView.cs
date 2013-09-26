@@ -26,6 +26,6 @@ namespace Chaos.Portal.Core.Indexing.View
 
         string Name { get; }
 
-        
+        void Delete(string uniqueIdentifier);
     }
 }

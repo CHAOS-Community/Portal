@@ -78,11 +78,26 @@ namespace Chaos.Portal.Core.Indexing.View
             return _loadedViews[viewName];
         }
 
+        /// <summary>
+        /// Sends a delete all query to all Views, essentially cleaning the entire index
+        /// </summary>
         public void Delete()
         {
             foreach(var view in LoadedViews)
             {
                 view.Delete();
+            }
+        }
+
+        /// <summary>
+        /// Sends a delete query to all Views
+        /// </summary>
+        /// <param name="query"></param>
+        public void Delete(string query)
+        {
+            foreach (var view in LoadedViews)
+            {
+                view.Delete(query);
             }
         }
 

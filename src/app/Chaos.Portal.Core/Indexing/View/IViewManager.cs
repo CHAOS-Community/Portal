@@ -2,9 +2,6 @@ namespace Chaos.Portal.Core.Indexing.View
 {
     using System.Collections.Generic;
 
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Indexing.Solr;
-
     /// <summary>
     /// The ViewManager interface.
     /// </summary>
@@ -57,5 +54,11 @@ namespace Chaos.Portal.Core.Indexing.View
         IEnumerable<IView> LoadedViews { get; }
 
         void Delete();
+
+        /// <summary>
+        /// Sends a delete query to all Views
+        /// </summary>
+        /// <param name="query"></param>
+        void Delete(string query);
     }
 }

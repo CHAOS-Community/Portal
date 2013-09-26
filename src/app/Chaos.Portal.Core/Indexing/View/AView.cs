@@ -105,6 +105,13 @@ namespace Chaos.Portal.Core.Indexing.View
         public void Delete()
         {
             Core.Delete();
+            // todo clean cache
+        }
+
+        public void Delete(string uniqueIdentifier)
+        {
+            Core.Delete(uniqueIdentifier);
+            Cache.Remove(CreateKey(uniqueIdentifier));
         }
 
         protected IPagedResult<IResult> Query<TResult>(IQuery query) where TResult : class, IResult
