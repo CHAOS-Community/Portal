@@ -55,7 +55,7 @@ namespace CHAOS.Portal.Core.Standard
                         if( _user == null )
                             throw new SessionDoesNotExistException( "Session has expired" );
 
-                        Cache.Put( string.Format( "[UserInfo:sid={0}]", Session.GUID ), _user, new TimeSpan(0, 1, 0) );
+                        Cache.Put( string.Format( "[UserInfo:sid={0}]", Session.GUID ), _user, new TimeSpan(0, 1, 0, 0) );
                     }
                 }
 

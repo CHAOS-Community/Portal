@@ -53,7 +53,7 @@
     <Compile Include="Bindings\Standard\GuidParameterBinding.cs" />
     <Compile Include="Bindings\Standard\DateTimeParameterBinding.cs" />
     <Compile Include="Bindings\Standard\QueryParameterBinding.cs" />
-    <Compile Include="Cache\Membase\Membase.cs" />
+    <Compile Include="Cache\Couchbase\Couchbase.cs" />
     <Compile Include="Cache\ICache.cs" />
     <Compile Include="Extension\AExtension.cs" />
     <Compile Include="Extension\DefaultExtension.cs" />
@@ -89,13 +89,14 @@
     <Reference Include="CHAOS">
       <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
     </Reference>
+    <Reference Include="Couchbase">
+      <HintPath>..\..\..\lib\Couchbase.dll</HintPath>
+    </Reference>
     <Reference Include="Enyim.Caching">
       <HintPath>..\..\..\lib\Enyim.Caching.dll</HintPath>
-      <Private>False</Private>
     </Reference>
-    <Reference Include="Membase">
-      <HintPath>..\..\..\lib\Membase.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
