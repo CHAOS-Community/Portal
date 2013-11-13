@@ -9,19 +9,19 @@ namespace Chaos.Portal.Core.Response.Dto.v2
 {
     public class ResponseFactory
     {
-        public PortalResponse Create(object obj, IPortalRequest request)
+        public object Create(object obj, IPortalRequest request)
         {
             if(obj == null) throw new NullReferenceException("Returned object is null");
 
-            var result        = obj as IResult;
-            var results       = obj as IEnumerable<IResult>;
-            var pagedResult   = obj as IPagedResult<IResult>;
-            var queryResult   = obj as QueryResult;
+            var result = obj as IResult;
+            var results = obj as IEnumerable<IResult>;
+            var pagedResult = obj as IPagedResult<IResult>;
+            var queryResult = obj as QueryResult;
             var groupedResult = obj as IGroupedResult<IResult>;
-            var uinteger      = obj as uint?;
-            var integer       = obj as int?;
-            var exception     = obj as Exception;
-
+            var uinteger = obj as uint?;
+            var integer = obj as int?;
+            var exception = obj as Exception;
+            
             if( result != null )
             {
                 var portalResult = new PagedResult(1, 0, new[] { result });

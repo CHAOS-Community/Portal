@@ -1,6 +1,3 @@
-using Chaos.Portal.Core.Data.Model;
-using Chaos.Portal.Core.Response.Dto.v1;
-
 namespace Chaos.Portal.Protocol.Tests.v5.Response
 {
     using System;
@@ -8,6 +5,9 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
     using Core.Request;
     using Core.Response;
     using NUnit.Framework;
+
+    using Core.Data.Model;
+    using Core.Response.Dto.v1;
 
     [TestFixture]
     public class PortalResponseTest
@@ -118,33 +118,6 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
             {
                 var readToEnd = stream.ReadToEnd();
                 Assert.That(readToEnd, Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResult Duration=\"0\"><ModuleResults><ModuleResult Fullname=\"Portal\" Duration=\"0\" Count=\"1\"><Results><Error FullName=\"System.ArgumentException\"><Message>Value does not fall within the expected range.</Message></Error></Results></ModuleResult></ModuleResults></PortalResult>"));
-            }
-        }
-
-        [Test]
-        public void GetResponseStream_GivenAStream_ReturnsAStream()
-        {
-            var request = new PortalRequest();
-            request.Parameters.Add("format", "attachment");
-
-            using (var response = new PortalResponse(request))
-            {
-                request.Stopwatch.Reset();
-
-                var memoryStream = new MemoryStream();
-                var writer = new StreamWriter(memoryStream);
-                var attachment = new Attachment
-                {
-                    Stream = memoryStream
-                };
-
-                writer.Write("OK!");
-                writer.Flush();
-                response.WriteToOutput(attachment);
-
-                var stream = new StreamReader(response.GetResponseStream());
-                
-                Assert.That(stream.ReadToEnd(), Is.EqualTo("OK!"));
             }
         }
     }

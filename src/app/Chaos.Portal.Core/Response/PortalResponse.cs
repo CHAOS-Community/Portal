@@ -20,6 +20,8 @@ namespace Chaos.Portal.Core.Response
         private static readonly Dto.v2.ResponseFactory ResponseFactoryv6 = new Dto.v2.ResponseFactory();
         private static readonly Dto.v1.ResponseFactory ResponseFactoryv5 = new Dto.v1.ResponseFactory();
 
+        private readonly Dictionary<string, string> Headers; 
+
         #endregion
         #region Initialization
 
@@ -41,6 +43,7 @@ namespace Chaos.Portal.Core.Response
             Callback     = request.Parameters.ContainsKey("callback") ? request.Parameters["callback"] : null;
             Request      = request;
             Encoding     = Encoding.UTF8;
+            Headers = new Dictionary<string, string>();
         }
 
         public IPortalResponse WithResponseSpecification(IResponseSpecification responseSpecification)
@@ -72,7 +75,7 @@ namespace Chaos.Portal.Core.Response
                 case ReturnFormat.JSON:
                 case ReturnFormat.JSONP:
                 case ReturnFormat.ATTACHMENT:
-                    Output = ResponseFactoryv5.Create(obj, Request);
+                    Output = ResponseFactoryv5.Create(obj, Request, this);
                     break;
                 case ReturnFormat.XML2:
                 case ReturnFormat.JSON2:
@@ -87,7 +90,23 @@ namespace Chaos.Portal.Core.Response
             return ResponseSpecification.GetStream(this);
         }
 
+        public string GetHeader(string key)
+        {
+            return Headers.ContainsKey(key) ? Headers[key] : DefaultHeaderValue(key);
+        }
+
+        private string DefaultHeaderValue(string key)
+        {
+            return "";
+        }
+
+        public void AddHeader(string key, string value)
+        {
+            Headers.Add(key, value);
+        }
+
         #endregion
+
         #region Implementation of IDisposable
 
         public void Dispose()

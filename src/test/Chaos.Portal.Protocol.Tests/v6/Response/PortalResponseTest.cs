@@ -63,6 +63,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
                 var writer = new StreamWriter(memoryStream);
                 var attachment = new Attachment
                 {
+                    FileName = "somefile.name",
                     Stream = memoryStream
                 };
 
@@ -73,6 +74,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
                 var stream = new StreamReader(response.GetResponseStream());
                 
                 Assert.That(stream.ReadToEnd(), Is.EqualTo("OK!"));
+                Assert.That(response.GetHeader("Content-Disposition"), Is.EqualTo("filename=somefile.name;"));
             }
         }
     }

@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using Chaos.Portal.Core.Data.Model;
-using Chaos.Portal.Core.Exceptions;
-using Chaos.Portal.Core.Request;
-
 namespace Chaos.Portal.Core.Response.Dto.v1
 {
+    using System;
+    using System.Collections.Generic;
+    using Data.Model;
+    using Exceptions;
+    using Request;
+
     public class ResponseFactory
     {
 
-        public object Create(object obj, IPortalRequest request)
+        public object Create(object obj, IPortalRequest request, PortalResponse portalResponse)
         {
             var moduleName = "Portal";
             var namedResult = obj as NamedResult;
@@ -20,10 +20,10 @@ namespace Chaos.Portal.Core.Response.Dto.v1
                 obj = namedResult.Obj;
             }
 
-            return CreateWithModuleName(obj, request, moduleName);
+            return CreateWithModuleName(obj, request, moduleName, portalResponse);
         }
 
-        private static object CreateWithModuleName(object obj, IPortalRequest request, string moduleName)
+        private static object CreateWithModuleName(object obj, IPortalRequest request, string moduleName, PortalResponse portalResponse)
         {
             if (obj == null) throw new NullReferenceException("Returned object is null");
 
@@ -33,8 +33,8 @@ namespace Chaos.Portal.Core.Response.Dto.v1
             var groupedResult = obj as IGroupedResult<IResult>;
             var uinteger = obj as uint?;
             var integer = obj as int?;
-            var attachment = obj as Attachment;
             var exception = obj as Exception;
+            var attachment = obj as Attachment;
 
             if (result != null)
             {
@@ -61,10 +61,6 @@ namespace Chaos.Portal.Core.Response.Dto.v1
 
                 return response;
             }
-            if (attachment != null)
-            {
-                return attachment.Stream;
-            }
             if (uinteger != null)
             {
                 var response = new PortalResult(request.Stopwatch);
@@ -78,6 +74,12 @@ namespace Chaos.Portal.Core.Response.Dto.v1
                 response.GetModule(moduleName).AddResult(new ScalarResult(integer.Value));
 
                 return response;
+            }
+            if (attachment != null)
+            {
+                portalResponse.AddHeader("Content-Disposition", string.Format("filename={0};", attachment.FileName));
+
+                return attachment.Stream;
             }
             else
             {
