@@ -37,7 +37,7 @@
         ClientSettings ClientSettingsGet(Guid guid);
         uint ClientSettingsSet(Guid guid, string name, string settings);
 
-        IEnumerable<UserSettings> UserSettingsGet(Guid clientGuid, Guid userGuid);
+        UserSettings UserSettingsGet(Guid clientGuid, Guid userGuid);
         uint UserSettingsSet(Guid guid, Guid userGuid, string settings);
         uint UserSettingsDelete(Guid guid, Guid userGuid);
 

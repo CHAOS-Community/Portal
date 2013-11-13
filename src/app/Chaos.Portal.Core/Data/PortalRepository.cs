@@ -7,9 +7,9 @@ namespace Chaos.Portal.Core.Data
     using CHAOS.Data;
     using CHAOS.Data.MySql;
 
-    using Chaos.Portal.Core.Data.Mappings;
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Exceptions;
+    using Mappings;
+    using Model;
+    using Exceptions;
 
     using MySql.Data.MySqlClient;
 
@@ -53,7 +53,7 @@ namespace Chaos.Portal.Core.Data
                     new MySqlParameter("Guid", userGuid.HasValue ? userGuid.Value.ToByteArray() : null),
                     new MySqlParameter("SessionGuid", sessionGuid.HasValue ? sessionGuid.Value.ToByteArray() : null),
                     new MySqlParameter("Email", email),
-					new MySqlParameter("GroupGuid", groupGuid.HasValue ? groupGuid.Value.ToByteArray() : null),
+					new MySqlParameter("GroupGuid", groupGuid.HasValue ? groupGuid.Value.ToByteArray() : null)
                 });
         }
 
@@ -81,7 +81,7 @@ namespace Chaos.Portal.Core.Data
 		    throw new NotImplementedException();
 	    }
 
-	    public uint UserUpdate(Guid guid, string email, uint? SystemPermission)
+	    public uint UserUpdate(Guid guid, string email, uint? systemPermission)
 	    {
 		    throw new NotImplementedException();
 	    }
@@ -105,7 +105,7 @@ namespace Chaos.Portal.Core.Data
                     new MySqlParameter("Guid", guid.HasValue ? guid.Value.ToByteArray() : null), 
                     new MySqlParameter("Name", name), 
                     new MySqlParameter("RequestingUserGuid", requestingUserGuid.HasValue ? requestingUserGuid.Value.ToByteArray() : null), 
-                    new MySqlParameter("UserGuid", userGuid.HasValue ? userGuid.Value.ToByteArray() : null), 
+                    new MySqlParameter("UserGuid", userGuid.HasValue ? userGuid.Value.ToByteArray() : null) 
                 });
         }
 
@@ -113,12 +113,12 @@ namespace Chaos.Portal.Core.Data
         {
             guid = guid ?? Guid.NewGuid();
 
-            var result = Gateway.ExecuteNonQuery("Group_Create", new MySqlParameter[]
+            var result = Gateway.ExecuteNonQuery("Group_Create", new[]
                 {
                     new MySqlParameter("Guid", guid.Value.ToByteArray()),
                     new MySqlParameter("Name", name),
                     new MySqlParameter("RequestUserGuid", requestedUserGuid.ToByteArray()),
-                    new MySqlParameter("SystemPermission", systemPermission),
+                    new MySqlParameter("SystemPermission", systemPermission)
                 });
 
             if (result == -100) throw new InsufficientPermissionsException("User has insufficient permissions to create groups");
@@ -134,7 +134,7 @@ namespace Chaos.Portal.Core.Data
                     new MySqlParameter("NewName", newName), 
                     new MySqlParameter("NewSystemPermission", newSystemPermission), 
                     new MySqlParameter("WhereGroupGuid", guid.ToByteArray()), 
-                    new MySqlParameter("RequestUserGuid", userGuid.ToByteArray()), 
+                    new MySqlParameter("RequestUserGuid", userGuid.ToByteArray()) 
                 });
 
 			if (result == -100) throw new InsufficientPermissionsException("User does not have permission to update group");
@@ -147,7 +147,7 @@ namespace Chaos.Portal.Core.Data
             var result = Gateway.ExecuteNonQuery("Group_Delete", new[]
                 {
                     new MySqlParameter("Guid", guid.ToByteArray()), 
-                    new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray()) 
                 });
 
             if(result == -100) throw new InsufficientPermissionsException("User has insufficient permissions to delete groups");
@@ -163,7 +163,7 @@ namespace Chaos.Portal.Core.Data
                     new MySqlParameter("GroupGUID", guid.ToByteArray()), 
                     new MySqlParameter("UserGUID", userGuid.ToByteArray()), 
                     new MySqlParameter("Permission", systemPermission), 
-                    new MySqlParameter("RequestUserGUID", requestUserGuid.HasValue ? requestUserGuid.Value.ToByteArray() : null), 
+                    new MySqlParameter("RequestUserGUID", requestUserGuid.HasValue ? requestUserGuid.Value.ToByteArray() : null) 
                 });
 
 			if (result == -100) throw new InsufficientPermissionsException("User does not have permission to add user to group");
@@ -208,7 +208,7 @@ namespace Chaos.Portal.Core.Data
             return Gateway.ExecuteQuery<Session>("Session_Get", new[]
                 {
                     new MySqlParameter("Guid", guid.HasValue ? guid.Value.ToByteArray() : null), 
-                    new MySqlParameter("UserGuid", userGuid.HasValue ? userGuid.Value.ToByteArray() : null), 
+                    new MySqlParameter("UserGuid", userGuid.HasValue ? userGuid.Value.ToByteArray() : null) 
                 });
         }
 
@@ -216,23 +216,23 @@ namespace Chaos.Portal.Core.Data
         {
             var guid = Guid.NewGuid();
 
-            var result = Gateway.ExecuteNonQuery("Session_Create", new[]
-                {
-                    new MySqlParameter("Guid", guid.ToByteArray()), 
-                    new MySqlParameter("UserGuid", userGuid.ToByteArray())
-                });
+            Gateway.ExecuteNonQuery("Session_Create", new[]
+            {
+                new MySqlParameter("Guid", guid.ToByteArray()), 
+                new MySqlParameter("UserGuid", userGuid.ToByteArray())
+            });
 
             return SessionGet(guid, null).First();
         }
 
         public Session SessionUpdate(Guid guid, Guid userGuid)
         {
-            var result = Gateway.ExecuteNonQuery("Session_Update", new[]
-                {
-                    new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
-                    new MySqlParameter("WhereSessionGuid", guid.ToByteArray()), 
-                    new MySqlParameter("WhereUserGuid", null) 
-                });
+            Gateway.ExecuteNonQuery("Session_Update", new[]
+            {
+                new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
+                new MySqlParameter("WhereSessionGuid", guid.ToByteArray()), 
+                new MySqlParameter("WhereUserGuid", null) 
+            });
 
             return SessionGet(guid, userGuid).First();
         }
@@ -262,7 +262,7 @@ namespace Chaos.Portal.Core.Data
                 {
                     new MySqlParameter("Guid", guid.ToByteArray()), 
                     new MySqlParameter("Name", name), 
-                    new MySqlParameter("Settings", settings),
+                    new MySqlParameter("Settings", settings)
                 });
 
             return (uint)result;
@@ -288,7 +288,7 @@ namespace Chaos.Portal.Core.Data
                 {
                     new MySqlParameter("Guid", guid.Value.ToByteArray()), 
                     new MySqlParameter("Name", name), 
-                    new MySqlParameter("RequestUserGuid", requestingUserGuid.ToByteArray()), 
+                    new MySqlParameter("RequestUserGuid", requestingUserGuid.ToByteArray()) 
                 });
 
             if(result == -100) throw new InsufficientPermissionsException("User does not have sufficient permissions to access the subscription");
@@ -328,13 +328,18 @@ namespace Chaos.Portal.Core.Data
         #endregion
         #region User Settings
 
-        public IEnumerable<UserSettings> UserSettingsGet(Guid clientGuid, Guid userGuid)
+        public UserSettings UserSettingsGet(Guid clientGuid, Guid userGuid)
         {
-            return Gateway.ExecuteQuery<UserSettings>("UserSettings_Get", new[]
-                {
-                    new MySqlParameter("ClientSettingsGuid", clientGuid.ToByteArray()), 
-                    new MySqlParameter("UserGuid", userGuid.ToByteArray()) 
-                });
+            var result = Gateway.ExecuteQuery<UserSettings>("UserSettings_Get", new[]
+            {
+                new MySqlParameter("ClientSettingsGuid", clientGuid.ToByteArray()), 
+                new MySqlParameter("UserGuid", userGuid.ToByteArray()) 
+            }).FirstOrDefault();
+
+            if (result == null)
+                throw new ChaosDatabaseException("User has no settings on the client");
+
+            return result;
         }
 
         public uint UserSettingsSet(Guid guid, Guid userGuid, string settings)
@@ -354,7 +359,7 @@ namespace Chaos.Portal.Core.Data
             var result = Gateway.ExecuteNonQuery("UserSettings_Delete", new[]
                 {
                     new MySqlParameter("ClientSettingsGuid", guid.ToByteArray()), 
-                    new MySqlParameter("UserGuid", userGuid.ToByteArray()),
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray())
                 });
 
             return (uint)result;

@@ -20,7 +20,7 @@ namespace Chaos.Portal.v6.Extension
 
         #region Get
 
-        public IEnumerable<Core.Data.Model.UserSettings> Get(Guid clientGUID )
+        public Core.Data.Model.UserSettings Get(Guid clientGUID )
         {
             return PortalRepository.UserSettingsGet(clientGUID, Request.User.Guid);
         }

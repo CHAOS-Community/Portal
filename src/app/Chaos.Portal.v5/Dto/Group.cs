@@ -11,7 +11,7 @@
         #region Properties
 
         [Serialize("GUID")]
-        public Guid GUID { get; set; }
+        public Guid Guid { get; set; }
 
         [Serialize]
         public long? SystemPermission { get; set; }
@@ -32,8 +32,8 @@
 
         public Group(Core.Data.Model.Group group)
         {
-            GUID             = group.Guid;
-            Name             = @group.Name;
+            Guid             = group.Guid;
+            Name             = group.Name;
             SystemPermission = group.SystemPermission;
             DateCreated      = group.DateCreated;
         }

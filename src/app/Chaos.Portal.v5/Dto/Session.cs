@@ -4,7 +4,7 @@
 
     using CHAOS.Serialization;
 
-    using Chaos.Portal.Core.Data.Model;
+    using Core.Data.Model;
 
     public class Session : AResult
     {

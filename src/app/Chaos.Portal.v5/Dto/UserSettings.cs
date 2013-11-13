@@ -1,21 +1,21 @@
-﻿namespace Chaos.Portal.v5.Dto
+﻿using System;
+using CHAOS;
+using CHAOS.Extensions;
+using Chaos.Portal.Core.Data.Model;
+using CHAOS.Serialization;
+using CHAOS.Serialization.XML;
+
+namespace Chaos.Portal.v5.Dto
 {
-    using System;
-
-    using CHAOS.Serialization;
-    using CHAOS.Serialization.XML;
-
-    using Chaos.Portal.Core.Data.Model;
-
     public class UserSettings : AResult
     {
         #region Properties
 
         [Serialize("ClientSettingGUID")]
-        public Guid ClientSettingGUID { get; set; }
+        public UUID ClientSettingGuid { get; set; }
 
         [Serialize("UserGUID")]
-        public Guid UserGUID { get; set; }
+        public UUID UserGuid { get; set; }
 
         [SerializeXML(false, true)]
         [Serialize("Settings")]
@@ -34,8 +34,8 @@
 
         public UserSettings(Core.Data.Model.UserSettings userSettings)
         {
-            ClientSettingGUID = userSettings.ClientSettingGuid;
-            UserGUID          = userSettings.UserGuid;
+            ClientSettingGuid = userSettings.ClientSettingGuid.ToUUID();
+            UserGuid          = userSettings.UserGuid.ToUUID();
             Settings          = userSettings.Settings;
             DateCreated       = userSettings.DateCreated;
         }

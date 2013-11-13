@@ -272,14 +272,12 @@
         {
             var userSettings = Make_UserSettings();
 
-            var results = PortalRepository.UserSettingsGet(userSettings.ClientSettingGuid, userSettings.UserGuid);
+            var result = PortalRepository.UserSettingsGet(userSettings.ClientSettingGuid, userSettings.UserGuid);
 
-            Assert.That(results, Is.Not.Empty);
-            var actual = results.First();
-            Assert.That(actual.ClientSettingGuid, Is.EqualTo(userSettings.ClientSettingGuid));
-            Assert.That(actual.UserGuid, Is.EqualTo(userSettings.UserGuid));
-            Assert.That(actual.Settings, Is.EqualTo(userSettings.Settings));
-            Assert.That(actual.DateCreated, Is.EqualTo(userSettings.DateCreated));
+            Assert.That(result.ClientSettingGuid, Is.EqualTo(userSettings.ClientSettingGuid));
+            Assert.That(result.UserGuid, Is.EqualTo(userSettings.UserGuid));
+            Assert.That(result.Settings, Is.EqualTo(userSettings.Settings));
+            Assert.That(result.DateCreated, Is.EqualTo(userSettings.DateCreated));
         }
 
         [Test]

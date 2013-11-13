@@ -4,24 +4,24 @@
     using System.Collections.Generic;
     using System.Diagnostics;
 
-    using Chaos.Portal.Core;
-    using Chaos.Portal.Core.Cache;
-    using Chaos.Portal.Core.Data;
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Extension;
-    using Chaos.Portal.Core.Indexing.View;
-    using Chaos.Portal.Core.Logging;
-    using Chaos.Portal.Core.Request;
-    using Chaos.Portal.Core.Response;
-    using Chaos.Portal.v5.Extension;
+    using Core;
+    using Core.Cache;
+    using Core.Data;
+    using Core.Data.Model;
+    using Core.Extension;
+    using Core.Indexing.View;
+    using Core.Logging;
+    using Core.Request;
+    using Core.Response;
+    using Portal.v5.Extension;
 
     using Moq;
 
     using NUnit.Framework;
 
-    using ClientSettings = Chaos.Portal.v5.Extension.ClientSettings;
-    using Group = Chaos.Portal.v5.Extension.Group;
-    using Session = Chaos.Portal.v5.Extension.Session;
+    using ClientSettings = Portal.v5.Extension.ClientSettings;
+    using Group = Portal.v5.Extension.Group;
+    using Session = Portal.v5.Extension.Session;
 
     [TestFixture]
     public class TestBase

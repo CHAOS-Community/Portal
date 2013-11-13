@@ -1,4 +1,7 @@
-﻿namespace Chaos.Portal.v5.Dto
+﻿using CHAOS;
+using CHAOS.Extensions;
+
+namespace Chaos.Portal.v5.Dto
 {
     using System;
 
@@ -11,7 +14,7 @@
         #region Properties
 
         [Serialize("GUID")]
-        public Guid GUID { get; set; }
+        public UUID Guid { get; set; }
 
         [Serialize]
         public string Name { get; set; }
@@ -32,7 +35,7 @@
 
         public ClientSettings(Core.Data.Model.ClientSettings clientSettings)
         {
-            GUID        = clientSettings.Guid;
+            Guid        = clientSettings.Guid.ToUUID();
             Name        = clientSettings.Name;
             Settings    = clientSettings.Settings;
             DateCreated = clientSettings.DateCreated;
