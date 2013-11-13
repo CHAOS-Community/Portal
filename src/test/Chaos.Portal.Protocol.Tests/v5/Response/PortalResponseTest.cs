@@ -1,14 +1,11 @@
+using Chaos.Portal.Core.Data.Model;
+
 namespace Chaos.Portal.Protocol.Tests.v5.Response
 {
     using System;
     using System.IO;
-
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Exceptions;
-    using Chaos.Portal.Core.Request;
-    using Chaos.Portal.Core.Response;
-    using Chaos.Portal.Core.Response.Dto.v1;
-
+    using Core.Request;
+    using Core.Response;
     using NUnit.Framework;
 
     [TestFixture]
@@ -119,10 +116,14 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
 
                 var memoryStream = new MemoryStream();
                 var writer = new StreamWriter(memoryStream);
+                var attachment = new Attachment
+                {
+                    Stream = memoryStream
+                };
 
                 writer.Write("OK!");
                 writer.Flush();
-                response.WriteToOutput(memoryStream);
+                response.WriteToOutput(attachment);
 
                 var stream = new StreamReader(response.GetResponseStream());
                 

@@ -5,11 +5,11 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
 
     using CHAOS.Serialization;
 
-    using Chaos.Portal.Core;
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Indexing.View;
-    using Chaos.Portal.Core.Request;
-    using Chaos.Portal.Core.Response;
+    using Core;
+    using Core.Data.Model;
+    using Core.Indexing.View;
+    using Core.Request;
+    using Core.Response;
 
     using NUnit.Framework;
 
@@ -61,10 +61,14 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
 
                 var memoryStream = new MemoryStream();
                 var writer = new StreamWriter(memoryStream);
+                var attachment = new Attachment
+                {
+                    Stream = memoryStream
+                };
 
                 writer.Write("OK!");
                 writer.Flush();
-                response.WriteToOutput(memoryStream);
+                response.WriteToOutput(attachment);
 
                 var stream = new StreamReader(response.GetResponseStream());
                 

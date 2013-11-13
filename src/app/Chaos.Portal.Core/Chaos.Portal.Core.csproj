@@ -80,6 +80,7 @@
     <Compile Include="Data\Mappings\UserInfoMapping.cs" />
     <Compile Include="Data\Mappings\UserSettingsMapping.cs" />
     <Compile Include="Data\Model\AResult.cs" />
+    <Compile Include="Data\Model\Attachment.cs" />
     <Compile Include="Data\Model\ClientSettings.cs" />
     <Compile Include="Data\Model\Facet.cs" />
     <Compile Include="Data\Model\FieldFacet.cs" />
@@ -169,12 +170,14 @@
     <Compile Include="Response\Dto\v1\IModuleResult.cs" />
     <Compile Include="Response\Dto\v1\IPortalResult.cs" />
     <Compile Include="Response\Dto\v1\ModuleResult.cs" />
+    <Compile Include="Response\Dto\v1\ResponseFactory.cs" />
     <Compile Include="Response\Dto\v1\PortalResult.cs" />
     <Compile Include="Response\Dto\v2\PagedResult.cs" />
     <Compile Include="Response\Dto\v2\PortalError.cs" />
     <Compile Include="Response\Dto\v2\PortalHeader.cs" />
     <Compile Include="Response\Dto\v2\PortalResponse.cs" />
     <Compile Include="Response\Dto\v2\PortalResult.cs" />
+    <Compile Include="Response\Dto\v2\ResponseFactory.cs" />
     <Compile Include="Response\IPortalError.cs" />
     <Compile Include="Response\IPortalHeader.cs" />
     <Compile Include="Response\IPortalResponse.cs" />

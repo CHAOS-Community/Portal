@@ -1,7 +1,7 @@
 namespace Chaos.Portal.v5.Extension
 {
-    using Chaos.Portal.Core;
-    using Chaos.Portal.Core.Extension;
+    using Core;
+    using Core.Extension;
 
     public class User : AExtension
     {
