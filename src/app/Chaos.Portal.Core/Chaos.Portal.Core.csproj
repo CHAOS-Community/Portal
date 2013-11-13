@@ -170,6 +170,7 @@
     <Compile Include="Response\Dto\v1\IModuleResult.cs" />
     <Compile Include="Response\Dto\v1\IPortalResult.cs" />
     <Compile Include="Response\Dto\v1\ModuleResult.cs" />
+    <Compile Include="Response\Dto\v1\NamedResult.cs" />
     <Compile Include="Response\Dto\v1\ResponseFactory.cs" />
     <Compile Include="Response\Dto\v1\PortalResult.cs" />
     <Compile Include="Response\Dto\v2\PagedResult.cs" />

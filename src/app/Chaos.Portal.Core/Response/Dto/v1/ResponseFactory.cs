@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Chaos.Portal.Core.Data.Model;
 using Chaos.Portal.Core.Exceptions;
 using Chaos.Portal.Core.Request;
@@ -12,9 +11,21 @@ namespace Chaos.Portal.Core.Response.Dto.v1
 
         public object Create(object obj, IPortalRequest request)
         {
-            if(obj == null) throw new NullReferenceException("Returned object is null");
-
             var moduleName = "Portal";
+            var namedResult = obj as NamedResult;
+
+            if (namedResult != null)
+            {
+                moduleName = namedResult.ModuleName;
+                obj = namedResult.Obj;
+            }
+
+            return CreateWithModuleName(obj, request, moduleName);
+        }
+
+        private static object CreateWithModuleName(object obj, IPortalRequest request, string moduleName)
+        {
+            if (obj == null) throw new NullReferenceException("Returned object is null");
 
             var result = obj as IResult;
             var results = obj as IEnumerable<IResult>;
@@ -25,14 +36,14 @@ namespace Chaos.Portal.Core.Response.Dto.v1
             var attachment = obj as Attachment;
             var exception = obj as Exception;
 
-            if(result != null)
+            if (result != null)
             {
                 var response = new PortalResult(request.Stopwatch);
                 response.GetModule(moduleName).AddResult(result);
 
                 return response;
             }
-            if(results != null)
+            if (results != null)
             {
                 var response = new PortalResult(request.Stopwatch);
 
@@ -40,7 +51,7 @@ namespace Chaos.Portal.Core.Response.Dto.v1
 
                 return response;
             }
-            if(pagedResult != null)
+            if (pagedResult != null)
             {
                 var response = new PortalResult(request.Stopwatch);
 
@@ -50,18 +61,18 @@ namespace Chaos.Portal.Core.Response.Dto.v1
 
                 return response;
             }
-            if(attachment != null)
+            if (attachment != null)
             {
                 return attachment.Stream;
             }
-            if(uinteger != null)
+            if (uinteger != null)
             {
                 var response = new PortalResult(request.Stopwatch);
-                response.GetModule(moduleName).AddResult(new ScalarResult((int)uinteger.Value));
+                response.GetModule(moduleName).AddResult(new ScalarResult((int) uinteger.Value));
 
                 return response;
             }
-            if(integer != null)
+            if (integer != null)
             {
                 var response = new PortalResult(request.Stopwatch);
                 response.GetModule(moduleName).AddResult(new ScalarResult(integer.Value));
@@ -70,8 +81,12 @@ namespace Chaos.Portal.Core.Response.Dto.v1
             }
             else
             {
-                if (exception == null) exception = new UnsupportedExtensionReturnTypeException("Return type is not supported: " + obj.GetType().FullName);
-                if (groupedResult != null) exception = new UnsupportedExtensionReturnTypeException("This Action is not available with the current Format");
+                if (exception == null)
+                    exception =
+                        new UnsupportedExtensionReturnTypeException("Return type is not supported: " + obj.GetType().FullName);
+                if (groupedResult != null)
+                    exception =
+                        new UnsupportedExtensionReturnTypeException("This Action is not available with the current Format");
                 var response = new PortalResult(request.Stopwatch);
 
                 response.GetModule(moduleName).AddResult(new ExtensionError(exception, request.Stopwatch));

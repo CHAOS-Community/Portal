@@ -1,4 +1,5 @@
 using Chaos.Portal.Core.Data.Model;
+using Chaos.Portal.Core.Response.Dto.v1;
 
 namespace Chaos.Portal.Protocol.Tests.v5.Response
 {
@@ -11,6 +12,22 @@ namespace Chaos.Portal.Protocol.Tests.v5.Response
     [TestFixture]
     public class PortalResponseTest
     {
+        [Test]
+        public void GetResponseStream_ReturnedObjectWrappedWithModuleName_SetTheModuleNameInTheResponseXml()
+        {
+            var request = new PortalRequest();
+            var response = new PortalResponse(request);
+            var wrapped = new NamedResult( "Some module name", 1234);
+            request.Stopwatch.Reset();
+
+            response.WriteToOutput(wrapped);
+
+            using (var stream = new StreamReader(response.GetResponseStream()))
+            {
+                Assert.That(stream.ReadToEnd(), Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?><PortalResult Duration=\"0\"><ModuleResults><ModuleResult Fullname=\"Some module name\" Duration=\"0\" Count=\"1\"><Results><Result FullName=\"Chaos.Portal.Core.Data.Model.ScalarResult\"><Value>1234</Value></Result></Results></ModuleResult></ModuleResults></PortalResult>"));
+            }
+        }
+
         [Test]
         public void GetResponseStream_GivenSimpleIntegerResult_ReturnsXmlContainingScalarResult()
         {
