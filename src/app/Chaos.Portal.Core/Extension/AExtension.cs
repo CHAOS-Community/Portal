@@ -3,13 +3,13 @@ namespace Chaos.Portal.Core.Extension
     using System.Collections.Generic;
     using System.Reflection;
 
-    using Chaos.Portal.Core.Cache;
-    using Chaos.Portal.Core.Data;
-    using Chaos.Portal.Core.Exceptions;
-    using Chaos.Portal.Core.Indexing.View;
-    using Chaos.Portal.Core.Logging;
-    using Chaos.Portal.Core.Request;
-    using Chaos.Portal.Core.Response;
+    using Cache;
+    using Data;
+    using Exceptions;
+    using Indexing.View;
+    using Logging;
+    using Request;
+    using Response;
 
     public abstract class AExtension : IExtension
     {
@@ -82,16 +82,21 @@ namespace Chaos.Portal.Core.Extension
             {
                 var result = method.Invoke(this, parameters);
 
-                Response.WriteToOutput(result);
+                WriteToOutput(result);
             }
             catch (TargetInvocationException e)
             {
-                Response.WriteToOutput(e.InnerException);
+                WriteToOutput(e.InnerException);
                 
                 PortalApplication.Log.Fatal("ProcessRequest() - Unhandeled exception occured during", e.InnerException);
             }
 
             return Response;
+        }
+
+        protected virtual void WriteToOutput(object result)
+        {
+            Response.WriteToOutput(result);
         }
 
         private object[] BindParameters(IDictionary<string, string> inputParameters, ICollection<ParameterInfo> parameters)
