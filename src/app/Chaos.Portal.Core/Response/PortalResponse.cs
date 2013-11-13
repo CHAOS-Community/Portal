@@ -100,9 +100,17 @@ namespace Chaos.Portal.Core.Response
             return "";
         }
 
-        public void AddHeader(string key, string value)
+        public void SetHeader(string key, string value)
         {
-            Headers.Add(key, value);
+            if (ContainsHeader(key))
+                Headers[key] = value;
+            else
+                Headers.Add(key, value);
+        }
+
+        public bool ContainsHeader(string key)
+        {
+            return Headers.ContainsKey(key);
         }
 
         #endregion

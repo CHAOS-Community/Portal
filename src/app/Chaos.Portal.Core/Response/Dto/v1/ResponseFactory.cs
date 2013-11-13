@@ -77,7 +77,8 @@ namespace Chaos.Portal.Core.Response.Dto.v1
             }
             if (attachment != null)
             {
-                portalResponse.AddHeader("Content-Disposition", string.Format("filename={0};", attachment.FileName));
+                portalResponse.SetHeader("Content-Disposition", string.Format("filename={0};", attachment.FileName));
+                portalResponse.SetHeader("Content-Type", attachment.ContentType);
 
                 return attachment.Stream;
             }

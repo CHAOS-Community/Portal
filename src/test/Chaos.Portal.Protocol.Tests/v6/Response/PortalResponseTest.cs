@@ -64,7 +64,8 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
                 var attachment = new Attachment
                 {
                     FileName = "somefile.name",
-                    Stream = memoryStream
+                    Stream = memoryStream,
+                    ContentType = "some content/type"
                 };
 
                 writer.Write("OK!");
@@ -75,6 +76,7 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
                 
                 Assert.That(stream.ReadToEnd(), Is.EqualTo("OK!"));
                 Assert.That(response.GetHeader("Content-Disposition"), Is.EqualTo("filename=somefile.name;"));
+                Assert.That(response.GetHeader("Content-Type"), Is.EqualTo(attachment.ContentType));
             }
         }
     }

@@ -14,5 +14,8 @@ namespace Chaos.Portal.Core.Response
         ReturnFormat ReturnFormat { get; set; }
 
         object Output { get; set; }
+        string GetHeader(string key);
+        void SetHeader(string key, string value);
+        bool ContainsHeader(string key);
     }
 }
