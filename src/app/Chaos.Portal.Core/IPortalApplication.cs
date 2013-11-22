@@ -42,5 +42,6 @@ namespace Chaos.Portal.Core
         TResult GetModule<TResult>() where TResult : IModule;
 
         void AddModule(IModule module);
+        event ApplicationDelegates.ModuleHandler OnModuleLoaded;
     }
 }

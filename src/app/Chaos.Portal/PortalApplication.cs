@@ -11,19 +11,19 @@ namespace Chaos.Portal
 
     using CHAOS;
 
-    using Chaos.Portal.Core;
-    using Chaos.Portal.Core.Bindings;
-    using Chaos.Portal.Core.Bindings.Standard;
-    using Chaos.Portal.Core.Cache;
-    using Chaos.Portal.Core.Data;
-    using Chaos.Portal.Core.Exceptions;
-    using Chaos.Portal.Core.Extension;
-    using Chaos.Portal.Core.Indexing;
-    using Chaos.Portal.Core.Indexing.View;
-    using Chaos.Portal.Core.Logging;
-    using Chaos.Portal.Core.Module;
-    using Chaos.Portal.Core.Request;
-    using Chaos.Portal.Core.Response;
+    using Core;
+    using Core.Bindings;
+    using Core.Bindings.Standard;
+    using Core.Cache;
+    using Core.Data;
+    using Core.Exceptions;
+    using Core.Extension;
+    using Core.Indexing;
+    using Core.Indexing.View;
+    using Core.Logging;
+    using Core.Module;
+    using Core.Request;
+    using Core.Response;
 
     /// <summary>
     /// The portal application.
@@ -31,6 +31,8 @@ namespace Chaos.Portal
     public class PortalApplication : IPortalApplication
     {
         #region Fields
+
+        public event ApplicationDelegates.ModuleHandler OnModuleLoaded;
 
         private readonly ILogFactory _loggingFactory;
 	    private IEmailService _emailService;
@@ -199,8 +201,16 @@ namespace Chaos.Portal
                 if (!LoadedModules.ContainsKey(extensionName))
                     LoadedModules.Add(extensionName, module);
             }
+
+            OnOnModuleLoaded(new ApplicationDelegates.ModuleArgs(module));
+        }
+
+        protected virtual void OnOnModuleLoaded(ApplicationDelegates.ModuleArgs args)
+        {
+            var handler = OnModuleLoaded;
+            if (handler != null) handler(this, args);
         }
 
         #endregion
-    }
+    }   
 }

@@ -26,3 +26,4 @@ Thumbs.db
 *.ncrunchproject
 _NCrunch*
 App.Config
+deploy-db.bat

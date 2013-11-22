@@ -60,6 +60,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationDelegates.cs" />
     <Compile Include="Bindings\IParameterBinding.cs" />
     <Compile Include="Bindings\Standard\ConvertableParameterBinding.cs" />
     <Compile Include="Bindings\Standard\DateTimeParameterBinding.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Request\PortalRequest.cs" />
     <Compile Include="Data\Model\GroupedResult.cs" />
     <Compile Include="Data\Model\PagedResult.cs" />
+    <Compile Include="Request\RequestDelegate.cs" />
     <Compile Include="Response\Dto\v1\Error.cs" />
     <Compile Include="Response\Dto\v1\ExtensionError.cs" />
     <Compile Include="Response\Dto\v1\IModuleResult.cs" />

@@ -2,7 +2,7 @@ namespace Chaos.Portal.Core.Module
 {
     using System.Collections.Generic;
 
-    using Chaos.Portal.Core.Extension;
+    using Extension;
 
     public interface IModule
     {

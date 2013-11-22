@@ -62,13 +62,16 @@
             var module      = new Mock<IModule>();
             var extension   = new Mock<IExtension>();
             var application = Make_PortalApplication();
+            var wasEventRaised = false;
             module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "test" });
             module.Setup(m => m.GetExtension(Protocol.V6, "test")).Returns(extension.Object);
+            application.OnModuleLoaded += (sender, args) => wasEventRaised = true;
 
             application.AddModule(module.Object);
 
             Assert.That(application.LoadedModules.ContainsKey("test"), Is.True);
             Assert.That(application.LoadedModules["test"], Is.EqualTo(module.Object));
+            Assert.That(wasEventRaised, Is.True);
         }
 
         [Test]

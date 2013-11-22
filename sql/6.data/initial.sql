@@ -28,3 +28,35 @@ INSERT INTO Permission(TableIdentifier,Permission,Name,Description) VALUES('Subs
 INSERT INTO Permission(TableIdentifier,Permission,Name,Description) VALUES('System', '1', 'CREATE_GROUP', 'Permission to Create a Group');
 INSERT INTO Permission(TableIdentifier,Permission,Name,Description) VALUES('System', '2', 'CREATE_SUBSCRIPTION', 'Permission to Create a Subscription');
 INSERT INTO Permission(TableIdentifier,Permission,Name,Description) VALUES('System', '4', 'MANAGE', 'Permissoin to Manage the system');
+
+INSERT INTO 
+	`Group`(`GUID`,`SystemPermission`,`Name`,`DateCreated`)
+VALUES
+	(unhex('2a2595ae9fed4006b57744ee7539c516'), 0,'User', NOW());
+
+INSERT INTO 
+	`Group`(`GUID`,`SystemPermission`,`Name`,`DateCreated`)
+VALUES
+	(unhex('a703cfdb476342a9b470369b77669059'), 4294967295,'System Administrator', NOW());
+
+
+INSERT INTO 
+	`User`(`GUID`,`Email`,`DateCreated`) 
+VALUES 
+	(unhex('E931B2C0987D524F885EAF4837FAA352'),'anon@ymo.us',NOW());
+
+INSERT INTO 
+	`User`(`GUID`,`Email`,`DateCreated`) 
+VALUES 
+	(unhex('34613336383661632D333562392D3131'),'admin',NOW());
+
+
+INSERT INTO 
+	`Group_User_Join` (`GroupGUID`,`UserGUID`,`Permission`,`DateCreated`)
+VALUES
+	(unhex('2a2595ae9fed4006b57744ee7539c516'), unhex('34613336383661632D333562392D3131'), 4294967295, NOW());
+
+INSERT INTO 
+	`Group_User_Join` (`GroupGUID`,`UserGUID`,`Permission`,`DateCreated`)
+VALUES
+	(unhex('a703cfdb476342a9b470369b77669059'), unhex('34613336383661632D333562392D3131'), 4294967295, NOW());
