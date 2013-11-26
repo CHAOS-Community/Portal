@@ -4,10 +4,10 @@ namespace Chaos.Portal.Core.Indexing.View
     using System.Collections.Generic;
     using System.Linq;
 
-    using Chaos.Portal.Core.Cache;
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Indexing.Solr;
-    using Chaos.Portal.Core.Indexing.Solr.Response;
+    using Cache;
+    using Data.Model;
+    using Solr;
+    using Solr.Response;
 
     public abstract class AView : IView
     {
@@ -122,7 +122,7 @@ namespace Chaos.Portal.Core.Indexing.View
             var foundCount = response.QueryResult.FoundCount;
             var results    = Cache.Get<TResult>(keys);
 
-            return new Data.Model.PagedResult<TResult>(foundCount, startIndex, results);
+            return new PagedResult<TResult>(foundCount, startIndex, results);
         }
 
         protected string CreateKey(string key)

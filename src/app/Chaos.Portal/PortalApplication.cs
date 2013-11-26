@@ -30,9 +30,34 @@ namespace Chaos.Portal
     /// </summary>
     public class PortalApplication : IPortalApplication
     {
-        #region Fields
+        #region Events
 
-        public event ApplicationDelegates.ModuleHandler OnModuleLoaded;
+        private ApplicationDelegates.ModuleHandler _onModuleLoaded;
+
+        public event ApplicationDelegates.ModuleHandler OnModuleLoaded
+        {
+            add
+            {
+                _onModuleLoaded = (ApplicationDelegates.ModuleHandler)Delegate.Combine(_onModuleLoaded, value);
+
+                InvokeForAllLoadedModules(value);
+            }
+            remove
+            {
+                _onModuleLoaded = (ApplicationDelegates.ModuleHandler)Delegate.Remove(_onModuleLoaded, value);
+            }
+        }
+
+        private void InvokeForAllLoadedModules(ApplicationDelegates.ModuleHandler value)
+        {
+            foreach (var module in LoadedModules.Values)
+            {
+                value.Invoke(this, new ApplicationDelegates.ModuleArgs(module));
+            }
+        }
+
+        #endregion
+        #region Fields
 
         private readonly ILogFactory _loggingFactory;
 	    private IEmailService _emailService;
@@ -207,7 +232,7 @@ namespace Chaos.Portal
 
         protected virtual void OnOnModuleLoaded(ApplicationDelegates.ModuleArgs args)
         {
-            var handler = OnModuleLoaded;
+            var handler = _onModuleLoaded;
             if (handler != null) handler(this, args);
         }
 
