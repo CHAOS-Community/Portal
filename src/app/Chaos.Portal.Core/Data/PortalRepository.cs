@@ -2,6 +2,7 @@ namespace Chaos.Portal.Core.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
 
     using CHAOS.Data;
@@ -387,11 +388,15 @@ namespace Chaos.Portal.Core.Data
 
         public Module ModuleGet(string name)
         {
-            return Gateway.ExecuteQuery<Module>("Module_Get", new[]
+            var module = Gateway.ExecuteQuery<Module>("Module_Get", new[]
                 {
-                    new MySqlParameter("ID", null), 
-                    new MySqlParameter("Name", name) 
-                }).First();
+                    new MySqlParameter("ID", null), new MySqlParameter("Name", name)
+                }).FirstOrDefault();
+
+            if(module == null)
+                throw new ArgumentException("Module not found", name);
+
+            return module;
         }
 
         #endregion
