@@ -1,4 +1,7 @@
-﻿namespace Chaos.Portal.Core.Response.Specification
+﻿using System;
+using Chaos.Portal.Core.Data.Model;
+
+namespace Chaos.Portal.Core.Response.Specification
 {
     using System.IO;
 
@@ -8,11 +11,20 @@
 
         public Stream GetStream(IPortalResponse response)
         {
-            var stream = (Stream)response.Output;
+	        var attachment = (Attachment) response.Output;
 
-            if (stream.CanSeek) stream.Position = 0;
+	        if (attachment == null)
+	        {
+				if(response.Output == null)
+					throw new Exception("Response.Output must not be null");
 
-            return stream;
+				throw new Exception("Response.Output is not an Attachment but a " + response.Output.GetType().FullName);
+	        }
+
+			if (attachment.Stream.CanSeek)
+				attachment.Stream.Position = 0;
+
+			return attachment.Stream;
         }
 
         #endregion
