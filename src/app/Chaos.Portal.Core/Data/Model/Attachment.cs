@@ -9,5 +9,6 @@ namespace Chaos.Portal.Core.Data.Model
         public string ContentType { get; set; }
         public IDisposable Disposable { get; set; }
         public Stream Stream { get; set; }
+		public bool AsAttachment { get; set; }
     }
 }

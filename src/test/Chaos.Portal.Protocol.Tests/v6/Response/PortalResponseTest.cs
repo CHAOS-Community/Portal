@@ -79,6 +79,38 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
                 Assert.That(response.GetHeader("Content-Type"), Is.EqualTo(attachment.ContentType));
             }
         }
+
+		[Test]
+		public void GetResponseStream_GivenAStream_ReturnsAStreamAsAttachment()
+		{
+			var request = new PortalRequest();
+			request.Parameters.Add("format", "attachment");
+
+			using (var response = new PortalResponse(request))
+			{
+				request.Stopwatch.Reset();
+
+				var memoryStream = new MemoryStream();
+				var writer = new StreamWriter(memoryStream);
+				var attachment = new Attachment
+				{
+					FileName = "somefile.name",
+					Stream = memoryStream,
+					ContentType = "some content/type",
+					AsAttachment = true
+				};
+
+				writer.Write("OK!");
+				writer.Flush();
+				response.WriteToOutput(attachment);
+
+				var stream = new StreamReader(response.GetResponseStream());
+
+				Assert.That(stream.ReadToEnd(), Is.EqualTo("OK!"));
+				Assert.That(response.GetHeader("Content-Disposition"), Is.EqualTo("attachment;filename=somefile.name;"));
+				Assert.That(response.GetHeader("Content-Type"), Is.EqualTo(attachment.ContentType));
+			}
+		}
     }
     public class ViewDataResultMock : IViewData
     {
