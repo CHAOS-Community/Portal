@@ -5,5 +5,6 @@ namespace Chaos.Portal.Core.Indexing
         string Field { get; set; }
 
         uint Limit { get; set; }
+        uint Offset { get; set; }
     }
 }

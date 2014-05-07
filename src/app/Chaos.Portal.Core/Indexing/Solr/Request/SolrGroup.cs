@@ -7,6 +7,7 @@ namespace Chaos.Portal.Core.Indexing.Solr.Request
         public string Field { get; set; }
 
         public uint Limit { get; set; }
+        public uint Offset { get; set; }
 
         public bool IsGroupingEnabled 
         { 
@@ -23,6 +24,7 @@ namespace Chaos.Portal.Core.Indexing.Solr.Request
             query.AppendFormat("&group={0}", IsGroupingEnabled.ToString().ToLower());
             query.AppendFormat("&group.limit={0}", Limit);
             query.AppendFormat("&group.field={0}", Field);
+            query.AppendFormat("&group.offset={0}", Offset);
             
             return query.ToString();
         }
