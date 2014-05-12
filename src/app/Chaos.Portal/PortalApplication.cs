@@ -163,9 +163,16 @@ namespace Chaos.Portal
         private IExtension GetExtension(IPortalRequest request)
         {
             var version = request.Version == Protocol.V6 || request.Version == Protocol.Latest ? "v6" : "v5";
-            var path = string.Format("/{0}/{1}/{2}", version, request.Extension, request.Action);
+            var fullpath = string.Format("/{0}/{1}/{2}", version, request.Extension, request.Action).ToLower();
+            var path = string.Format("/{0}/{1}", version, request.Extension).ToLower();
 
-            return ExtensionInvoker.Endpoints.ContainsKey(path) ? ExtensionInvoker.Endpoints[path.ToLower()].Invoke() : GetExtension(request.Version, request.Extension);
+            if (ExtensionInvoker.Endpoints.ContainsKey(fullpath))
+                return ExtensionInvoker.Endpoints[fullpath].Invoke();
+
+            if (ExtensionInvoker.Endpoints.ContainsKey(path))
+                return ExtensionInvoker.Endpoints[path].Invoke();
+
+            return GetExtension(request.Version, request.Extension);
         }
 
         internal class Invoker

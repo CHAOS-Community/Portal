@@ -188,7 +188,7 @@
             var application = Make_PortalApplication();
             var request     = Make_TestRequest();
             var wasInvoked = false;
-            application.MapRoute("/v6/Test/Test", () =>
+            application.MapRoute("/v6/Test", () =>
                 {
                     wasInvoked = true;
                     return new Mock<IExtension>().Object;
