@@ -75,8 +75,6 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
                 var stream = new StreamReader(response.GetResponseStream());
                 
                 Assert.That(stream.ReadToEnd(), Is.EqualTo("OK!"));
-                Assert.That(response.GetHeader("Content-Disposition"), Is.EqualTo("filename=somefile.name;"));
-                Assert.That(response.GetHeader("Content-Type"), Is.EqualTo(attachment.ContentType));
             }
         }
 
@@ -107,8 +105,6 @@ namespace Chaos.Portal.Protocol.Tests.v6.Response
 				var stream = new StreamReader(response.GetResponseStream());
 
 				Assert.That(stream.ReadToEnd(), Is.EqualTo("OK!"));
-				Assert.That(response.GetHeader("Content-Disposition"), Is.EqualTo("attachment;filename=somefile.name;"));
-				Assert.That(response.GetHeader("Content-Type"), Is.EqualTo(attachment.ContentType));
 			}
 		}
     }

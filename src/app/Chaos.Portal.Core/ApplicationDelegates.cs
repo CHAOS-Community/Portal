@@ -2,6 +2,7 @@
 {
 	using System;
     using Module;
+	using Response;
 
     public class ApplicationDelegates
     {
@@ -9,9 +10,9 @@
 
         public class ModuleArgs : EventArgs
         {
-            public IModule Module { get; set; }
+            public IBaseModule Module { get; set; }
 
-            public ModuleArgs(IModule module)
+            public ModuleArgs(IBaseModule module)
             {
                 Module = module;
             }

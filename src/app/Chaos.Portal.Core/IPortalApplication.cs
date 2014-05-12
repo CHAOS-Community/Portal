@@ -24,7 +24,6 @@ namespace Chaos.Portal.Core
         IDictionary<Type, IParameterBinding> Bindings { get; set; }
 
         IViewManager ViewManager { get; }
-
         /// <summary>
         /// Process a request to portal. Any underlying extensions or modules will be called based on the callContext parameter
         /// </summary>
@@ -43,5 +42,6 @@ namespace Chaos.Portal.Core
 
         void AddModule(IModule module);
         event ApplicationDelegates.ModuleHandler OnModuleLoaded;
+        void MapRoute(string path, Func<IExtension> func);
     }
 }

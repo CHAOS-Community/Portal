@@ -65,12 +65,19 @@ namespace Chaos.Portal
         #endregion
         #region Properties
 
-	    public IDictionary<Type, IParameterBinding> Bindings { get; set; }
-        public IDictionary<string, IModule>         LoadedModules { get; set; }
-        public ICache                               Cache { get; protected set; }
-        public IViewManager                         ViewManager { get; protected set; }
-        public ILog                                 Log { get; protected set; }
-        public IPortalRepository                    PortalRepository { get; set; }
+	    public IDictionary<Type, IParameterBinding>  Bindings { get; set; }
+        public ICache                                Cache { get; protected set; }
+        public IViewManager                          ViewManager { get; protected set; }
+        public ILog                                  Log { get; protected set; }
+        public IPortalRepository                     PortalRepository { get; set; }
+        public IDictionary<string, IModule> LoadedModules
+        {
+            get { return ExtensionInvoker.LoadedModules; }
+            set { ExtensionInvoker.LoadedModules = value; }
+        }
+
+        // todo Extract Invoking logic should be extracted into the invoker.
+        internal Invoker ExtensionInvoker { get; set; }
 
 		#region Email
 
@@ -96,7 +103,8 @@ namespace Chaos.Portal
 
         public PortalApplication( ICache cache, IViewManager viewManager, IPortalRepository portalRepository, ILogFactory loggingFactory )
         {
-            LoadedModules    = new Dictionary<string, IModule>();
+            
+            ExtensionInvoker = new Invoker();
             Bindings         = new Dictionary<Type, IParameterBinding>();
             Log              = new DirectLogger(loggingFactory).WithName("Portal Application");
             Cache            = cache;
@@ -145,24 +153,32 @@ namespace Chaos.Portal
         public IPortalResponse ProcessRequest( IPortalRequest request )
         {
             var response  = new PortalResponse(request);
-            var extension = GetExtension(request.Version, request.Extension);
+            var extension = GetExtension(request);
             extension.WithPortalRequest(request);
             extension.WithPortalResponse(response);
 
             return extension.CallAction(request);
         }
 
-//        private static IPortalResponse CreatePortalResponse(IPortalRequest request)
-//        {
-//            switch(request.Version)
-//            {
-//                case Protocol.V5:
-//                    return new PortalResponse(request);
-//                case Protocol.V6:
-//                default:
-//                    return new v6.Response.PortalResponse(request);
-//            }
-//        }
+        private IExtension GetExtension(IPortalRequest request)
+        {
+            var version = request.Version == Protocol.V6 || request.Version == Protocol.Latest ? "v6" : "v5";
+            var path = string.Format("/{0}/{1}/{2}", version, request.Extension, request.Action);
+
+            return ExtensionInvoker.Endpoints.ContainsKey(path) ? ExtensionInvoker.Endpoints[path.ToLower()].Invoke() : GetExtension(request.Version, request.Extension);
+        }
+
+        internal class Invoker
+        {
+            public IDictionary<string, Func<IExtension>> Endpoints { get; set; }
+            public IDictionary<string, IModule> LoadedModules { get; set; }
+
+            public Invoker()
+            {
+                Endpoints = new Dictionary<string, Func<IExtension>>();
+                LoadedModules    = new Dictionary<string, IModule>();
+            }
+        }
 
         /// <summary>
         /// Return the loaded instance of the requested extension
@@ -230,10 +246,22 @@ namespace Chaos.Portal
             OnOnModuleLoaded(new ApplicationDelegates.ModuleArgs(module));
         }
 
+        public void AddModule(IModuleConfig module)
+        {
+            module.Load(this);
+
+            OnOnModuleLoaded(new ApplicationDelegates.ModuleArgs(module));
+        }
+
         protected virtual void OnOnModuleLoaded(ApplicationDelegates.ModuleArgs args)
         {
             var handler = _onModuleLoaded;
             if (handler != null) handler(this, args);
+        }
+
+        public void MapRoute(string path, Func<IExtension> func)
+        {
+            ExtensionInvoker.Endpoints.Add(path.ToLower(), func);
         }
 
         #endregion

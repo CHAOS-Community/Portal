@@ -180,5 +180,23 @@
 
             extension.Verify(m => m.WithPortalRequest(It.IsAny<IPortalRequest>()), Times.Exactly(1));
         }
+
+
+        [Test]
+        public void ProcessRequest_UsingEndpoints_EndpointFunctionIsInvoked()
+        {
+            var application = Make_PortalApplication();
+            var request     = Make_TestRequest();
+            var wasInvoked = false;
+            application.MapRoute("/v6/Test/Test", () =>
+                {
+                    wasInvoked = true;
+                    return new Mock<IExtension>().Object;
+                });
+
+            application.ProcessRequest(request);
+
+            Assert.That(wasInvoked, Is.True);
+        }
     }
 }
