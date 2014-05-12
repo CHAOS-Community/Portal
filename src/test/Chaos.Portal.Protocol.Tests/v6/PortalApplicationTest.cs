@@ -2,14 +2,13 @@
 {
     using System.Collections.Generic;
     using System.IO;
-
-    using Chaos.Portal.Core;
-    using Chaos.Portal.Core.Data;
-    using Chaos.Portal.Core.Exceptions;
-    using Chaos.Portal.Core.Extension;
-    using Chaos.Portal.Core.Module;
-    using Chaos.Portal.Core.Request;
-    using Chaos.Portal.Core.Response;
+    using System.Linq;
+    using Core;
+    using Core.Exceptions;
+    using Core.Extension;
+    using Core.Module;
+    using Core.Request;
+    using Core.Response;
 
     using Moq;
 
@@ -25,35 +24,9 @@
 
             Assert.Greater(portalApplication.Bindings.Count, 0);
             Assert.IsNotNull(portalApplication.Cache);
-            Assert.IsNotNull(portalApplication.LoadedModules);
             Assert.IsNotNull(portalApplication.Log);
             Assert.IsNotNull(portalApplication.PortalRepository);
             Assert.IsNotNull(portalApplication.ViewManager);
-        }
-
-        [Test]
-        public void GetExtension_ByType_ReturnAInstanceOfTheExtension()
-        {
-            var application = Make_PortalApplication();
-            var extension   = new ExtensionMock(application);
-            var module      = new Mock<IModule>();
-            module.Setup(m => m.GetExtensionNames(Protocol.V6)).Returns(new[] { "ExtensionMock" });
-            module.Setup(m => m.GetExtension<ExtensionMock>(Protocol.V6)).Returns(extension);
-            application.AddModule(module.Object);
-
-            var result = application.GetExtension<ExtensionMock>(Protocol.V6);
-
-            Assert.That(result, Is.Not.Null);
-            Assert.IsInstanceOf<ExtensionMock>(result);
-        }
-
-        [Test]
-        [ExpectedException(typeof(ExtensionMissingException))]
-        public void GetExtension_ByNotLoadedType_ThrowExtensionMissingException()
-        {
-            var portalApplication = Make_PortalApplication();
-
-            portalApplication.GetExtension<ExtensionMock>(Protocol.V6);
         }
 
         [Test]
@@ -69,8 +42,7 @@
 
             application.AddModule(module.Object);
 
-            Assert.That(application.LoadedModules.ContainsKey("test"), Is.True);
-            Assert.That(application.LoadedModules["test"], Is.EqualTo(module.Object));
+            Assert.That(application.RegisteredEndpoints.Any(i => i == "/v6/test"), Is.True);
             Assert.That(wasEventRaised, Is.True);
         }
 

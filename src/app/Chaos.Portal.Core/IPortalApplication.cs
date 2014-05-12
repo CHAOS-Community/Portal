@@ -31,16 +31,10 @@ namespace Chaos.Portal.Core
         /// <returns>The response object</returns>
         IPortalResponse ProcessRequest( IPortalRequest request );
 
-        /// <summary>
-        /// Return the loaded instance of the requested extension
-        /// </summary>
-        /// <typeparam name="TExtension">The type of extension to get</typeparam>
-        /// <returns>The loaded the instance of the extension</returns>
-        TExtension GetExtension<TExtension>(Protocol version) where TExtension : IExtension;
-
-        TResult GetModule<TResult>() where TResult : IModule;
+        //TResult GetModule<TResult>() where TResult : IModule;
 
         void AddModule(IModule module);
+        void AddModule(IModuleConfig module);
         event ApplicationDelegates.ModuleHandler OnModuleLoaded;
         void MapRoute(string path, Func<IExtension> func);
     }

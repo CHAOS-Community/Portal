@@ -50,7 +50,7 @@ namespace Chaos.Portal
 
         private void InvokeForAllLoadedModules(ApplicationDelegates.ModuleHandler value)
         {
-            foreach (var module in LoadedModules.Values)
+            foreach (var module in ExtensionInvoker.LoadedModules.Values)
             {
                 value.Invoke(this, new ApplicationDelegates.ModuleArgs(module));
             }
@@ -70,18 +70,17 @@ namespace Chaos.Portal
         public IViewManager                          ViewManager { get; protected set; }
         public ILog                                  Log { get; protected set; }
         public IPortalRepository                     PortalRepository { get; set; }
-        public IDictionary<string, IModule> LoadedModules
+
+        public IEnumerable<string> RegisteredEndpoints
         {
-            get { return ExtensionInvoker.LoadedModules; }
-            set { ExtensionInvoker.LoadedModules = value; }
+            get { return ExtensionInvoker.Endpoints.Keys; }
         }
 
-        // todo Extract Invoking logic should be extracted into the invoker.
         internal Invoker ExtensionInvoker { get; set; }
 
-		#region Email
+        #region Email
 
-		public IEmailService EmailService
+        public IEmailService EmailService
 		{
 			get
 			{
@@ -96,8 +95,8 @@ namespace Chaos.Portal
 				return _emailService;
 			}
 		}
-		
-		#endregion
+
+        #endregion
         #endregion
         #region Constructors
 
@@ -152,102 +151,23 @@ namespace Chaos.Portal
         /// <returns>The response object</returns>
         public IPortalResponse ProcessRequest( IPortalRequest request )
         {
-            var response  = new PortalResponse(request);
-            var extension = GetExtension(request);
-            extension.WithPortalRequest(request);
-            extension.WithPortalResponse(response);
-
-            return extension.CallAction(request);
+            return ExtensionInvoker.Invoke(request);
         }
 
-        private IExtension GetExtension(IPortalRequest request)
-        {
-            var version = request.Version == Protocol.V6 || request.Version == Protocol.Latest ? "v6" : "v5";
-            var fullpath = string.Format("/{0}/{1}/{2}", version, request.Extension, request.Action).ToLower();
-            var path = string.Format("/{0}/{1}", version, request.Extension).ToLower();
-
-            if (ExtensionInvoker.Endpoints.ContainsKey(fullpath))
-                return ExtensionInvoker.Endpoints[fullpath].Invoke();
-
-            if (ExtensionInvoker.Endpoints.ContainsKey(path))
-                return ExtensionInvoker.Endpoints[path].Invoke();
-
-            return GetExtension(request.Version, request.Extension);
-        }
-
-        internal class Invoker
-        {
-            public IDictionary<string, Func<IExtension>> Endpoints { get; set; }
-            public IDictionary<string, IModule> LoadedModules { get; set; }
-
-            public Invoker()
-            {
-                Endpoints = new Dictionary<string, Func<IExtension>>();
-                LoadedModules    = new Dictionary<string, IModule>();
-            }
-        }
-
-        /// <summary>
-        /// Return the loaded instance of the requested extension
-        /// </summary>
-        /// <typeparam name="TExtension">The type of extension to get</typeparam>
-        /// <returns>The loaded the instance of the extension</returns>
-        public TExtension GetExtension<TExtension>(Protocol version) where TExtension : IExtension
-        {
-            // todo: optimize cross extension calls, this is relatively slow
-            var modules = LoadedModules.Values.Distinct().FirstOrDefault(item => item.GetExtension<TExtension>(version) != null);
-
-            if (modules == null) throw new ExtensionMissingException(string.Format("Extension not found"));
-
-            return (TExtension)modules.GetExtension<TExtension>(version);
-        }
-
-        /// <summary>
-        /// The get extension.
-        /// </summary>
-        /// <param name="version"> </param>
-        /// <param name="extension">The key associated with the extension.</param>
-        /// <returns>The instance of<see cref="IExtension"/>.</returns>
-        /// <exception cref="ExtensionMissingException">Is thrown if the extension is not loaded</exception>
-        public IExtension GetExtension(Protocol version, string extension)
-        {
-            if (extension == null || !LoadedModules.ContainsKey(extension))
-                throw new ExtensionMissingException(string.Format("Extension named '{0}' not found", extension));
-
-            var module = LoadedModules[extension];
-
-            return module.GetExtension(version, extension);
-        }
-
-        public TModule GetModule<TModule>() where TModule : IModule
-        {
-            var moduleType = typeof(TModule);
-            var moduleName = moduleType.FullName;
-
-            foreach(var loadedModule in LoadedModules.Values)
-            {
-                if(loadedModule.GetType().FullName == moduleName)
-                    return (TModule) loadedModule;
-            }
-
-            throw new ModuleNotLoadedException(string.Format("Module [{0}] is not loaded in Portal", moduleName));
-        }
-
-        // todo: rethink the module loading process, it's not logical
         public void AddModule(IModule module)
         {
             module.Load(this);
 
             foreach (var extensionName in module.GetExtensionNames(Protocol.V5))
             {
-                if(!LoadedModules.ContainsKey(extensionName))
-                    LoadedModules.Add(extensionName, module);
+                if (!ExtensionInvoker.LoadedModules.ContainsKey(extensionName))
+                    MapRoute(string.Format("/v5/{0}", extensionName), () => module.GetExtension(Protocol.V5, extensionName));
             }
 
             foreach (var extensionName in module.GetExtensionNames(Protocol.V6))
             {
-                if (!LoadedModules.ContainsKey(extensionName))
-                    LoadedModules.Add(extensionName, module);
+                if (!ExtensionInvoker.LoadedModules.ContainsKey(extensionName))
+                    MapRoute(string.Format("/v6/{0}", extensionName), () => module.GetExtension(Protocol.V6, extensionName));
             }
 
             OnOnModuleLoaded(new ApplicationDelegates.ModuleArgs(module));
@@ -262,6 +182,8 @@ namespace Chaos.Portal
 
         protected virtual void OnOnModuleLoaded(ApplicationDelegates.ModuleArgs args)
         {
+            ExtensionInvoker.LoadedModules.Add(args.Module.GetType().FullName, args.Module);
+
             var handler = _onModuleLoaded;
             if (handler != null) handler(this, args);
         }
@@ -272,5 +194,54 @@ namespace Chaos.Portal
         }
 
         #endregion
+
+        internal class Invoker
+        {
+            public IDictionary<string, Func<IExtension>> Endpoints { get; set; }
+            public IDictionary<string, IBaseModule> LoadedModules { get; set; }
+
+            public Invoker()
+            {
+                Endpoints = new Dictionary<string, Func<IExtension>>();
+                LoadedModules = new Dictionary<string, IBaseModule>();
+            }
+
+            public IPortalResponse Invoke(IPortalRequest request)
+            {
+                var response = new PortalResponse(request);
+                var extension = GetExtension(request);
+                extension.WithPortalRequest(request);
+                extension.WithPortalResponse(response);
+
+                return extension.CallAction(request);
+            }
+
+            private IExtension GetExtension(IPortalRequest request)
+            {
+                var version = request.Version == Protocol.V6 || request.Version == Protocol.Latest ? "v6" : "v5";
+                var fullpath = string.Format("/{0}/{1}/{2}", version, request.Extension, request.Action).ToLower();
+                var path = string.Format("/{0}/{1}", version, request.Extension).ToLower();
+
+                if (Endpoints.ContainsKey(fullpath))
+                    return Endpoints[fullpath].Invoke();
+
+                if (Endpoints.ContainsKey(path))
+                    return Endpoints[path].Invoke();
+
+                return GetExtension(request.Version, request.Extension);
+            }
+
+            private IExtension GetExtension(Protocol version, string extension)
+            {
+                if (extension == null || !LoadedModules.ContainsKey(extension))
+                    throw new ExtensionMissingException(string.Format("Extension named '{0}' not found", extension));
+
+                var module = LoadedModules[extension] as IModule;
+
+                if(module == null) throw new ExtensionMissingException("Module is in an unknown format");
+
+                return module.GetExtension(version, extension);
+            }
+        }
     }   
 }
