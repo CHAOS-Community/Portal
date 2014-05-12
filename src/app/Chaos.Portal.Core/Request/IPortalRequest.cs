@@ -43,5 +43,7 @@ namespace Chaos.Portal.Core.Request
         /// Get the UUID of the anonymous user
         /// </summary>
         Guid AnonymousUserGuid { get; }
+
+        void ClearCache();
     }
 }

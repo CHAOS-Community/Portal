@@ -6,18 +6,18 @@ namespace Chaos.Portal.Core.Request
     using System.Diagnostics;
     using System.Linq;
 
-    using Chaos.Portal.Core.Data;
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Exceptions;
+    using Data;
+    using Data.Model;
+    using Exceptions;
 
     public class PortalRequest : IPortalRequest
     {
         #region Fields
 
-        private Core.Data.Model.Session _session;
+        private Session _session;
         private UserInfo _user;
         private IEnumerable<SubscriptionInfo> _subscriptions;
-        private IEnumerable<Core.Data.Model.Group> _group;
+        private IEnumerable<Group> _group;
 
         private IPortalRepository _portalRepository;
 
@@ -144,6 +144,11 @@ namespace Chaos.Portal.Core.Request
         public bool IsAnonymousUser
         {
             get { return GetSessionFromDatabase() == null || AnonymousUserGuid.ToString() == Session.UserGuid.ToString(); }
+        }
+
+        public void ClearCache()
+        {
+            _session = null;
         }
 
         /// <summary>
