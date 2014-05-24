@@ -2,19 +2,19 @@ namespace Chaos.Portal.Core.Bindings.Standard
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Reflection;
 
     using CHAOS.Extensions;
-    using CHAOS.Serialization.Standard.String;
 
-    using Chaos.Portal.Core.Exceptions;
+    using Exceptions;
 
     public class DateTimeParameterBinding : IParameterBinding
     {
         public object Bind(IDictionary<string, string> parameters, ParameterInfo parameterInfo)
         {
             if( parameters.ContainsKey( parameterInfo.Name ) && !string.IsNullOrEmpty( parameters[ parameterInfo.Name ] ) )
-                return new StringSerializer().Deserialize<DateTime>( parameters[ parameterInfo.Name ], true );
+                return DateTime.ParseExact(parameters[parameterInfo.Name], "dd'-'MM'-'yyyy HH':'mm':'ss", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
 
             if( parameterInfo.ParameterType.IsNullable() )
                 return null;
