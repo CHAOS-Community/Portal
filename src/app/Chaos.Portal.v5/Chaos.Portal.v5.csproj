@@ -47,6 +47,7 @@
     <Compile Include="Dto\UserSettings.cs" />
     <Compile Include="Extension\ClientSettings.cs" />
     <Compile Include="Extension\Group.cs" />
+    <Compile Include="Extension\Result\EndpointResult.cs" />
     <Compile Include="Extension\Session.cs" />
     <Compile Include="Extension\Subscription.cs" />
     <Compile Include="Extension\User.cs" />
