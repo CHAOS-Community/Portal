@@ -37,5 +37,6 @@ namespace Chaos.Portal.Core
         void AddModule(IModuleConfig module);
         event ApplicationDelegates.ModuleHandler OnModuleLoaded;
         void MapRoute(string path, Func<IExtension> func);
+        void AddView(IView view, string coreName = null);
     }
 }

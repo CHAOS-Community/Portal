@@ -10,7 +10,7 @@ namespace Chaos.Portal
     using System.Xml.Linq;
 
     using CHAOS;
-
+    using CHAOS.Net;
     using Core;
     using Core.Bindings;
     using Core.Bindings.Standard;
@@ -19,6 +19,7 @@ namespace Chaos.Portal
     using Core.Exceptions;
     using Core.Extension;
     using Core.Indexing;
+    using Core.Indexing.Solr;
     using Core.Indexing.View;
     using Core.Logging;
     using Core.Module;
@@ -178,6 +179,14 @@ namespace Chaos.Portal
             module.Load(this);
 
             OnOnModuleLoaded(new ApplicationDelegates.ModuleArgs(module));
+        }
+
+        public void AddView(IView view, string coreName = null)
+        {
+            view.WithPortalApplication(this);
+            view.WithCache(Cache);
+            view.WithIndex(new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), string.IsNullOrEmpty(coreName) ? view.Name : coreName));
+            ViewManager.AddView(view);
         }
 
         protected virtual void OnOnModuleLoaded(ApplicationDelegates.ModuleArgs args)
