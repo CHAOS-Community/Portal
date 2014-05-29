@@ -113,33 +113,33 @@ namespace Chaos.Portal
             _loggingFactory  = loggingFactory;
             
             // Load bindings
-            Bindings.Add( typeof(string), new StringParameterBinding() );
-            Bindings.Add( typeof(long), new ConvertableParameterBinding<long>() );
-            Bindings.Add( typeof(int), new ConvertableParameterBinding<int>() );
-            Bindings.Add( typeof(short), new ConvertableParameterBinding<short>() );
-            Bindings.Add( typeof(ulong), new ConvertableParameterBinding<ulong>() );
-            Bindings.Add( typeof(uint), new ConvertableParameterBinding<uint>() );
-            Bindings.Add( typeof(ushort), new ConvertableParameterBinding<ushort>() );
-            Bindings.Add( typeof(double), new ConvertableParameterBinding<double>() );
-            Bindings.Add( typeof(float), new ConvertableParameterBinding<float>() );
-            Bindings.Add( typeof(bool), new ConvertableParameterBinding<bool>() );
-            Bindings.Add( typeof(DateTime), new DateTimeParameterBinding());
-            Bindings.Add( typeof(long?), new ConvertableParameterBinding<long>() );
-            Bindings.Add( typeof(int?), new ConvertableParameterBinding<int>() );
-            Bindings.Add( typeof(short?), new ConvertableParameterBinding<short>() );
-            Bindings.Add( typeof(ulong?), new ConvertableParameterBinding<ulong>() );
-            Bindings.Add( typeof(uint?), new ConvertableParameterBinding<uint>() );
-            Bindings.Add( typeof(ushort?), new ConvertableParameterBinding<ushort>() );
-            Bindings.Add( typeof(double?), new ConvertableParameterBinding<double>() );
-            Bindings.Add( typeof(float?), new ConvertableParameterBinding<float>() );
-            Bindings.Add( typeof(bool?), new ConvertableParameterBinding<bool>() );
-            Bindings.Add( typeof(DateTime?), new DateTimeParameterBinding());
-            Bindings.Add( typeof(Guid), new GuidParameterBinding() );
-            Bindings.Add( typeof(Guid?), new GuidParameterBinding() );
-            Bindings.Add( typeof(IQuery), new QueryParameterBinding() );
-            Bindings.Add( typeof(IEnumerable<Guid>), new EnumerableOfGuidParameterBinding());
-            Bindings.Add( typeof(XDocument), new XDocumentBinding() );
-            Bindings.Add( typeof(UUID), new UUIDParameterBinding() );
+            AddBinding(typeof(string), new StringParameterBinding());
+            AddBinding(typeof(long), new ConvertableParameterBinding<long>());
+            AddBinding(typeof(int), new ConvertableParameterBinding<int>());
+            AddBinding(typeof(short), new ConvertableParameterBinding<short>());
+            AddBinding(typeof(ulong), new ConvertableParameterBinding<ulong>());
+            AddBinding(typeof(uint), new ConvertableParameterBinding<uint>());
+            AddBinding(typeof(ushort), new ConvertableParameterBinding<ushort>());
+            AddBinding(typeof(double), new ConvertableParameterBinding<double>());
+            AddBinding(typeof(float), new ConvertableParameterBinding<float>());
+            AddBinding(typeof(bool), new ConvertableParameterBinding<bool>());
+            AddBinding(typeof(DateTime), new DateTimeParameterBinding());
+            AddBinding(typeof(long?), new ConvertableParameterBinding<long>());
+            AddBinding(typeof(int?), new ConvertableParameterBinding<int>());
+            AddBinding(typeof(short?), new ConvertableParameterBinding<short>());
+            AddBinding(typeof(ulong?), new ConvertableParameterBinding<ulong>());
+            AddBinding(typeof(uint?), new ConvertableParameterBinding<uint>());
+            AddBinding(typeof(ushort?), new ConvertableParameterBinding<ushort>());
+            AddBinding(typeof(double?), new ConvertableParameterBinding<double>());
+            AddBinding(typeof(float?), new ConvertableParameterBinding<float>());
+            AddBinding(typeof(bool?), new ConvertableParameterBinding<bool>());
+            AddBinding(typeof(DateTime?), new DateTimeParameterBinding());
+            AddBinding(typeof(Guid), new GuidParameterBinding());
+            AddBinding(typeof(Guid?), new GuidParameterBinding());
+            AddBinding(typeof(IQuery), new QueryParameterBinding());
+            AddBinding(typeof(IEnumerable<Guid>), new EnumerableOfGuidParameterBinding());
+            AddBinding(typeof(XDocument), new XDocumentBinding());
+            AddBinding(typeof(UUID), new UUIDParameterBinding());
         }
 
         #endregion
@@ -187,6 +187,11 @@ namespace Chaos.Portal
             view.WithCache(Cache);
             view.WithIndex(new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), string.IsNullOrEmpty(coreName) ? view.Name : coreName));
             ViewManager.AddView(view);
+        }
+
+        public void AddBinding(Type type, IParameterBinding binding)
+        {
+            Bindings.Add(type, binding);
         }
 
         protected virtual void OnOnModuleLoaded(ApplicationDelegates.ModuleArgs args)
