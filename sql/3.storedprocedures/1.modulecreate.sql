@@ -1,14 +1,22 @@
-CREATE PROCEDURE `Module_Create`
+CREATE PROCEDURE `Module_Set`
 (
-    IN  ID 		INT UNSIGNED,
+    IN  Id 		INT UNSIGNED,
     IN  Name		VARCHAR(255),
     IN  Configuration	TEXT
 )
 BEGIN
 
-    INSERT INTO Module( ID, Name, Configuration, DateCreated )
-                VALUES( ID, Name, Configuration, NOW() );
+	IF Id IS NULL THEN
 
-    SELECT ID;
+		INSERT INTO Module( Name, Configuration, DateCreated )
+					VALUES( Name, Configuration, UTC_TIMESTAMP() );
+
+		SELECT last_insert_id();
+
+	ELSE
+
+		SELECT -666;
+
+	END IF;
 
 END

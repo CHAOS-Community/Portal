@@ -16,6 +16,8 @@ namespace Chaos.Portal.Core.Data
 
     public class PortalRepository : IPortalRepository
     {
+        private IModuleRepository ModuleRepository { get; set; }
+
         #region Initialization
 
         static PortalRepository()
@@ -33,7 +35,9 @@ namespace Chaos.Portal.Core.Data
         public IPortalRepository WithConfiguration(string connectionString)
         {
             Gateway = new Gateway(connectionString);
-
+            
+            ModuleRepository = new ModuleRepository(Gateway);
+            
             return this;
         }
 
@@ -388,15 +392,7 @@ namespace Chaos.Portal.Core.Data
 
         public Module ModuleGet(string name)
         {
-            var module = Gateway.ExecuteQuery<Module>("Module_Get", new[]
-                {
-                    new MySqlParameter("ID", null), new MySqlParameter("Name", name)
-                }).FirstOrDefault();
-
-            if(module == null)
-                throw new ArgumentException("Module not found", name);
-
-            return module;
+            return ModuleRepository.Get(name);
         }
 
         #endregion
