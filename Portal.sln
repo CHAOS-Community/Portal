@@ -43,6 +43,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.tables", "1.tables", "{A1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.changes", "2.changes", "{5C25B6A3-648B-4240-909E-D83B62C63DA5}"
+	ProjectSection(SolutionItems) = preProject
+		sql\2.Changes\06.00.001.sql = sql\2.Changes\06.00.001.sql
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.storedprocedures", "{0E959814-402F-4688-8C36-1A90AD0EF9B7}"
 	ProjectSection(SolutionItems) = preProject
@@ -64,7 +67,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.sto
 		sql\3.storedprocedures\1.indexsettingscreate.sql = sql\3.storedprocedures\1.indexsettingscreate.sql
 		sql\3.storedprocedures\1.indexsettingsget.sql = sql\3.storedprocedures\1.indexsettingsget.sql
 		sql\3.storedprocedures\1.logcreate.sql = sql\3.storedprocedures\1.logcreate.sql
-		sql\3.storedprocedures\1.modulecreate.sql = sql\3.storedprocedures\1.modulecreate.sql
+		sql\3.storedprocedures\1.module_set.sql = sql\3.storedprocedures\1.module_set.sql
 		sql\3.storedprocedures\1.moduleget.sql = sql\3.storedprocedures\1.moduleget.sql
 		sql\3.storedprocedures\1.permissioncreate.sql = sql\3.storedprocedures\1.permissioncreate.sql
 		sql\3.storedprocedures\1.sessioncreate.sql = sql\3.storedprocedures\1.sessioncreate.sql

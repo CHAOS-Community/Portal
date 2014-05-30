@@ -28,7 +28,6 @@ namespace Chaos.Portal.Core.Data
             ReaderExtensions.Mappings.Add(typeof(UserSettings), new UserSettingsMapping());
             ReaderExtensions.Mappings.Add(typeof(UserInfo), new UserInfoMapping());
             ReaderExtensions.Mappings.Add(typeof(Session), new SessionMapping());
-            ReaderExtensions.Mappings.Add(typeof(Module), new ModuleMapping());
             ReaderExtensions.Mappings.Add(typeof(Group), new GroupMapping());
         }
 

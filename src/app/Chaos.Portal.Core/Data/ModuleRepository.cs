@@ -32,7 +32,8 @@ namespace Chaos.Portal.Core.Data
         {
             var module = Gateway.ExecuteQuery<Model.Module>("Module_Get", new[]
                 {
-                    new MySqlParameter("ID", null), new MySqlParameter("Name", name)
+                    new MySqlParameter("ID", null), 
+                    new MySqlParameter("Name", name)
                 }).FirstOrDefault();
 
             if(module == null)

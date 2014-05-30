@@ -1,7 +1,6 @@
 DELETE FROM Group_User_Join;
 DELETE FROM Subscription_User_Join;
 DELETE FROM Session;
-DELETE FROM IndexSettings;
 DELETE FROM Ticket;
 DELETE FROM UserSettings;
 DELETE FROM `User`;
