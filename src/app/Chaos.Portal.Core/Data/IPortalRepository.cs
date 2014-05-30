@@ -44,5 +44,6 @@
         uint LogCreate(string name, Guid? sessionGuid, string level, double? duration, string message);
 
         Module ModuleGet(string name);
+        IModuleRepository Module { get; set; }
     }
 }

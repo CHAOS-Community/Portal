@@ -16,7 +16,7 @@ namespace Chaos.Portal.Core.Data
 
     public class PortalRepository : IPortalRepository
     {
-        private IModuleRepository ModuleRepository { get; set; }
+        public IModuleRepository Module { get; set; }
 
         #region Initialization
 
@@ -36,7 +36,7 @@ namespace Chaos.Portal.Core.Data
         {
             Gateway = new Gateway(connectionString);
             
-            ModuleRepository = new ModuleRepository(Gateway);
+            Module = new ModuleRepository(Gateway);
             
             return this;
         }
@@ -392,7 +392,7 @@ namespace Chaos.Portal.Core.Data
 
         public Module ModuleGet(string name)
         {
-            return ModuleRepository.Get(name);
+            return Module.Get(name);
         }
 
         #endregion
