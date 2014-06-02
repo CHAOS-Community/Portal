@@ -1,105 +1,61 @@
 namespace Chaos.Portal.Module
 {
+    using System;
     using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
+    using System.Xml.Linq;
+    using CHAOS;
+    using Core;
+    using Core.Bindings.Standard;
+    using Core.Indexing;
+    using Core.Module;
 
-    using Chaos.Portal.Core;
-    using Chaos.Portal.Core.Exceptions;
-    using Chaos.Portal.Core.Extension;
-    using Chaos.Portal.Core.Module;
-
-    public class PortalModule : IModule
+    public class PortalModule : IModuleConfig
     {
-        #region Field
-
-        private IPortalApplication _portalApplication;
-
-        #endregion
-        #region Initialization
-
         public void Load(IPortalApplication portalApplication)
         {
-            _portalApplication = portalApplication;
+            portalApplication.AddBinding(typeof(string), new StringParameterBinding());
+            portalApplication.AddBinding(typeof(long), new ConvertableParameterBinding<long>());
+            portalApplication.AddBinding(typeof(int), new ConvertableParameterBinding<int>());
+            portalApplication.AddBinding(typeof(short), new ConvertableParameterBinding<short>());
+            portalApplication.AddBinding(typeof(ulong), new ConvertableParameterBinding<ulong>());
+            portalApplication.AddBinding(typeof(uint), new ConvertableParameterBinding<uint>());
+            portalApplication.AddBinding(typeof(ushort), new ConvertableParameterBinding<ushort>());
+            portalApplication.AddBinding(typeof(double), new ConvertableParameterBinding<double>());
+            portalApplication.AddBinding(typeof(float), new ConvertableParameterBinding<float>());
+            portalApplication.AddBinding(typeof(bool), new ConvertableParameterBinding<bool>());
+            portalApplication.AddBinding(typeof(DateTime), new DateTimeParameterBinding());
+            portalApplication.AddBinding(typeof(long?), new ConvertableParameterBinding<long>());
+            portalApplication.AddBinding(typeof(int?), new ConvertableParameterBinding<int>());
+            portalApplication.AddBinding(typeof(short?), new ConvertableParameterBinding<short>());
+            portalApplication.AddBinding(typeof(ulong?), new ConvertableParameterBinding<ulong>());
+            portalApplication.AddBinding(typeof(uint?), new ConvertableParameterBinding<uint>());
+            portalApplication.AddBinding(typeof(ushort?), new ConvertableParameterBinding<ushort>());
+            portalApplication.AddBinding(typeof(double?), new ConvertableParameterBinding<double>());
+            portalApplication.AddBinding(typeof(float?), new ConvertableParameterBinding<float>());
+            portalApplication.AddBinding(typeof(bool?), new ConvertableParameterBinding<bool>());
+            portalApplication.AddBinding(typeof(DateTime?), new DateTimeParameterBinding());
+            portalApplication.AddBinding(typeof(Guid), new GuidParameterBinding());
+            portalApplication.AddBinding(typeof(Guid?), new GuidParameterBinding());
+            portalApplication.AddBinding(typeof(IQuery), new QueryParameterBinding());
+            portalApplication.AddBinding(typeof(IEnumerable<Guid>), new EnumerableOfGuidParameterBinding());
+            portalApplication.AddBinding(typeof(XDocument), new XDocumentBinding());
+            portalApplication.AddBinding(typeof(UUID), new UUIDParameterBinding());
+
+            portalApplication.MapRoute("/v5/ClientSettings", () => new v5.Extension.ClientSettings(portalApplication));
+            portalApplication.MapRoute("/v5/Group", () => new v5.Extension.Group(portalApplication));
+            portalApplication.MapRoute("/v5/Session", () => new v5.Extension.Session(portalApplication));
+            portalApplication.MapRoute("/v5/Subscription", () => new v5.Extension.Subscription(portalApplication));
+            portalApplication.MapRoute("/v5/User", () => new v5.Extension.User(portalApplication));
+            portalApplication.MapRoute("/v5/UserSettings", () => new v5.Extension.UserSettings(portalApplication));
+            portalApplication.MapRoute("/v5/View", () => new v5.Extension.View(portalApplication));
+
+            portalApplication.MapRoute("/v6/ClientSettings", () => new v6.Extension.ClientSettings(portalApplication));
+            portalApplication.MapRoute("/v6/Group", () => new v6.Extension.Group(portalApplication));
+            portalApplication.MapRoute("/v6/Session", () => new v6.Extension.Session(portalApplication));
+            portalApplication.MapRoute("/v6/Subscription", () => new v6.Extension.Subscription(portalApplication));
+            portalApplication.MapRoute("/v6/User", () => new v6.Extension.User(portalApplication));
+            portalApplication.MapRoute("/v6/UserSettings", () => new v6.Extension.UserSettings(portalApplication));
+            portalApplication.MapRoute("/v6/View", () => new v5.Extension.View(portalApplication));
         }
-
-        #endregion
-        #region Properties
-
-
-        #endregion
-        #region Business Logic
-
-        public IEnumerable<string> GetExtensionNames(Protocol version)
-        {
-            yield return "ClientSettings";
-            yield return "Group";
-            yield return "Session";
-            yield return "Subscription";
-            yield return "User";
-            yield return "UserSettings";
-            yield return "View";
-
-        }
-
-        public IExtension GetExtension<TExtension>(Protocol version) where TExtension : IExtension
-        {
-            return GetExtension(version, typeof(TExtension).Name);
-        }
-
-        public IExtension GetExtension(Protocol version, string name)
-        {
-            if (_portalApplication == null) throw new ConfigurationErrorsException("Load not call on module");
-
-            if (version == Protocol.V5)
-            {
-                switch (name)
-                {
-                    case "ClientSettings":
-                        return new v5.Extension.ClientSettings(_portalApplication);
-                    case "Group":
-                        return new v5.Extension.Group(_portalApplication);
-                    case "Session":
-                        return new v5.Extension.Session(_portalApplication);
-                    case "Subscription":
-                        return new v5.Extension.Subscription(_portalApplication);
-                    case "User":
-                        return new v5.Extension.User(_portalApplication);
-                    case "UserSettings":
-                        return new v5.Extension.UserSettings(_portalApplication);
-                    case "View":
-                        return new v5.Extension.View(_portalApplication);
-                    default:
-                        throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
-                }
-            }
-            
-            if (version == Protocol.V6)
-            {
-                switch (name)
-                {
-                    case "ClientSettings":
-                        return new v6.Extension.ClientSettings(_portalApplication);
-                    case "Group":
-                        return new v6.Extension.Group(_portalApplication);
-                    case "Session":
-                        return new v6.Extension.Session(_portalApplication);
-                    case "Subscription":
-                        return new v6.Extension.Subscription(_portalApplication);
-                    case "User":
-                        return new v6.Extension.User(_portalApplication);
-                    case "UserSettings":
-                        return new v6.Extension.UserSettings(_portalApplication);
-                    case "View":
-                        return new v5.Extension.View(_portalApplication);
-                    default:
-                        throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
-                }
-            }
-
-            throw new VersionNotFoundException("Version not supported by module");
-        }
-
-        #endregion
     }
 }

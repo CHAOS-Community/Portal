@@ -84,20 +84,20 @@ namespace Chaos.Portal
         #region Email
 
         public IEmailService EmailService
-		{
-			get
-			{
-				if (_emailService != null) return _emailService;
+        {
+            get
+            {
+                if (_emailService != null) return _emailService;
 
-				if (ConfigurationManager.AppSettings.GetValues("AWSKey") == null || ConfigurationManager.AppSettings.GetValues("AWSSecret") == null)
-					throw new Exception("AWSKey and AWSSecret not set in app config");
+                if (ConfigurationManager.AppSettings.GetValues("AWSKey") == null || ConfigurationManager.AppSettings.GetValues("AWSSecret") == null)
+                    throw new Exception("AWSKey and AWSSecret not set in app config");
 
-				_emailService = new EmailService.EmailService(new AWSEmailSender(ConfigurationManager.AppSettings["AWSKey"],
-																				ConfigurationManager.AppSettings["AWSSecret"]));
+                _emailService = new EmailService.EmailService(new AWSEmailSender(ConfigurationManager.AppSettings["AWSKey"],
+                                                                                 ConfigurationManager.AppSettings["AWSSecret"]));
 
-				return _emailService;
-			}
-		}
+                return _emailService;
+	        }
+        }
 
         #endregion
         #endregion
@@ -113,35 +113,6 @@ namespace Chaos.Portal
             ViewManager      = viewManager;
             PortalRepository = portalRepository;
             _loggingFactory  = loggingFactory;
-            
-            // Load bindings
-            AddBinding(typeof(string), new StringParameterBinding());
-            AddBinding(typeof(long), new ConvertableParameterBinding<long>());
-            AddBinding(typeof(int), new ConvertableParameterBinding<int>());
-            AddBinding(typeof(short), new ConvertableParameterBinding<short>());
-            AddBinding(typeof(ulong), new ConvertableParameterBinding<ulong>());
-            AddBinding(typeof(uint), new ConvertableParameterBinding<uint>());
-            AddBinding(typeof(ushort), new ConvertableParameterBinding<ushort>());
-            AddBinding(typeof(double), new ConvertableParameterBinding<double>());
-            AddBinding(typeof(float), new ConvertableParameterBinding<float>());
-            AddBinding(typeof(bool), new ConvertableParameterBinding<bool>());
-            AddBinding(typeof(DateTime), new DateTimeParameterBinding());
-            AddBinding(typeof(long?), new ConvertableParameterBinding<long>());
-            AddBinding(typeof(int?), new ConvertableParameterBinding<int>());
-            AddBinding(typeof(short?), new ConvertableParameterBinding<short>());
-            AddBinding(typeof(ulong?), new ConvertableParameterBinding<ulong>());
-            AddBinding(typeof(uint?), new ConvertableParameterBinding<uint>());
-            AddBinding(typeof(ushort?), new ConvertableParameterBinding<ushort>());
-            AddBinding(typeof(double?), new ConvertableParameterBinding<double>());
-            AddBinding(typeof(float?), new ConvertableParameterBinding<float>());
-            AddBinding(typeof(bool?), new ConvertableParameterBinding<bool>());
-            AddBinding(typeof(DateTime?), new DateTimeParameterBinding());
-            AddBinding(typeof(Guid), new GuidParameterBinding());
-            AddBinding(typeof(Guid?), new GuidParameterBinding());
-            AddBinding(typeof(IQuery), new QueryParameterBinding());
-            AddBinding(typeof(IEnumerable<Guid>), new EnumerableOfGuidParameterBinding());
-            AddBinding(typeof(XDocument), new XDocumentBinding());
-            AddBinding(typeof(UUID), new UUIDParameterBinding());
         }
 
         #endregion
