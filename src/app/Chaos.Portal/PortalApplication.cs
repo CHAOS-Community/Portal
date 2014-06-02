@@ -7,10 +7,12 @@ namespace Chaos.Portal
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Xml;
     using System.Xml.Linq;
 
     using CHAOS;
     using CHAOS.Net;
+    using CHAOS.Serialization.Standard;
     using Core;
     using Core.Bindings;
     using Core.Bindings.Standard;
@@ -255,6 +257,51 @@ namespace Chaos.Portal
                 if(module == null) throw new ExtensionMissingException("Module is in an unknown format");
 
                 return module.GetExtension(version, extension);
+            }
+        }
+
+        public T GetSettings<T>(string key) where T : IModuleSettings, new()
+        {
+            try
+            {
+                var module = PortalRepository.Module.Get(key);
+                var settings = ParseSettings<T>(module);
+
+                if (!settings.IsValid())
+                    throw new ModuleConfigurationMissingException("Settings are invalid.");
+
+                return settings;
+            }
+            catch (ArgumentException e)
+            {
+                var settings = new T();
+                var module = new Core.Data.Model.Module
+                    {
+                        Name = key,
+                        Configuration = Newtonsoft.Json.JsonConvert.SerializeObject(settings)
+                    };
+
+                PortalRepository.Module.Set(module);
+
+                throw new ModuleConfigurationMissingException("Settings not found in the database. A template was created.", e);
+            }
+        }
+
+        private static T ParseSettings<T>(Core.Data.Model.Module module) where T : new()
+        {
+            try
+            {
+                var xml = XDocument.Parse(module.Configuration);
+                var settings = SerializerFactory.XMLSerializer.Deserialize<T>(xml);
+            
+                return settings;
+            }
+            catch (XmlException e)
+            {
+                var json = module.Configuration;
+                var settings = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
+
+                return settings;
             }
         }
     }   

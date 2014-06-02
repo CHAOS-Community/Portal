@@ -39,5 +39,6 @@ namespace Chaos.Portal.Core
         void MapRoute(string path, Func<IExtension> func);
         void AddView(IView view, string coreName = null);
         void AddBinding(Type type, IParameterBinding binding);
+        T GetSettings<T>(string key) where T : IModuleSettings, new();
     }
 }
