@@ -19,5 +19,18 @@
 
             Assert.That(result, Is.EqualTo("fl=Id,score&q=*:*&sort=&start=0&rows=0&fq=&facet=false&group=true&group.limit=3&group.field=TypeId&group.offset=0"));
         } 
+        
+        [Test]
+        public void SolrQueryString_WithFacet_ReturnQueryWithFacet()
+        {
+            var query = new SolrQuery
+                {
+                    Facet = "field:something"
+                };
+
+            var result = query.SolrQueryString;
+
+            Assert.That(result, Is.EqualTo("fl=Id,score&q=*:*&sort=&start=0&rows=0&fq=&facet=true&facet.field=something&group=false&group.limit=0&group.field=&group.offset=0"));
+        } 
     }
 }

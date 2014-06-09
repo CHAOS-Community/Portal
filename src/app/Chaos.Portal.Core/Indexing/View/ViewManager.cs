@@ -4,10 +4,8 @@ namespace Chaos.Portal.Core.Indexing.View
     using System.Collections.Generic;
     using System.Linq;
 
-    using Chaos.Portal.Core.Cache;
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Exceptions;
-    using Chaos.Portal.Core.Indexing.Solr;
+    using Cache;
+    using Exceptions;
 
     /// <summary>
     /// The view manager.
@@ -101,11 +99,11 @@ namespace Chaos.Portal.Core.Indexing.View
             }
         }
 
-        public void AddView(IView view)
+        public void AddView(IView view, bool force = false)
         {
             if(view == null) throw new NullReferenceException("Cannot load a null view");
             if(string.IsNullOrEmpty(view.Name)) throw new ArgumentException("View.Name cannot be null");
-            if(_loadedViews.ContainsKey( view.Name )) throw new ArgumentException( "Key already added", view.Name );
+            if(_loadedViews.ContainsKey( view.Name ) && !force) throw new DuplicateViewException( "Key already added: " + view.Name );
 
             _loadedViews.Add( view.Name, view );
         }

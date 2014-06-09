@@ -107,6 +107,9 @@
     <Compile Include="Exceptions\ActionMissingException.cs" />
     <Compile Include="Exceptions\AssemblyNotLoadedException.cs" />
     <Compile Include="Exceptions\ChaosDatabaseException.cs" />
+    <Compile Include="Exceptions\DuplicateViewException.cs" />
+    <Compile Include="Exceptions\DuplicateException.cs" />
+    <Compile Include="Exceptions\DuplicateEndpointException.cs" />
     <Compile Include="Exceptions\ExtensionMissingException.cs" />
     <Compile Include="Exceptions\InsufficientPermissionsException.cs" />
     <Compile Include="Exceptions\ModuleConfigurationMissingException.cs" />

@@ -22,7 +22,6 @@
         {
             var portalApplication = Make_PortalApplication();
 
-            Assert.Greater(portalApplication.Bindings.Count, 0);
             Assert.IsNotNull(portalApplication.Cache);
             Assert.IsNotNull(portalApplication.Log);
             Assert.IsNotNull(portalApplication.PortalRepository);

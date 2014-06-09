@@ -43,13 +43,14 @@ namespace Chaos.Portal.Core.Indexing.View
         /// <summary>
         /// The add view.
         /// </summary>
+        /// <param name="view">
+        ///     The view.
+        /// </param>
+        /// <param name="force"></param>
         /// <param name="key">
         /// The key.
         /// </param>
-        /// <param name="view">
-        /// The view.
-        /// </param>
-        void AddView(IView view);
+        void AddView(IView view, bool force = false);
 
         IEnumerable<IView> LoadedViews { get; }
 

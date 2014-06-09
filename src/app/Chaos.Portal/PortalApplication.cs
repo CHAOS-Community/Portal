@@ -6,21 +6,18 @@ namespace Chaos.Portal
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using System.Data;
     using System.Xml;
     using System.Xml.Linq;
 
-    using CHAOS;
     using CHAOS.Net;
     using CHAOS.Serialization.Standard;
     using Core;
     using Core.Bindings;
-    using Core.Bindings.Standard;
     using Core.Cache;
     using Core.Data;
     using Core.Exceptions;
     using Core.Extension;
-    using Core.Indexing;
     using Core.Indexing.Solr;
     using Core.Indexing.View;
     using Core.Logging;
@@ -154,12 +151,13 @@ namespace Chaos.Portal
             OnOnModuleLoaded(new ApplicationDelegates.ModuleArgs(module));
         }
 
-        public void AddView(IView view, string coreName = null)
+        public void AddView(IView view, string coreName = null, bool force = false)
         {
             view.WithPortalApplication(this);
             view.WithCache(Cache);
             view.WithIndex(new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), string.IsNullOrEmpty(coreName) ? view.Name : coreName));
-            ViewManager.AddView(view);
+
+            ViewManager.AddView(view, force);
         }
 
         public void AddBinding(Type type, IParameterBinding binding)
@@ -177,6 +175,9 @@ namespace Chaos.Portal
 
         public void MapRoute(string path, Func<IExtension> func)
         {
+            if (ExtensionInvoker.Endpoints.ContainsKey(path))
+                throw new DuplicateEndpointException("Path for endpoint is already in use");
+
             ExtensionInvoker.Endpoints.Add(path.ToLower(), func);
         }
 

@@ -3,16 +3,17 @@ namespace Chaos.Portal.Test.Indexing.View
     using System;
     using System.Collections.Generic;
 
-    using Chaos.Portal.Core.Cache.Couchbase;
-    using Chaos.Portal.Core.Indexing.View;
+    using Core.Cache.Couchbase;
+    using Core.Exceptions;
+    using Core.Indexing.View;
 
     using Couchbase;
 
     using Moq;
 
     using NUnit.Framework;
+    using IView = Core.Indexing.View.IView;
 
-    using IView = Chaos.Portal.Core.Indexing.View.IView;
 
     [TestFixture]
     public class ViewManagerTest
@@ -48,13 +49,13 @@ namespace Chaos.Portal.Test.Indexing.View
             Assert.IsTrue(_dictionary.ContainsKey(_viewName));
         }
 
-        [Test, ExpectedException(typeof(System.NullReferenceException))]
+        [Test, ExpectedException(typeof(NullReferenceException))]
         public void AddView_NullView_ThrowNullReferenceException()
         {
             this._viewManager.AddView(null);
         }
 
-        [Test, ExpectedException(typeof(ArgumentException))]
+        [Test, ExpectedException(typeof(DuplicateViewException))]
         public void AddView_DuplicateView_ThrowException()
         {
             _viewManager.AddView(_view.Object);
