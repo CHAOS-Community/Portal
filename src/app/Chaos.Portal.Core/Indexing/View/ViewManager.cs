@@ -103,9 +103,14 @@ namespace Chaos.Portal.Core.Indexing.View
         {
             if(view == null) throw new NullReferenceException("Cannot load a null view");
             if(string.IsNullOrEmpty(view.Name)) throw new ArgumentException("View.Name cannot be null");
-            if(_loadedViews.ContainsKey( view.Name ) && !force) throw new DuplicateViewException( "Key already added: " + view.Name );
+            if (_loadedViews.ContainsKey(view.Name))
+            {
+                if(!force) throw new DuplicateViewException( "Key already added: " + view.Name );
 
-            _loadedViews.Add( view.Name, view );
+                _loadedViews[view.Name] = view;
+            }
+            else
+                _loadedViews.Add( view.Name, view );
         }
 
         #endregion
