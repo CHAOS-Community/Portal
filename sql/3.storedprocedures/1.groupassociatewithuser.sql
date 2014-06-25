@@ -2,9 +2,7 @@ CREATE PROCEDURE `Group_AssociateWithUser`(
     IN  GroupGUID       BINARY(16),
     IN  UserGUID        BINARY(16),
     IN  Permission      INT(10) UNSIGNED,
-    IN  RequestUserGUID BINARY(16),
-    OUT ErrorCode       INTEGER
-    
+    IN  RequestUserGUID BINARY(16)
 )
 BEGIN
 
@@ -12,9 +10,9 @@ BEGIN
         INSERT INTO Group_User_Join ( GroupGUID, UserGUID, Permission, DateCreated) 
              VALUES ( GroupGUID, UserGUID, Permission, NOW() );
              
-        SET ErrorCode = 1;
+        SELECT 1;
     ELSE
-        SET ErrorCode = -100;
+        SELECT -100;
     END IF;
     
 
