@@ -42,7 +42,7 @@ namespace Chaos.Portal.Core.Data.Model
 
         public bool HasPermission(SystemPermissons permission)
         {
-            return SystemPermissonsEnum.HasFlag(permission);
+            return SystemPermissions.HasValue && SystemPermissonsEnum.HasFlag(permission);
         }
 
         #endregion

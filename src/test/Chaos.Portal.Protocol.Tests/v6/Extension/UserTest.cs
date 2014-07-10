@@ -15,17 +15,6 @@ namespace Chaos.Portal.Protocol.Tests.v6.Extension
 	public class UserTest : TestBase
 	{
 		[Test]
-		public void GetCurrent_ReturnCurrentUser()
-		{
-
-			var user = Make_UserExtension();
-
-			var result = user.GetCurrent();
-
-            Assert.That(result.Guid, Is.EqualTo(Make_User().Guid));
-		}
-
-		[Test]
 		public void Get_HasAdminSystemPermission_ReturnAllUsers()
 		{
 			var user  = Make_UserExtension();
@@ -119,35 +108,24 @@ namespace Chaos.Portal.Protocol.Tests.v6.Extension
 			user.Create(null, "name@domain.com");
 		}
 
-		[Test]
-		public void Update_WithAdminSystemPermission_UpdateUser()
+		[Test, ExpectedException(typeof(InsufficientPermissionsException))]
+		public void Update_WithoutUserManagerPermission_Throw()
 		{
 			var user = Make_UserExtension();
-			var currentUser = Make_User();
 			var updatedUser = Make_User();
-            PortalRepository.Setup(p => p.UserUpdate(It.IsAny<Guid>(), It.IsAny<string>(), It.Is<uint?>(v => v.HasValue))).Returns(1);
-            PortalRepository.Setup(p => p.UserInfoGet(It.Is<Guid?>(i => i.HasValue), null, null, null)).Returns(new[] { updatedUser }); //Return the updated user
-			PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
+            PortalRequest.SetupGet(p => p.User).Returns(new UserInfo());
 
-			var result = user.Update(updatedUser.Guid, updatedUser.Email, updatedUser.SystemPermissions);
-
-			Assert.That(result, Is.EqualTo(updatedUser));
+			user.Update(updatedUser.Guid, updatedUser.Email, updatedUser.SystemPermissions);
 		}
 
-		[Test]
-		public void Delete_WithAdminSystemPermission_DeleteUser()
+        [Test, ExpectedException(typeof(InsufficientPermissionsException))]
+		public void Delete_WithoutUserManagerPermission_Throw()
 		{
 			var user = Make_UserExtension();
-			var currentUser = Make_User();
 			var deleteUserGuid = Guid.NewGuid();
-            PortalRequest.SetupGet(p => p.User).Returns(currentUser);
-            PortalRepository.Setup(p => p.UserDelete(deleteUserGuid)).Returns(1);
-			PortalRequest.SetupGet(m => m.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
+            PortalRequest.SetupGet(p => p.User).Returns(new UserInfo());
 
-			var result = user.Delete(deleteUserGuid);
-
-			Assert.That(result, Is.Not.Null);
-			Assert.That(result.Value, Is.EqualTo(1));
+			user.Delete(deleteUserGuid);
 		}
 	}
 }
