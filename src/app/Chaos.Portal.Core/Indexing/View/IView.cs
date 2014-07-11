@@ -7,9 +7,6 @@ namespace Chaos.Portal.Core.Indexing.View
     using Solr;
     using Solr.Response;
 
-    /// <summary>
-    /// The View interface.
-    /// </summary>
     public interface IView
     {
         void Index( IEnumerable<object> objectsToIndex );

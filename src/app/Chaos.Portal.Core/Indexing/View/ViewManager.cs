@@ -14,10 +14,6 @@ namespace Chaos.Portal.Core.Indexing.View
     {
         #region Fields
 
-        /// <summary>
-        /// The _loaded views.
-        /// </summary>
-        private readonly IDictionary<string, Func<IView>> _viewFactories = new Dictionary<string, Func<IView>>();
         private readonly ICache Cache;
 
         #endregion
@@ -26,9 +22,10 @@ namespace Chaos.Portal.Core.Indexing.View
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewManager"/> class.
         /// </summary>
-        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="cache"></param>
         public ViewManager(ICache cache)
         {
+            ViewFactories = new Dictionary<string, Func<IView>>();
             Cache = cache;
         }
 
@@ -39,9 +36,11 @@ namespace Chaos.Portal.Core.Indexing.View
         {
             get
             {
-                return _viewFactories.Select(item => item.Value.Invoke());
+                return ViewFactories.Select(item => item.Value.Invoke());
             }
         }
+
+        public IDictionary<string, Func<IView>> ViewFactories { get; private set; }
 
         #endregion
         #region Business Logic
@@ -64,15 +63,15 @@ namespace Chaos.Portal.Core.Indexing.View
         {
             var objects = obj as List<object> ?? obj.ToList();
 
-            foreach (var view in _viewFactories.Values.Select(fac => fac.Invoke()))
+            foreach (var view in ViewFactories.Values.Select(fac => fac.Invoke()))
                 view.Index(objects);
         }
 
         public IView GetView(string viewName)
         {
-            if (!_viewFactories.ContainsKey(viewName)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", viewName));
+            if (!ViewFactories.ContainsKey(viewName)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", viewName));
 
-            return _viewFactories[viewName].Invoke();
+            return ViewFactories[viewName].Invoke();
         }
 
         /// <summary>
@@ -98,26 +97,29 @@ namespace Chaos.Portal.Core.Indexing.View
             }
         }
 
+
+        [Obsolete("Use the overload AddView(name, viewFactory, forced) instead",true)]
         public void AddView(IView view, bool force = false)
         {
-            if(view == null) throw new NullReferenceException("Cannot load a null view");
-            if(string.IsNullOrEmpty(view.Name)) throw new ArgumentException("View.Name cannot be null");
-            if (_viewFactories.ContainsKey(view.Name))
-            {
-                if(!force) throw new DuplicateViewException( "Key already added: " + view.Name );
+            AddView(view.Name, () => view);
+        }
 
-                _viewFactories[view.Name] = () => view;
-            }
-            else
-                AddView(view.Name, () => view);
+        public void AddView(string name, Func<IView> viewFactory, bool force = false)
+        {
+            if (viewFactory == null) throw new NullReferenceException("ViewFactory cannot be null");
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("ViewName has to have a valid value");
+            
+            if (ViewFactories.ContainsKey(name)) TryReplaceView(name, viewFactory, force);
+            else ViewFactories.Add(name, viewFactory);
+        }
+
+        private void TryReplaceView(string name, Func<IView> viewFactory, bool force)
+        {
+            if (force) ViewFactories[name] = viewFactory;
+            else throw new DuplicateViewException("Key already added: " + name);
         }
 
         #endregion
-
-        public void AddView(string name, Func<IView> viewFactory)
-        {
-            _viewFactories.Add(name, viewFactory);
-        }
     }
 
 }
