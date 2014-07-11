@@ -21,7 +21,6 @@ namespace Chaos.Portal.Test.Indexing.View
         #region Setup
 
         private ViewManager _viewManager;
-        private IDictionary<string, IView> _dictionary;
         private Mock<IView> _view;
         private string _viewName;
 
@@ -31,8 +30,7 @@ namespace Chaos.Portal.Test.Indexing.View
         public void SetUp()
         {
             _couchbaseClient = new Mock<ICouchbaseClient>();
-            _dictionary      = new Dictionary<string, IView>();
-            _viewManager     = new ViewManager(this._dictionary, new Cache(this._couchbaseClient.Object));
+            _viewManager     = new ViewManager(new Cache(_couchbaseClient.Object));
             _view            = new Mock<IView>();
             _viewName        = "ViewName";
             _view.SetupGet(p => p.Name).Returns(_viewName);
@@ -46,7 +44,17 @@ namespace Chaos.Portal.Test.Indexing.View
         {
             _viewManager.AddView(_view.Object);
 
-            Assert.IsTrue(_dictionary.ContainsKey(_viewName));
+            var view = _viewManager.GetView(_viewName);
+            Assert.That(view, Is.EqualTo(_view.Object));
+        }
+        
+        [Test]
+        public void AddView_ViewFactoryMethod_AddToDictionary()
+        {
+            _viewManager.AddView(_viewName ,() => _view.Object);
+
+            var view = _viewManager.GetView(_viewName);
+            Assert.That(view, Is.EqualTo(_view.Object));
         }
 
         [Test, ExpectedException(typeof(NullReferenceException))]

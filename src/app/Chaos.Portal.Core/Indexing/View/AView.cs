@@ -75,8 +75,6 @@ namespace Chaos.Portal.Core.Indexing.View
         #endregion
         #region Business Logic
 
-        public abstract IList<IViewData> Index( object objectsToIndex );
-
         public void Index(IEnumerable<object> objectsToIndex)
         {
             var results = GetIndexResults(objectsToIndex).ToList();
@@ -102,10 +100,12 @@ namespace Chaos.Portal.Core.Indexing.View
             }
         }
 
+        public abstract IList<IViewData> Index(object objectsToIndex);
+
         public void Delete()
         {
             Core.Delete();
-            // todo clean cache
+            // todo: clean cache
         }
 
         public void Delete(string uniqueIdentifier)
@@ -114,7 +114,7 @@ namespace Chaos.Portal.Core.Indexing.View
             Cache.Remove(CreateKey(uniqueIdentifier));
         }
 
-        protected IPagedResult<IResult> Query<TResult>(IQuery query) where TResult : class, IResult
+        public IPagedResult<IResult> Query<TResult>(IQuery query) where TResult : class, IResult
         {
             var response   = Core.Query( query );
             var keys       = response.QueryResult.Results.Select( item => CreateKey( item.Id ) );

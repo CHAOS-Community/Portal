@@ -17,8 +17,8 @@ namespace Chaos.Portal.Core.Indexing.View
         /// <summary>
         /// The _loaded views.
         /// </summary>
-        private readonly IDictionary<string, IView> _loadedViews;
-        private readonly ICache                     Cache;
+        private readonly IDictionary<string, Func<IView>> _viewFactories = new Dictionary<string, Func<IView>>();
+        private readonly ICache Cache;
 
         #endregion
         #region Initialization
@@ -27,10 +27,9 @@ namespace Chaos.Portal.Core.Indexing.View
         /// Initializes a new instance of the <see cref="ViewManager"/> class.
         /// </summary>
         /// <param name="dictionary">The dictionary.</param>
-        public ViewManager(IDictionary<string, IView> dictionary, ICache cache)
+        public ViewManager(ICache cache)
         {
-            _loadedViews = dictionary;
-            Cache       = cache;
+            Cache = cache;
         }
 
         #endregion
@@ -40,7 +39,7 @@ namespace Chaos.Portal.Core.Indexing.View
         {
             get
             {
-                return _loadedViews.Select(item => item.Value);
+                return _viewFactories.Select(item => item.Value.Invoke());
             }
         }
 
@@ -65,15 +64,15 @@ namespace Chaos.Portal.Core.Indexing.View
         {
             var objects = obj as List<object> ?? obj.ToList();
 
-            foreach(var view in _loadedViews.Values)
+            foreach (var view in _viewFactories.Values.Select(fac => fac.Invoke()))
                 view.Index(objects);
         }
 
         public IView GetView(string viewName)
         {
-            if (!_loadedViews.ContainsKey(viewName)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", viewName));
+            if (!_viewFactories.ContainsKey(viewName)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", viewName));
 
-            return _loadedViews[viewName];
+            return _viewFactories[viewName].Invoke();
         }
 
         /// <summary>
@@ -103,17 +102,22 @@ namespace Chaos.Portal.Core.Indexing.View
         {
             if(view == null) throw new NullReferenceException("Cannot load a null view");
             if(string.IsNullOrEmpty(view.Name)) throw new ArgumentException("View.Name cannot be null");
-            if (_loadedViews.ContainsKey(view.Name))
+            if (_viewFactories.ContainsKey(view.Name))
             {
                 if(!force) throw new DuplicateViewException( "Key already added: " + view.Name );
 
-                _loadedViews[view.Name] = view;
+                _viewFactories[view.Name] = () => view;
             }
             else
-                _loadedViews.Add( view.Name, view );
+                AddView(view.Name, () => view);
         }
 
         #endregion
+
+        public void AddView(string name, Func<IView> viewFactory)
+        {
+            _viewFactories.Add(name, viewFactory);
+        }
     }
 
 }

@@ -14,6 +14,7 @@ namespace Chaos.Portal.v6.Extension
     {
         public User(IPortalApplication portalApplication): base(portalApplication)
         {
+
         }
 	
 		public UserInfo Create(Guid? guid, string email)

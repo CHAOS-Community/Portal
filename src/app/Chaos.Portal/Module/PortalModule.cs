@@ -37,24 +37,25 @@ namespace Chaos.Portal.Module
             portalApplication.AddBinding(typeof(Guid), new GuidParameterBinding());
             portalApplication.AddBinding(typeof(Guid?), new GuidParameterBinding());
             portalApplication.AddBinding(typeof(IQuery), new QueryParameterBinding());
+            // todo: replace with a general Enumerable Of <Binding> class
             portalApplication.AddBinding(typeof(IEnumerable<Guid>), new EnumerableOfGuidParameterBinding());
             portalApplication.AddBinding(typeof(XDocument), new XDocumentBinding());
             portalApplication.AddBinding(typeof(UUID), new UUIDParameterBinding());
 
             portalApplication.MapRoute("/v5/ClientSettings", () => new v5.Extension.ClientSettings(portalApplication));
-            portalApplication.MapRoute("/v5/Group", () => new v5.Extension.Group(portalApplication));
-            portalApplication.MapRoute("/v5/Session", () => new v5.Extension.Session(portalApplication));
             portalApplication.MapRoute("/v5/Subscription", () => new v5.Extension.Subscription(portalApplication));
-            portalApplication.MapRoute("/v5/User", () => new v5.Extension.User(portalApplication));
             portalApplication.MapRoute("/v5/UserSettings", () => new v5.Extension.UserSettings(portalApplication));
+            portalApplication.MapRoute("/v5/Session", () => new v5.Extension.Session(portalApplication));
+            portalApplication.MapRoute("/v5/Group", () => new v5.Extension.Group(portalApplication));
+            portalApplication.MapRoute("/v5/User", () => new v5.Extension.User(portalApplication));
             portalApplication.MapRoute("/v5/View", () => new v5.Extension.View(portalApplication));
 
             portalApplication.MapRoute("/v6/ClientSettings", () => new v6.Extension.ClientSettings(portalApplication));
-            portalApplication.MapRoute("/v6/Group", () => new v6.Extension.Group(portalApplication));
-            portalApplication.MapRoute("/v6/Session", () => new v6.Extension.Session(portalApplication));
             portalApplication.MapRoute("/v6/Subscription", () => new v6.Extension.Subscription(portalApplication));
-            portalApplication.MapRoute("/v6/User", () => new v6.Extension.User(portalApplication));
             portalApplication.MapRoute("/v6/UserSettings", () => new v6.Extension.UserSettings(portalApplication));
+            portalApplication.MapRoute("/v6/Session", () => new v6.Extension.Session(portalApplication));
+            portalApplication.MapRoute("/v6/Group", () => new v6.Extension.Group(portalApplication));
+            portalApplication.MapRoute("/v6/User", () => new v6.Extension.User(portalApplication));
             portalApplication.MapRoute("/v6/View", () => new v5.Extension.View(portalApplication));
         }
     }
