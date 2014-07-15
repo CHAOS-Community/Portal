@@ -3,9 +3,9 @@ namespace Chaos.Portal.Core.Indexing.View
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
     using Cache;
     using Exceptions;
+    using Solr;
 
     /// <summary>
     /// The view manager.
@@ -58,13 +58,15 @@ namespace Chaos.Portal.Core.Indexing.View
         /// <summary>
         /// The index.
         /// </summary>
-        /// <param name="obj">The objects.</param>
-        public void Index(IEnumerable<object> obj)
+        /// <param name="objectsToIndex">The objects.</param>
+        public void Index(IEnumerable<object> objectsToIndex)
         {
-            var objects = obj as List<object> ?? obj.ToList();
+            var objects = objectsToIndex as List<object> ?? objectsToIndex.ToList();
 
             foreach (var view in ViewFactories.Values.Select(fac => fac.Invoke()))
+            {
                 view.Index(objects);
+            }
         }
 
         public IView GetView(string viewName)
@@ -97,8 +99,6 @@ namespace Chaos.Portal.Core.Indexing.View
             }
         }
 
-
-        [Obsolete("Use the overload AddView(name, viewFactory, forced) instead",true)]
         public void AddView(IView view, bool force = false)
         {
             AddView(view.Name, () => view);
@@ -116,10 +116,9 @@ namespace Chaos.Portal.Core.Indexing.View
         private void TryReplaceView(string name, Func<IView> viewFactory, bool force)
         {
             if (force) ViewFactories[name] = viewFactory;
-            else throw new DuplicateViewException("Key already added: " + name);
+            else throw new DuplicateViewException("View named " + name +" already exist.");
         }
 
         #endregion
     }
-
 }

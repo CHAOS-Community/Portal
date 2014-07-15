@@ -1,10 +1,15 @@
 ﻿namespace Chaos.Portal.Test
 {
     using System;
+    using System.Collections.Generic;
+    using Core;
     using Core.Cache;
     using Core.Data;
     using Core.Data.Model;
     using Core.Exceptions;
+    using Core.Indexing;
+    using Core.Indexing.Solr;
+    using Core.Indexing.Solr.Response;
     using Core.Indexing.View;
     using Core.Module;
     using Moq;
@@ -73,6 +78,18 @@
             app.GetSettings<TestSettings>(key);
 
             Repo.Verify(m => m.Module.Set(It.IsAny<Module>()));
+        }
+
+        [Test]
+        public void AddView_MockView_CanBeRetrievedFromTheViewManager()
+        {
+            var app = new PortalApplication(Cache.Object, new ViewManager(Cache.Object), Repo.Object, null );
+            var view = new Mock<IView>();
+
+            app.AddView("MyView", () => view.Object, false);
+          
+            var actual = app.ViewManager.GetView("MyView");
+            Assert.That(actual, Is.Not.Null);
         }
 
         private PortalApplication Make_PortalApplication()

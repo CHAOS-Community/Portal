@@ -160,6 +160,11 @@ namespace Chaos.Portal
             ViewManager.AddView(view, force);
         }
 
+        public void AddView(string name, Func<IView> viewFactory, bool force = false)
+        {
+            ViewManager.AddView(name, viewFactory, force);
+        }
+
         public void AddBinding(Type type, IParameterBinding binding)
         {
             Bindings.Add(type, binding);
@@ -210,11 +215,8 @@ namespace Chaos.Portal
                 var fullpath = string.Format("/{0}/{1}/{2}", version, request.Extension, request.Action).ToLower();
                 var path = string.Format("/{0}/{1}", version, request.Extension).ToLower();
 
-                if (Endpoints.ContainsKey(fullpath))
-                    return Endpoints[fullpath].Invoke();
-
-                if (Endpoints.ContainsKey(path))
-                    return Endpoints[path].Invoke();
+                if (Endpoints.ContainsKey(fullpath)) return Endpoints[fullpath].Invoke();
+                if (Endpoints.ContainsKey(path)) return Endpoints[path].Invoke();
 
                 return GetExtension(request.Version, request.Extension);
             }

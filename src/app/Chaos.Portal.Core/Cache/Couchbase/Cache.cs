@@ -88,6 +88,18 @@ namespace Chaos.Portal.Core.Cache.Couchbase
             return Client.StoreJson(StoreMode.Set, key, value);
         }
 
+        public bool Store(IDictionary<string, object> values)
+        {
+            foreach (var pair in values)
+            {
+                var result = Store(pair.Key, pair.Value);
+
+                if (!result) return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Used to get a object from the cache
         /// </summary>

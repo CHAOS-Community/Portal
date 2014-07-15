@@ -23,5 +23,7 @@ namespace Chaos.Portal.Core.Cache
         /// </summary>
         /// <param name="key"></param>
         void Remove(string key);
+
+        bool Store(IDictionary<string, object> values);
     }
 }

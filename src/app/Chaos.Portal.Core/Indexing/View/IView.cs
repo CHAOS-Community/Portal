@@ -23,7 +23,10 @@ namespace Chaos.Portal.Core.Indexing.View
         IView WithPortalApplication(IPortalApplication portalApplication);
 
         string Name { get; }
+        IIndex Core { get; set; }
 
         void Delete(string uniqueIdentifier);
+        IEnumerable<IIndexable> GetIndexResults(IEnumerable<object> objectsToIndex);
+        string CreateKey(string key);
     }
 }

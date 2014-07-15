@@ -13,8 +13,8 @@ namespace Chaos.Portal.Core.Indexing.View
     {
         #region Fields
 
-        protected ICache Cache;
-        protected IIndex Core;
+        public ICache Cache;
+        public IIndex Core { get; set; }
 
         #endregion
         #region Initialization
@@ -46,26 +46,6 @@ namespace Chaos.Portal.Core.Indexing.View
         }
 
         #endregion
-        #region Abstract
-
-        public virtual IGroupedResult<IResult> GroupedQuery(IQuery query)
-        {
-            throw new NotImplementedException("Grouping not implemented on this view");
-        }
-
-        public virtual FacetResult FacetedQuery(IQuery query)
-        {
-            var response = Core.Query(query);
-
-            return response.FacetResult;
-        }
-
-        public virtual IPagedResult<IResult> Query(IQuery query)
-        {
-            throw new NotImplementedException("Querying not implemented on this view");
-        }
-
-        #endregion
         #region Properties
 
         public IPortalApplication PortalApplication { get; set; }
@@ -79,23 +59,67 @@ namespace Chaos.Portal.Core.Indexing.View
         {
             var results = GetIndexResults(objectsToIndex).ToList();
 
-            foreach (var result in results)
-            {
-                var key = CreateKey(result.UniqueIdentifier.Value);
-
-                Cache.Store(key, result);
-            }
-
+            var cacheWriter = new CacheWriter(Cache);
+            var cacheDocuments = results.Select(res => new CacheDocument{ Id = CreateKey(res.UniqueIdentifier.ToString()), Dto = res });
+            cacheWriter.Write(cacheDocuments);
             Core.Index(results);
+
+            cacheWriter.Commit();
         }
 
-        private IEnumerable<IIndexable> GetIndexResults(IEnumerable<object> objectsToIndex)
+        private class CacheWriter
+        {
+            private ICache Cache { get; set; }
+            private IList<CacheDocument> CacheBuffer { get; set; } 
+
+            public CacheWriter(ICache cache)
+            {
+                Cache = cache;
+                CacheBuffer = new List<CacheDocument>();
+            }
+
+            public void Write(IEnumerable<CacheDocument> cacheDocuments)
+            {
+                foreach (var doc in cacheDocuments)
+                {
+                    Write(doc);
+                }
+            }
+            
+            public void Write(CacheDocument cacheDocument)
+            {
+                CacheBuffer.Add(cacheDocument);
+            }
+
+            public void Commit()
+            {
+                foreach (var cacheDocument in CacheBuffer)
+                {
+                    Cache.Store(cacheDocument.Id, cacheDocument);
+                }
+
+                CacheBuffer.Clear();
+            }
+        }
+
+        private class CacheDocument
+        {
+            public string Id { get; set; }
+            public object Dto { get; set; }
+
+            public string Fullname
+            {
+                get { return Dto.GetType().FullName; }
+            }
+        }
+
+        public IEnumerable<IIndexable> GetIndexResults(IEnumerable<object> objectsToIndex)
         {
             foreach(var viewResults in objectsToIndex.Select(Index).Where(viewResults => viewResults != null))
             {
-                foreach(var viewResult in viewResults)
+                foreach(var results in viewResults)
                 {
-                    yield return viewResult;
+                    yield return results;
                 }
             }
         }
@@ -114,18 +138,35 @@ namespace Chaos.Portal.Core.Indexing.View
             Cache.Remove(CreateKey(uniqueIdentifier));
         }
 
+        public virtual IGroupedResult<IResult> GroupedQuery(IQuery query)
+        {
+            throw new NotImplementedException("Grouping not implemented on this view");
+        }
+
+        public virtual FacetResult FacetedQuery(IQuery query)
+        {
+            var response = Core.Query(query);
+
+            return response.FacetResult;
+        }
+
+        public virtual IPagedResult<IResult> Query(IQuery query)
+        {
+            throw new NotImplementedException("Querying not implemented on this view");
+        }
+
         public IPagedResult<IResult> Query<TResult>(IQuery query) where TResult : class, IResult
         {
             var response   = Core.Query( query );
-            var keys       = response.QueryResult.Results.Select( item => CreateKey( item.Id ) );
-            var startIndex = response.QueryResult.StartIndex;
             var foundCount = response.QueryResult.FoundCount;
+            var startIndex = response.QueryResult.StartIndex;
+            var keys       = response.QueryResult.Results.Select( item => CreateKey( item.Id ) );
             var results    = Cache.Get<TResult>(keys);
 
             return new PagedResult<TResult>(foundCount, startIndex, results);
         }
 
-        protected string CreateKey(string key)
+        public string CreateKey(string key)
         {
             if (string.IsNullOrEmpty(Name)) throw new NullReferenceException(string.Format("Name on {0} view is null", Name));
             if (string.IsNullOrEmpty(key)) throw new NullReferenceException(string.Format("UniqueIdentifier on {0} view is null", Name));

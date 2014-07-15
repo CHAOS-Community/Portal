@@ -1,5 +1,6 @@
 namespace Chaos.Portal.Core.Indexing.View
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -31,7 +32,7 @@ namespace Chaos.Portal.Core.Indexing.View
         ///       <cref>IIndexReport</cref>
         ///     </see> .
         /// </returns>
-        void Index(IEnumerable<object> objects);
+        void Index(IEnumerable<object> objectsToIndex);
 
         /// <summary>
         /// Retrieves a view by name
@@ -61,5 +62,7 @@ namespace Chaos.Portal.Core.Indexing.View
         /// </summary>
         /// <param name="query"></param>
         void Delete(string query);
+
+        void AddView(string name, Func<IView> viewFactory, bool force = false);
     }
 }
