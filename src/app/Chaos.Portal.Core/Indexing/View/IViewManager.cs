@@ -39,30 +39,18 @@ namespace Chaos.Portal.Core.Indexing.View
         /// </summary>
         /// <param name="viewName"></param>
         /// <returns></returns>
-        IView GetView(string viewName);
+        ViewInfo GetView(string viewName);
 
-        /// <summary>
-        /// The add view.
-        /// </summary>
-        /// <param name="view">
-        ///     The view.
-        /// </param>
-        /// <param name="force"></param>
-        /// <param name="key">
-        /// The key.
-        /// </param>
-        void AddView(IView view, bool force = false);
-
-        IEnumerable<IView> LoadedViews { get; }
+        IEnumerable<ViewInfo> LoadedViews { get; }
 
         void Delete();
 
         /// <summary>
         /// Sends a delete query to all Views
         /// </summary>
-        /// <param name="query"></param>
-        void Delete(string query);
+        /// <param name="id"></param>
+        void Delete(string id);
 
-        void AddView(string name, Func<IView> viewFactory, bool force = false);
+        void AddView(ViewInfo viewInfo, bool force = false);
     }
 }

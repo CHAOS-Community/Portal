@@ -7,7 +7,7 @@ namespace Chaos.Portal.Core.Indexing.Solr.Response
     {
         #region Properties
 
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         public float Score { get; set; }
 

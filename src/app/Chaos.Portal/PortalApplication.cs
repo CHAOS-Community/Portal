@@ -1,12 +1,8 @@
-using System.Configuration;
-using Chaos.Portal.Core.EmailService;
-using Chaos.Portal.EmailService;
-
 namespace Chaos.Portal
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
+    using System.Configuration;
     using System.Xml;
     using System.Xml.Linq;
 
@@ -16,6 +12,7 @@ namespace Chaos.Portal
     using Core.Bindings;
     using Core.Cache;
     using Core.Data;
+    using Core.EmailService;
     using Core.Exceptions;
     using Core.Extension;
     using Core.Indexing.Solr;
@@ -24,6 +21,7 @@ namespace Chaos.Portal
     using Core.Module;
     using Core.Request;
     using Core.Response;
+    using EmailService;
 
     /// <summary>
     /// The portal application.
@@ -151,17 +149,18 @@ namespace Chaos.Portal
             OnOnModuleLoaded(new ApplicationDelegates.ModuleArgs(module));
         }
 
-        public void AddView(IView view, string coreName = null, bool force = false)
+        public void AddView(string name, IView view, string coreName = null, bool force = false)
         {
-            view.WithPortalApplication(this);
-            view.WithIndex(new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), string.IsNullOrEmpty(coreName) ? view.Name : coreName));
-
-            ViewManager.AddView(view, force);
+            AddView(name, () => view, coreName, force);
         }
 
-        public void AddView(string name, Func<IView> viewFactory, bool force = false)
+        // todo extract Solr logic out from PortalApplication (Settings/Configuration)
+        public void AddView(string name, Func<IView> viewFactory, string coreName = null, bool force = false)
         {
-            ViewManager.AddView(name, viewFactory, force);
+            var core = new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), string.IsNullOrEmpty(coreName) ? name : coreName);
+            var viewInfo = new ViewInfo(name, Cache, core, viewFactory);
+
+            ViewManager.AddView(viewInfo, force);
         }
 
         public void AddBinding(Type type, IParameterBinding binding)

@@ -3,12 +3,11 @@ namespace Chaos.Portal.Test.Indexing.View
     using System;
     using System.Collections.Generic;
     using Core.Cache;
-    using Core.Cache.Couchbase;
     using Core.Exceptions;
     using Core.Indexing.Solr;
+    using Core.Indexing.Solr.Request;
+    using Core.Indexing.Solr.Response;
     using Core.Indexing.View;
-
-    using Couchbase;
 
     using Moq;
 
@@ -22,98 +21,95 @@ namespace Chaos.Portal.Test.Indexing.View
         #region Setup
 
         private ViewManager _viewManager;
-        private Mock<IView> _view;
-        private string _viewName;
 
+        public Mock<IIndex> CoreMock { get; private set; }
         public Mock<ICache> CacheMock { get; private set; }
 
         [SetUp]
         public void SetUp()
         {
             CacheMock = new Mock<ICache>();
-
+            CoreMock = new Mock<IIndex>();
             _viewManager = new ViewManager(CacheMock.Object);
-            _view            = new Mock<IView>();
-            _viewName        = "ViewName";
-            _view.SetupGet(p => p.Name).Returns(_viewName);
         }
 
         #endregion
         #region AddView
 
         [Test]
-        public void AddView_MockView_TheViewShouldBeStoredInTheDictionary()
+        public void AddView_GivenViewInfo_AddToDictionary()
         {
-            _viewManager.AddView(_view.Object);
+            var viewInfo = Make_MockView();
+            _viewManager.AddView(viewInfo);
 
-            var view = _viewManager.GetView(_viewName);
-            Assert.That(view, Is.EqualTo(_view.Object));
-        }
-        
-        [Test]
-        public void AddView_ViewFactoryMethod_AddToDictionary()
-        {
-            _viewManager.AddView(_viewName ,() => _view.Object);
-
-            var view = _viewManager.GetView(_viewName);
-            Assert.That(view, Is.EqualTo(_view.Object));
+            var view = _viewManager.GetView(viewInfo.Name);
+            Assert.That(view, Is.Not.Null);
         }
 
         [Test, ExpectedException(typeof(NullReferenceException))]
         public void AddView_NullView_ThrowNullReferenceException()
         {
-            this._viewManager.AddView(null);
+            _viewManager.AddView(null);
         }
 
         [Test, ExpectedException(typeof(DuplicateViewException))]
         public void AddView_DuplicateView_ThrowException()
         {
-            _viewManager.AddView(_view.Object);
+            _viewManager.AddView(Make_MockView());
 
-            _viewManager.AddView(_view.Object);
+            _viewManager.AddView(Make_MockView());
         }
         
         [Test, ExpectedException(typeof(ArgumentException))]
         public void AddView_ViewNameIsNull_ThrowException()
         {
-            _view.SetupGet(p => p.Name).Returns((string)null);
+            var view = Make_MockView();
+            view.Name = null;
 
-            _viewManager.AddView(_view.Object);
+            _viewManager.AddView(view);
         }
         
         [Test, ExpectedException(typeof(ArgumentException))]
-        public void AddView_ViewNameEmptystring_ThrowException()
+        public void AddView_ViewNameEmptyString_ThrowException()
         {
-            _view.SetupGet(p => p.Name).Returns(string.Empty);
+            var view = Make_MockView();
+            view.Name = String.Empty;
 
-            _viewManager.AddView(_view.Object);
+            _viewManager.AddView(view);
         }
 
         #endregion
-        #region Index
 
         [Test]
         public void Index_OneObject_CallEachViewsIndexMethodWithTheObject()
         {
-            var coreMock = new Mock<IIndex>();
-            _viewManager.AddView("MyView", () => new MockView{ Core = coreMock.Object});
+            _viewManager.AddView(Make_MockView());
 
             _viewManager.Index(new object());
 
-            coreMock.Verify(m => m.Index(It.IsAny<IList<IIndexable>>()));
+            CoreMock.Verify(m => m.Index(It.IsAny<IList<IIndexable>>()));
             CacheMock.Verify(m => m.Store(It.IsAny<string>(), It.IsAny<object>()));
         }
 
         [Test]
-        public void Delete_GivenId_CallDeleteOnCache()
+        public void Delete_All_CallDeleteOnCore()
         {
-            var coreMock = new Mock<IIndex>();
-            _viewManager.AddView("MyView", () => new MockView { Core = coreMock.Object });
+            _viewManager.AddView(Make_MockView());
 
-            _viewManager.GetView("MyView").Delete("Id");
+            _viewManager.Delete();
+
+            CoreMock.Verify(m => m.Delete());
+        }
+
+        [Test]
+        public void Delete_GivenId_CallDeleteOnCacheAndCore()
+        {
+            _viewManager.AddView(Make_MockView());
+
+            _viewManager.Delete("Id");
 
             CacheMock.Verify(m => m.Remove(It.IsAny<string>()));
-            coreMock.Verify(m => m.Delete(It.IsAny<string>()));
+            CoreMock.Verify(m => m.Delete(It.IsAny<string>()));
         }
 
         [Test, ExpectedException(typeof(InvalidViewDataException))]
@@ -121,40 +117,56 @@ namespace Chaos.Portal.Test.Indexing.View
         [TestCase("")]
         public void Delete_GivenInvalidInput_Throw(string id)
         {
-            _viewManager.AddView("MyView", () => new MockView());
+            _viewManager.AddView(Make_MockView());
 
-            _viewManager.GetView("MyView").Delete(id);
+            _viewManager.GetView("MyView").Delete("");
         }
-        
-        public class MockView : AView
-        {
-            public MockView() : base("MyView")
-            {
-            }
 
-            public override IList<IViewData> Index(object objectsToIndex)
+        [Test, ExpectedException(typeof(NotImplementedException))]
+        public void GroupedQuery_WhenNotOverridden_Throw()
+        {
+            var view = Make_MockView();
+
+            view.GroupedQuery(null);
+        }
+
+        [Test]
+        public void Query_GivenValidQuery_ReturnPagedResult()
+        {
+            var stubResponse = new Mock<IIndexResponse<IdResult>>();
+            var view = Make_MockView();
+            var query = new SolrQuery();
+            var queryResultStub = new QueryResultStub<IdResult> {Results = new[] {new IdResult {Id = "id", Score = 1}}};
+            var expected = new[] {new ViewData()};
+            stubResponse.Setup(p => p.QueryResult).Returns(queryResultStub);
+            CoreMock.Setup(m => m.Query(query)).Returns(stubResponse.Object);
+            CacheMock.Setup(m => m.Get<ViewData>(It.IsAny<IEnumerable<string>>())).Returns(expected);
+
+            var result = view.Query<ViewData>(query);
+
+            Assert.That(result.Results, Is.EqualTo(expected));
+        }
+
+        internal class MockView : IView
+        {
+            public IList<IViewData> Index(object objectsToIndex)
             {
                 return new List<IViewData>(){new ViewData{}};
             }
         }
 
-        #endregion
-        #region Query
+        public class QueryResultStub<TReturnType> : IQueryResult<TReturnType> where TReturnType : IIndexResult, new()
+        {
+            public string Value { get; private set; }
+            public uint FoundCount { get; set; }
+            public uint StartIndex { get; set; }
+            public IEnumerable<TReturnType> Results { get; set; }
+        }
 
-//        [Test]
-//        public void Query_GivenQueryToViewThatExist_CallViewsQueryMethodWithQueryAndReturnResult()
-//        {
-//            var query = new Mock<IQuery>();
-//            var expected = new ;
-//            _view.Setup(m => m.Query(query.Object)).Returns(expected);
-//
-//            var result = _viewManager.Query(_viewName, query.Object);
-//
-//            
-//
-//        }
-
-        #endregion
+        private ViewInfo Make_MockView()
+        {
+            return new ViewInfo("MyView", CacheMock.Object, CoreMock.Object, () => new MockView());
+        }
     }
 
     public class ViewData : IViewData

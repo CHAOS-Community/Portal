@@ -3,7 +3,8 @@ namespace Chaos.Portal.Core.Indexing.View
     using System;
     using System.Collections.Generic;
     using Cache;
-    
+    using Solr;
+
     public class BufferedCacheWriter : ICacheWriter, IDisposable
     {
         private ICache Cache { get; set; }
@@ -35,6 +36,13 @@ namespace Chaos.Portal.Core.Indexing.View
                 Cache.Store(document.Id, document);
             }
         }
+    }
+
+    public class CacheDocument 
+    {
+        public string Id { get; set; }
+
+        public IIndexable Dto { get; set; }
     }
 
     public interface ICacheWriter

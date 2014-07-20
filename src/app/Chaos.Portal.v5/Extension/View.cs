@@ -5,10 +5,10 @@ namespace Chaos.Portal.v5.Extension
 
     using CHAOS.Serialization;
 
-    using Chaos.Portal.Core;
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Extension;
-    using Chaos.Portal.Core.Indexing;
+    using Core;
+    using Core.Data.Model;
+    using Core.Extension;
+    using Core.Indexing;
 
     public class View : AExtension
     {
@@ -21,7 +21,7 @@ namespace Chaos.Portal.v5.Extension
         #endregion
         public IPagedResult<IResult> Get(string view, IQuery query )
         {
-            return ViewManager.GetView(view).Query(query);
+            return ViewManager.GetView(view).Query<IResult>(query);
         }
         
         public IEnumerable<IResult> List()

@@ -6,7 +6,7 @@ namespace Chaos.Portal.Core.Indexing.Solr
 
     using CHAOS.Net;
 
-    using Chaos.Portal.Core.Indexing.Solr.Response;
+    using Response;
 
     public class SolrCore : IIndex
     {
@@ -31,7 +31,7 @@ namespace Chaos.Portal.Core.Indexing.Solr
         #endregion
         #region Business Logic
 
-        public Response<IdResult> Query(IQuery query)
+        public IIndexResponse<IdResult> Query(IQuery query)
         {
             using (var stream = _httpConnection.Get(Core + "/select", query.ToString()))
             {
