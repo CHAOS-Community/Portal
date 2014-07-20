@@ -107,6 +107,7 @@
     <Compile Include="Exceptions\ActionMissingException.cs" />
     <Compile Include="Exceptions\AssemblyNotLoadedException.cs" />
     <Compile Include="Exceptions\ChaosDatabaseException.cs" />
+    <Compile Include="Exceptions\InvalidViewDataException.cs" />
     <Compile Include="Exceptions\DuplicateViewException.cs" />
     <Compile Include="Exceptions\DuplicateException.cs" />
     <Compile Include="Exceptions\DuplicateEndpointException.cs" />
@@ -151,6 +152,8 @@
     <Compile Include="Indexing\Solr\Response\Response.cs" />
     <Compile Include="Indexing\Solr\SolrCore.cs" />
     <Compile Include="Indexing\View\AView.cs" />
+    <Compile Include="Indexing\View\BufferedCacheWriter.cs" />
+    <Compile Include="Indexing\View\CacheDocument.cs" />
     <Compile Include="Indexing\View\IView.cs" />
     <Compile Include="Indexing\View\IViewData.cs" />
     <Compile Include="Indexing\View\IViewManager.cs" />

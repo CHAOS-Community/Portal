@@ -25,13 +25,14 @@ namespace Chaos.Portal.Test.Indexing.View
         private Mock<IView> _view;
         private string _viewName;
 
-        private Mock<ICouchbaseClient> _couchbaseClient;
+        public Mock<ICache> CacheMock { get; private set; }
 
         [SetUp]
         public void SetUp()
         {
-            _couchbaseClient = new Mock<ICouchbaseClient>();
-            _viewManager     = new ViewManager(new Cache(_couchbaseClient.Object));
+            CacheMock = new Mock<ICache>();
+
+            _viewManager = new ViewManager(CacheMock.Object);
             _view            = new Mock<IView>();
             _viewName        = "ViewName";
             _view.SetupGet(p => p.Name).Returns(_viewName);
@@ -94,19 +95,37 @@ namespace Chaos.Portal.Test.Indexing.View
         [Test]
         public void Index_OneObject_CallEachViewsIndexMethodWithTheObject()
         {
-            var expected = new object();
             var coreMock = new Mock<IIndex>();
-            var cacheMock = new Mock<ICache>();
-            var view = new MockView{ Core = coreMock.Object, Cache = cacheMock.Object};
-            _viewManager.AddView("MyView", () => view);
+            _viewManager.AddView("MyView", () => new MockView{ Core = coreMock.Object});
 
-            _viewManager.Index(expected);
+            _viewManager.Index(new object());
 
-            Assert.That(view.WasIndexCalled, Is.True);
             coreMock.Verify(m => m.Index(It.IsAny<IList<IIndexable>>()));
-            cacheMock.Verify(m => m.Store(It.IsAny<string>(), It.IsAny<object>()));
+            CacheMock.Verify(m => m.Store(It.IsAny<string>(), It.IsAny<object>()));
         }
 
+        [Test]
+        public void Delete_GivenId_CallDeleteOnCache()
+        {
+            var coreMock = new Mock<IIndex>();
+            _viewManager.AddView("MyView", () => new MockView { Core = coreMock.Object });
+
+            _viewManager.GetView("MyView").Delete("Id");
+
+            CacheMock.Verify(m => m.Remove(It.IsAny<string>()));
+            coreMock.Verify(m => m.Delete(It.IsAny<string>()));
+        }
+
+        [Test, ExpectedException(typeof(InvalidViewDataException))]
+        [TestCase(null)]
+        [TestCase("")]
+        public void Delete_GivenInvalidInput_Throw(string id)
+        {
+            _viewManager.AddView("MyView", () => new MockView());
+
+            _viewManager.GetView("MyView").Delete(id);
+        }
+        
         public class MockView : AView
         {
             public MockView() : base("MyView")
@@ -115,24 +134,9 @@ namespace Chaos.Portal.Test.Indexing.View
 
             public override IList<IViewData> Index(object objectsToIndex)
             {
-                WasIndexCalled = true;
-
                 return new List<IViewData>(){new ViewData{}};
             }
-
-            public bool WasIndexCalled { get; set; }
         }
-
-        //[Test]
-        //public void Index_MultipleObjects_CallEachViewsIndexMethodWithTheObjects()
-        //{
-        //    var expected = new[] { new object(), new object() };
-        //    _viewManager.AddView(_view.Object);
-
-        //    _viewManager.Index(expected);
-
-        //    _view.Verify(m => m.Index(expected));
-        //}
 
         #endregion
         #region Query

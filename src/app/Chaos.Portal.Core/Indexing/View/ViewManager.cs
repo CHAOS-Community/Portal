@@ -62,10 +62,13 @@ namespace Chaos.Portal.Core.Indexing.View
         public void Index(IEnumerable<object> objectsToIndex)
         {
             var objects = objectsToIndex as List<object> ?? objectsToIndex.ToList();
-
+            
             foreach (var view in ViewFactories.Values.Select(fac => fac.Invoke()))
             {
-                view.Index(objects);
+                using (var cacheWriter = new BufferedCacheWriter(Cache))
+                {
+                    view.Index(objects, cacheWriter);
+                }
             }
         }
 
@@ -73,7 +76,10 @@ namespace Chaos.Portal.Core.Indexing.View
         {
             if (!ViewFactories.ContainsKey(viewName)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", viewName));
 
-            return ViewFactories[viewName].Invoke();
+            var view = ViewFactories[viewName].Invoke();
+            view.WithCache(Cache);
+
+            return view;
         }
 
         /// <summary>

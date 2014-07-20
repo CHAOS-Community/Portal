@@ -6,19 +6,12 @@ namespace Chaos.Portal.Core.Indexing.View
 
     using Cache;
     using Data.Model;
+    using Exceptions;
     using Solr;
     using Solr.Response;
 
     public abstract class AView : IView
     {
-        #region Fields
-
-        public ICache Cache;
-        public IIndex Core { get; set; }
-
-        #endregion
-        #region Initialization
-
         protected AView(string name)
         {
             Name = name;
@@ -30,6 +23,13 @@ namespace Chaos.Portal.Core.Indexing.View
 
             return this;
         }
+        
+        public void Initialize(ICacheWriter cacheWriter)
+        {
+            CacheWriter = cacheWriter;
+        }
+
+        protected ICacheWriter CacheWriter { get; set; }
 
         public IView WithIndex(IIndex index)
         {
@@ -45,72 +45,20 @@ namespace Chaos.Portal.Core.Indexing.View
             return this;
         }
 
-        #endregion
-        #region Properties
-
         public IPortalApplication PortalApplication { get; set; }
-
         public string Name { get; private set; }
+        public IIndex Core { get; set; }
+        public ICache Cache { get; set; }
 
-        #endregion
         #region Business Logic
 
-        public void Index(IEnumerable<object> objectsToIndex)
+        public void Index(List<object> objectsToIndex, ICacheWriter cacheWriter)
         {
             var results = GetIndexResults(objectsToIndex).ToList();
 
-            var cacheWriter = new CacheWriter(Cache);
-            var cacheDocuments = results.Select(res => new CacheDocument{ Id = CreateKey(res.UniqueIdentifier.ToString()), Dto = res });
+            var cacheDocuments = results.Select(res => new CacheDocument { Id = CreateKey(res.UniqueIdentifier.ToString()), Dto = res });
             cacheWriter.Write(cacheDocuments);
             Core.Index(results);
-
-            cacheWriter.Commit();
-        }
-
-        private class CacheWriter
-        {
-            private ICache Cache { get; set; }
-            private IList<CacheDocument> CacheBuffer { get; set; } 
-
-            public CacheWriter(ICache cache)
-            {
-                Cache = cache;
-                CacheBuffer = new List<CacheDocument>();
-            }
-
-            public void Write(IEnumerable<CacheDocument> cacheDocuments)
-            {
-                foreach (var doc in cacheDocuments)
-                {
-                    Write(doc);
-                }
-            }
-            
-            public void Write(CacheDocument cacheDocument)
-            {
-                CacheBuffer.Add(cacheDocument);
-            }
-
-            public void Commit()
-            {
-                foreach (var cacheDocument in CacheBuffer)
-                {
-                    Cache.Store(cacheDocument.Id, cacheDocument);
-                }
-
-                CacheBuffer.Clear();
-            }
-        }
-
-        private class CacheDocument
-        {
-            public string Id { get; set; }
-            public object Dto { get; set; }
-
-            public string Fullname
-            {
-                get { return Dto.GetType().FullName; }
-            }
         }
 
         public IEnumerable<IIndexable> GetIndexResults(IEnumerable<object> objectsToIndex)
@@ -134,6 +82,9 @@ namespace Chaos.Portal.Core.Indexing.View
 
         public void Delete(string uniqueIdentifier)
         {
+            if (string.IsNullOrEmpty(uniqueIdentifier)) 
+                throw new InvalidViewDataException("uniqueIdentifier cannot be null");
+
             Core.Delete(uniqueIdentifier);
             Cache.Remove(CreateKey(uniqueIdentifier));
         }

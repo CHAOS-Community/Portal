@@ -1,7 +1,6 @@
 namespace Chaos.Portal.Core.Indexing.View
 {
     using System.Collections.Generic;
-
     using Cache;
     using Data.Model;
     using Solr;
@@ -9,8 +8,6 @@ namespace Chaos.Portal.Core.Indexing.View
 
     public interface IView
     {
-        void Index( IEnumerable<object> objectsToIndex );
-
         void Delete();
 
         IGroupedResult<IResult> GroupedQuery(IQuery query);
@@ -18,7 +15,6 @@ namespace Chaos.Portal.Core.Indexing.View
         IPagedResult<IResult> Query(IQuery query);
         IPagedResult<IResult> Query<TResult>(IQuery query) where TResult : class, IResult;
 
-        IView WithCache(ICache cache);
         IView WithIndex(IIndex index);
         IView WithPortalApplication(IPortalApplication portalApplication);
 
@@ -28,5 +24,9 @@ namespace Chaos.Portal.Core.Indexing.View
         void Delete(string uniqueIdentifier);
         IEnumerable<IIndexable> GetIndexResults(IEnumerable<object> objectsToIndex);
         string CreateKey(string key);
+
+        void Index(List<object> objectsToIndex, ICacheWriter cacheWriter);
+        IView WithCache(ICache cache);
+        void Initialize(ICacheWriter cacheWriter);
     }
 }
