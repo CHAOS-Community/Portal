@@ -10,6 +10,9 @@ namespace Chaos.Portal.Core.Indexing.View
     using Solr;
     using Solr.Response;
 
+    // todo, add extension points
+    // todo, Class violate SOLID (open/close & single responsibility)
+    // todo, decide how much structure should be enforced upon View implementations (Triggers, Data assembly, Map to Index, Map to Dto) aka. Map/Reduce
     public class ViewInfo
     {
         public string Name { get; set; }
