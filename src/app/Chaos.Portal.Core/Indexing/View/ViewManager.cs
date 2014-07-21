@@ -3,6 +3,7 @@ namespace Chaos.Portal.Core.Indexing.View
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Cache;
     using Exceptions;
 
@@ -62,13 +63,7 @@ namespace Chaos.Portal.Core.Indexing.View
         {
             var objects = objectsToIndex as List<object> ?? objectsToIndex.ToList();
 
-            foreach (var viewInfo in LoadedViews)
-            {
-                using (var cacheWriter = new BufferedCacheWriter(Cache))
-                {
-                    viewInfo.Index(objects, cacheWriter);
-                }
-            }
+            Parallel.ForEach(LoadedViews, (viewInfo) => viewInfo.Index(objects));
         }
 
         public ViewInfo GetView(string viewName)

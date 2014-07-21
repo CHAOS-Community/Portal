@@ -13,6 +13,7 @@ namespace Chaos.Portal.Core.Indexing.View
     // todo, add extension points
     // todo, Class violate SOLID (open/close & single responsibility)
     // todo, decide how much structure should be enforced upon View implementations (Triggers, Data assembly, Map to Index, Map to Dto) aka. Map/Reduce
+    // todo, find a name that better express the concept behind the class
     public class ViewInfo
     {
         public string Name { get; set; }
@@ -73,28 +74,23 @@ namespace Chaos.Portal.Core.Indexing.View
             Cache.Remove(CreateKey(id));
         }
 
-        public void Index(List<object> objectsToIndex, ICacheWriter cacheWriter)
+        public void Index(List<object> objectsToIndex)
         {
-            var results = GetIndexResults(objectsToIndex).ToList();
-
-            var cacheDocuments = results.Select(res => new CacheDocument { Id = CreateKey(res.UniqueIdentifier.ToString()), Dto = res });
-            cacheWriter.Write(cacheDocuments);
-            Core.Index(results);
-        }
-
-        public IEnumerable<IIndexable> GetIndexResults(IEnumerable<object> objectsToIndex)
-        {
-            var view = ViewFactory.Invoke();
-
-            foreach (var viewResults in objectsToIndex.Select(view.Index).Where(viewResults => viewResults != null))
+            using (var cacheWriter = new BufferedCacheWriter(Cache))
+            using (var indexWriter = new BufferedIndexWriter(Core))
             {
-                foreach (var results in viewResults)
+                var view = ViewFactory.Invoke();
+
+                foreach (var viewResults in objectsToIndex.Select(view.Index).Where(viewResults => viewResults != null))
                 {
-                    yield return results;
+                    foreach (var res in viewResults)
+                    {
+                        cacheWriter.Write(new CacheDocument { Id = CreateKey(res.UniqueIdentifier.Value), Dto = res });
+                        indexWriter.Write(new IndexDocument { Id = res.UniqueIdentifier.Value, Fields = res });
+                    }
                 }
             }
         }
-
 
         public string CreateKey(string key)
         {

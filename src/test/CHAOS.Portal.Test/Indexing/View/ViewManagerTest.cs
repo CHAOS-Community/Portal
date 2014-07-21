@@ -2,6 +2,7 @@ namespace Chaos.Portal.Test.Indexing.View
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Core.Exceptions;
     using Core.Indexing.Solr;
     using Core.Indexing.View;
@@ -89,8 +90,8 @@ namespace Chaos.Portal.Test.Indexing.View
 
             _viewManager.Index(new object());
 
-            CoreMock.Verify(m => m.Index(It.IsAny<IList<IIndexable>>()));
-            CacheMock.Verify(m => m.Store(It.IsAny<string>(), It.IsAny<object>()));
+            CacheMock.Verify(m => m.Store("MyView_1", It.IsAny<object>()));
+            CoreMock.Verify(m => m.Index(It.Is<IEnumerable<IIndexable>>(lst => lst.Single().UniqueIdentifier.Value == "1")));
         }
 
         [Test]

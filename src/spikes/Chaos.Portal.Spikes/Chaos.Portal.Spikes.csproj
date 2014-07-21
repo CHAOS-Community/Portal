@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimplifiedView\ActualView.cs" />
+    <Compile Include="SimplifiedView\ViewInfo.cs" />
+    <Compile Include="SimplifiedView\ViewManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

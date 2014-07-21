@@ -2,18 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Dynamic;
 
-    class ActualView
+    class ActualView : IView
     {
-        public void Index(object obj)
+        public void Index(object value, ICacheWriter cache, ISearchWriter searcher)
         {
-            var indexWriter = new IndexWriter();
-            var cacheWriter = new CacheWriter();
-            dynamic input = new ExpandoObject();
-            input.Name = "some name";
-            input.Number = 1u;
-            input.Type = 1u;
+            var input = value as InputData;
 
             // trigger
             if (input.Type != 1u) return;
@@ -36,11 +30,11 @@
                     {"Number", input.Number.ToString()},
                     {"Type", input.Type.ToString()}
                 };
-            indexWriter.AddDocument(doc);
+            searcher.AddDocument(doc);
 
             // create cachable dto
-            cacheWriter.AddDocument(new CacheDocument<ActualViewData>("Namespace.Class", viewData));
-            cacheWriter.AddDocument(new CacheDocument<object>("Namespace.Class", input));
+            cache.AddDocument(new CacheDocument<ActualViewData>("Namespace.Class", viewData));
+            cache.AddDocument(new CacheDocument<object>("Namespace.Class", input));
         }
 
         internal class ActualViewData
@@ -51,7 +45,16 @@
         }
     }
 
-    internal interface ICacheDocument<out TDtoType>
+    internal class InputData
+    {
+        public uint Type { get; set; }
+
+        public string Name { get; set; }
+
+        public uint Number { get; set; }
+    }
+
+    public interface ICacheDocument<out TDtoType>
     {
         string Fullname { get; }
         TDtoType Dto { get; }
@@ -69,20 +72,30 @@
         }
     }
 
-    internal class CacheWriter
+    internal class CacheWriter : ICacheWriter
     {
         public void AddDocument<T>(ICacheDocument<T> dto)
         {
             Console.WriteLine(dto.Fullname);
             Console.WriteLine(dto.Dto.ToString());
         }
+
+        public void Commit()
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    internal class IndexWriter
+    internal class IndexWriter : ISearchWriter
     {
         public void AddDocument(IDictionary<string, string> document)
         {
 
+        }
+
+        public void Commit()
+        {
+            throw new NotImplementedException();
         }
     }
 }

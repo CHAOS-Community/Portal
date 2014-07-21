@@ -151,6 +151,11 @@
     <Compile Include="Indexing\Solr\Response\QueryResultGroup.cs" />
     <Compile Include="Indexing\Solr\Response\Response.cs" />
     <Compile Include="Indexing\Solr\SolrCore.cs" />
+    <Compile Include="Indexing\View\BufferedIndexWriter.cs" />
+    <Compile Include="Indexing\View\CacheDocument.cs" />
+    <Compile Include="Indexing\View\ICacheWriter.cs" />
+    <Compile Include="Indexing\View\IndexDocument.cs" />
+    <Compile Include="Indexing\View\IIndexWriter.cs" />
     <Compile Include="Indexing\View\ViewInfo.cs" />
     <Compile Include="Indexing\View\BufferedCacheWriter.cs" />
     <Compile Include="Indexing\View\IView.cs" />
