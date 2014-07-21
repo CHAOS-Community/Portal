@@ -114,8 +114,10 @@ namespace Chaos.Portal.Core.Indexing.View
 
         private void TryReplaceView(string name, ViewInfo viewInfo, bool force)
         {
-            if (force) ViewInfos[name] = viewInfo;
-            else throw new DuplicateViewException("View named " + name +" already exist.");
+            if (force) 
+                ViewInfos[name] = viewInfo;
+            else 
+                throw new DuplicateViewException("View named " + name +" already exist.");
         }
 
         #endregion

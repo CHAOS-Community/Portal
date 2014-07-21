@@ -60,6 +60,18 @@ namespace Chaos.Portal.Test.Indexing.View
             _viewManager.AddView(Make_MockView());
         }
         
+        [Test]
+        public void AddView_DuplicateViewWithForceTrue_ReplaceView()
+        {
+            _viewManager.AddView(Make_MockView());
+            var expected = Make_MockView();
+            
+            _viewManager.AddView(expected, true);
+
+            var actual = _viewManager.GetView(expected.Name);
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+        
         [Test, ExpectedException(typeof(ArgumentException))]
         public void AddView_ViewNameIsNull_ThrowException()
         {
