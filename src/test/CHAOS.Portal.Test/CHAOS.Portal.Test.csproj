@@ -67,6 +67,8 @@
     <Compile Include="Indexing\Solr\SolrCoreTest.cs" />
     <Compile Include="Indexing\Solr\SolrQueryTest.cs" />
     <Compile Include="Indexing\Solr\TestBase.cs" />
+    <Compile Include="Indexing\View\TestBase.cs" />
+    <Compile Include="Indexing\View\ViewInfoTest.cs" />
     <Compile Include="Indexing\View\ViewManagerTest.cs" />
     <Compile Include="PortalApplicationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
