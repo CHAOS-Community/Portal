@@ -8,7 +8,7 @@ namespace Chaos.Portal.Core.Indexing.View
     using Exceptions;
 
     /// <summary>
-    /// The view manager.
+    /// Handles loading and convinience methods for invoking all views
     /// </summary>
     public class ViewManager : IViewManager
     {
@@ -25,14 +25,14 @@ namespace Chaos.Portal.Core.Indexing.View
         /// <param name="cache"></param>
         public ViewManager(ICache cache)
         {
-            ViewInfos = new Dictionary<string, ViewInfo>();
+            ViewInfos = new Dictionary<string, ViewInvoker>();
             Cache = cache;
         }
 
         #endregion
         #region Properties
 
-        public IEnumerable<ViewInfo> LoadedViews
+        public IEnumerable<ViewInvoker> LoadedViews
         {
             get
             {
@@ -40,7 +40,7 @@ namespace Chaos.Portal.Core.Indexing.View
             }
         }
 
-        public IDictionary<string, ViewInfo> ViewInfos { get; private set; }
+        public IDictionary<string, ViewInvoker> ViewInfos { get; private set; }
 
         #endregion
         #region Business Logic
@@ -66,7 +66,7 @@ namespace Chaos.Portal.Core.Indexing.View
             Parallel.ForEach(LoadedViews, (viewInfo) => viewInfo.Index(objects));
         }
 
-        public ViewInfo GetView(string viewName)
+        public ViewInvoker GetView(string viewName)
         {
             if (!ViewInfos.ContainsKey(viewName)) throw new ViewNotLoadedException(string.Format("No key with name: '{0}' has been loaded", viewName));
 
@@ -98,19 +98,19 @@ namespace Chaos.Portal.Core.Indexing.View
             }
         }
 
-        public void AddView(ViewInfo viewInfo, bool force = false)
+        public void AddView(ViewInvoker viewInvoker, bool force = false)
         {
-            if (viewInfo == null) throw new NullReferenceException("ViewFactory cannot be null");
-            if (string.IsNullOrEmpty(viewInfo.Name)) throw new ArgumentException("ViewName has to have a valid value");
+            if (viewInvoker == null) throw new NullReferenceException("ViewFactory cannot be null");
+            if (string.IsNullOrEmpty(viewInvoker.Name)) throw new ArgumentException("ViewName has to have a valid value");
 
-            if (ViewInfos.ContainsKey(viewInfo.Name)) TryReplaceView(viewInfo.Name, viewInfo, force);
-            else ViewInfos.Add(viewInfo.Name, viewInfo);
+            if (ViewInfos.ContainsKey(viewInvoker.Name)) TryReplaceView(viewInvoker.Name, viewInvoker, force);
+            else ViewInfos.Add(viewInvoker.Name, viewInvoker);
         }
 
-        private void TryReplaceView(string name, ViewInfo viewInfo, bool force)
+        private void TryReplaceView(string name, ViewInvoker viewInvoker, bool force)
         {
             if (force) 
-                ViewInfos[name] = viewInfo;
+                ViewInfos[name] = viewInvoker;
             else 
                 throw new DuplicateViewException("View named " + name +" already exist.");
         }

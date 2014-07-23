@@ -30,6 +30,7 @@
 
         protected class ViewData : IViewData
         {
+            public string Type = "ViewData";
             public KeyValuePair<string, string> UniqueIdentifier { get { return new KeyValuePair<string, string>("Id", "1"); } }
             public IEnumerable<KeyValuePair<string, string>> GetIndexableFields()
             {
@@ -39,9 +40,9 @@
             public string Fullname { get; private set; }
         }
 
-        protected ViewInfo Make_MockView()
+        protected ViewInvoker Make_MockView()
         {
-            return new ViewInfo("MyView", CacheMock.Object, CoreMock.Object, () => new MockView());
+            return new ViewInvoker("MyView", CacheMock.Object, CoreMock.Object, () => new MockView());
         }
     }
 }

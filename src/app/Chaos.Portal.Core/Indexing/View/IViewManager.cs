@@ -39,9 +39,9 @@ namespace Chaos.Portal.Core.Indexing.View
         /// </summary>
         /// <param name="viewName"></param>
         /// <returns></returns>
-        ViewInfo GetView(string viewName);
+        ViewInvoker GetView(string viewName);
 
-        IEnumerable<ViewInfo> LoadedViews { get; }
+        IEnumerable<ViewInvoker> LoadedViews { get; }
 
         void Delete();
 
@@ -51,6 +51,6 @@ namespace Chaos.Portal.Core.Indexing.View
         /// <param name="id"></param>
         void Delete(string id);
 
-        void AddView(ViewInfo viewInfo, bool force = false);
+        void AddView(ViewInvoker viewInvoker, bool force = false);
     }
 }

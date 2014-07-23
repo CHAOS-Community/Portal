@@ -13,15 +13,14 @@ namespace Chaos.Portal.Core.Indexing.View
     // todo, add extension points
     // todo, Class violate SOLID (open/close & single responsibility)
     // todo, decide how much structure should be enforced upon View implementations (Triggers, Data assembly, Map to Index, Map to Dto) aka. Map/Reduce
-    // todo, find a name that better express the concept behind the class
-    public class ViewInfo
+    public class ViewInvoker
     {
         public string Name { get; set; }
         public ICache Cache { get; set; }
         public IIndex Core { get; set; }
         public Func<IView> ViewFactory { get; set; }
 
-        public ViewInfo(string name, ICache cache, IIndex core, Func<IView> viewFactory)
+        public ViewInvoker(string name, ICache cache, IIndex core, Func<IView> viewFactory)
         {
             Name = name;
             Cache = cache;
@@ -31,13 +30,9 @@ namespace Chaos.Portal.Core.Indexing.View
 
         public IPagedResult<IResult> Query<TResult>(IQuery query) where TResult : class, IResult
         {
-            var response = Core.Query(query);
-            var foundCount = response.QueryResult.FoundCount;
-            var startIndex = response.QueryResult.StartIndex;
-            var keys = response.QueryResult.Results.Select(item => CreateKey(item.Id));
-            var results = Cache.Get<TResult>(keys);
+            var queryResult = Core.Query(query).QueryResult;
 
-            return new PagedResult<TResult>(foundCount, startIndex, results);
+            return ConvertToResultGroup<TResult>(queryResult);
         }
 
         public virtual FacetResult FacetedQuery(IQuery query)
@@ -47,16 +42,30 @@ namespace Chaos.Portal.Core.Indexing.View
             return response.FacetResult;
         }
 
-        public virtual IGroupedResult<IResult> GroupedQuery(IQuery query)
+        public virtual IGroupedResult<IResult> GroupedQuery<TResult>(IQuery query) where TResult : class, IResult
         {
-            throw new NotImplementedException("Grouping not implemented on this view");
+            var groups = new List<ResultGroup<TResult>>();
+
+            foreach (var queryResultGroup in Core.Query(query).QueryResultGroups)
+                groups.AddRange(queryResultGroup.Groups.Select(ConvertToResultGroup<TResult>));
+
+            return new GroupedResult<TResult>(groups);
+        }
+
+        private ResultGroup<TResult> ConvertToResultGroup<TResult>(IQueryResult<IdResult> queryResult) where TResult : class, IResult
+        {
+            var foundCount = queryResult.FoundCount;
+            var startIndex = queryResult.StartIndex;
+            var keys = queryResult.Results.Select(item => CreateKey(item.Id));
+            var results = Cache.Get<TResult>(keys);
+
+            return new ResultGroup<TResult>(foundCount, startIndex, results){Value = queryResult.Value};
         }
 
         public virtual IPagedResult<IResult> Query(IQuery query)
         {
             throw new NotImplementedException("Querying not implemented on this view");
         }
-
 
 
         public void Delete()

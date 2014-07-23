@@ -34,7 +34,7 @@ namespace Chaos.Portal.v5.Extension
     {
         #region Implementation of IResult
 
-        public string Fullname { get { return "Chaos.Portal.Extension.ViewInfo"; } }
+        public string Fullname { get { return "Chaos.Portal.Extension.ViewInvoker"; } }
 
         [Serialize]
         public string Name { get; set; }

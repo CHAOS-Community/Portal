@@ -2,6 +2,8 @@ namespace Chaos.Portal.Test.Indexing.View
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Core.Data.Model;
     using Core.Exceptions;
     using Core.Indexing.Solr;
     using Core.Indexing.Solr.Request;
@@ -30,7 +32,7 @@ namespace Chaos.Portal.Test.Indexing.View
 
         public class QueryResultStub<TReturnType> : IQueryResult<TReturnType> where TReturnType : IIndexResult, new()
         {
-            public string Value { get; private set; }
+            public string Value { get; set; }
             public uint FoundCount { get; set; }
             public uint StartIndex { get; set; }
             public IEnumerable<TReturnType> Results { get; set; }
@@ -44,10 +46,32 @@ namespace Chaos.Portal.Test.Indexing.View
             Make_MockView().Delete("");
         }
 
-        [Test, ExpectedException(typeof(NotImplementedException))]
+        [Test]
         public void GroupedQuery_WhenNotOverridden_Throw()
         {
-            Make_MockView().GroupedQuery(null);
+            var stubResponse = new Mock<IIndexResponse<IdResult>>();
+            var queryResultStub = new QueryResultStub<IdResult> { Results = new[] { new IdResult { Id = "id", Score = 1 } }, FoundCount = 1, StartIndex = 1, Value = "Group1"};
+            var queryResultGroupStub = new QueryResultGroupStub { Groups = new[] { queryResultStub }, FoundCount = 1};
+            var query = new SolrQuery();
+            var expected = new[] { new ViewData() };
+            stubResponse.Setup(p => p.QueryResultGroups).Returns(new[] { queryResultGroupStub });
+            CoreMock.Setup(m => m.Query(query)).Returns(stubResponse.Object);
+            CacheMock.Setup(m => m.Get<ViewData>(It.IsAny<IEnumerable<string>>())).Returns(expected);
+
+            var result = Make_MockView().GroupedQuery<ViewData>(query);
+
+            Assert.That(result.Groups, Is.Not.Empty);
+            Assert.That(result.Groups.First().FoundCount, Is.EqualTo(1));
+            Assert.That(result.Groups.First().StartIndex, Is.EqualTo(1));
+            Assert.That(result.Groups.First().Value, Is.EqualTo("Group1"));
+            Assert.That(result.Groups.First().Results, Is.SameAs(expected));
         }
+    }
+
+    public class QueryResultGroupStub : IQueryResultGroup<IdResult>
+    {
+        public string Name { get; set; }
+        public uint FoundCount { get; set; }
+        public IList<IQueryResult<IdResult>> Groups { get; set; }
     }
 }

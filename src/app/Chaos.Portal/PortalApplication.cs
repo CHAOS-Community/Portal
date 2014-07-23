@@ -158,7 +158,7 @@ namespace Chaos.Portal
         public void AddView(string name, Func<IView> viewFactory, string coreName = null, bool force = false)
         {
             var core = new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), string.IsNullOrEmpty(coreName) ? name : coreName);
-            var viewInfo = new ViewInfo(name, Cache, core, viewFactory);
+            var viewInfo = new ViewInvoker(name, Cache, core, viewFactory);
 
             ViewManager.AddView(viewInfo, force);
         }
