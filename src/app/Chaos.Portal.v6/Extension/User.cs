@@ -61,6 +61,11 @@ namespace Chaos.Portal.v6.Extension
             return result.Any() ? result : new[] { Request.User };
         }
 
+		public IEnumerable<UserInfo> GetCurrent()
+		{
+			return Get(Request.User.Guid);
+		}
+
         private void ThrowIfUserDoesntHavePermission()
         {
             if (!HasUserManagerPermission()) throw new InsufficientPermissionsException();
