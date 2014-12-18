@@ -32,6 +32,9 @@ namespace Chaos.Portal.Core.Data.Model
 		public string Email { get; set; }
 
 		[Serialize]
+		public DateTime? DateCreated { get; set; }
+
+		[Serialize]
 		public DateTime? SessionDateCreated { get; set; }
 
 		[Serialize]

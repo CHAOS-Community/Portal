@@ -21,6 +21,7 @@
                         SessionGuid         = reader.GetGuidNullable("SessionGUID"),
                         SystemPermissions   = reader.GetUint32Nullable("SystemPermission"),
                         Email               = reader.GetString("Email"),
+                        DateCreated         = reader.GetDateTimeNullable("DateCreated"),
                         SessionDateCreated  = reader.GetDateTimeNullable("SessionDateCreated"),
                         SessionDateModified = reader.GetDateTimeNullable("DateModified"),
                     };

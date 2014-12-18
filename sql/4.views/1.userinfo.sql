@@ -5,6 +5,7 @@ SELECT
     Session.GUID AS SessionGUID,
     GetUsersHighestSystemPermission(User.GUID) AS SystemPermission,
     User.Email AS Email,
+    User.DateCreated AS DateCreated,
     Session.DateModified AS DateModified,
     Session.DateCreated AS SessionDateCreated 
 FROM 
