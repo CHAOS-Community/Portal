@@ -89,6 +89,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.sto
 		sql\3.storedprocedures\1.usersettingsdelete.sql = sql\3.storedprocedures\1.usersettingsdelete.sql
 		sql\3.storedprocedures\1.usersettingsget.sql = sql\3.storedprocedures\1.usersettingsget.sql
 		sql\3.storedprocedures\1.usersettingsset.sql = sql\3.storedprocedures\1.usersettingsset.sql
+		sql\3.storedprocedures\1.userupdate.sql = sql\3.storedprocedures\1.userupdate.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.views", "4.views", "{E4EAC9FA-122E-4348-A53B-EBF0F1C78D2D}"

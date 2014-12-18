@@ -11,7 +11,7 @@ namespace Chaos.Portal.Core.Cache.Couchbase
     using global::Couchbase;
     using global::Couchbase.Extensions;
 
-    /// <summary>
+  /// <summary>
     /// Couchbase caching.
     /// </summary>
     public class Cache : ICache

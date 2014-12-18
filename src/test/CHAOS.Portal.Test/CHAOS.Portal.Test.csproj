@@ -39,15 +39,17 @@
     <Reference Include="CHAOS">
       <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
     </Reference>
-    <Reference Include="Couchbase, Version=1.2.0.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\Couchbase.dll</HintPath>
+    <Reference Include="Couchbase">
+      <HintPath>..\..\..\packages\CouchbaseNetClient.1.3.9\lib\net40\Couchbase.dll</HintPath>
     </Reference>
     <Reference Include="Enyim.Caching">
-      <HintPath>..\..\..\lib\Enyim.Caching.dll</HintPath>
+      <HintPath>..\..\..\packages\CouchbaseNetClient.1.3.9\lib\net40\Enyim.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\..\..\tools\Moq.4.0.10827\NET40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\tools\NUnit-2.6.0.12051\bin\nunit.framework.dll</HintPath>
@@ -81,6 +83,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="EmailService\EmailTemplate02.xml">

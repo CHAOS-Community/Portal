@@ -3,14 +3,14 @@
     using System;
     using System.Linq;
 
-    using Chaos.Portal.Core.Cache.Couchbase;
-    using Chaos.Portal.Core.Data.Model;
+    using Core.Cache.Couchbase;
+    using Core.Data.Model;
 
     using NUnit.Framework;
-
     using global::Couchbase;
 
-    [TestFixture]
+
+  [TestFixture]
     public class CacheTest
     {
         #region Setup

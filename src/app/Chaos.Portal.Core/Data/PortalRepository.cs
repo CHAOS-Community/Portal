@@ -80,6 +80,17 @@ namespace Chaos.Portal.Core.Data
             return (uint)result;
         }
 
+      public uint UserSet(Guid guid, string email)
+      {
+        var result = Gateway.ExecuteNonQuery("User_Set", new[]
+                {
+                    new MySqlParameter("Guid", guid.ToByteArray()), 
+                    new MySqlParameter("Email", email)
+                });
+
+        return (uint)result;
+      }
+
 	    public uint UserDelete(Guid guid)
 	    {
 		    throw new NotImplementedException();

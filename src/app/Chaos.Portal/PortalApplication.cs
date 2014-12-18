@@ -6,7 +6,6 @@ namespace Chaos.Portal
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
     using System.Xml;
     using System.Xml.Linq;
 
