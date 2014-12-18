@@ -98,7 +98,7 @@ namespace Chaos.Portal.Core.Data
 
 	    public uint UserUpdate(Guid guid, string email, uint? systemPermission)
 	    {
-		    throw new NotImplementedException();
+	      return UserSet(guid, email);
 	    }
 
 	    public UserInfo UserInfoGet(string email)
