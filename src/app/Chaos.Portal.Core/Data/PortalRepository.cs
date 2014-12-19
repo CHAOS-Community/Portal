@@ -93,7 +93,12 @@ namespace Chaos.Portal.Core.Data
 
 	    public uint UserDelete(Guid guid)
 	    {
-		    throw new NotImplementedException();
+        var result = Gateway.ExecuteNonQuery("User_Delete", new[]
+                {
+                    new MySqlParameter("Guid", guid.ToByteArray())
+                });
+
+        return (uint)result;
 	    }
 
 	    public uint UserUpdate(Guid guid, string email, uint? systemPermission)
