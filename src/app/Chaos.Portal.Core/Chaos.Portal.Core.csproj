@@ -195,6 +195,7 @@
     <Compile Include="Response\IPortalResult.cs" />
     <Compile Include="Response\IResponseSpecification.cs" />
     <Compile Include="Response\PortalResponse.cs" />
+    <Compile Include="Response\Specification\Json3Response.cs" />
     <Compile Include="Response\Specification\JsonpResponse.cs" />
     <Compile Include="Response\Specification\JsonResponse.cs" />
     <Compile Include="Response\Specification\StreamResponse.cs" />

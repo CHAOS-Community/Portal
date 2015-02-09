@@ -31,6 +31,7 @@ namespace Chaos.Portal.Core.Response
             ResponseSpecifications.Add(ReturnFormat.XML2, new XmlResponse());
             ResponseSpecifications.Add(ReturnFormat.JSON, new JsonResponse());
             ResponseSpecifications.Add(ReturnFormat.JSON2, new JsonResponse());
+            ResponseSpecifications.Add(ReturnFormat.JSON3, new Json3Response());
             ResponseSpecifications.Add(ReturnFormat.JSONP, new JsonpResponse());
             ResponseSpecifications.Add(ReturnFormat.JSONP2, new JsonpResponse());
             ResponseSpecifications.Add(ReturnFormat.ATTACHMENT, new StreamResponse());
@@ -79,6 +80,7 @@ namespace Chaos.Portal.Core.Response
                     break;
                 case ReturnFormat.XML2:
                 case ReturnFormat.JSON2:
+                case ReturnFormat.JSON3:
                 case ReturnFormat.JSONP2:
                     Output = ResponseFactoryv6.Create(obj, Request);
                     break;
