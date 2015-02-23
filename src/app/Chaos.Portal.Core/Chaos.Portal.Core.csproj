@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="ApplicationDelegates.cs" />
     <Compile Include="Bindings\IParameterBinding.cs" />
+    <Compile Include="Bindings\Standard\JsonParameterBinding.cs" />
     <Compile Include="Bindings\Standard\ConvertableParameterBinding.cs" />
     <Compile Include="Bindings\Standard\DateTimeParameterBinding.cs" />
     <Compile Include="Bindings\Standard\GuidParameterBinding.cs" />
