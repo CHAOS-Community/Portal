@@ -29,16 +29,9 @@ end
 desc 'Perform fast build (warn: doesn\'t d/l deps)'
 build :quick_compile => [:prepare_compile] do |b|
   b.prop 'Configuration', Configuration
-  b.logging = 'detailed'
+  b.logging = 'minimal'
   b.sln     = 'Portal.sln'
 end
-
-desc "Run all the tests"
-test_runner :tests => [:package_tests]do |tests|
-    tests.files = FileList['tests/Chaos.Test.dll']
-    tests.add_parameter '/framework=4.0.30319'
-    tests.exe = 'tools/NUnit-2.6.0.12051/bin/nunit-console.exe'
-  end
 
 task :package_tests => [:quick_compile] do |cmd|
 	FileUtils.mkdir 'tests'
@@ -59,6 +52,13 @@ task :package_tests => [:quick_compile] do |cmd|
       'src\test\CHAOS.Portal.Test\bin\Release\CHAOS.Portal.Test.dll',
       'src\test\Chaos.Portal.IntegrationTest\bin\Release\Chaos.Portal.IntegrationTest.dll',
       'src\test\Chaos.Portal.Protocol.Tests\bin\Release\Chaos.Portal.Protocol.Tests.dll'], clr_command: true
+end
+
+desc "Run all the tests"
+test_runner :tests => [:package_tests] do |tests|
+  tests.files = FileList['tests/Chaos.Test.dll']
+  tests.add_parameter '/framework=4.0.30319'
+  tests.exe = 'tools/NUnit-2.6.0.12051/bin/nunit-console.exe'
 end
 
 desc "Merges all production assemblies"
