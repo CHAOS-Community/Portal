@@ -21,8 +21,13 @@ asmver_files :assembly_info do |a|
                assembly_informational_version: ENV['BUILD_VERSION']
 end
 
+task :prepare_compile do |b|
+  FileUtils.cp 'Portal/src/test/Chaos.Portal.IntegrationTest/App.config.sample', 'Portal/src/test/Chaos.Portal.IntegrationTest/App.config'
+  FileUtils.cp 'Portal/src/test/Chaos.Portal.Protocol.Tests/App.config.sample', 'Portal/src/test/Chaos.Portal.Protocol.Tests/App.config'
+end
+
 desc 'Perform fast build (warn: doesn\'t d/l deps)'
-build :quick_compile do |b|
+build :quick_compile => [:prepare_compile] do |b|
   b.prop 'Configuration', Configuration
   b.logging = 'quiet'
   b.sln     = 'Portal.sln'
