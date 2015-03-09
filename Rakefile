@@ -22,8 +22,8 @@ asmver_files :assembly_info do |a|
 end
 
 task :prepare_compile do |b|
-  FileUtils.cp 'src/test/Chaos.Portal.IntegrationTest/App.config.sample', 'Portal/src/test/Chaos.Portal.IntegrationTest/App.config'
-  FileUtils.cp 'src/test/Chaos.Portal.Protocol.Tests/App.config.sample', 'Portal/src/test/Chaos.Portal.Protocol.Tests/App.config'
+  FileUtils.cp 'src/test/Chaos.Portal.IntegrationTest/App.config.sample', 'src/test/Chaos.Portal.IntegrationTest/App.config'
+  FileUtils.cp 'src/test/Chaos.Portal.Protocol.Tests/App.config.sample', 'src/test/Chaos.Portal.Protocol.Tests/App.config'
 end
 
 desc 'Perform fast build (warn: doesn\'t d/l deps)'
