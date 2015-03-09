@@ -21,7 +21,7 @@ asmver_files :assembly_info do |a|
                assembly_informational_version: ENV['BUILD_VERSION']
 end
 
-task :prepare_compile do |b|
+task :prepare_compile do
   FileUtils.cp 'src/test/Chaos.Portal.IntegrationTest/App.config.sample', 'src/test/Chaos.Portal.IntegrationTest/App.config'
   FileUtils.cp 'src/test/Chaos.Portal.Protocol.Tests/App.config.sample', 'src/test/Chaos.Portal.Protocol.Tests/App.config'
 end
@@ -33,7 +33,7 @@ build :quick_compile => [:prepare_compile] do |b|
   b.sln     = 'Portal.sln'
 end
 
-task :package_tests => [:quick_compile] do |cmd|
+task :package_tests => [:quick_compile] do
 	FileUtils.mkdir 'tests'
 
   FileUtils.cp 'tools\NUnit-2.6.0.12051\bin\nunit.framework.dll', 'tests'
@@ -62,7 +62,7 @@ test_runner :tests => [:package_tests] do |tests|
 end
 
 desc "Merges all production assemblies"
-task :package => [:tests] do |cmd|
+task :package => [:tests] do
 	FileUtils.mkdir 'build'
 
   system 'tools/ILMerge/ILMerge.exe',
