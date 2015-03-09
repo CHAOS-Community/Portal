@@ -29,7 +29,6 @@ end
 desc 'Perform fast build (warn: doesn\'t d/l deps)'
 build :quick_compile => [:prepare_compile] do |b|
   b.prop 'Configuration', Configuration
-  b.logging = 'quiet'
   b.sln     = 'Portal.sln'
 end
 
