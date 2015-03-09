@@ -8,6 +8,11 @@ Configuration = ENV['CONFIGURATION'] || 'Release'
 
 Albacore::Tasks::Versionizer.new :versioning
 
+task :clean do
+  FileUtils.rmtree 'tests'
+  FileUtils.rmtree 'build'
+end
+
 desc 'create assembly infos'
 asmver_files :assembly_info do |a|
   a.files = FileList['**/*proj'] # optional, will find all projects recursively by default
@@ -21,7 +26,7 @@ asmver_files :assembly_info do |a|
                assembly_informational_version: ENV['BUILD_VERSION']
 end
 
-task :prepare_compile do
+task :prepare_compile => [:clean] do
   FileUtils.cp 'src/test/Chaos.Portal.IntegrationTest/App.config.sample', 'src/test/Chaos.Portal.IntegrationTest/App.config'
   FileUtils.cp 'src/test/Chaos.Portal.Protocol.Tests/App.config.sample', 'src/test/Chaos.Portal.Protocol.Tests/App.config'
 end
@@ -34,36 +39,43 @@ build :quick_compile => [:prepare_compile] do |b|
 end
 
 task :package_tests => [:quick_compile] do
-	FileUtils.mkdir 'tests'
+  FileUtils.mkdir 'tests'
 
   FileUtils.cp 'tools\NUnit-2.6.0.12051\bin\nunit.framework.dll', 'tests'
   FileUtils.cp 'src\app\Chaos.Portal.Core\bin\Release\Chaos.Portal.Core.dll', 'tests'
   FileUtils.cp 'src\app\Chaos.Portal.v5\bin\Release\Chaos.Portal.v5.dll', 'tests'
   FileUtils.cp 'src\app\Chaos.Portal.v6\bin\Release\Chaos.Portal.v6.dll', 'tests'
   FileUtils.cp 'src\app\Chaos.Portal\bin\Release\Chaos.Portal.dll', 'tests'
+  FileUtils.cp 'src\test\Chaos.Portal.Protocol.Tests\App.config', 'tests\Chaos.Portal.Test.dll.config'
+  FileUtils.cp 'tools\Moq.4.0.10827\NET40\Moq.dll', 'tests'
+  FileUtils.cp 'lib\CHAOS.dll', 'tests'
+  FileUtils.cp 'lib\AWSSDK.dll', 'tests'
+  FileUtils.cp 'packages\CouchbaseNetClient.1.3.9\lib\net40\Couchbase.dll', 'tests'
+  FileUtils.cp 'packages\CouchbaseNetClient.1.3.9\lib\net40\Enyim.Caching.dll', 'tests'
+  FileUtils.cp 'packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll', 'tests'
+  FileUtils.cp_r 'src\test\CHAOS.Portal.Test\bin\Release\EmailService', 'tests'
 
   system 'tools/ILMerge/ILMerge.exe',
     ['/out:tests\Chaos.Portal.Test.dll',
-      '/target:library',
-      '/ndebug',
-      '/lib:lib',
-      '/targetplatform:v4,c:\windows\Microsoft.Net\Framework64\v4.0.30319',
-      '/lib:c:\windows\Microsoft.Net\Framework64\v4.0.30319',
-      'src\test\CHAOS.Portal.Test\bin\Release\CHAOS.Portal.Test.dll',
-      'src\test\Chaos.Portal.IntegrationTest\bin\Release\Chaos.Portal.IntegrationTest.dll',
-      'src\test\Chaos.Portal.Protocol.Tests\bin\Release\Chaos.Portal.Protocol.Tests.dll'], clr_command: true
+     '/target:library',
+     '/ndebug',
+     '/lib:lib',
+     '/targetplatform:v4,c:\windows\Microsoft.Net\Framework64\v4.0.30319',
+     '/lib:c:\windows\Microsoft.Net\Framework64\v4.0.30319',
+     'src\test\CHAOS.Portal.Test\bin\Release\CHAOS.Portal.Test.dll',
+     'src\test\Chaos.Portal.Protocol.Tests\bin\Release\Chaos.Portal.Protocol.Tests.dll'], clr_command: true
 end
 
 desc "Run all the tests"
 test_runner :tests => [:package_tests] do |tests|
-  tests.files = FileList['tests/Chaos.Test.dll']
+  tests.files = FileList['tests/Chaos.Portal.Test.dll']
   tests.add_parameter '/framework=4.0.30319'
   tests.exe = 'tools/NUnit-2.6.0.12051/bin/nunit-console.exe'
 end
 
 desc "Merges all production assemblies"
 task :package => [:tests] do
-	FileUtils.mkdir 'build'
+  FileUtils.mkdir 'build'
 
   system 'tools/ILMerge/ILMerge.exe',
     ['/out:build\Chaos.Portal.dll',

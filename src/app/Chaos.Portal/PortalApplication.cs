@@ -267,7 +267,7 @@ namespace Chaos.Portal
             
                 return settings;
             }
-            catch (XmlException e)
+            catch (XmlException)
             {
                 var json = module.Configuration;
                 var settings = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);

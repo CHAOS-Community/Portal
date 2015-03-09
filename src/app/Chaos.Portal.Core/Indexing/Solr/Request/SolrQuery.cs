@@ -4,7 +4,7 @@ namespace Chaos.Portal.Core.Indexing.Solr.Request
     {
         private string _facet;
 
-        private string _groupField;
+        //private string _groupField;
 
         #region Properties
 

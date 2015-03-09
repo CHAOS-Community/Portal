@@ -27,3 +27,7 @@ Thumbs.db
 _NCrunch*
 App.Config
 deploy-db.bat
+
+build
+tests
+Gemfile.lock
