@@ -36,11 +36,11 @@ end
 task :package_tests => [:quick_compile] do |cmd|
 	FileUtils.mkdir 'tests'
 
-  FileUtils.cp 'tools/NUnit.2.6.0.12051/bin/nunit.framework.dll', 'tests/'
-  FileUtils.cp 'src/app/Chaos.Portal.Core/bin/Release/Chaos.Portal.Core.dll', 'tests/'
-  FileUtils.cp 'src/app/Chaos.Portal.v5/bin/Release/Chaos.Portal.v5.dll', 'tests/'
-  FileUtils.cp 'src/app/Chaos.Portal.v6/bin/Release/Chaos.Portal.v6.dll', 'tests/'
-  FileUtils.cp 'src/app/Chaos.Portal/bin/Release/Chaos.Portal.dll', 'tests/'
+  FileUtils.cp 'tools/NUnit-2.6.0.12051/bin/nunit.framework.dll', 'tests/nunit.framework.dll'
+  FileUtils.cp 'src/app/Chaos.Portal.Core/bin/Release/Chaos.Portal.Core.dll', 'tests/Chaos.Portal.Core.dll'
+  FileUtils.cp 'src/app/Chaos.Portal.v5/bin/Release/Chaos.Portal.v5.dll', 'tests/Chaos.Portal.v5.dll'
+  FileUtils.cp 'src/app/Chaos.Portal.v6/bin/Release/Chaos.Portal.v6.dll', 'tests/Chaos.Portal.v6.dll'
+  FileUtils.cp 'src/app/Chaos.Portal/bin/Release/Chaos.Portal.dll', 'tests/Chaos.Portal.dll'
 
   system 'tools/ILMerge/ILMerge.exe',
     ['/out:tests\Chaos.Portal.Test.dll',
