@@ -49,7 +49,7 @@ task :package_tests => [:quick_compile] do
   FileUtils.cp 'src\test\Chaos.Portal.Protocol.Tests\App.config', 'tests\Chaos.Portal.Test.dll.config'
   FileUtils.cp 'tools\Moq.4.0.10827\NET40\Moq.dll', 'tests'
   FileUtils.cp 'lib\CHAOS.dll', 'tests'
-  FileUtils.cp 'lib\AWSSDK.dll', 'tests'
+  FileUtils.cp 'packages\AWSSDK.2.3.24.3\lib\net45\AWSSDK.dll', 'tests'
   FileUtils.cp 'packages\CouchbaseNetClient.1.3.9\lib\net40\Couchbase.dll', 'tests'
   FileUtils.cp 'packages\CouchbaseNetClient.1.3.9\lib\net40\Enyim.Caching.dll', 'tests'
   FileUtils.cp 'packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll', 'tests'

@@ -33,8 +33,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AWSSDK">
-      <HintPath>..\..\..\lib\AWSSDK.dll</HintPath>
+    <Reference Include="AWSSDK, Version=2.3.24.3, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\AWSSDK.2.3.24.3\lib\net45\AWSSDK.dll</HintPath>
     </Reference>
     <Reference Include="CHAOS">
       <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
