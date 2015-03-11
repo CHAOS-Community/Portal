@@ -31,7 +31,7 @@
             var app = Make_PortalApplication();
             var key = "valid key";
             Repo.Setup(m => m.Module.Get(key)).Returns(new Module { Configuration = "<TestSettings><Val1>1</Val1></TestSettings>" });
-
+          
             var result = app.GetSettings<TestSettings>(key);
 
             Assert.That(result.IsValid(), Is.True);

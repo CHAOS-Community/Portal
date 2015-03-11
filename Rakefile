@@ -82,6 +82,7 @@ task :package => [:tests] do
       '/target:library',
       '/ndebug',
       '/lib:lib',
+      '/targetplatform:v4,c:\windows\Microsoft.Net\Framework64\v4.0.30319',
       '/lib:c:\windows\Microsoft.Net\Framework64\v4.0.30319',
       'src/app/Chaos.Portal.Core/bin/Release/Chaos.Portal.Core.dll',
       'src/app/Chaos.Portal.v5/bin/Release/Chaos.Portal.v5.dll',
