@@ -31,3 +31,4 @@ deploy-db.bat
 build
 tests
 Gemfile.lock
+_NCrunch_Portal

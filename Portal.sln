@@ -45,6 +45,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.changes", "2.changes", "{5C25B6A3-648B-4240-909E-D83B62C63DA5}"
 	ProjectSection(SolutionItems) = preProject
 		sql\2.Changes\06.00.001.sql = sql\2.Changes\06.00.001.sql
+		sql\2.Changes\06.00.002.sql = sql\2.Changes\06.00.002.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.storedprocedures", "{0E959814-402F-4688-8C36-1A90AD0EF9B7}"
@@ -86,10 +87,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.sto
 		sql\3.storedprocedures\1.userget.sql = sql\3.storedprocedures\1.userget.sql
 		sql\3.storedprocedures\1.userinfoget.sql = sql\3.storedprocedures\1.userinfoget.sql
 		sql\3.storedprocedures\1.userinfogetwithgrouppermission.sql = sql\3.storedprocedures\1.userinfogetwithgrouppermission.sql
+		sql\3.storedprocedures\1.userset.sql = sql\3.storedprocedures\1.userset.sql
 		sql\3.storedprocedures\1.usersettingsdelete.sql = sql\3.storedprocedures\1.usersettingsdelete.sql
 		sql\3.storedprocedures\1.usersettingsget.sql = sql\3.storedprocedures\1.usersettingsget.sql
 		sql\3.storedprocedures\1.usersettingsset.sql = sql\3.storedprocedures\1.usersettingsset.sql
-		sql\3.storedprocedures\1.userupdate.sql = sql\3.storedprocedures\1.userupdate.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.views", "4.views", "{E4EAC9FA-122E-4348-A53B-EBF0F1C78D2D}"
