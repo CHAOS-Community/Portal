@@ -61,6 +61,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bindings\EnumerableOfStringBindingTest.cs" />
     <Compile Include="Bindings\GuidParameterBindingTest.cs" />
     <Compile Include="Bindings\EnumerableOfGuidBindingTest.cs" />
     <Compile Include="Bindings\XDocumentBindingTest.cs" />

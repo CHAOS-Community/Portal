@@ -38,6 +38,7 @@ namespace Chaos.Portal.Module
             portalApplication.AddBinding(typeof(Guid?), new GuidParameterBinding());
             portalApplication.AddBinding(typeof(IQuery), new QueryParameterBinding());
             portalApplication.AddBinding(typeof(IEnumerable<Guid>), new EnumerableOfGuidParameterBinding());
+            portalApplication.AddBinding(typeof(IEnumerable<string>), new EnumerableOfStringParameterBinding());
             portalApplication.AddBinding(typeof(XDocument), new XDocumentBinding());
             portalApplication.AddBinding(typeof(UUID), new UUIDParameterBinding());
 
