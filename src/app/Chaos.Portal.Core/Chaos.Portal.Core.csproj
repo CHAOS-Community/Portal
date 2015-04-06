@@ -110,6 +110,7 @@
     <Compile Include="Exceptions\ActionMissingException.cs" />
     <Compile Include="Exceptions\AssemblyNotLoadedException.cs" />
     <Compile Include="Exceptions\ChaosDatabaseException.cs" />
+    <Compile Include="Exceptions\ClientException.cs" />
     <Compile Include="Exceptions\DuplicateViewException.cs" />
     <Compile Include="Exceptions\DuplicateException.cs" />
     <Compile Include="Exceptions\DuplicateEndpointException.cs" />
@@ -118,7 +119,9 @@
     <Compile Include="Exceptions\ModuleConfigurationMissingException.cs" />
     <Compile Include="Exceptions\ModuleNotLoadedException.cs" />
     <Compile Include="Exceptions\ParameterBindingMissingException.cs" />
+    <Compile Include="Exceptions\PortalException.cs" />
     <Compile Include="Exceptions\ProtocolVersionException.cs" />
+    <Compile Include="Exceptions\ServerException.cs" />
     <Compile Include="Exceptions\SessionDoesNotExistException.cs" />
     <Compile Include="Exceptions\UnhandledException.cs" />
     <Compile Include="Exceptions\UnsupportedExtensionReturnTypeException.cs" />
