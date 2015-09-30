@@ -13,19 +13,6 @@ task :clean do
   FileUtils.rmtree 'build'
 end
 
-desc 'create assembly infos'
-asmver_files :assembly_info do |a|
-  a.files = FileList['**/*proj'] # optional, will find all projects recursively by default
-
-  a.attributes assembly_description: 'TODO',
-               assembly_configuration: Configuration,
-               assembly_company: 'CHAOS APS',
-               assembly_copyright: "(c) 2015 by CHAOS APS",
-               assembly_version: ENV['LONG_VERSION'],
-               assembly_file_version: ENV['LONG_VERSION'],
-               assembly_informational_version: ENV['BUILD_VERSION']
-end
-
 task :prepare_compile => [:clean] do
   FileUtils.cp 'src/test/Chaos.Portal.IntegrationTest/App.config.sample', 'src/test/Chaos.Portal.IntegrationTest/App.config'
   FileUtils.cp 'src/test/Chaos.Portal.Protocol.Tests/App.config.sample', 'src/test/Chaos.Portal.Protocol.Tests/App.config'

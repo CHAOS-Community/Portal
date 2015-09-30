@@ -53,11 +53,11 @@ namespace Chaos.Portal.Core.Indexing.View
             throw new NotImplementedException("Grouping not implemented on this view");
         }
 
-        public virtual FacetResult FacetedQuery(IQuery query)
+        public virtual FacetResponse FacetedQuery(IQuery query)
         {
             var response = Core.Query(query);
 
-            return response.FacetResult;
+            return response.FacetResponse;
         }
 
         public virtual IPagedResult<IResult> Query(IQuery query)

@@ -1,102 +1,123 @@
 namespace Chaos.Portal.Core.Indexing.Solr.Request
 {
-    public class SolrQuery : IQuery
-    {
-        private string _facet;
+	public class SolrQuery : IQuery
+	{
+		private string _facet;
 
-        //private string _groupField;
+		//private string _groupField;
 
-        #region Properties
+		#region Properties
 
-        public string Query { get; set; }
-        public string Sort { get; set; }
-        public string Facet
-        {
-            get { return _facet; }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                    _facet = "";
-                else
-                {
-                    _facet = value.Replace(":", "=");
-                    _facet = _facet.Replace("field", "facet.field");
-                    _facet = _facet.Replace("AND", "&");
-                    _facet = _facet.Replace("+", "");
-                    _facet = _facet.Replace(" ", "");
-                    _facet = "&" + _facet;
-                }
+		public string Query { get; set; }
+		public string Sort { get; set; }
 
-            }
-        }
+		public string Facet
+		{
+			get { return _facet; }
+			set
+			{
+				if (string.IsNullOrEmpty(value))
+					_facet = "";
+				else
+				{
+					var rangeStart = value.IndexOf("(range ");
 
-        public string Filter { get; set; }
+					if (rangeStart != -1)
+					{
+						var rangeEnd = value.IndexOf(")", rangeStart);
+						var rangeCommand = value.Substring(rangeStart, rangeEnd);
+						var rangeParameters = rangeCommand.Split(' ');
 
-        public uint PageIndex { get; set; }
-        public uint PageSize { get; set; }
+						_facet =
+							string.Format(
+								"&facet.range={0}&f.date_field.facet.range.start={1}&f.date_field.facet.range.end={2}&f.date_field.facet.range.gap=%2B{3}",
+								rangeParameters[1], rangeParameters[2], rangeParameters[3], rangeParameters[4]);
 
-        public string SolrQueryString
-        {
-            get
-            {
-                return string.Format("fl=Id,score&q={0}&sort={1}&start={2}&rows={3}&fq={4}&facet={5}{6}{7}", string.IsNullOrEmpty(Query) ? "*:*" : Query, Sort ?? "", PageIndex * PageSize, PageSize, Filter, (!string.IsNullOrEmpty(Facet)).ToString().ToLower(), Facet, Group != null ? Group.ToString() : "");
-            }
-        }
+						value = value.Remove(rangeStart, rangeEnd + 1);
+					}
 
-        public IQueryGroupSettings Group { get; set; }
+					value = value.Replace(":", "=");
+					value = value.Replace("field", "&facet.field");
+					value = value.Replace("AND", "&");
+					value = value.Replace("+", "");
+					value = value.Replace(" ", "");
+					_facet += value;
+				}
+			}
+		}
 
-        #endregion
-        #region Construction
+		public string Filter { get; set; }
 
-        public SolrQuery(string query, string facet, string sort, string filter, uint pageIndex, uint pageSize) : this()
-        {
-            Init(query, facet, sort, filter, pageIndex, pageSize);
-        }
+		public uint PageIndex { get; set; }
+		public uint PageSize { get; set; }
 
-        public SolrQuery()
-        {
-            Group = new SolrGroup();
-        }
+		public string SolrQueryString
+		{
+			get
+			{
+				return string.Format("fl=Id,score&q={0}&sort={1}&start={2}&rows={3}&fq={4}&facet={5}{6}{7}",
+				                     string.IsNullOrEmpty(Query) ? "*:*" : Query, Sort ?? "", PageIndex*PageSize, PageSize, Filter,
+				                     (!string.IsNullOrEmpty(Facet)).ToString().ToLower(), Facet,
+				                     Group != null ? Group.ToString() : "");
+			}
+		}
 
-        #endregion
-        #region Business Logic
+		public IQueryGroupSettings Group { get; set; }
 
-        public void Init(string query, string facet, string sort, string filter, uint pageIndex, uint pageSize)
-        {
-            WithQuery(query);
-            Sort = sort;
-            WithPageIndex(pageIndex);
-            WithPageSize(pageSize);
-            Facet = facet;
-            Filter = filter;
-        }
+		#endregion
 
-        public SolrQuery WithQuery(string q)
-        {
-            Query = q;
+		#region Construction
 
-            return this;
-        }
+		public SolrQuery(string query, string facet, string sort, string filter, uint pageIndex, uint pageSize) : this()
+		{
+			Init(query, facet, sort, filter, pageIndex, pageSize);
+		}
 
-        public SolrQuery WithPageIndex(uint pageIndex)
-        {
-            PageIndex = pageIndex;
+		public SolrQuery()
+		{
+			Group = new SolrGroup();
+		}
 
-            return this;
-        }
+		#endregion
 
-        public SolrQuery WithPageSize(uint pageSize)
-        {
-            PageSize = pageSize;
+		#region Business Logic
 
-            return this;
-        }
+		public void Init(string query, string facet, string sort, string filter, uint pageIndex, uint pageSize)
+		{
+			WithQuery(query);
+			Sort = sort;
+			WithPageIndex(pageIndex);
+			WithPageSize(pageSize);
+			Facet = facet;
+			Filter = filter;
+		}
 
-        public override string ToString()
-        {
-            return SolrQueryString;
-        }
-        
-        #endregion
-    }
+		public SolrQuery WithQuery(string q)
+		{
+			Query = q;
+
+			return this;
+		}
+
+		public SolrQuery WithPageIndex(uint pageIndex)
+		{
+			PageIndex = pageIndex;
+
+			return this;
+		}
+
+		public SolrQuery WithPageSize(uint pageSize)
+		{
+			PageSize = pageSize;
+
+			return this;
+		}
+
+		public override string ToString()
+		{
+			return SolrQueryString;
+		}
+
+		#endregion
+	}
 }

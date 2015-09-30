@@ -141,7 +141,8 @@
     <Compile Include="Indexing\Solr\Response\Facet.cs" />
     <Compile Include="Indexing\Solr\Response\FacetFieldsResult.cs" />
     <Compile Include="Indexing\Solr\Response\FacetQueriesResult.cs" />
-    <Compile Include="Indexing\Solr\Response\FacetResult.cs" />
+    <Compile Include="Indexing\Solr\Response\FacetResponse.cs" />
+    <Compile Include="Indexing\Solr\Response\FacetResults.cs" />
     <Compile Include="Indexing\Solr\Response\GuidResult.cs" />
     <Compile Include="Indexing\Solr\Response\Header.cs" />
     <Compile Include="Indexing\Solr\Response\IdResult.cs" />

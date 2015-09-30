@@ -5,7 +5,7 @@ namespace Chaos.Portal.Core.Indexing.Solr.Response
     public interface IIndexResponse<TReturnType> where TReturnType : IIndexResult, new()
     {
         Header Header { get; }
-        FacetResult FacetResult { get;}
+        FacetResponse FacetResponse { get;}
         IList<IQueryResultGroup<TReturnType>> QueryResultGroups { get; }
         IQueryResult<TReturnType> QueryResult { get; }
     }

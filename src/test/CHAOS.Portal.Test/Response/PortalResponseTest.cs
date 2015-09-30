@@ -47,7 +47,7 @@
             var solrResponse = Make_SolrResponseWithFacets();
             var faceted      = new QueryResult
                 {
-                    FieldFacets = solrResponse.FacetResult.FacetFieldsResult.Select(item => new FieldFacet(item.Value, item.Facets.Select(facet => new Core.Data.Model.Facet(facet.Value, facet.Count)).ToList())).ToList()
+                    FieldFacets = solrResponse.FacetResponse.FacetFieldsResult.Select(item => new FieldFacet(item.Value, item.Facets.Select(facet => new Core.Data.Model.Facet(facet.Value, facet.Count)).ToList())).ToList()
                 };
             response.ReturnFormat = ReturnFormat.XML2;
             request.Stopwatch.Reset();

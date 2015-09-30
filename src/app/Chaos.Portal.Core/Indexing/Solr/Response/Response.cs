@@ -7,14 +7,14 @@ namespace Chaos.Portal.Core.Indexing.Solr.Response
     public class ResponseBase
     {
         public Header Header { get; set; }
-        public FacetResult FacetResult { get; set; }
+        public FacetResponse FacetResponse { get; set; }
 
         #region Initialization
 
         public ResponseBase(XContainer response)
         {
             Header      = new Header(response.Elements("lst").First(item => item.Attribute("name").Value == "responseHeader"));
-            FacetResult = new FacetResult(response.Elements("lst").FirstOrDefault(item => item.Attribute("name").Value == "facet_counts"));
+            FacetResponse = new FacetResponse(response.Elements("lst").FirstOrDefault(item => item.Attribute("name").Value == "facet_counts"));
         }
 
         #endregion
