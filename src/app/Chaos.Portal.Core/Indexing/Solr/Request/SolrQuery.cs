@@ -25,15 +25,15 @@ namespace Chaos.Portal.Core.Indexing.Solr.Request
 					if (rangeStart != -1)
 					{
 						var rangeEnd = value.IndexOf(")", rangeStart);
-						var rangeCommand = value.Substring(rangeStart, rangeEnd);
+						var rangeCommand = value.Substring(rangeStart, rangeEnd - rangeStart);
 						var rangeParameters = rangeCommand.Split(' ');
 
 						_facet =
 							string.Format(
-								"&facet.range={0}&f.date_field.facet.range.start={1}&f.date_field.facet.range.end={2}&f.date_field.facet.range.gap=%2B{3}",
+								"&facet.range={0}&f.{0}.facet.range.start={1}&f.{0}.facet.range.end={2}&f.{0}.facet.range.gap=%2B{3}",
 								rangeParameters[1], rangeParameters[2], rangeParameters[3], rangeParameters[4]);
 
-						value = value.Remove(rangeStart, rangeEnd + 1);
+						value = value.Remove(rangeStart, rangeEnd - rangeStart + 1);
 					}
 
 					value = value.Replace(":", "=");

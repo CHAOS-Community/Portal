@@ -70,6 +70,17 @@
 			Assert.That(result.FacetResponse.Ranges.First().Facets.First().Count, Is.EqualTo(3));
 		}
 
+		[Test]
+		public void Constructor_GivenStreamWithBothRangeAndFieldFacets_ReturnResponseWithBothFacets()
+		{
+			var xml = Make_SolrResponseXmlWithRangeFacets();
+
+			var result = new Response<DataStub>(xml);
+
+			Assert.That(result.FacetResponse.Ranges.First().Facets.Count, Is.EqualTo(12));
+			Assert.That(result.FacetResponse.FacetFieldsResult.First().Facets.Count, Is.EqualTo(4));
+		}
+
 		protected Stream Make_SolrResponseXml()
 		{
 			var text = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
@@ -175,7 +186,14 @@
 			           + "  </result>"
 			           + "  <lst name=\"facet_counts\">"
 			           + "    <lst name=\"facet_queries\"/>"
-			           + "    <lst name=\"facet_fields\"/>"
+								 + "    <lst name=\"facet_fields\">"
+								 + "      <lst name=\"NetworkId\">"
+								 + "        <int name=\"00000000-0000-0000-0000-000000000001\">71</int>"
+								 + "        <int name=\"fc2e10f7-3eee-49d8-b441-3235f96e5c0a\">2</int>"
+								 + "        <int name=\"3cbcdafc-af3b-4955-9d79-64d397b6393d\">1</int>"
+								 + "        <int name=\"3ec2f894-bdf2-4281-a91f-46a84b982039\">1</int>"
+								 + "      </lst>"
+								 + "    </lst>"
 			           + "    <lst name=\"facet_dates\"/>"
 			           + "    <lst name=\"facet_ranges\">"
 			           + "      <lst name=\"field_name\">"

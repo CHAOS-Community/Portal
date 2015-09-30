@@ -46,7 +46,20 @@
 
 			var result = query.SolrQueryString;
 
-			Assert.That(result, Is.EqualTo("fl=Id,score&q=*:*&sort=&start=0&rows=0&fq=&facet=true&facet.range=date_val&f.date_field.facet.range.start=1992-01-01T00:00:00Z&f.date_field.facet.range.end=1993-01-01T00:00:00Z&f.date_field.facet.range.gap=%2B1MONTH&group=false&group.limit=0&group.field=&group.offset=0"));
+			Assert.That(result, Is.EqualTo("fl=Id,score&q=*:*&sort=&start=0&rows=0&fq=&facet=true&facet.range=date_val&f.date_val.facet.range.start=1992-01-01T00:00:00Z&f.date_val.facet.range.end=1993-01-01T00:00:00Z&f.date_val.facet.range.gap=%2B1MONTH&group=false&group.limit=0&group.field=&group.offset=0"));
+		}
+
+		[Test]
+		public void SolrQueryString_WithBothRangeAndFieldFacet_ReturnQuery()
+		{
+			var query = new SolrQuery
+				{
+					Facet = "field:something(range date_val 1992-01-01T00:00:00Z 1993-01-01T00:00:00Z 1MONTH)"
+				};
+
+			var result = query.SolrQueryString;
+
+			Assert.That(result, Is.EqualTo("fl=Id,score&q=*:*&sort=&start=0&rows=0&fq=&facet=true&facet.range=date_val&f.date_val.facet.range.start=1992-01-01T00:00:00Z&f.date_val.facet.range.end=1993-01-01T00:00:00Z&f.date_val.facet.range.gap=%2B1MONTH&facet.field=something&group=false&group.limit=0&group.field=&group.offset=0"));
 		}
 	}
 }
