@@ -31,7 +31,7 @@ namespace Chaos.Portal.Core.Indexing.View
         ///       <cref>IIndexReport</cref>
         ///     </see> .
         /// </returns>
-        void Index(IEnumerable<object> objects);
+        void Index(IEnumerable<object> objs);
 
         /// <summary>
         /// Retrieves a view by name
