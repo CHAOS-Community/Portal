@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Chaos.Portal.Core.Data.Model;
 using Chaos.Portal.Core.Exceptions;
+using Chaos.Portal.Core.Indexing.Solr.Request;
 using Chaos.Portal.Core.Request;
 
 namespace Chaos.Portal.Core.Response.Dto.v2

@@ -7,6 +7,52 @@
 	public class SolrQueryTest
 	{
 		[Test]
+		public void EDismax_NormalQuery()
+		{
+			var query = new EDismaxQuery
+			{
+				QueryFields = "somefield^0.2",
+				Query = "search terms"
+			};
+
+			var result = query.SolrQueryString;
+
+			Assert.That(result,
+									Is.EqualTo("fl=Id,score&q=search terms&sort=&start=0&rows=0&fq=&qf=somefield^0.2&defType=edismax&facet=false"));
+		}
+
+		[Test]
+		public void EDismax_WithQuotes()
+		{
+			var query = new EDismaxQuery
+			{
+				QueryFields = "somefield^0.2",
+				Query = "\"some search\" terms"
+			};
+
+			var result = query.SolrQueryString;
+
+			Assert.That(result,
+									Is.EqualTo("fl=Id,score&q=\"some search\" terms&sort=&start=0&rows=0&fq=&qf=somefield^0.2&defType=edismax&facet=false"));
+		}
+
+
+		[Test]
+		public void EDismax_EndingWithQuotes()
+		{
+			var query = new EDismaxQuery
+			{
+				QueryFields = "somefield^0.2",
+				Query = "\"some search terms\""
+			};
+
+			var result = query.SolrQueryString;
+
+			Assert.That(result,
+									Is.EqualTo("fl=Id,score&q=\"some search terms\"&sort=&start=0&rows=0&fq=&qf=somefield^0.2&defType=edismax&facet=false"));
+		}
+
+		[Test]
 		public void SolrQueryString_GroupFieldIsSet_ReturnQueryWithGroupingEnabled()
 		{
 			var query = new SolrQuery

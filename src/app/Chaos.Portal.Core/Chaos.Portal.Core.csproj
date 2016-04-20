@@ -137,6 +137,7 @@
     <Compile Include="Indexing\Solr\IIndexable.cs" />
     <Compile Include="Indexing\Solr\IIndexResult.cs" />
     <Compile Include="Indexing\Solr\Request\SolrGroup.cs" />
+    <Compile Include="Indexing\Solr\Request\EDismaxQuery.cs" />
     <Compile Include="Indexing\Solr\Request\SolrQuery.cs" />
     <Compile Include="Indexing\Solr\Response\Facet.cs" />
     <Compile Include="Indexing\Solr\Response\FacetFieldsResult.cs" />
