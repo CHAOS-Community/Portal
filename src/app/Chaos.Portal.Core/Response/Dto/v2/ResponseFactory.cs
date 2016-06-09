@@ -15,6 +15,7 @@ namespace Chaos.Portal.Core.Response.Dto.v2
 			if (obj == null) throw new NullReferenceException("Returned object is null");
 
 			var result = obj as IResult;
+			result = result == null ? obj as AResult : result;
 			var results = obj as IEnumerable<IResult>;
 			var pagedResult = obj as IPagedResult<IResult>;
 			var queryResult = obj as QueryResult;

@@ -16,9 +16,9 @@
 
         public Stream GetStream(IPortalResponse response)
         {
-            var xdoc = SerializerFactory.Get<XDocument>().Serialize(response.Output, false);
+            var xdoc = SerializerFactory.XMLSerializer.Serialize(response.Output, false);
             xdoc.Declaration = new XDeclaration("1.0", response.Encoding.HeaderName, "yes");
-
+						
             var stream = new MemoryStream();
 
             xdoc.Save(stream, SaveOptions.DisableFormatting);

@@ -247,14 +247,16 @@ namespace Chaos.Portal.Core.Data
 
         public Session SessionUpdate(Guid guid, Guid userGuid)
         {
-            Gateway.ExecuteNonQuery("Session_Update", new[]
+            var result = Gateway.ExecuteNonQuery("Session_Update", new[]
             {
                 new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
                 new MySqlParameter("WhereSessionGuid", guid.ToByteArray()), 
                 new MySqlParameter("WhereUserGuid", null) 
             });
 
-            return SessionGet(guid, userGuid).First();
+						if(result == 0) throw new SessionDoesNotExistException("Session was not updated because it doesn't exist");
+
+            return SessionGet(guid, userGuid).Single();
         }
 
         public uint SessionDelete(Guid guid, Guid userGuid)
